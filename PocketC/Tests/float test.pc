@@ -1,0 +1,6 @@
+// float test
+main() {
+float f = 3.6;
+puts("f = " + f + "\n");
+puts("f = " +  format(f, 2) +  "\n");
+}

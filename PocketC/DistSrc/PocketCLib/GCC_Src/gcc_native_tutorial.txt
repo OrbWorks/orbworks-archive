@@ -1,0 +1,67 @@
+[Tutorial and GCC files provided by Mark Roth]
+
+Hello all,
+
+  It is January 12, 2004 and 1:50AM EST.  I am writing this tutorial to share some information on compiling native libraries for PocketC using the GCC toolchain.  My setup is as follows:
+
+CygWin 1.5.5
+GCC 3.3.1
+PRC-Tools 2.3
+Pilrc 3.1
+par 0.5
+DeveloperStudio for the PalmOS 2.6.2 (falch.net)
+PalmOS SDK-5r3
+PocketC v6.1.0 desktop editon
+
+  The first thing you need to do is get your environment working.  I use CygWin and once it was set up it has worked like a champ.  If you have problems go to their website and FOLLOW the DIRECTIONS.  This is not meant to be a helpfile for that sort of thing.  If you have not gotten your environment up to specs you will not be able to do what will be described in this file.  Use the tools available to you.  The orbworks.com forums are an excellent place to start and if you use the search button in the upper right hand corner you will be able to find a wealth of information. So on that note, lets begin.
+
+  If you are reading this you should have downloaded the archive that contains all the nessesary raw materials to make this process a success.  If for some reason you have not, I don't know what to tell you.  Please read the fine documentation provided by orbworks on PocketC Native Libraries.  I am not going to duplicate that info here since it is avalible at their website and in your docs directory in PocketC.  I may harp on it but documentation is your friend.  There are only four files you need to get through this. They are:
+
+Makefile - premade makefile that will do all your work for you, thank Joe Stadolnik, I did.
+PocketCLib.cpp - A very important file
+PocketCLibDispatch - Another very important file
+PocketCLib.h - Yet another important file
+
+Like I said, if you haven't read the documentation included with you PocketC environment delete this and go on to other things.  If you are still with me, GREAT!  I just want to impress upon you that this is going to get ugly before we are done and I reccommend printing out any important documentation before going any further.  Since I haven't scared you off lets get to the fun stuff, shall we.
+
+The real meat of the matter here is the makefile.  Anyone who wants to thank Joe for the time he loaned me in getting this straight can probably go to his website and make a donation.  It is in his profile which can be found by clicking on his name in the forums.  Let's tear this thing apart and you will be on your way.
+
+The Makefile is setup so that by changing only a few values you should be able to compile your own library.  As it is, it will compile the PocketCLib into a prc suitable for loading onto a handheld device running the PalmOS and using PocketC.  The functions in the library can then be called from your PocketC application, but I am just reiterating what is in other documentation.  I will break down the makefile so when you make your changes you have an idea what is happening.  The documentation for make can be found at the GNU site.  I reccomend downloading the html version and keeping it handy.  I will only scratch the surface and there is so much that can be done within make.
+
+OUR Makefile:
+
+LIBNAME = PocketCLib
+CREATOR = PCL?
+OBJECTS = $(LIBNAME).o $(LIBNAME)Dispatch.o
+CC = m68k-palmos-gcc -O2
+XTRALIBS = -lnfm -lgcc -lPalmOSGlue
+BUILDPRC = build-prc
+
+This is really the only part you should have to change to get a working copy of your own named library compiled.  They are the variables that will control your output.  By simply changing 2 values you can compile your own library after making the changes in the .cpp files.  But I am not going into that.  The LIBNAME variable is of course your base name of the library.  In our example it is PocketCLib.  Everything else is based on that.  The creator id which needs to be registered in the developer section of Palm.com is defined by the CREATOR variable.  Guess what, that is all you need to change to compile your own library.  This was created as a joint effort of myself and Joe of PtoolBox fame because we both use the GCC tool chain.  The CC variable sets the compiler options to middle of the road, general all purpose compiling.  -o2 can be changed and the available options can be found in the PRC-TOOLS documentation you got when you installed the programs. They should be located in you cygwin directory under usr\doc\prc-tools.  The html versions will answer all your questions.  The XTRALIBS variable sets the stage to compile for a library using the latest PalmOS SDK (5-0) and BUILDPRC is sort of redundant but if it's name is ever changed you can adjust for windage here. In case make is alien to you I will look at one of the rules to give you a headstart.  You don't have to change these but you will need to do your homework and understand these at some point. A point of note about the XTRALIBS that Joe brought me up to speed on:
+
+The gcc base library also has floating point support (-lgcc)(which doesn't work on 
+PalmOS devices), by putting the new float manager first (-lnfm), this guarantees 
+that the nfm lib will be used instead (which does work).
+
+#build the PRC
+$(LIBNAME).prc : $(LIBNAME)
+    $(BUILDPRC) -L $@ $(LIBNAME) $(CREATOR) $^
+
+The first part of the rule is the target.  In our case it is $(LIBNAME).prc.  This can be read as PocketCLib.prc.  That is the file that will be built in this case.  The second part is the dependency.  In our case it is $(LIBNAME) which will expand out to PocketCLib.  The way it works is in order to create the target (PocketCLib.prc) the file PocketCLib must exist.  If it exists and is newer than the target the commands below will be run.  The command line which in our case is, $(BUILDPRC) -L $@ $(LIBNAME) $(CREATOR) $^, will run build-prc with the -L switch for a library.  The $@ will expand out to the name of our target (PocketCLib.prc), $(LIBNAME) is our library name defined earlier, $(CREATOR) is our creator id we registered with Palm.com, and the S^ is all our dependencies.  These will all be run in our shell after we type make from a bash prompt.  One thing to be sure of is there is a real TAB in front of the command.  That is how make knows it is a command. All this info is in the make documentation so get ready for some reading to really understand it.
+
+To build the library you will simply need to have these files in the same directory.  Open bash and cd to that directory.  Type 'make' and if you have the 4 files I mentioned out will spit PocketCLib.prc. You can use whatever shell you like but I use bash so I can't say if anything else will work.  If you want to get rid of the extra files generated to initiate a new build just type 'make clean' to get rid of the excess.  Typing 'make' will update anytime you change any files though.
+
+The PocketCLib.lib is a file explaining to PDE what you are telling it to compile.  It is explained in more detail in the PocketC Native Libraries file.  I have added the @doc's for the functions and you can see how they work when you select the function name in the editor.
+
+I don't know what else to say, you should be under way.  If you can do it for this example file than when you modify for your own purposes the drudgery should be done and you can concentrate on your coding of your own functions.
+
+I would like to thank Joe Stadolnik one last time.  Without his help this document you are reading would never have gotten to this point.  The thread in the PtoolBox section of the forums titled 'Building a Native Library - GCC Tool Chain' describes the process in more detail.  Check it out. I want to note that all the testing was done with the xGrfxLib package written by Gary A. Clark.  There is a link to his website in the resources section of orbworks website.  A thank you goes out to Jeremy Dewey for the most excellent PocketC.  It is a product I have been happy to use since I bought it.  If you have not registered it yet do so today, it is worth every penny.  Last but not least I would like to thank my better half Hilary for putting up with all the time I spend doing things like this.  Without her I would not be as far as I am.
+
+Well, that about wraps up my cut rate tutorial.  I hope you find it helpful.  I can be contacted in the forums or by email at cable_guy_67@juno.com.  Drop me a note if you have found this helpful.
+
+Mark
+3 in the friggin' morning.
+
+You are free to use this information as long as you take full responsiblity for your own actions.  I am not holding a gun to your head making you follow any of these directions and I can not be blamed for anything you do.  Use it for any purpose but send me an email if you find it useful.
+
+Oh yeah, the test file and source are for PCL Test can be used to test the library once it is compiled and loaded on a device.  It ain't pretty but it does the trick.

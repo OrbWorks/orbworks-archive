@@ -1,0 +1,204 @@
+// PocketC Architect sample
+// UISample - demonstrates all the built-in UI elements
+
+// app definition
+@app UIApp app {
+  name = "UI Sample"
+  dbname = "UI Sample"
+  creator = "OFs7"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  resstring UIString strChoose {
+    id = 125, text = "This is a form that is used for choosing options.\n\nChoose wisely."
+  }
+}
+
+@form UIForm mainForm {
+  id = 100
+  text = "UI Sample"
+  x = 0, y = 0, w = 160, h = 160
+
+  button UIButton buClick {
+    id = 101
+    x = 2, y = 20, w = 46, h = 12
+    text = "Click here"
+  }
+
+  label UILabel lblScroller {
+    id = 102
+    x = 36, y = 144
+    text = "Scrolling text is fun!  "
+  }
+
+  checkbox UICheckbox cbShow {
+    id = 103
+    x = 53, y = 20, w = 68, h = 12
+    text = "Show button"
+  }
+
+  field UIField fldSource {
+    id = 104
+    x = 2, y = 38, w = 70, h = 12
+    maxchars = 36
+  }
+
+  label UILabel label105 {
+    id = 105
+    x = 75, y = 38
+    text = "->"
+  }
+
+  field UIField fldDest {
+    id = 106
+    x = 87, y = 38, w = 70, h = 12
+    maxchars = 36, editable = false
+    hresize = 0, vresize = 0
+  }
+    
+  pushbutton UIPushButton pbStandard {
+    id = 107
+    x = 131, y = 20, w = 10, h = 12
+    text = "A", group = 1
+  }
+
+  pushbutton UIPushButton pbBold {
+    id = 108
+    x = 142, y = 20, w = 10, h = 12
+    text = "A", group = 1, fontid = 1
+  }
+
+  field UIField fldNewItem {
+    id = 109
+    x = 2, y = 64, w = 70, h = 12, maxchars = 36
+    autoshift = true
+  }
+
+  button UIButton buAdd {
+    id = 110
+    x = 76, y = 63, w = 22, h = 12
+    text = "Add"
+  }
+
+  list UIList listItems {
+    id = 111
+    x = 2, y = 82, w = 70, h = 55
+  }
+
+  selector UISelector selChoose {
+    id = 112
+    x = 105, y = 63, w = 39, h = 12
+    text = "Option 1"
+  }
+
+  slider UISlider sliderAlpha {
+    id = 120
+    x = 80, y = 117, w = 70, h = 12
+    min = 0, max = 25, page = 5
+  }
+
+  popup UIPopup popFruit {
+    id = 118
+    x = 76, y = 82, w = 37, h = 12
+    text = "Fruit"
+  }
+
+  popup UIPopup popDynamic {
+    id = 122
+    x = 76, y = 94, w = 50, h = 12
+    text = "<none>"
+  }
+
+  list UIList listFruit {
+    id = 119
+    x = 76, y = 82, w = 40, h = 44
+    triggerid = 118
+  }
+
+  label UILabel lblAlpha {
+    id = 121
+    x = 138, y = 100
+    fontid = 7
+    text = "A"
+  }
+
+  list UIList listDynamic {
+    id = 123
+    x = 76, y = 94, w = 50, h = 44
+    triggerid = 122
+  }
+
+  button UIButton buMemo {
+    id = 129
+    x = 127, y = 82, w = 30, h = 12
+    text = "Memo"
+  }
+}
+
+@form UIForm chooseForm {
+  id = 113
+  text = "Choose something"
+  x = 2, y = 98, w = 156, h = 60
+  helpid = 125, modal = true
+    
+  button UIButton buOption1 {
+    id = 114
+    x = 4, y = 43, w = 42, h = 12
+    text = "Option 1"
+  }
+
+  button UIButton buOption2 {
+    id = 115
+    x = 50, y = 43, w = 42, h = 12
+    text = "Option 2"
+  }
+
+  button UIButton buOption3 {
+    id = 116
+    x = 96, y = 43, w = 42, h = 12
+    text = "Option 3"
+  }
+
+  label UILabel label117 {
+    id = 117
+    x = 6, y = 22
+    text = "Pick an option:"
+  }
+}
+
+@form UIForm memoForm {
+  id = 124
+  text = "Mini Memo"
+  x = 40, y = 40, w = 80, h = 80
+  modal = true
+
+  field UIField fldMemo {
+    id = 126
+    x = 2, y = 20, w = 64, h = 34
+    maxchars = 1024, singleline = false, hasscroll = true
+    autoshift = true
+  }
+
+  scroll UIScroll sclMemo {
+    id = 127
+    x = 70, y = 20, w = 7, h = 36
+    min = 0, max = 10, page = 0
+  }
+
+  button UIButton buMemoClose {
+    id = 128
+    x = 4, y = 63, w = 25, h = 12
+    text = "Close"
+  }
+}
+
+
+// source files
+#include "UISample.oc"
+#include "mainform.oc"
+#include "chooseForm.oc"
+#include "memoForm.oc"

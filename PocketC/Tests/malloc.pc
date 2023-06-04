@@ -1,0 +1,21 @@
+//Malloc test
+main() {
+    pointer p;
+    int i;
+
+    p = malloc(25);
+    if (p) {
+        puts("p = " + p + "\n");
+        if (!settype(p, 5, 'f')) {
+            puts("Error in settype\n");
+        }
+        if (!settype(p+5, 5, 's')) {
+            puts("Error in settype() 2\n");
+        }
+        for (i=0;i<12;i++) {
+            puts("Type[" + i + "] = " + typeof(p+i) + "\n");
+        }
+    } else {
+        puts("Unable to allocate memory\n");
+    }
+}

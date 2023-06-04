@@ -1,0 +1,117 @@
+// PocketC Architect sample
+// TipCalc - Calculate tips based on size of party
+
+// app definition
+@app UIApp app {
+  name = "Tip Calc"
+  dbname = "Tip Calc"
+  creator = "OFs5"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form UIForm mainForm {
+    id = 100
+    text = "Tic Calculator"
+    x = 0, y = 0, w = 160, h = 160
+
+    field UIField fldParty {
+      id = 114
+      x = 53, y = 40, w = 26, h = 12
+      leftanchor = false, maxchars = 5, autoshift = true, numeric = true
+    }
+
+    label UILabel labParty {
+      id = 113
+      x = 2, y = 42
+      text = "Party #"
+    }
+
+    label UILabel label112 {
+      id = 112
+      x = 130, y = 92
+      fontid = 1
+      text = "Each"
+    }
+
+    field UIField fldPerson {
+      id = 111
+      x = 120, y = 104, w = 32, h = 45
+      leftanchor = false, maxchars = 36
+      underline = false, singleline = false, editable = false
+    }
+
+    label UILabel Label_101 {
+      id = 101
+      x = 2, y = 25
+      text = "Bill total:"
+    }
+
+    field UIField fldBill {
+      id = 102
+      x = 53, y = 25, w = 26, h = 12
+      leftanchor = false, maxchars = 8, autoshift = true
+    }
+
+    button UIButton btnCalc {
+      id = 103
+      x = 90, y = 24, w = 60, h = 12
+      text = "Calculate Tips"
+    }
+
+    field UIField fldPercents {
+      id = 104
+      x = 7, y = 104, w = 22, h = 45
+      leftanchor = false, maxchars = 36
+      underline = false, singleline = false, editable = false
+   }
+
+    field UIField fldTotals {
+      id = 105
+      x = 37, y = 104, w = 32, h = 45
+      leftanchor = false, maxchars = 36
+      underline = false, singleline = false, editable = false
+    }
+
+    field UIField fldTips {
+      id = 106
+      x = 79, y = 104, w = 32, h = 45
+      leftanchor = false, maxchars = 36
+      underline = false, singleline = false, editable = false
+    }
+
+    checkbox UICheckbox chbRound {
+      id = 107
+      x = 2, y = 58, w = 150, h = 12
+      text = "Round total to the nearest dollar"
+    }
+
+    label UILabel Label_108 {
+      id = 108
+      x = 16, y = 91
+      fontid = 1
+      text = "%"
+    }
+
+    label UILabel Label_109 {
+      id = 109
+      x = 41, y = 91
+      fontid = 1
+      text = "Total"
+    }
+
+    label UILabel Label_110 {
+      id = 110
+      x = 95, y = 91
+      fontid = 1
+      text = "Tip"
+    }
+  }
+}
+
+// source files
+#include "TipCalc.oc"
+#include "mainform.oc"

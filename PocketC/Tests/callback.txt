@@ -1,0 +1,63 @@
+   Name: \callback.pc
+Version: 4.20
+ Header: 4 bytes
+
+    9	CWord		44
+   12	Call
+   13	Pop
+   14	Halt
+
+Func 0: func1()
+   15	Link		(0 args)
+   17	CString		1	"Func1"
+   20	CallBI		puts
+   22	Pop
+   23	SetRet0
+   24	UnLink
+   25	Ret		0
+
+Func 1: func2()
+   27	Link		(1 args)
+   29	CString		7	"Func2"
+   32	CallBI		puts
+   34	Pop
+   35	CWordPFP	arg 0
+   38	Call
+   39	Pop
+   40	SetRet0
+   41	UnLink
+   42	Ret		1
+
+Func 2: main()
+   44	Link		(0 args)
+   46	OldCall		func1()
+   49	Pop
+   50	CWord		15
+   53	ToInt
+   54	OldCall		func2()
+   57	Pop
+   58	SetRet0
+   59	UnLink
+   60	Ret		0
+
+
+Instruction count:
+    CInt 0	   CChar 0	  CFloat 0	 CString 2	
+   ToInt 1	  ToChar 0	 ToFloat 0	ToString 0	
+    GetG 0	    SetG 0	    GetL 0	    SetL 0	
+   Array 0	   IncGA 0	   DecGA 0	   IncLA 0	
+   DecLA 0	   IncGB 0	   DecGB 0	   IncLB 0	
+   DecLB 0	     Add 0	     Sub 0	    Mult 0	
+     Div 0	     Mod 0	     Neg 0	     Not 0	
+     And 0	      Or 0	      Eq 0	     NEq 0	
+      LT 0	     LTE 0	      GT 0	     GTE 0	
+     Jmp 0	    JmpZ 0	   JmpNZ 0	 OldCall 2	
+  CallBI 2	     Ret 3	  SetRet 0	 SetRet0 3	
+     Pop 6	    PopN 0	    Link 3	  UnLink 3	
+    Halt 1	    Swap 0	 LibCall 0	   CWord 2	
+CWordPFP 1	    Call 2	    Load 0	    Save 0	
+    IncA 0	    DecA 0	    IncB 0	    DecB 0	
+    BAnd 0	     BOr 0	    BNot 0	      SL 0	
+      SR 0	     Xor 0	    NoOp 0	   NoOp2 0	
+     XXX 0	     XXX 0	 AddExtI 0	    GetC 0	
+    SetC 0	    Case 0	

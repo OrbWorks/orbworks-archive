@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PocketC Language</title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h1>PocketC Language</h1>
+
+<p>The language is very similar to standard C in syntax, but has a different feature set.
+Most notably, there are no structs, no typedefs, and some operators are not supported,
+such as the comma and the conditional operator (?:). A string data type has been added,
+and values are somewhat loosely typed. The next section is for those who are already
+somewhat familiar with C. A <a href="Language-full.html">complete guide</a> is also
+available for those not familiar with C. </p>
+
+<h2>Brief guide to the PocketC language</h2>
+
+<hr>
+
+<h3>Data Types</h3>
+
+<p>There are five types in PocketC: 32-bit signed integers (<code>int</code>), 32-bit
+floating point numbers (<code>float</code>), 8-bit signed characters (<code>char</code>),
+null-terminated strings (<code>string</code>), pointers (<code>pointer</code>), and
+single-dimensional arrays. </p>
+
+<h3>Expressions</h3>
+
+<p>An expression consists of any number of variables, function calls, and constants of any
+type, joined by operators and parentheses. Thus, the following expressions are valid:<br>
+</p>
+
+<pre>3 + 5
+6.7 + 23
+&quot;Hello &quot; + &quot;World&quot;
+5*3 + foobar()</pre>
+
+<p>When an expression contains values of different types, the two values are first cast to
+the same type, and then the operator applied. For example in the following expression:</p>
+
+<p><code>5.7 + 8</code></p>
+
+<p>The 8 is first cast to a float (8.0), and the two numbers are added (5.7 + 8.0). This
+becomes slightly more interesting when we use strings. For example:</p>
+
+<p><code>&quot;The result is &quot; + (5 + 8)</code></p>
+
+<p>5 is first added to 8, resulting in 13. The 13 is then converted to a string, and
+appended to &quot;The result is &quot; resulting in &quot;The result is 13&quot;.However,</p>
+
+<p><code>&quot;The result is &quot; + 5 + 8</code></p>
+
+<p>would result in &quot;The result is 58&quot;, since the the 5 is first converted to a
+string, then appended to &quot;The result is &quot;...</p>
+
+<p>Of course, explicit casting is possible:</p>
+
+<p><code>56 + (int)&quot;7&quot;</code></p>
+
+<p>evaluates to 63.</p>
+
+<p>The following operators are provided (in order of precedence (lowest first), with
+associativity): </p>
+
+<table border="2">
+  <tr>
+    <th>Operator</th>
+    <th>Assoc</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>=</td>
+    <td>right</td>
+    <td>assigns the value of the expression on the right to the variable on the left.</td>
+  </tr>
+  <tr>
+    <td>||</td>
+    <td>left</td>
+    <td>logical 'or', returns 0 if false, 1 if true</td>
+  </tr>
+  <tr>
+    <td>&amp;&amp;</td>
+    <td>left</td>
+    <td>logical 'and'</td>
+  </tr>
+  <tr>
+    <td>|</td>
+    <td>left</td>
+    <td>bitwise 'or'</td>
+  </tr>
+  <tr>
+    <td>^</td>
+    <td>left</td>
+    <td>bitwise 'xor'</td>
+  </tr>
+  <tr>
+    <td>&amp;</td>
+    <td>left</td>
+    <td>bitwise 'and'</td>
+  </tr>
+  <tr>
+    <td>== != &lt; &lt;= &gt; &gt;=</td>
+    <td>left</td>
+    <td>relational operators</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt; &gt;&gt;</td>
+    <td>left</td>
+    <td>bitwise shift operators. The operands must be int or char.</td>
+  </tr>
+  <tr>
+    <td>+ -</td>
+    <td>left</td>
+    <td>addition, subtraction</td>
+  </tr>
+  <tr>
+    <td>* / %</td>
+    <td>left</td>
+    <td>multiplication, division, modulus</td>
+  </tr>
+  <tr>
+    <td>- ! ++ -- ~ *<br>
+      [] () &amp; @[]</td>
+    <td>left</td>
+    <td>unary operators, pointer dereferencing, address operator, function call (for pointers
+    to functions), array subscripts (for pointers), and the character access
+      operator ( @[] e.g. string str = &quot;bob&quot;; str@[0] = 'B'; )</td>
+  </tr>
+</table>
+<p>
+
+<b>Note:</b> No shortcut logic is performed on the operands of || and &amp;&amp;<br>
+<b>Note2:</b> The compound assignment operators (+=, -=, *=, etc.) are not supported.<br>
+<strong>Note3:</strong> The comma and conditional operator (?:) are not supported.<br>
+</p>
+
+<h3>Variables</h3>
+
+<ul>
+  <li>The following variable types are supported: <code>int, float, char, string, pointer,</code>
+    and single-dimensional arrays. </li>
+  <li>Local variables must be declared before any code in a function. </li>
+  <li>It is best to create larger arrays as globals rather than locals.&nbsp; </li>
+  <li>Variable initializers ARE supported (as of version 3.5). The
+    initialization expressions must be constants, and of the correct type. Array
+    initialization is also available. (e.g. string days[7] = { &quot;Sun&quot;,
+    &quot;Mon&quot; };). If not all array elements are specified, the final
+    elements use defaults (0 or &quot;&quot;). (i.e. int x[3] = {1, 2}; // x[2]
+    == 0) </li>
+  <li>All variables, global and local, are initialized to zero or the empty string.</li>
+  <li>Variable names can be up to 31 characters long and are case sensitive.</li>
+</ul>
+
+<h3>Pointers</h3>
+
+<p>A pointer is defined by the <code>pointer</code> type, not <code>int*</code>, for
+example. Importantly, pointers in PocketC are not typed. Instead, they take on the type of
+the data to which they point. Additionally, a pointer can refer to a function, and would
+be used as follows: </p>
+
+<pre>func(int x) { return 5*x; }
+
+main() {
+   pointer ptr;
+   int result;
+
+   ptr = func;
+   result = (*ptr)(7);
+   puts(&quot;5*7=&quot; + result);
+}</pre>
+
+<p>Additionally, pointer values are not addresses to actual PalmOS memory. </p>
+
+<h3>String Character Accessor</h3>
+
+<p>To get or set an individual character within a string variable, use <i>stringVariable</i>@[<i>index</i>].
+The index of the first character is 0. You will produce a runtime error if you
+attempt to access a character that is past the end of the string. Example:</p>
+<pre>string str = &quot;bob&quot;;
+...
+puts(str@[1]); // Prints the second letter of str
+str@[1] = 'X'; // changes str from &quot;bob&quot; to &quot;bXb&quot;</pre>
+
+<p><b>Note:</b> the string character accessor cannot be used with pointers, nor
+can the address of the resulting string be take. In other words, the following
+expressions are not valid: &amp;str@[i], *pstr@[i], (*pstr)@[i]</p>
+
+<h3>Statements</h3>
+
+<p>The following statements are fully supported: <code>for, while, do, break, continue,
+if, then, return, switch, case, default</code>. Strings can be used in switch
+statements.<br>
+<b>Note:</b> <code>for</code> requires a condition expression (i.e. <code>for (;;)</code>
+is not legal, instead, use <code>for (;true;)</code> or <code>while (true)</code>) Also, the
+comma operator is not supported.</p>
+
+<h3>Functions</h3>
+
+<ul>
+  <li>Functions are declared without a return type. Because of loose typing, it is possible to
+    return any type or even multiple types. The type returned is the type of the expression in
+    the executed return statement. If no return value is specified, a function returns integer
+    0.</li>
+  <li>Local variables must come before any function code. </li>
+  <li>There must be a main function that takes no parameters. </li>
+  <li>Functions cannot take arrays as parameters. They can, however, take pointers as
+    arguments, allowing the same functionality.</li>
+  <li>A function cannot be called before it is defined. </li>
+  <li>Function prototypes ARE allowed (as of version 3.02).</li>
+  <li>Recursion is allowed. </li>
+</ul>
+
+<h3>Include</h3>
+
+<ul>
+  <li>Only three levels of includes are supported (i.e. if memo A includes B which includes C
+    which includes D, D may not include any memos)</li>
+  <li>Do not append '//' to the include file name </li>
+  <li>The included file can begin with '/$' instead of '//' to hide it from the compile form </li>
+  <li>The include file may be a doc file. Note: PocketC will search for a
+    matching memo before trying to find a matching doc file. </li>
+  <li>On the Desktop Edition, any slashes in a path must be escaped </li>
+</ul>
+
+<p>Example: </p>
+
+<pre>// My large applet
+include &quot;Part1&quot;
+include &quot;Part2&quot;
+
+main() {
+// call functions defined in other memos
+}</pre>
+
+<b>Note: </b><code>include</code> can only be used at the top level (i.e. you cannot use <code>include</code> within a function)
+
+<h3>Library</h3>
+
+<ul>
+  <li>Use the keyword <code>library</code> to use a native library.</li>
+  <li>DO NOT use this keyword with MathLib. MathLib functions are available as built-in
+    functions.</li>
+</ul>
+
+<p>Example:</p>
+
+<pre>// My Applet
+library &quot;PocketCLib&quot;
+
+main() {
+int x;
+// call functions defined by native library
+x = times5(7); // Where times5(int) is defined by &quot;PocketCLib&quot;
+}</pre>
+
+<h3>Special characters</h3>
+
+<p>There are two ways to add special characters to a string. The first is by appending
+them by number, such as: </p>
+
+<pre>str = &quot;Here is a neat little square: &quot; + (char)149;</pre>
+
+<p>The other method is through using escape sequences. The following escape sequences are
+supported: </p>
+
+<table border="1">
+  <tr>
+    <th>Escape sequence</th>
+    <th width="40">\\</th>
+    <th width="40">\'</th>
+    <th width="40">\&quot;</th>
+    <th width="40">\n</th>
+    <th width="40">\t</th>
+    <th>\x</th>
+  </tr>
+  <tr>
+    <th>Interpretation</th>
+    <td align="center">\</td>
+    <td align="center">'</td>
+    <td align="center">&quot;</td>
+    <td align="center">newline</td>
+    <td align="center">tab</td>
+    <td>character specified by the following two hex digits. Example: '\x95' is the block
+    character (decimal 149)</td>
+  </tr>
+</table>
+
+<h3>Preprocessor</h3>
+
+<p>The following preprocessor directives are supported: #define, #undef, #ifdef, #ifndef, #else,
+#endif. Macros cannot take parameters. The following constants are predefined: <code>__PKTC__,
+__PKTC_PALM__,</code> and if PocketC Desktop Edition is compiling a .prc file, <code>__PKTC_PRC__.</code></p>
+</body>
+</html>

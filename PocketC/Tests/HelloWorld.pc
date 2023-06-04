@@ -1,0 +1,9 @@
+// Hello, World
+@cid "RAFF";
+@ver "1.0";
+@category "Main";
+@name "Hello";
+@dbname "Hello";
+main() {
+   alert("Hello, World");
+}

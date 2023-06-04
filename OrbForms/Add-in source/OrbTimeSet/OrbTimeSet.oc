@@ -1,0 +1,2 @@
+// set the current date/time to the value in the Date
+void setTime(Date d) @ library("OrbTimeSet", 0);

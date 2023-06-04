@@ -1,0 +1,426 @@
+void final();
+#include "tests.h"
+interface IB1 {
+    string ib1();
+    string ib12();
+};
+
+interface IB2 {
+    string ib12();
+    string ib2();
+};
+
+interface IB : IB1, IB2 {
+    string ib();
+    string ibc();
+};
+
+interface IC {
+    string ic();
+    string ibc();
+};
+
+object SubB {
+    string ssubb;
+    int subbi;
+    void _init();
+    void _copy(SubB);
+    virtual string subb();
+};
+void SubB._init() { ssubb = "SubB"; }
+void SubB._copy(SubB subb) { subbi = subb.subbi; puts("SubB._copy()\n"); }
+
+object A {
+    int ai;
+    string sa;
+    void _init();
+    virtual string a();
+    virtual string abc();
+    virtual string ib2(); // will implement IB2 method in B
+};
+void A._init() { sa += "A"; }
+
+object B : A, IB {
+    int bi;
+    string sb;
+    SubB subb, subba[3];
+    void _init();
+    void _copy(B);
+    string abc();
+    string b();
+    string ib();
+    string ibc();
+    string ib1();
+    string ib12();
+};
+void B._init() { sb += "B"; }
+void B._copy(B b) {
+    test(subb.subbi == b.subb.subbi, "SubB._copy()");
+    test(ai == b.ai, "B._copy() prolog");
+    sb = b.sb;
+    bi = b.bi + 1;
+}
+
+object C : B, IC, IB1 {
+    int ci;
+    string sc;
+    void _init();
+    void _copy(C);
+    string abc();
+    string c();
+    string ic();
+    string ibc();
+    string ib1();
+    string ib12();
+};
+void C._init() { sc += "C"; }
+void C._copy(C c) { test(bi == c.bi + 1, "B._copy()"); ci = c.ci + 2; }
+
+object D : C {
+    int di, dia[3];
+};
+
+object CopyA {
+    int ai;
+};
+
+object CopySubB {
+    int subbi;
+    void _copy(CopySubB);
+};
+void CopySubB._copy(CopySubB b) { subbi = b.subbi * 3; }
+
+object CopyB : CopyA {
+    int bi;
+    CopySubB subb;
+};
+
+string A.a() { return "A.a"; }
+string A.abc() { return "A.abc"; }
+string A.ib2() { return "A.ib2"; }
+string SubB.subb() { return "SubB.subb"; }
+string B.abc() { return "B.abc"; }
+string B.b() { return "B.b"; }
+string B.ib() { return "B.ib"; }
+string B.ibc() { return "B.ibc"; }
+string B.ib1() { return "B.ib1"; }
+string B.ib12() { return "B.ib12"; }
+string C.abc() { return "C.abc"; }
+string C.c() { return "C.c"; }
+string C.ic() { return "C.ic"; }
+string C.ibc() { return "C.ibc"; }
+string C.ib1() { return "C.ib1"; }
+string C.ib12() { return "C.ib12"; }
+
+string g_destroyOrder;
+interface IFood {
+    B eat(int);
+};
+object Animal : IFood {
+    void _destroy();
+    virtual string speak();
+    virtual B getB();
+    B eat(int);
+};
+string Animal.speak() { return "?"; }
+void Animal._destroy() { g_destroyOrder += "A"; }
+B Animal.getB() { B b; return b; }
+B Animal.eat(int) { B b; b.sb = "eatB"; return b; }
+
+object Dog : Animal {
+    void _destroy();
+    string speak();
+    B getB();
+};
+string Dog.speak() { return "woof"; }
+void Dog._destroy() { g_destroyOrder += "D"; }
+B Dog.getB() { B b; b.sb = "DogB"; return b; }
+
+object Hairball {
+    void _destroy();
+};
+void Hairball._destroy() { g_destroyOrder += "H"; }
+
+object Cat : Animal {
+    Hairball h;
+    void _destroy();
+    string speak();
+};
+string Cat.speak() { return "meow"; }
+void Cat._destroy() { g_destroyOrder += "C"; }
+
+object Lion : Cat {
+    void _destroy();
+    string speak();
+    void testBase();
+};
+string Lion.speak() { return "roar"; }
+void Lion._destroy() { g_destroyOrder += "L"; }
+void Lion.testBase() {
+    test(speak() == "roar", "non-base");
+    test(base.speak() == "meow", "base.speak()");
+}
+
+object FakeAnimal : Animal {
+};
+
+void testIfaces() {
+    B b = { 55, "Not b" };
+    C c;
+    IB* pib;
+    IB1* pib1;
+    IB2* pib2;
+    IC* pic;
+    
+    B* pb = new B;
+    C* pc = new C;
+    
+    puts("*** Interfaces\n");
+    pib = &b;
+    test(pib->ib() == "B.ib", "IB.ib");
+    test(pib->ib1() == "B.ib1", "IB.ib1");
+    test(pib->ib2() == "A.ib2", "IB.ib2");
+    test(pib->ib12() == "B.ib12", "IB.ib12");
+    test(pib->ibc() == "B.ibc", "IB.ibc");
+    
+    pib1 = &b;
+    test(pib1->ib1() == "B.ib1", "IB1.ib1");
+    test(pib1->ib12() == "B.ib12", "IB1.ib12");
+    
+    pib2 = &b;
+    test(pib2->ib2() == "A.ib2", "IB2.ib2");
+    test(pib2->ib12() == "B.ib12", "IB2.ib12");
+    
+    pic = &c;
+    test(pic->ic() == "C.ic", "IC.ic");
+    test(pic->ibc() == "C.ibc", "IC.ibc");
+    
+    puts("C:\n");
+    pib = &c;
+    test(pib->ib() == "B.ib", "IB.ib");
+    test(pib->ib1() == "C.ib1", "IB.ib1");
+    test(pib->ib2() == "A.ib2", "IB.ib2");
+    test(pib->ib12() == "C.ib12", "IB.ib12");
+    test(pib->ibc() == "C.ibc", "IB.ibc");
+    
+    pib1 = &c;
+    test(pib1->ib1() == "C.ib1", "IB1.ib1");
+    test(pib1->ib12() == "C.ib12", "IB1.ib12");
+
+    pib2 = &c;
+    test(pib2->ib2() == "A.ib2", "IB2.ib2");
+    test(pib2->ib12() == "C.ib12", "IB2.ib12");
+
+    puts("new B:\n");
+    pib = pb;
+    test(pib->ib() == "B.ib", "IB.ib");
+    test(pib->ib1() == "B.ib1", "IB.ib1");
+    test(pib->ib2() == "A.ib2", "IB.ib2");
+    test(pib->ib12() == "B.ib12", "IB.ib12");
+    test(pib->ibc() == "B.ibc", "IB.ibc");
+    
+    pib1 = pb;
+    test(pib1->ib1() == "B.ib1", "IB1.ib1");
+    test(pib1->ib12() == "B.ib12", "IB1.ib12");
+    
+    pib2 = pb;
+    test(pib2->ib2() == "A.ib2", "IB2.ib2");
+    test(pib2->ib12() == "B.ib12", "IB2.ib12");
+    
+    puts("new C:\n");
+    pic = pc;
+    test(pic->ic() == "C.ic", "IC.ic");
+    test(pic->ibc() == "C.ibc", "IC.ibc");
+    
+    pib = pc;
+    test(pib->ib() == "B.ib", "IB.ib");
+    test(pib->ib1() == "C.ib1", "IB.ib1");
+    test(pib->ib2() == "A.ib2", "IB.ib2");
+    test(pib->ib12() == "C.ib12", "IB.ib12");
+    test(pib->ibc() == "C.ibc", "IB.ibc");
+    
+    pib1 = pc;
+    test(pib1->ib1() == "C.ib1", "IB1.ib1");
+    test(pib1->ib12() == "C.ib12", "IB1.ib12");
+    
+    pib2 = pc;
+    test(pib2->ib2() == "A.ib2", "IB2.ib2");
+    test(pib2->ib12() == "C.ib12", "IB2.ib12");
+    
+    delete pb;
+    delete pc;
+}
+
+void testInit() { // and subobjects
+    B b;
+    C c;
+    
+    B* pb, pba;
+    C* pc;
+    SubB* psubb;
+
+    puts("*** Init\n");
+    pba = new B[2];
+    pb = &pba[1];
+    pc = new C;
+    psubb = &b.subb;
+    
+    
+    test(b.sa == "A", "sa");
+    test(b.sb == "B", "sb");
+    test(b.subb.ssubb == "SubB", "ssubb");
+    test(psubb->subb() == "SubB.subb", "subb()");
+    
+    // ensure that vmNewObj sets subobjects
+    psubb = &pb->subb;
+    puts("new:\n");
+    test(pb->sa == "A", "sa");
+    test(pb->sb == "B", "sb");
+    test(pb->subb.ssubb == "SubB", "ssubb");
+    test(psubb->subb() == "SubB.subb", "subb()");
+}
+
+void testCopy() {
+    C c1, c2;
+    D d1, d2;
+    CopyB cb1, cb2;
+    
+    puts("*** Copy\n");
+    c1 = c2;
+    test(c1.ci == c2.ci + 2, "C._copy()");
+    d2.di = 5;
+    d2.ai = 8;
+    d1 = d2;
+    test(d1.ai == 8, "B._copy() prolog");
+    test(d1.ci == d2.ci + 2, "C._copy()");
+    test(d1.di == 5, "D._copy()");
+    
+    cb2.ai = 9;
+    cb2.subb.subbi = 11;
+    cb1 = cb2;
+    test(cb1.ai == 9, "CopyB._copy() auto");
+    test(cb1.subb.subbi == 33, "CopyB._copy() auto 2");
+}
+
+void testVirtual() {
+    Animal* animals[5];
+    Animal* pAnimals;
+
+    puts("*** Virtual\n");
+    
+    animals[0] = new Animal;
+    animals[1] = new Dog;
+    animals[2] = new Cat;
+    animals[3] = new Lion;
+    animals[4] = new FakeAnimal;
+    
+    test(animals[0]->speak() == "?", "Animal.speak");
+    test(animals[1]->speak() == "woof", "Dog.speak");
+    test(animals[2]->speak() == "meow", "Cat.speak");
+    test(animals[3]->speak() == "roar", "Lion.speak");
+    
+    g_destroyOrder = "";
+    delete animals[0];
+    test(g_destroyOrder == "A", "Animal._destroy");
+    g_destroyOrder = "";
+    delete animals[1];
+    test(g_destroyOrder == "DA", "Dog._destroy");
+    g_destroyOrder = "";
+    delete animals[2];
+    test(g_destroyOrder == "CHA", "Cat._destroy");
+    //puts("Order: " + g_destroyOrder + "\n");
+    g_destroyOrder = "";
+    delete animals[3];
+    test(g_destroyOrder == "LCHA", "Lion._destroy");
+    g_destroyOrder = "";
+    delete animals[4];
+    test(g_destroyOrder == "A", "FakeAnimal._destroy");
+    
+    pAnimals = new Lion[3];
+    g_destroyOrder = "";
+    delete pAnimals;
+    test(g_destroyOrder == "LCHALCHALCHA", "delete Lion[]");
+}
+
+void testBase() {
+    Lion lion;
+
+    puts("*** base\n");
+    lion.testBase();
+}
+
+void paramTestFunc(Animal* pAnimal) {
+    test(pAnimal->speak() == "woof", "pAnimal->speak()");
+}
+
+void testImplicitCast() {
+    Animal* pAnimal;
+    Dog dog;
+    
+    puts("*** Implicit cast\n");
+    pAnimal = &dog;
+    paramTestFunc(&dog);
+}
+
+void testOptimize() {
+}
+
+Dog testReturn(B b) {
+    Dog dog;
+    test(b.sb == "B", "B arg");
+    return dog;
+}
+
+void testFuncArgs() {
+    Dog dog;
+    Lion lion;
+    B b;
+    Animal* pAnimal;
+    IFood* pFood;
+    
+    dog = testReturn(b);
+    // virtual returning struct
+    pAnimal = &lion;
+    b = pAnimal->getB();
+    test(b.sb == "B", "lion.getB()");
+    pAnimal = &dog;
+    b = pAnimal->getB();
+    test(b.sb == "DogB", "dog.getB()");
+    // iface returning struct
+    pFood = &lion;
+    b = pFood->eat(5);
+    test(b.sb == "eatB", "IFood.eat()");
+}
+
+interface IUnused {
+    string iu1();
+};
+
+object SubObjUnused {
+    int i;
+};
+
+object ObjUnused : IUnused {
+    string iu1();
+    SubObjUnused sou;
+};
+
+string ObjUnused.iu1() { return ""; }
+
+//ObjUnused ou;
+
+void main() {
+    //IUnused* piu = new ObjUnused;
+    //piu->iu1();
+    puts("calling testIfaces()\n");
+    testIfaces();
+    testInit();
+    testCopy();
+    testVirtual();
+    testBase();
+    testImplicitCast();
+    testOptimize();
+    testFuncArgs();
+
+    final();
+}

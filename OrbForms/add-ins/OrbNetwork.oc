@@ -1,0 +1,124 @@
+// address families
+const int netAfInet = 2;
+const int netAfInet6 = 23;
+
+// socket types
+const int netSockStream = 1;
+const int netSockDgram = 2;
+
+// protocol types
+const int netProtoIpTcp = 6;
+const int netProtoIpUdp = 17;
+
+// directions for Socket.shutdown
+const int netDirInput = 0;
+const int netDirOutput = 1;
+const int netDirBoth = 2;
+
+// error codes
+const int netErrInvalidAddrString = 1;
+const int netErrOther = 2;
+const int netErrParamErr = 4612;
+const int netErrNoMoreSockets = 4613;
+const int netErrOutOfResources = 4614;
+const int netErrOutOfMemory = 4615;
+const int netErrSocketNotOpen = 4616;
+const int netErrSocketBusy = 4617;
+const int netErrMessageTooBig = 4618;
+const int netErrSocketNotConnected = 4619;
+const int netErrNoInterfaces = 4620;
+const int netErrPortInUse = 4623;
+const int netErrQuietTimeNotElapsed = 4624;
+const int netErrInternal = 4625;
+const int netErrTimeout = 4626;
+const int netErrSocketAlreadyConnected = 4627;
+const int netErrSocketClosedByRemote = 4628;
+const int netErrOutOfCmdBlocks = 4629;
+const int netErrWrongSocketType = 4630;
+const int netErrSocketNotListening = 4631;
+const int netErrUnknownSetting = 4632;
+const int netErrUnknownProtocol = 4651;
+const int netErrUnreachableDest = 4653;
+const int netErrWouldBlock = 4655;
+const int netErrDNSNameTooLong = 4661;
+const int netErrDNSBadName = 4662;
+const int netErrDNSBadArgs = 4663;
+const int netErrDNSLabelTooLong = 4664;
+const int netErrDNSAllocationFailure = 4665;
+const int netErrDNSTimeout = 4666;
+const int netErrDNSUnreachable = 4667;
+const int netErrDNSFormat = 4668;
+const int netErrDNSServerFailure = 4669;
+const int netErrDNSNonexistantName = 4670;
+const int netErrDNSNIY = 4671;
+const int netErrDNSRefused = 4672;
+const int netErrDNSImpossible = 4673;
+const int netErrDNSNoRRS = 4674;
+const int netErrDNSAborted = 4675;
+const int netErrDNSBadProtocol = 4676;
+const int netErrDNSTruncated = 4677;
+const int netErrDNSNoRecursion = 4678;
+const int netErrDNSIrrelevant = 4679;
+const int netErrDNSNotInLocalCache = 4680;
+const int netErrDNSNoPort = 4681;
+const int netErrIPCantFragment = 4682;
+const int netErrIPNoRoute = 4683;
+const int netErrIPNoSrc = 4684;
+const int netErrIPNoDst = 4685;
+const int netErrIPktOverflow = 4686;
+const int netErrTooManyTCPConnections = 4687;
+const int netErrNoDNSServers = 4688;
+const int netErrInterfaceDown = 4689;
+
+struct Socket {
+    int id;
+    void _init() @ library("OrbNetwork", 0);
+    void _destroy() @ 80;
+    void _copy(Socket) @ 89;
+    
+    int open(int family, int type, int protocol) @ library("OrbNetwork", 1);
+    int close() @ library("OrbNetwork", 2);
+    int accept(Socket newSocket) @ library("OrbNetwork", 3);
+    int bind(string localAddr) @ library("OrbNetwork", 4);
+    int connect(string addr) @ library("OrbNetwork", 5);
+    int listen(int backlog) @ library("OrbNetwork", 6);
+    int sends(string data);
+    int send(void* pdata, string format, int count) @ library("OrbNetwork", 7);
+    int recvs(string* pdata);
+    int recv(void* pdata, string format, int count) @ library("OrbNetwork", 9);
+    int shutdown(int dir) @ library("OrbNetwork", 11);
+    
+    string localAddr @ library("OrbNetwork", 12);
+    string remoteAddr @ library("OrbNetwork", 13);
+};
+
+int Socket.sends(string data) {
+    return send(&data, "s", 1);
+}
+
+int Socket.recvs(string* pdata) {
+    return recv(pdata, "s",  1);
+}
+
+struct Network {
+    int open() @ library("OrbNetwork", 21);
+    void close() @ library("OrbNetwork", 22);
+    void closei() @ library("OrbNetwork", 23);
+    int getHostByName(string name, string* paddr) @ library("OrbNetwork", 16);
+    int getHostByAddr(string addr, string* pname) @ library("OrbNetwork", 17);
+    
+    string localAddr @ library("OrbNetwork", 20);
+    int timeout @ library("OrbNetwork", 14:15); // timeout for all methods
+};
+
+object SocketStream : Stream {
+    Socket socket;
+    bool write(void* data, string type, int count);
+    bool read(void* data, string type, int count);
+};
+bool SocketStream.write(void* data, string type, int count) {
+    return socket.send(data, type, count) == 0;
+}
+bool SocketStream.read(void* data, string type, int count) {
+    return socket.recv(data, type, count) == 0;
+}

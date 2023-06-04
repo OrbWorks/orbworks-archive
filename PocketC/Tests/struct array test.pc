@@ -1,0 +1,24 @@
+// struct array test
+#include "array_st.h"
+
+#define _X 0
+#define _Y 1
+#define _NAME 2
+
+main() {
+    pointer p;
+    int i;
+    
+    p = array_st(5, "iis");
+    for (;i<5;i++) {
+        p[i][_X] = i*5;
+        p[i][_Y] = 20 + i*11;
+        p[i][_NAME] = "item " + i;
+    }
+    graph_on();
+    title("Pointer Array");
+    for (i=0;i<5;i++) {
+        text(p[i][_X], p[i][_Y], p[i][_NAME]);
+    }
+    waitp();
+}

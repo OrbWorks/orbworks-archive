@@ -1,0 +1,88 @@
+<p>The OrbC language is a simple language based on the
+style of C and C++. It is a procedural language with a limited implementation of
+objects. The language has a lot of useful features, but becomes extremely
+powerful when combined with the event handlers and library provided by the
+runtime.</p>
+<h3>A Basic Application</h3>
+<p>As a quick introduction to the language, lets dissect a
+very simple application. Let's assume you've created an application named
+"myApp". "myApp" has a main form named "myForm" which contains a text field named
+"nameField",
+and a button named "alertButton". This simple app could look something like
+this:</p>
+
+<pre>@app myApp {
+  creator = "MyAp";
+  name = "App Name";
+  dbname = "AppName-MyAp";
+}
+
+@form myForm {
+  id = 1000
+  text = "My Form"
+  x = 0, y = 0, w = 160, h = 160
+
+  field nameField {
+    id = 1001
+    x = 10, y = 60, w = 140, h = 12
+  }
+  
+  button alertButton {
+    id = 1002
+    x = 60, y = 80, w = 40, h = 12
+    text = "My Button"
+  }
+}
+
+// a global variable to hold the salutation.
+string text;
+
+// the handler for when the app is started
+handler myApp.onstart() {
+  // load the main form
+  myForm.load();
+}
+
+// a function to build the text for the alert
+string buildText(string name) {
+  return "Hello, " + name;
+}
+
+// the handler for the button, which displays the alert
+handler alertButton.onselect() {
+  text = buildText(nameField.text);
+  alert(text);
+}</pre>
+
+<p>As you can see, there is no main function such as you would see in a C/C++
+application. There is no single entry into the application. Instead, all the
+code in your application is called by the runtime through handlers. When an
+application is started, the first handler to be called is the onstart handler of
+you application. Once the handler completes, control is returned to the OrbC
+runtime. The runtime waits for a UI event to occur and calls into the
+appropriate handler in your application if one is defined (such as the alertButton.onselect handler above).</p>
+
+<h3>Keywords</h3>
+
+<p>The keywords are described through the rest of the documentation. As a
+reference, they are:<code> if, else, for, while, do, return, break, continue,
+switch, case, default, string, int, float, char, bool, void, object, struct,
+sizeof, typeof, new, delete, handler, const, enum, include, true, false, null,
+funcptr, interface, virtual, library, debug, debuglog, assert.</code></p>
+
+<p>The following are reserved words, but are not yet used by the language. You
+may not use these words as names in your application: <code>static, tassert.</code></p>
+
+<h3>Comments</h3>
+<p>A comment is text in a source file that the compiler
+ignores. Comments are used by the developer to explain what the code does in
+plain English (or any other languge you prefer). There are two types of
+comments: single-line and multi-line. A single line comment begins with two
+slashes (//) - everything following the slashes on the current line is a
+comment. A multi-line comment starts with /* and ends with */. Multi-line
+comments cannot be nested.</p>
+<pre>// this is a comment
+
+/* this is a
+multi-line comment */</pre>
+<pre>/* it is /* not valid */ to nest comments*</pre>

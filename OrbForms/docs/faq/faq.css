@@ -1,0 +1,16 @@
+BODY
+{
+	font-family: Arial,Helvetica,sans-serif;
+}
+H1
+{
+	font-weight: bold;
+	font-size: medium;
+	color: gray;
+}
+H2
+{
+	font-weight: bold;
+	font-size: small;
+	color: gray;
+}

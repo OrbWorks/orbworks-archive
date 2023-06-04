@@ -1,0 +1,37 @@
+#include "tests.h"
+#include "buttonsLight.h"
+
+onRedraw() {
+    refreshAll();
+    puts("onRedraw\n");
+}
+
+onResize() {
+    _buttonData[top] = peny() - 13;
+    _buttonData[bottom] = peny() - 1;
+    puts("onResize (" + penx() + "," + peny() + ")\n");
+}
+
+int done;
+onExit() {
+    done = true;
+}
+
+main() {
+    int d = 20050422;
+    int t = 234300;
+    int s;
+    int e;
+    s = secondsx(d, t);
+    puts("seconds: " + s + "\ndate: " + datex(s,1) + "\ntime: " + timex(s,1) + "\n");
+    buttonInit();
+    graph_on();
+    addButton("Execute", onExit, 1, 148, 45, 159);
+    while (!done) {
+        e = event(1);
+        if (e == 2) bLevent();
+        else if (e == 23) onRedraw();
+        else if (e == 24) onResize();
+    }
+    graph_off();
+}

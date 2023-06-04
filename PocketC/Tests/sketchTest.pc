@@ -1,0 +1,25 @@
+// sketch test
+int g_x[100], g_y[100];
+
+init() {
+  int i;
+  for (i=0;i<100;i++) {
+    g_x[i] = random(160);
+    g_y[i] = random(160);
+  }
+}
+
+main() {
+  int i;
+  graph_on();
+  init();
+  textalign(11);
+  text(79, 79, "Tap to draw");
+  while (1) {
+    waitp();
+    rect(0, 0, 0, 160, 160, 0);
+    for (i=1;i<100;i++) {
+      line(2, g_x[i-1], g_y[i-1], g_x[i], g_y[i]);
+    }
+  }
+}

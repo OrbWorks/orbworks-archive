@@ -1,0 +1,4385 @@
+<Documentation>
+	<toc>
+		<title>{product} Reference</title>
+		<desc>Everything you need to know about programming with {product}
+		is contained in the following chapters.
+		</desc>
+	</toc>
+
+	<book name="WhatsNew" title="What's New" product="OrbForms">
+		<sdesc>What's new in this release.</sdesc>
+		<topic name="WhatsNew" title="What's New">
+			<sdesc>Changes in this version.</sdesc>
+			<desc>
+			<import name="whatsnew.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="WhatsNew" title="What's New" product="PocketC">
+		<sdesc>What's new in this release.</sdesc>
+		<topic name="WhatsNew" title="What's New">
+			<sdesc>Changes in this version.</sdesc>
+			<desc>
+			<import name="whatsnew_pc.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Basics" title="OrbForms Basics" product="OrbForms">
+		<sdesc>Getting started with OrbForms Designer.</sdesc>
+		<topic name="GetStart" title="Getting Started" keywords="emulator,runtime,OrbFormsRT,MathLib">
+			<sdesc>What you need to do to create an application.</sdesc>
+			<desc>
+			<import name="get_started.html"/>
+			</desc>
+		</topic>
+		<topic name="OrbEnv" title="Environment" keywords="Workspace,Visual Designer,Inspection">
+			<sdesc>Tools and environment for designing applications.</sdesc>
+			<desc>
+			<import name="environment.html"/>
+			</desc>
+		</topic>
+		<topic name="Project" title="Project" keywords="Source file order,Gadget file,bitmap,icon,transparency">
+			<sdesc>Forms, bitmaps, source code, etc. as a whole.</sdesc>
+			<desc>
+			<import name="project.html"/>
+			</desc>
+		</topic>
+		<topic name="FormsControls" title="Forms and Controls" keywords="Form,Button,Menu,Pushbutton,Checkbox,Repeatbutton,Graffiti state indicator,Slider,Scroll bar,Label,Bitmap,Popup,List,Field,Gadget,Shortcut,Separator">
+			<sdesc>Descriptions of forms, controls, and menus.</sdesc>
+			<desc>
+			<import name="forms_ctrls.html"/>
+			</desc>
+		</topic>
+		<topic name="Translation" title="Language Translation" keywords="language,translation">
+			<sdesc>Taking advantage of OrbForms translation support.</sdesc>
+			<desc>
+			<import name="translation.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Tutorials" title="Quick Tutorials" product="OrbForms">
+		<sdesc>Step-by-step instructions for creating a few simple applications.</sdesc>
+		<topic name="Lesson1" title="Hello, World" keywords="Project Wizard">
+			<sdesc>Tutorial 1: Create the most basic application, "Hello, World".</sdesc>
+			<desc>
+			<import name="lesson1.html"/>
+			</desc>
+		</topic>
+		<topic name="Lesson2" title="Calculator">
+			<sdesc>Tutorial 2: Create and implement a simple calculator.</sdesc>
+			<desc>
+			<import name="lesson2.html"/>
+			</desc>
+		</topic>
+		<topic name="Lesson3" title="Survey" keywords="">
+			<sdesc>Tutorial 3: Create a survey application with multiple forms.</sdesc>
+			<desc>
+			<import name="lesson3.html"/>
+			</desc>
+		</topic>
+		<topic name="Lesson4" title="ProgressBar Gadget" keywords="">
+			<sdesc>Tutorial 4: Create a progress bar gadget and use it in a form.</sdesc>
+			<desc>
+			<import name="lesson4.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Basics" title="PocketC Architect Basics" product="PocketC">
+		<sdesc>Using PocketC Architect</sdesc>
+		<topic name="Intro" title="Introduction" keywords="">
+			<sdesc>An introduction to PocketC Architect.</sdesc>
+			<desc>
+				<import name="pc_basics_intro.html"/>
+			</desc>
+		</topic>
+		<topic name="Desktop" title="PocketC Architect Desktop" keywords="Project,File extensions,QuickDocs,.oc,.ocp,.pc,Auto Update,Upload on Build,oc.exe,Command line">
+			<sdesc>Using PocketC Architect Desktop Edition.</sdesc>
+			<desc>
+				<import name="pc_basics_desktop.html"/>
+			</desc>
+		</topic>
+		<topic name="Device" title="PocketC Architect for Palm OS" keywords="Launching the compiler">
+			<sdesc>Using PocketC Architect on the Palm OS.</sdesc>
+			<desc>
+				<import name="pc_basics_device.html"/>
+			</desc>
+		</topic>
+		<topic name="Application" title="Creating an application" keywords="">
+			<sdesc>Creating applications, forms, and controls.</sdesc>
+			<desc>
+				<import name="pc_basics_app.html"/>
+			</desc>
+		</topic>
+		<topic name="Resources" title="OrbC resource langage" keywords="Embedding resources,Resizable forms,Resource only apps,app resource,icon resource,form resource,label resource,field resource,button resource,pushbutton resource,repeatbutton resource,checkbox resource,selector resource,popup resource,list resource,bitmap resource, graffiti resource,scroll resource,slider resource,gadget resource,menubar resource,menu resource,menuitem resource,resstring resource">
+			<sdesc>The syntax used to specify applications, forms, and controls.</sdesc>
+			<desc>
+				<import name="pc_basics_resources.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Language" title="Language Reference">
+		<sdesc>Complete OrbC language reference.</sdesc>
+		<topic name="Basics" keywords="comment" product="OrbForms">
+			<sdesc>Overview of the language.</sdesc>
+			<desc>
+			<import name="lang_basics.html"/>
+			</desc>
+		</topic>
+		<topic name="Basics" keywords="comment" product="PocketC">
+			<sdesc>Overview of the language.</sdesc>
+			<desc>
+			<import name="lang_basics_pc.html"/>
+			</desc>
+		</topic>
+		<topic name="Variables" keywords="int,float,string,char,bool,array">
+			<sdesc>Places for storing data.</sdesc>
+			<desc>
+			<import name="lang_variables.html"/>
+			</desc>
+		</topic>
+		<topic name="Functions" keywords="local variables,parameters">
+			<sdesc>Breaking a program into smaller pieces.</sdesc>
+ 			<desc>
+ 			<import name="lang_functions.html"/>
+ 			</desc>
+		</topic>
+ 		<topic name="Expressions" keywords="literal,assignment,compound assignment,operators,shortcut logic,sizeof,typeof,conversion,casting">
+ 			<sdesc>two = 1 + 1.</sdesc>
+ 			<desc>
+ 			<import name="lang_expr.html"/>
+ 			</desc>
+		</topic>
+ 		<topic name="ConstantsEnums" title="Constants and Enumerations" keywords="const,enum">
+ 			<sdesc>Giving names to numbers.</sdesc>
+ 			<desc>
+ 			<import name="lang_const.html"/>
+ 			</desc>
+		</topic>
+		<topic name="Statements" keywords="if,else,return,while,for,do,switch,case,default,break,continue">
+			<sdesc>Making decisions and controlling program flow.</sdesc>
+			<desc>
+			<import name="lang_stmt.html"/>
+			</desc>
+		</topic>
+		<topic name="Pointers" keywords="new,delete">
+			<sdesc>Addresses of variables.</sdesc>
+			<desc>
+			<import name="lang_pointer.html"/>
+			</desc>
+		</topic>
+		<topic name="Structures" keywords="struct">
+			<sdesc>Aggregating data.</sdesc>
+			<desc>
+			<import name="lang_struct.html"/>
+			</desc>
+		</topic>
+		<topic name="Objects" keywords="object,_init,_destroy,_copy,this">
+			<sdesc>Adding intelligence to structures.</sdesc>
+			<desc>
+			<import name="lang_object.html"/>
+			</desc>
+		</topic>
+		<topic name="Inheritance" keywords="object,base,_init,_destroy,_copy,this">
+			<sdesc>Specializing and extending objects.</sdesc>
+			<desc>
+			<import name="lang_inherit.html"/>
+			</desc>
+		</topic>
+		<topic name="Interfaces" keywords="interface">
+			<sdesc>Defining an object contract.</sdesc>
+			<desc>
+			<import name="lang_iface.html"/>
+			</desc>
+		</topic>
+		<topic name="Function Pointers" keywords="function,pointer,funcptr">
+			<sdesc>Calling functions indirectly.</sdesc>
+			<desc>
+			<import name="lang_funcptr.html"/>
+			</desc>
+		</topic>
+		<topic name="Events" title="Event handlers" keywords="handler">
+			<sdesc>Writing event handlers for forms and controls.</sdesc>
+			<desc>
+			<import name="lang_events.html"/>
+			</desc>
+		</topic>
+		<topic name="Gadgets" title="Creating and Using Gadgets" keywords="Gadget,custom handler,@bitmap">
+			<sdesc>Creating and using gadgets.</sdesc>
+			<desc>
+			<import name="lang_gadgets.html"/>
+			</desc>
+		</topic>
+		<topic name="Debug" title="Debug Support" keywords="assert,debuglog,debug">
+			<sdesc>Debugging-oriented langauge features.</sdesc>
+			<desc>
+			<import name="lang_debug.html"/>
+			</desc>
+		</topic>
+		<topic name="Preprocessor" title="Compiler Directives" keywords="#define,#if,#else,#endif,#undef">
+			<sdesc>#define, #if, and related compiler directives.</sdesc>
+			<desc>
+			<import name="lang_define.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Library" title="Library Reference">
+		<!-- <desc>All objects and funcs.</desc> -->
+		<sdesc>Reference containing all built-in functions and objects.</sdesc>
+		<category name="Strings">
+			<desc>Functions for basic string manipulation.</desc>
+			<method name="strlen">
+				<param type="string" name="str">a string</param>
+				<return type="int">the length of the string</return>
+				<desc>Calculates the number of characters in a string.</desc>
+			</method>
+			<method name="substr">
+				<param type="string" name="str">a string</param>
+				<param type="int" name="index">the first character</param>
+				<param type="int" name="len">the number of characters</param>
+				<return type="string">the requested substring</return>
+				<desc>Creates a substring from the source string <param>str</param>.
+					The first character of the string is at zero-based <param>index</param>,
+					with the string being a maximum of <param>len</param> characters. If
+					<param>len</param> is negative, it means -<param>len</param> chars
+					from the end of the string.
+				</desc>
+			</method>
+			<method name="strleft">
+				<param type="string" name="str">a string</param>
+				<param type="int" name="len">the number of characters</param>
+				<return type="string">the requested substring</return>
+				<desc>Creates a substring from the left <param>len</param> characters of the
+					source string <param>str</param>. If <param>len</param> is negative,
+					it means to include all except the last -<param>len</param> chars.
+				</desc>
+			</method>
+			<method name="strright">
+				<param type="string" name="str">a string</param>
+				<param type="int" name="len">the number of characters</param>
+				<return type="string">the requested substring</return>
+				<desc>Creates a substring from the right <param>len</param> characters of the
+					source string <param>str</param>. If <param>len</param> is negative,
+					it means to include all except the first -<param>len</param> chars.
+				</desc>
+			</method>
+			<method name="strupper">
+				<param type="string" name="str">a string</param>
+				<return type="string">the uppercase string</return>
+				<desc>Creates a string from the source string <param>str</param> in all
+					uppercase characters.
+				</desc>
+			</method>
+			<method name="strlower">
+				<param type="string" name="str">a string</param>
+				<return type="string">the lowercase string</return>
+				<desc>Creates a string from the source string <param>str</param> in all
+					lowercase characters.
+				</desc>
+			</method>
+			<method name="strstr">
+				<param type="string" name="str">the source string</param>
+				<param type="string" name="sub">the substring to match</param>
+				<param type="int" name="first">the first index to search</param>
+				<return type="int">the location of the match, or -1 if none found</return>
+				<desc>Searches the source string <param>str</param> to find <param>sub</param>,
+					beginning at index <param>first</param>.
+				</desc>
+			</method>
+			<method name="strinsert">
+				<param type="string" name="str">the source string</param>
+				<param type="int" name="pos">the index at which to insert</param>
+				<param type="string" name="inster">the string to insert</param>
+				<return type="string">the resulting string</return>
+				<desc>Inserts the string <param>insert</param> into the source string
+					<param>str</param> at index <param>pos</param>, returning the result.
+				</desc>
+			</method>
+			<method name="strreplace">
+				<param type="string" name="str">the source string</param>
+				<param type="string" name="search">the string to search for</param>
+				<param type="string" name="replace">the string to replace with</param>
+				<return type="string">the resulting string</return>
+				<desc>Replaces all instances of <param>search</param> in the source string
+					<param>str</param> with <param>replace</param>, returning the result.
+				</desc>
+			</method>
+			<method name="hex">
+				<param type="int" name="value">an integer</param>
+				<return type="string">a hexadecimal string representation</return>
+				<desc>Creates a hexadecimal string representation of <param>value</param> in the
+					form "0xh".
+				</desc>
+			</method>
+			<method name="format">
+				<param type="float" name="value">float value</param>
+				<param type="int" name="prec">precision - digits beyond the decimal place</param>
+				<return type="string">string representation</return>
+				<desc>Returns the string representation of <param>value</param> with
+					<param>prec</param> decimal places.
+				</desc>
+			</method>
+			<method name="lformat">
+				<param type="float" name="value">float value</param>
+				<param type="int" name="prec">precision - digits beyond the decimal place</param>
+				<return type="string">string representation</return>
+				<desc>Returns the string representation of <param>value</param> with
+					<param>prec</param> decimal places. The decimal point used is based
+					on the OS locale settings.
+				</desc>
+			</method>
+			<method name="lparse">
+				<param type="string" name="value">string representation</param>
+				<return type="float">float value </return>
+				<desc>Converts the string representation <param>value</param> into
+					a float. Unlike relying on the compiler to do the conversion, this
+					function takes into account the decimal point character as defined
+					by the current OS locale settings.
+				</desc>
+			</method>
+			<method name="strctos">
+				<param type="char*" name="array">source array</param>
+				<return type="string">string version of array</return>
+				<desc>Builds a string from an array of characters, <param>array</param>.</desc>
+				<note>The final character in the array must be a null character (0).</note>
+			</method>
+			<method name="strstoc">
+				<param type="string" name="str">source string</param>
+				<param type="char*" name="array">destination array</param>
+				<return type="int">number of characters copied (include the terminating 0)</return>
+				<desc>Copy each character of a <param>str</param> into the character array
+					<param>array</param>.
+				</desc>
+				<note>The array must be allocated before calling this function. This must either
+					be a local or global array, or an array allocated with new or malloct.
+				</note>
+			</method>
+		</category>
+		<category name="Math" keywords="MathLib">
+			<sdesc>Trigonometric and other mathematical functions.</sdesc>
+			<desc>Trigonometric and other mathematical functions.
+				All trigonometry functions operate in radians. The device must have MathLib
+				installed to use most of these functions.
+			</desc>
+			<method name="cos">
+				<param type="float" name="f">value</param>
+				<return type="float">cosine result</return>
+				<desc>Returns the cosine of <param>value</param></desc>
+			</method>
+			<method name="sin">
+				<param type="float" name="f">value</param>
+				<return type="float">sine result</return>
+				<desc>Returns the sine of <param>value</param></desc>
+			</method>
+			<method name="tan">
+				<param type="float" name="f">value</param>
+				<return type="float">tangent result</return>
+				<desc>Returns the tangent of <param>value</param></desc>
+			</method>
+			<method name="acos">
+				<param type="float" name="f">value</param>
+				<return type="float">arccosine result</return>
+				<desc>Returns the arccosine of <param>value</param></desc>
+			</method>
+			<method name="asin">
+				<param type="float" name="f">value</param>
+				<return type="float">arcsine result</return>
+				<desc>Returns the arcsine of <param>value</param></desc>
+			</method>
+			<method name="atan">
+				<param type="float" name="f">value</param>
+				<return type="float">arctangent result</return>
+				<desc>Returns the arctangent of <param>value</param></desc>
+			</method>
+			<method name="cosh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic cosine result</return>
+				<desc>Returns the hyperbolic cosine of <param>value</param></desc>
+			</method>
+			<method name="sinh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic sine result</return>
+				<desc>Returns the hyperbolic sine of <param>value</param></desc>
+			</method>
+			<method name="tanh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic tangent result</return>
+				<desc>Returns the hyperbolic tangent of <param>value</param></desc>
+			</method>
+			<method name="acosh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic arccosine result</return>
+				<desc>Returns the hyperbolic arccosine of <param>value</param></desc>
+			</method>
+			<method name="asinh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic arcsine result</return>
+				<desc>Returns the hyperbolic arcsine of <param>value</param></desc>
+			</method>
+			<method name="atanh">
+				<param type="float" name="f">value</param>
+				<return type="float">hyperbolic arctangent result</return>
+				<desc>Returns the hyperbolic arctangent of <param>value</param></desc>
+			</method>
+			<method name="exp">
+				<param type="float" name="f">value</param>
+				<return type="float">exponential result</return>
+				<desc>Returns the exponential of <param>value</param>.</desc>
+			</method>
+			<method name="log">
+				<param type="float" name="f">value</param>
+				<return type="float">logarithm result</return>
+				<desc>Returns the logarithm of <param>value</param>.</desc>
+			</method>
+			<method name="log10">
+				<param type="float" name="f">value</param>
+				<return type="float">base-10 logarithm result</return>
+				<desc>Returns the base-10 logarithm of <param>value</param>.</desc>
+			</method>
+			<method name="sqrt">
+				<param type="float" name="f">value</param>
+				<return type="float">square root</return>
+				<desc>Returns the square root of <param>value</param>.</desc>
+			</method>
+			<method name="atan2">
+				<param type="float" name="x">x value</param>
+				<param type="float" name="y">y value</param>
+				<return type="float">arctangent result</return>
+				<desc>Returns the arctangent of <param>x</param>/<param>y</param>.</desc>
+			</method>
+			<method name="pow">
+				<param type="float" name="x">x value</param>
+				<param type="float" name="y">y value</param>
+				<return type="float">power result</return>
+				<desc>Returns <param>x</param> to the power of <param>y</param>.</desc>
+			</method>
+			<method name="random">
+				<param type="int" name="max">maximum</param>
+				<return type="int">random result</return>
+				<desc>Return a random integer between 0 and <param>n</param>-1.</desc>
+			</method>
+			<method name="rand">
+				<return type="float">random result</return>
+				<desc>Returns a random float between 0 and 1.</desc>
+			</method>
+			<method name="srand">
+				<return type="int">random seed</return>
+				<return type="void"/>
+				<desc>Seeds the random number generator.</desc>
+			</method>
+		</category>
+		<category name="Sound">
+			<sdesc>Functions for generating sounds.</sdesc>
+			<desc><p>Functions for generating sounds.</p>
+				<p>The playWave function is implemented in the OrbSound native add-in. To use it,
+				you must #include "OrbSound.oc". The source code is available in
+				the samples directory.</p>
+			</desc>
+			<method name="beep">
+				<param type="int" name="type">beep type</param>
+				<return type="void"/>
+				<desc>Generate one of the pre-defined system beeps.</desc>
+				<note>Available beeps are <const>beepInfo, beepWarning, beepError,
+					beepStartUp, beepAlarm, beepConfirmation, beepClick</const>.
+				</note>
+			</method>
+			<method name="tone">
+				<param type="int" name="freq">frequency in Hz</param>
+				<param type="int" name="dur">duration in milliseconds</param>
+				<param type="int" name="vol">volume (0-64)</param>
+				<return type="void"/>
+				<desc>Synchronously play a tone of frequency <param>freq</param>, at volume
+					<param>vol</param>, for duration <param>dur</param>. An application
+					should play the sound at the volume specified by the system preferences
+					by first calling <xref node="mUIApp-getSysPref">UIApp.getSysPref()</xref>.
+				</desc>
+			</method>
+			<method name="tonea">
+				<param type="int" name="freq">frequency in Hz</param>
+				<param type="int" name="dur">duration in milliseconds</param>
+				<param type="int" name="vol">volume (0-64)</param>
+				<return type="void"/>
+				<desc>Asynchronously play a tone of frequency <param>freq</param>, at volume
+					<param>vol</param>, for duration <param>dur</param>. An application
+					should play the sound at the volume specified by the system preferences
+					by first calling <xref node="mUIApp-getSysPref">UIApp.getSysPref()</xref>.
+				</desc>
+			</method>
+			<method name="tonema">
+				<param type="int" name="key">MIDI key value</param>
+				<param type="int" name="dur">duration in milliseconds</param>
+				<param type="int" name="vel">velocity (0-127)</param>
+				<return type="void"/>
+				<desc>Asynchronously play the note <param>key</param>, at velocity (volume)
+					<param>vel</param>, for duration <param>dur</param>.
+				</desc>
+			</method>
+			<method name="playWave">
+				<param type="int" name="resID">resource ID of WAVE resource</param>
+				<param type="int" name="volume">volume (0-1024) or a value below</param>
+				<param type="bool" name="async">true to play asynchronously</param>
+				<return type="void"/>
+				<desc>Plays the WAVE resource with resource ID <param>resID</param> at the
+					specified <param>volume</param>. If <param>async</param> is false, the
+					function will not return until the WAVE is completely played.
+				</desc>
+				<note>A volume of 1024 plays the WAVE at the original volume. Special
+					volumes are <const>sndSystemVolume, sndGameVolume,
+					sndAlarmVolume</const>.
+				</note>
+				<example>
+					<desc>Embed a WAVE file in the app, and play it.</desc>
+					<code>@resource {
+  type = "WAVE";
+  id = 1000;
+  file = "blink.wav";
+}
+
+handler playButton.onselect() {
+  playWave(1000, sndSystemVolume, true);
+}</code>
+				</example>
+			</method>
+		</category>
+		<category name="System">
+			<desc>Functions for retrieving and manipulating system status, dynamic memory,
+				dates, and the clipboard.
+			</desc>
+			<object name="Date" keywords="Time">
+				<desc>A Date object encapsulates date and time operations. The Palm OS stores
+					time as a count of the seconds since January 1st, 1904, so the OrbC
+					Date object does the same.
+				</desc>
+				<sdesc>Encapsulates date and time operations.</sdesc>
+				<property type="int" name="secs">
+					<desc>Gets or sets the seconds since January 1st, 1904.</desc>
+				</property>
+				<property type="int" name="year">
+					<desc>Gets or sets the year</desc>
+				</property>
+				<property type="int" name="month">
+					<desc>Gets or sets the month. January = 1, December = 12.</desc>
+				</property>
+				<property type="int" name="day">
+					<desc>Gets or sets the day. First day of the month is 1.</desc>
+				</property>
+				<property type="int" name="hour">
+					<desc>Gets or sets the hour. Valid range is 0-23.</desc>
+				</property>
+				<property type="int" name="min">
+					<desc>Gets or sets the minute. Valid range is 0-59.</desc>
+				</property>
+				<property type="int" name="sec">
+					<desc>Gets or sets the second. Valid range is 0-59.</desc>
+				</property>
+				<property type="int" name="weekday">
+					<desc>Gets the day of week, with 0 being Sunday.</desc>
+				</property>
+				<property type="int" name="ymd">
+					<desc>Gets or sets the date as an integer in yyyymmdd format, such as
+						20000527 for May 27th, 2000.
+					</desc>
+				</property>
+				<method name="now">
+					<return type="void"/>
+					<desc>Sets the date object to the current date and time.</desc>
+				</method>
+				<method name="selectdate">
+					<param type="int" name="selby">select by mode</param>
+					<param type="string" name="title">dialog title</param>
+					<return type="bool">user selected something</return>
+					<desc>Displays the system date selector dialog, using the mode specified
+						by <param>selby</param>, using <param>title</param> as the dialog title.
+						If the user selects a date, true is returned; if the user cancels, false
+						is returned.
+					</desc>
+					<note>Available selection modes are <const>dateDayByDay, dateDayByWeek,
+						dateDayByMonth</const>.
+					</note>
+				</method>
+				<method name="selecttime">
+					<param type="string" name="title">dialog title</param>
+					<return type="bool">user selected something</return>
+					<desc>Displays the system time selector dialog, using <param>title</param> as
+						the dialog title. If the user selects a time, true is returned; if the
+						user cancels, false is returned. Available only on OS v3.1 and higher.
+					</desc>
+				</method>
+				<method name="addsecs">
+					<param type="int" name="s">seconds</param>
+					<return type="void"/>
+					<desc>Adds <param>s</param> seconds to the date object.</desc>
+				</method>
+				<method name="adddays">
+					<param type="int" name="days">days</param>
+					<return type="void"/>
+					<desc>Adds <param>d</param> days to the date object.</desc>
+				</method>
+				<method name="subsecs">
+					<param type="int" name="s">seconds</param>
+					<return type="void"/>
+					<desc>Subtracts <param>s</param> seconds from the date object.</desc>
+				</method>
+				<method name="subdays">
+					<param type="int" name="days">days</param>
+					<return type="void"/>
+					<desc>Subtracts <param>d</param> days from the date object.</desc>
+				</method>
+				<method name="diffsecs">
+					<param type="Date" name="d">end date</param>
+					<return type="int">difference in seconds</return>
+					<desc>Returns the difference of this date and <param>d</param>. If
+						<param>d</param> is before this date, the result will be positive.
+					</desc>
+				</method>
+				<method name="diffdays">
+					<param type="Date" name="d">end date</param>
+					<return type="int">difference in days</return>
+					<desc>Returns the difference of this date and <param>d</param>. If
+						<param>d</param> is before this date, the result will be positive.
+					</desc>
+				</method>
+				<method name="time">
+					<return type="string">string represention of the time</return>
+					<desc>Returns the string representation of the time in the format specified
+						by the system preferences.
+					</desc>
+				</method>
+				<method name="date">
+					<return type="string">string representation of the date</return>
+					<desc>Returns the short string representation of the date in the format
+						specified by the system preferences.
+					</desc>
+				</method>
+				<method name="ldate">
+					<return type="string">string representation of the date</return>
+					<desc>Returns the long string representation of the date in the format
+						specified by the system preferences.
+					</desc>
+				</method>
+			</object>
+			<object name="Preferences">
+				<desc>The Preferences object is used to store and retrieve application
+					preferences. There are two types of preferences - saved and unsaved. Saved
+					preferences are backed up to the desktop during a HotSync operation.
+				</desc>
+				<sdesc>Stores and retrieves application preferences.</sdesc>
+				<method name="get">
+					<param type="string" name="creatorid">creator id</param>
+					<param type="bool" name="saved">true for saved preferences, false for
+						unsaved
+					</param>
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if successful, false otherwise</return>
+					<desc>Load the preference associated with <param>creatorid</param> into
+						the memory pointed to by <param>pdata</param>. The memory must be
+						in a format compatible with that specified by the
+						<xref node="ttypeStrings">type string</xref> <param>type</param>.
+						The format is repeated <param>count</param>. If the preference does not
+						exist, or is shorter than requested, this method returns false.
+					</desc>
+					<example>
+						<desc>Load the array 'people' from the saved preferences of "MyAp".</desc>
+<code>
+struct Person {
+  string name;
+  int age;
+};
+
+Person people[2];
+
+bool LoadPrefs() {
+  Preferences prefs;
+  return prefs.get("MyAp", true, people, typeof(Person), 2);
+}</code>
+					</example>
+				</method>
+				<method name="set">
+					<param type="string" name="creatorid">creator id</param>
+					<param type="bool" name="saved">true for saved preferences, false for
+						unsaved
+					</param>
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if successful, false otherwise</return>
+					<desc>Save the data pointed to by <param>pdata</param> into the saved or
+						unsaved preference associated with <param>creatorid</param> using the
+						format specified by <param>type</param>. The format is repeated
+						<param>count</param>. This method returns true if successful.
+					</desc>
+					<example>
+						<desc>Save the array 'people' into the saved preferences of "MyAp".</desc>
+<code>
+struct Person {
+  string name;
+  int age;
+};
+
+Person people[2];
+
+bool SavePrefs() {
+  Preferences prefs;
+  people[0].name = "Jeremy";
+  people[0].age = 26;
+  people[1].name = "Hudson";
+  people[1].age = 7; // in dog years
+  return prefs.set("MyAp", true, people, typeof(Person), 2);
+}</code>
+					</example>
+				</method>
+				<method name="del">
+					<param type="string" name="creatorid">creator id</param>
+					<param type="bool" name="saved">true for saved preferences, false for
+						unsaved
+					</param>
+					<return type="void"/>
+					<desc>Delete the preference, saved or unsaved, associated with the app
+						<param>creatorid</param>.
+					</desc>
+				</method>
+			</object>
+			<object name="Serial">
+				<desc><p>The Serial object implements serial I/O, raw IR, IrComm, and RfComm,
+						(depending on which port
+						is opened). The Serial object is implemented using the New Serial Manager
+						which is only available on OS 3.3 and higher.
+					</p>
+					<p>The Serial object is implemented in the OrbSerial native add-in. To use it,
+						you must #include "OrbSerial.oc". The source code is available in
+						the samples directory.
+					</p>
+				</desc>
+				<sdesc>Serial I/O and raw IR support.</sdesc>
+				<property type="int" name="error">
+					<desc>Gets the current set of line error bits. Call clearerr() to clear.
+						Possible bits are <code>serErrorParity</code>, <code>serErrorHWOverrun</code>,
+						<code>serErrorFraming</code>, <code>serErrorBreak</code>, <code>serErrorHShake</code>,
+						<code>serErrorSWOverrun</code>, <code>serErrorCarrierLost</code>.
+					</desc>
+				</property>
+				<property type="int" name="status">
+					<desc>Gets the current set of status bits. Possible bits are
+						<code>serStatusCTS</code>, <code>serStatusRTS</code>,
+						<code>serStatusDSR</code>, <code>serStatusBreak</code>.
+					</desc>
+				</property>
+				<method name="open">
+					<param type="int" name="port">port number</param>
+					<param type="int" name="baud">baud rate</param>
+					<return type="bool">true if the port was opened successfully.</return>
+					<desc>Open the specified <param>port</param> at the specified
+						<param>baud</param> rate, using default settings (1 stop bit, 8 bits per char,
+						parity off, RTS receive flow control).
+					</desc>
+					<note>Possible <param>port</param> values are <const>serCradlePort</const>,
+						<const>serIRPort</const> (raw IR - does not work on devices
+						with OMAP processor), <const>serIrComm</const> (works on most current
+						devices), and <const>serRfComm</const> (bluetooth).
+					</note>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Closes the open port.</desc>
+				</method>
+				<method name="settings">
+					<param type="int" name="charbits">bits per char</param>
+					<param type="int" name="stopbits">stop bits</param>
+					<param type="int" name="parity">parity setting (0=off, 1=on, 2=even)</param>
+					<param type="char" name="flowctl">flow control ('r'=RTS, 'c'=CTS, 'h'=RTS+CTR, 'x'=XonXoff, 'n'=none)</param>
+					<param type="int" name="ctstimeout">inter-byte timeout</param>
+					<return type="void"/>
+					<desc>Apply the given settings to the open port.
+					</desc>
+				</method>
+				<method name="setbuffer">
+					<param type="int" name="size">size of buffer to allocate</param>
+					<return type="bool">true if the buffer was allocated successfully.</return>
+					<desc>Allocates a new receive buffer of the specified <param>size</param>.
+						The default buffer is 512 bytes, so most applications will not need
+						to enlarge it.
+					</desc>
+				</method>
+				<method name="clearerr">
+					<return type="void"/>
+					<desc>Clears all pending line errors. This method must be called if a line
+						error occurs before further sending and receiving can be done.
+					</desc>
+				</method>
+				<method name="send">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all data was sent without error</return>
+					<desc>Sends <param>count</param> blocks of data over the port from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="recv">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<param type="int" name="timeout">timeout in ticks</param>
+					<return type="bool">true if all data was received without error</return>
+					<desc>Attempts to receive <param>count</param> blocks of data from the port into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+						<param>timeout</param> is the number of ticks to wait for the data.
+					</desc>
+					<note>If the return value is false, but the no line error occured
+						(error property is 0), then the request timed out.
+					</note>
+				</method>
+				<method name="sendb">
+					<param type="char" name="byte">byte to send</param>
+					<return type="bool">true if the data was sent without error</return>
+					<desc>Sends the given <param>byte</param> over the port.
+					</desc>
+				</method>
+				<method name="recvb">
+					<param type="char*" name="pbyte">pointer to byte receive</param>
+					<return type="bool">true if the data was received without error</return>
+					<desc>Recieves one byte from the port, waiting up to one second to
+						receive it. If successful, the received byte is stored in the char
+						pointed to by <param>pbyte</param>.
+					</desc>
+				</method>
+				<method name="sendcheck">
+					<return type="int">Bytes remaining to be sent</return>
+					<desc>Retrieves the number of bytes remaining to be sent.
+					</desc>
+				</method>
+				<method name="recvcheck">
+					<return type="int">Bytes in the receive buffer</return>
+					<desc>Retrieves the number of bytes in the recieve buffer.
+					</desc>
+				</method>
+				<method name="sendwait">
+					<return type="bool">true if no error occured</return>
+					<desc>Waits for all pending data to be sent.
+					</desc>
+				</method>
+				<method name="recvwait">
+					<param type="int" name="bytes">number of bytes to wait for</param>
+					<param type="int" name="timeout">timeout in ticks</param>
+					<return type="bool">true if no error or timeout occured</return>
+					<desc>Waits for the specified number of <param>bytes</param> to be received into
+						the receive buffer, waiting up to <param>timeout</param> ticks. Returns when the
+						data is received or the timeout is reached.
+					</desc>
+				</method>
+				<method name="sendflush">
+					<return type="void"/>
+					<desc>Flushes all pending send data.
+					</desc>
+				</method>
+				<method name="recvflush">
+					<param type="int" name="timeout">inter-byte timeout</param>
+					<return type="void"/>
+					<desc>Flushes all data from the recieve buffer, and waits until
+						<param>timeout</param> ticks have passed with no new data received.
+					</desc>
+				</method>
+			</object>
+			<object name="SerialStream">
+				<sdesc>Exposes a Serial object as a Stream.</sdesc>
+				<desc>The SerialStream is derived from Stream, providing read/write access
+					to the serial port. To use this object, create and open a
+					<xref node="oSerial">Serial</xref> object, assign it to the serial
+					property, then call the read and write methods on
+					<xref node="oStream">Stream</xref>.
+				</desc>
+				<property type="Serial" name="serial">
+					<desc>Sets the Serial object that this stream should read/write to.
+					</desc>
+				</property>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>Reads <param>count</param> blocks of data from the stream into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>Writes <param>count</param> blocks of data to the stream from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="readInt">
+					<param type="int*" name="pi">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an int from the stream into the memory pointed to
+						by <param>pi</param>.
+					</desc>
+				</method>
+				<method name="writeInt">
+					<param type="int" name="i">int to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write an int to the stream.</desc>
+				</method>
+				<method name="readWord">
+					<param type="int*" name="pw">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an 2-byte word from the stream into the memory pointed to
+						by <param>pw</param>.
+					</desc>
+				</method>
+				<method name="writeWord">
+					<param type="int" name="w">word to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a 2-byte word to the stream.</desc>
+				</method>
+				<method name="readFloat">
+					<param type="float*" name="pf">float pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a float from the stream into the memory pointed to
+						by <param>pf</param>.
+					</desc>
+				</method>
+				<method name="writeFloat">
+					<param type="float" name="f">float to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a float to the stream.</desc>
+				</method>
+				<method name="readString">
+					<param type="string*" name="ps">string pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a string from the stream into the memory pointed to
+						by <param>ps</param>.
+					</desc>
+				</method>
+				<method name="writeString">
+					<param type="string" name="s">string to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a string to the stream.</desc>
+				</method>
+				<method name="readChar">
+					<param type="char*" name="pc">char pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a char from the stream into the memory pointed to
+						by <param>pc</param>.
+					</desc>
+				</method>
+				<method name="writeChar">
+					<param type="char" name="c">char to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a char to the stream.</desc>
+				</method>
+			</object>
+			<object name="Stream">
+				<sdesc>Base object for a Stream.</sdesc>
+				<desc>The Stream object provides a common set of methods for reading and
+					writing data. The Stream object is a base object for specialized
+					implementations, so you should never create an instance of this object.
+					Instead, create an instance of the desired derived object.
+				</desc>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>Reads <param>count</param> blocks of data from the stream into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>Writes <param>count</param> blocks of data to the stream from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="readInt">
+					<param type="int*" name="pi">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an int from the stream into the memory pointed to
+						by <param>pi</param>.
+					</desc>
+				</method>
+				<method name="writeInt">
+					<param type="int" name="i">int to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write an int to the stream.</desc>
+				</method>
+				<method name="readWord">
+					<param type="int*" name="pw">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an 2-byte word from the stream into the memory pointed to
+						by <param>pw</param>.
+					</desc>
+				</method>
+				<method name="writeWord">
+					<param type="int" name="w">word to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a 2-byte word to the stream.</desc>
+				</method>
+				<method name="readFloat">
+					<param type="float*" name="pf">float pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a float from the stream into the memory pointed to
+						by <param>pf</param>.
+					</desc>
+				</method>
+				<method name="writeFloat">
+					<param type="float" name="f">float to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a float to the stream.</desc>
+				</method>
+				<method name="readString">
+					<param type="string*" name="ps">string pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a string from the stream into the memory pointed to
+						by <param>ps</param>.
+					</desc>
+				</method>
+				<method name="writeString">
+					<param type="string" name="s">string to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a string to the stream.</desc>
+				</method>
+				<method name="readChar">
+					<param type="char*" name="pc">char pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a char from the stream into the memory pointed to
+						by <param>pc</param>.
+					</desc>
+				</method>
+				<method name="writeChar">
+					<param type="char" name="c">char to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a char to the stream.</desc>
+				</method>
+			</object>
+			<object name="ISerializable">
+				<sdesc>Interface for an object that can be serialized.</sdesc>
+				<desc>The ISerializable interface can be implemented by any object
+					which can be written to and read from a <xref node="oStream">Stream</xref>.
+				</desc>
+				<method name="serialize">
+					<param type="Stream*" name="stream">stream pointer</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>This method should write all of the important data of the
+						implementing object to the <param>stream</param>.
+					</desc>
+				</method>
+				<method name="deserialize">
+					<param type="Stream*" name="stream">stream pointer</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>This method should read all of the important data of the
+						implementing object to the <param>stream</param>.
+					</desc>
+				</method>
+			</object>
+			<method name="events">
+				<param type="bool" name="blocking">true to wait for an event to occur</param>
+				<return type="void"/>
+				<desc>Processes all pending events, calling user provided event handlers,
+					returning when the queue is empty. If <param>blocking</param> is true and
+					no events are in the queue, the function will not return until an event is
+					processed. If an appStopEvent is received,
+					the app's onstop handler is called but this function never returns.
+					This function should be called during long calculations to allow the
+					user interface to respond (for example, allowing the user to cancel).
+				</desc>
+					<example>
+						<desc>Displays a dialog synchronously. Calling executeDialog() will open
+							myDialog, process all its events, and return when the dialog has
+							been closed.
+						</desc>
+<code>
+bool myDialogClosed;
+handler myDialog.onclose() {
+  myDialogClosed = true;
+}
+void executeDialog() {
+  myDialogClosed = false;
+  myDialog.domodal();
+  while (!myDialogClosed) {
+    events(true);
+  }
+}</code>
+					</example>
+			</method>
+			<method name="fatal">
+				<param type="string" name="str">text to display</param>
+				<return type="void"/>
+				<desc>Displays a runtime error message containing the specified text and
+					information about the current function. When the error message is
+					dismissed, the app exits. This function does not return.
+				</desc>
+			</method>
+			<method name="callstack">
+				<return type="string">a formatted callstack</return>
+				<desc>Creates a string containing a list of functions in the current
+					callstack, one per line.
+				</desc>
+			</method>
+			<method name="debuglog">
+				<param type="string" name="str">text to log</param>
+				<return type="void"/>
+				<desc>Writes the text as a line to the debug log. See <xref node="tDebug">Debug support</xref>
+					for details. This is not a real function, as no code is generated unless
+					the project is compiled with the debug property set.
+				</desc>
+			</method>
+			<method name="assert">
+				<param type="bool" name="expr">expression to check</param>
+				<return type="void"/>
+				<desc>When <param>expr</param> is false, displays an error message containing
+					the text of the expression and a call stack. See <xref node="tDebug">Debug support</xref>
+					for details. This is not a real function, as no code is generated unless
+					the project is compiled with the debug property set.
+				</desc>
+			</method>
+			<method name="ticks">
+				<return type="int">tick count</return>
+				<desc>Returns the number of clock ticks since the device was last reset.</desc>
+			</method>
+			<method name="tickspersec">
+				<return type="int">ticks per second</return>
+				<desc>Returns the number of clock ticks that occur each second.</desc>
+			</method>
+			<method name="resetaot">
+				<return type="void"/>
+				<desc>Reset the device's auto off timer. If the device goes without input
+					for a short time, it will turn itself off. To prevent this, periodically call
+					this function.
+				</desc>
+			</method>
+			<method name="sleep">
+				<param type="int" name="ms">milliseconds to sleep</param>
+				<return type="void"/>
+				<desc>Causes the app to sleep for <param>ms</param> milliseconds. While sleeping,
+					the CPU will be put into low power mode, but the user will not be able to
+					interact with the device (including turning it off).
+				</desc>
+			</method>
+			<method name="launch">
+				<param type="string" name="creatorid">creator id of app to launch</param>
+				<return type="void"/>
+				<desc>Launch the app with the given 4 character creator id. This function will
+					post a message to quit the current app if the specified app is found. However,
+					it will return and allow the current app to process its queued events.
+				</desc>
+			</method>
+			<method name="launchGoto">
+				<param type="string" name="creatorid">creator id of app to launch</param>
+				<param type="string" name="database">name of database to open (used to set GoToParamsType.dbID)</param>
+				<param type="int" name="recId">record to open (sets GoToParamsType.recordNum)</param>
+				<param type="int" name="searchStrLen">sets GoToParamsType.searchStrLen</param>
+				<param type="int" name="matchPos">sets GoToParamsType.matchPos</param>
+				<param type="int" name="matchField">sets GoToParamsType.matchFieldNum</param>
+				<param type="int" name="matchCustom">sets GoToParamsType.matchCustom</param>
+				<return type="void"/>
+				<desc>Launch the app with the given 4 character creator id using the system defined
+					sysAppLaunchCmdGoTo launch code. The other parameters refer to fields in the
+					system defined GoToParamsType structure. Different applications use the GoToParamsType
+					differently, and not all field may be required/used by all applications. This function
+					will post a message to quit the current app if the specified app is found. However, it
+					will return and allow the current app to process its queued events.
+				</desc>
+			</method>
+			<method name="launchCustomString">
+				<param type="string" name="creatorid">creator id of app to launch</param>
+				<param type="int" name="code">launch code to send</param>
+				<param type="string" name="param">string to pass with the launch code</param>
+				<return type="void"/>
+				<desc>Launch the app with the given 4 character creator id passing a custom launch
+					code and a pointer to the specified string <param>param</param>. Only use this
+					function if the app you are launching supports a char* launch parameter. This
+					function will post a message to quit the current app if the specified app is found.
+					However, it will return and allow the current app to process its queued events.
+				</desc>
+				<note>In order to launch an OrbC application with a string parameter (as retrieved
+					by UIApp.launchArgs, specify <const>launchCodeOrbCAppWithArgs</const> as the launch code.
+				</note>
+			</method>
+			<method name="username">
+				<return type="string">HotSync username</return>
+				<desc>Returns the HotSync username associated with the device.</desc>
+			</method>
+			<method name="serialnum">
+				<return type="string">serial number</return>
+				<desc>Returns the string representation of the device's serial number, or the
+					empty string if it does not have one.
+				</desc>
+			</method>
+			<method name="osver">
+				<return type="int">OS version</return>
+				<desc>Returns the integer version of the OS, using the standard Palm OS version
+					specification - 32-bit number with the high 8 bits being the major version,
+					the the next 8 bits being the minor version, and the remaining bits
+					representing the fix number, build number, and build type.
+				</desc>
+			</method>
+			<method name="osvers">
+				<return type="string">OS version string</return>
+				<desc>Returns the string representation of the OS version.</desc>
+			</method>
+			<method name="orbver">
+				<return type="int">OrbC version</return>
+				<desc>Returns the OrbC runtime version the current app is using - 16-bit number
+					with the high 8 bits being the major version, and the low 8 bits being the
+					minor version.
+				</desc>
+			</method>
+			<method name="getclip">
+				<return type="string">clipboard contents</return>
+				<desc>Returns the contents of the clipboard if it currently contains text,
+					otherwise it returns the empty string.
+				</desc>
+			</method>
+			<method name="setclip">
+				<param type="string" name="text">new clipboard text</param>
+				<return type="void"/>
+				<desc>Copys <param>text</param> to the clipboard.</desc>
+			</method>
+			<method name="memcpy">
+				<param type="void*" name="pDest">destination pointer</param>
+				<param type="void*" name="pSrc">source pointer</param>
+				<param type="int" name="len">number of values</param>
+				<return type="void"/>
+				<desc>Copies <param>len</param> values from <param>pSrc</param> to
+					<param>pDst</param>. The data types at the destination must be the same as
+					the source, or the application's behavior will be unpredictable.
+				</desc>
+				<note>Each data type (int, float, string, char) has a length of 1 from the
+					perspective of this function.
+				</note>
+			</method>
+			<method name="malloct">
+				<param type="string" name="type">type string</param>
+				<param type="int" name="count">type count</param>
+				<return type="void*">pointer to allocated data</return>
+				<desc>Allocates <param>count</param> blocks of memory, initializing the
+					memory elements to the types specified by the <xref node="ttypeStrings">
+					type string</xref> <param>type</param>.
+				</desc>
+			</method>
+			<method name="free">
+				<param type="void*" name="ptr">pointer to memory block</param>
+				<return type="void"/>
+				<desc>Releases the memory allocated by calling malloct.</desc>
+			</method>
+			<method name="freemem">
+				<return type="int">free memory available</return>
+				<desc>Returns the amount of free dynamic memory. Because the OrbC runtime
+					has some overhead, this value cannot be used to make any direct calculations
+					about how much memory can be allocated.
+				</desc>
+			</method>
+			<method name="battery">
+				<param type="bool" name="volts">true to retrieve voltage * 100, false to
+					retrieve the percent remaining
+				</param>
+				<return type="int">percent remaining or voltage * 100</return>
+				<desc>Returns the requested battery status - voltage or percent remaining.
+				</desc>
+			</method>
+		</category>
+		<category name="Database">
+			<desc>Objects for creating and manipulating databases and memos.</desc>
+			<object name="DBRecord">
+				<desc>A DBRecord object respresents a single database record. To use a DBRecord,
+					you must associate it with a record using
+					<xref node="mDatabase-getrec">Database.getrec()</xref> or
+					<xref node="mDatabase-newrec">Database.newrec()</xref>. Once a DBRecord is
+					associated with a record, it must be closed before it is reused. All DBRecords
+					associated with records in a given database must be closed before the
+					database is closed. Two DBRecords cannot be used to open the same record at the
+					same time.
+				</desc>
+				<sdesc>Encapsulates a database record.</sdesc>
+				<property type="int" name="offset">
+					<desc>Gets or sets the current read/write location in the record. If
+						<param>offset</param> is set to a value greater than the size of the
+						record, <param>offset</param> becomes the record size.
+					</desc>
+				</property>
+				<property type="int" name="size">
+					<desc>Gets the current size of the record.</desc>
+				</property>
+				<property type="int" name="category">
+					<desc>Gets or sets the category of the record. Valid values are 0-15.</desc>
+				</property>
+				<property type="int" name="id">
+					<desc>Gets the id of the record.</desc>
+				</property>
+				<property type="int" name="uniqueid">
+					<desc>Gets the uniqueid of the record.</desc>
+				</property>
+				<property type="int" name="handle">
+					<desc>The MemHandle associated with this record to allow access to
+						native add-ins.
+					</desc>
+				</property>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">the number of values read</return>
+					<desc>Reads <param>count</param> blocks of data from the record into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>. Advances the
+						current offset.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">the number of values written</return>
+					<desc>Writes <param>count</param> blocks of data to the record from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>. Advances the
+						current offset.
+					</desc>
+				</method>
+				<method name="erase">
+					<return type="void"/>
+					<desc>Erases the contents of the record, but does not remove it from the
+						database.
+					</desc>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Closes the record. The object cannot be used again until it is
+						re-initialized using Database.newrec() or Database.getrec().
+					</desc>
+				</method>
+			</object>
+			<object name="DBRecordStream">
+				<sdesc>Exposes a DBRecord as a Stream.</sdesc>
+				<desc>The DBRecordStream is derived from Stream, providing read/write access
+					to a DBRecord. To use this object, create and open a
+					<xref node="oDBRecord">DBRecord</xref> object, assign it to the rec
+					property, then call the read and write methods on
+					<xref node="oStream">Stream</xref>.
+				</desc>
+				<property type="DBRecord" name="rec">
+					<desc>Sets the DBRecord object that this stream should read/write to.
+					</desc>
+				</property>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>Reads <param>count</param> blocks of data from the stream into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>Writes <param>count</param> blocks of data to the stream from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="readInt">
+					<param type="int*" name="pi">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an int from the stream into the memory pointed to
+						by <param>pi</param>.
+					</desc>
+				</method>
+				<method name="writeInt">
+					<param type="int" name="i">int to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write an int to the stream.</desc>
+				</method>
+				<method name="readWord">
+					<param type="int*" name="pw">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an 2-byte word from the stream into the memory pointed to
+						by <param>pw</param>.
+					</desc>
+				</method>
+				<method name="writeWord">
+					<param type="int" name="w">word to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a 2-byte word to the stream.</desc>
+				</method>
+				<method name="readFloat">
+					<param type="float*" name="pf">float pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a float from the stream into the memory pointed to
+						by <param>pf</param>.
+					</desc>
+				</method>
+				<method name="writeFloat">
+					<param type="float" name="f">float to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a float to the stream.</desc>
+				</method>
+				<method name="readString">
+					<param type="string*" name="ps">string pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a string from the stream into the memory pointed to
+						by <param>ps</param>.
+					</desc>
+				</method>
+				<method name="writeString">
+					<param type="string" name="s">string to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a string to the stream.</desc>
+				</method>
+				<method name="readChar">
+					<param type="char*" name="pc">char pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a char from the stream into the memory pointed to
+						by <param>pc</param>.
+					</desc>
+				</method>
+				<method name="writeChar">
+					<param type="char" name="c">char to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a char to the stream.</desc>
+				</method>
+			</object>
+			<object name="Database">
+				<desc>A Database represents a Palm OS database. A database can only be
+					opened by one Database object at a time.
+				</desc>
+				<sdesc>Encapsulates a Palm OS database.</sdesc>
+				<property type="int" name="nrecs">
+					<desc>Gets the number of records or resources in the database</desc>
+				</property>
+				<property type="bool" name="backup">
+					<desc>Gets or sets the backup bit. If set, the database will be backed up
+						the next time the device is HotSynced.
+					</desc>
+				</property>
+				<property type="bool" name="locked">
+					<desc>Gets or sets the locked bit. If set, the database cannot be beamed
+						from one device to another.
+					</desc>
+				</property>
+				<property type="int" name="version">
+					<desc>Gets or sets the database version number. The version stored in the
+						database is 16-bits unsigned, so it must be less than 65536.
+					</desc>
+				</property>
+				<property type="int" name="size">
+					<desc>Gets the total size of the database.</desc>
+				</property>
+				<property type="string" name="type">
+					<desc>Gets the 4-character type of the database.</desc>
+				</property>
+				<property type="string" name="creator">
+					<desc>Gets the 4-character creator id of the database.</desc>
+				</property>
+				<property type="string" name="name">
+					<desc>Gets or sets the name of the database.</desc>
+				</property>
+				<property type="bool" name="res">
+					<desc>True if this is a resource database, false otherwise.</desc>
+				</property>
+				<property type="bool" name="inrom">
+					<desc>True if this database is in ROM.</desc>
+				</property>
+				<property type="int" name="dbref">
+					<desc>The DmOpenRef for this database to allow access to native add-ins.</desc>
+				</property>
+				<property type="int" name="dbid">
+					<desc>The LocalID for this database to allow interop with external applications.</desc>
+				</property>
+				<property type="int" name="card">
+					<desc>The card on which this database resides (always 0 except on a few rare devices - has nothing to do with VFS).</desc>
+				</property>
+				<method name="open">
+					<param type="string" name="name">database name</param>
+					<param type="bool" name="readonly">open for read only</param>
+					<return type="bool">true if successful, false otherwise</return>
+					<desc>Opens the database named <param>name</param>. This method searches all
+						the available cards, starting with the builtin RAM. Returns true on
+						success.
+					</desc>
+				</method>
+				<method name="opentc">
+					<param type="string" name="type">type</param>
+					<param type="string" name="creatorid">creator id</param>
+					<param type="bool" name="readonly">open for read only</param>
+					<return type="bool">true if successful, false otherwise</return>
+					<desc>Opens the first database of type <param>type</param> and creator id
+						<param>creatorid</param>.
+					</desc>
+				</method>
+				<method name="create">
+					<param type="string" name="name">name, less than 32 characters</param>
+					<param type="string" name="type">type</param>
+					<param type="string" name="creatorid">creator id</param>
+					<param type="bool" name="res">true if this is a resource database,
+						false otherwise
+					</param>
+					<return type="bool">true if successful, false otherwise</return>
+					<desc>Creates a database named <param>name</param> with type
+						<param>type</param> and creator id <param>creatorid</param> on card 0
+						(builtin RAM). If <param>res</param> is true a resource database is
+						created, otherwise a record database is created. If a database with
+						this name already exists, the method will fail. Returns true on success.
+					</desc>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Close the database. All open records MUST be closed first.</desc>
+				</method>
+				<method name="deldb">
+					<return type="void"/>
+					<desc>Close and delete the database. All open records MUST be closed
+						first.
+					</desc>
+				</method>
+				<method name="getdate">
+					<param type="int" name="which">which date to retrieve</param>
+					<return type="Date">requested date</return>
+					<desc>Retrieve the creation, modification, or backup date of the
+						database.
+					</desc>
+					<note>Valid date ids are: <const>dbDateCreated, dbDateModified, dbDateBackup</const>
+					</note>
+				</method>
+				<method name="getcatname">
+					<param type="int" name="num">category number. Valid range is 0-15</param>
+					<return type="string">category name, less than 32 characters</return>
+					<desc>Get the category name associated with the index <param>num</param>.
+						This method may only be called if the the database has an app info
+						block.
+					</desc>
+				</method>
+				<method name="setcatname">
+					<param type="int" name="num">category number. Valid range is 0-15</param>
+					<param type="string" name="name">category name, less than 32 characters</param>
+					<return type="void"/>
+					<desc>Set the category associated with the index <param>num</param> to
+						<param>name</param>. This method may only be called if the the database
+						has an app info block. You can create an empty app info block using
+						createappinfo().
+					</desc>
+				</method>
+				<method name="moverec">
+					<param type="int" name="from">source index</param>
+					<param type="int" name="to">destination index</param>
+					<return type="void"/>
+					<desc>Remove the record at index <param>from</param> and insert it at index
+						<param>to</param>.
+					</desc>
+					<note>This method may cause the ids of other records to change. This method may NOT
+						be called when any records in the database are open.
+					</note>
+				</method>
+				<method name="removerec">
+					<param type="int" name="id">record index</param>
+					<return type="void"/>
+					<desc>Remove the record at index <param>id</param>. This method may NOT
+						be called when any records in the database are open.
+					</desc>
+					<note>This method may cause the ids of other records to change.
+					</note>
+				</method>
+				<method name="removeres">
+					<param type="string" name="type">resource type</param>
+					<param type="int" name="id">resource id</param>
+					<return type="void"/>
+					<desc>Remove the resource of the given <param>type</param> with the
+					given <param>id</param>.</desc>
+				</method>
+				<method name="delrec">
+					<param type="int" name="id">record index</param>
+					<return type="void"/>
+					<desc>Delete the record at index <param>id</param>, but leave the record
+						entry in the database header. If a conduit exists, the next
+						synchronization should remove the corresponding record on the desktop
+						and remove this record entry from the device.
+					</desc>
+					<note>Do not use this method unless your application has a conduit.
+					</note>
+				</method>
+				<method name="archiverec">
+					<param type="int" name="id">record index</param>
+					<return type="void"/>
+					<desc>Archive the record at index <param>id</param>. This leaves the
+						record in the database, but marks it as deleted. If a conduit exists,
+						the next synchronization should archive the corresponding record on
+						the desktop and remove this record from the device.
+					</desc>
+					<note>Do not use this method unless your application has a conduit.
+					</note>
+				</method>
+				<method name="getrec">
+					<param type="int" name="id">record index</param>
+					<param type="DBRecord" name="rec">pointer to a DBRecord</param>
+					<param type="bool" name="readonly">true for read only</param>
+					<return type="bool">true on success</return>
+					<desc>Gets the record at index <param>id</param>, and attaches the DBRecord
+						<param>rec</param> to it. Pass true for <param>readonly</param>
+						if you only intend to read from the record. Returns true if successful.
+					</desc>
+				</method>
+				<method name="newrec">
+					<param type="int*" name="id">record index</param>
+					<param type="DBRecord" name="rec">pointer to a DBRecord</param>
+					<return type="bool">true on success</return>
+					<desc>Inserts a new record at index <param>id</param>, and attaches the DBRecord
+						<param>rec</param> to it. If <param>id</param> is greater than
+						the number of records in the database or -1, the new record is appended
+						to the end of the database - use the id property to determine its index.
+					</desc>
+					<note>If the new record is not being appended to the end of the database,
+						the ids of other records in the database may change.
+					</note>
+				</method>
+				<method name="findrec">
+					<param type="int" name="uniqueid">record unique id</param>
+					<return type="int">record id, or -1 if not found</return>
+					<desc>Finds the record which has the specified <param>uniqueid</param>,
+						returning the record index if found, or -1 if not found. Calling this
+						method on some OSes will cause a fatal error if the record is not found.
+					</desc>
+				</method>
+				<method name="getresinfo">
+					<param type="int" name="index">resource index</param>
+					<param type="string*" name="pType">pointer to resource type</param>
+					<param type="int*" name="pId">pointer to resource id</param>
+					<return type="bool">true on success</return>
+					<desc>Gets the resource type and id of the resource with the
+						given <param>index</param>. Returns true if successful.
+					</desc>
+				</method>
+				<method name="getres">
+					<param type="string" name="type">resource type</param>
+					<param type="int" name="id">resource id</param>
+					<param type="DBRecord" name="rec">pointer to a DBRecord</param>
+					<return type="bool">true on success</return>
+					<desc>Gets the resource with the given <param>type</param> and the
+						given <param>id</param>, and attaches the DBRecord
+						<param>rec</param> to it. Returns true if successful.
+					</desc>
+				</method>
+				<method name="newres">
+					<param type="string" name="type">resource type</param>
+					<param type="int" name="id">resource id</param>
+					<param type="DBRecord" name="rec">pointer to a DBRecord</param>
+					<return type="bool">true on success</return>
+					<desc>Inserts a new resource with the given <param>type</param> and the
+						given <param>id</param>, and attaches the DBRecord
+						<param>rec</param> to it. Returns true if successful.
+					</desc>
+				</method>
+				<method name="hasappinfo">
+					<return type="bool">true if the database has an app info block</return>
+					<desc>Checks if the database has an app info block. Only a record database
+						can have an app info block.
+					</desc>
+				</method>
+				<method name="getappinfo">
+					<return type="int">record id, or -1 if there is no app info block</return>
+					<desc>Retrieves the app info block of the database and creates a
+						record to hold its data. Before closing the database, you must
+						remove this temporary record, or call setappinfo to convert it to
+						an app info block. This method will fail if the database was opened in
+						read-only mode.
+					</desc>
+				</method>
+				<method name="setappinfo">
+					<param type="int" name="id">record index to convert</param>
+					<return type="bool">true if successful</return>
+					<desc>Converts the record at index <param>id</param> into an app info
+						block and attaches it to the database. Removes the specified
+						record.
+					</desc>
+				</method>
+				<method name="createappinfo">
+					<return type="bool">true on success</return>
+					<desc>Creates an empty app info block.
+					</desc>
+				</method>
+			</object>
+			<object name="DatabaseMgr">
+				<desc>The DatabaseMgr object provides a function for enumerating all available
+					databases on the device.
+				</desc>
+				<sdesc>Allows for enumerating databases.</sdesc>
+				<method name="dbenum">
+					<param type="bool" name="first">true to get the first item</param>
+					<param type="string" name="type">4-character type string or empty string
+						for wildcard
+					</param>
+					<param type="string" name="creatorid">4-character creator id string or
+						empty string for wildcard
+					</param>
+					<return type="string">database name, or empty string if no more</return>
+					<desc>Enumerates the databases with the given <param>creatorid</param> and
+						<param>type</param>. Call this function once with <param>first</param> =
+						true to get the first database, and (if it doesn't return an empty string)
+						continue calling with <param>first</param> = false until the empty string
+						is returned.
+					</desc>
+				</method>
+			</object>
+			<object name="Memo">
+				<desc>A Memo object provides the ability to read and write memos.
+					A Memo object provides methods for working with an individual memo, as well as
+					the memo database as a whole. To attach a Memo object to a given memo, use
+					the create, open, or find methods. Two objects cannot open the same memo at
+					a time.
+				</desc>
+				<sdesc>Provides access to reading and writing memos.</sdesc>
+				<property type="string" name="text">
+					<desc>Gets or sets the entire text of the memo.</desc>
+				</property>
+				<property type="int" name="nrecs">
+					<desc>Gets the number of records in the memo database.</desc>
+				</property>
+				<property type="int" name="index">
+					<desc>Gets the index of the record in the memo database.</desc>
+				</property>
+				<method name="find">
+					<param type="string" name="name">first line of the desired memo</param>
+					<return type="bool">true if successful</return>
+					<desc>Searches for a memo beginning with <param>name</param> as the first
+						line, and opens it if found. Returns true on success.
+					</desc>
+				</method>
+				<method name="create">
+					<return type="bool">true if successful</return>
+					<desc>Create a new, empty memo record. Returns true on success.</desc>
+				</method>
+				<method name="open">
+					<param type="int" name="index">memo record index</param>
+					<return type="bool">true on success</return>
+					<desc>Opens the memo record at location <param>index</param>. This may fail
+						if <param>index</param> is greater than the number of records, or if
+						the specified record is marked for deletion.
+					</desc>
+				</method>
+				<method name="puts">
+					<param type="string" name="text">text to append</param>
+					<return type="void"/>
+					<desc>Appends <param>text</param> to the end of the current memo.</desc>
+				</method>
+				<method name="line">
+					<return type="string">next line of text</return>
+					<desc>Reads the next line of text from the memo. This method does NOT return
+						the \n character at the end of the line. Returns the empty string if the
+						contents have all been read, or if the current line is blank.
+					</desc>
+				</method>
+				<method name="end">
+					<return type="bool">true on end</return>
+					<desc>Returns true if the end of the memo has been reached while reading
+						the the record using the line() method.
+					</desc>
+				</method>
+				<method name="rewind">
+					<return type="void"/>
+					<desc>Resets the location from which the line() method reads to be the start
+						of the memo.
+					</desc>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Closes the current memo. This must be called before opening or creating
+						another memo.
+					</desc>
+				</method>
+				<method name="del">
+					<return type="void"/>
+					<desc>Close the memo and delete it from the memo database. A record header
+						will remain in the database until the next sync so that the desktop
+						database can be cleaned up.
+					</desc>
+				</method>
+				<method name="archive">
+					<return type="void"/>
+					<desc>Close the memo and mark it for archival. The record will remain in the
+						database until the next sync so that the desktop can archive the contents.
+					</desc>
+				</method>
+				<method name="remove">
+					<return type="void"/>
+					<desc>Close the memo and completely removes it from the memo database. This
+						method may not be called when any other Memo object is open.
+					</desc>
+				</method>
+				<method name="erase">
+					<return type="void"/>
+					<desc>Erases the contents of the current memo.</desc>
+				</method>
+			</object>
+		</category>
+		<category name="VFS" title="VFS">
+			<desc>Objects for accessing the virtual file system on expansion cards.</desc>
+			<topic name="UsingVFS" title="Using VFS">
+				<sdesc>An overview of using the VFS objects.</sdesc>
+				<desc>
+				<import name="lib_vfs.html"/>
+				</desc>
+			</topic>
+			<object name="File">
+				<desc>The File object encapsulates a file on a external memory card, allowing
+					reading and writing to the file. A File object is retrieved by calling
+					<xref node="mVolume-open">Volume.open()</xref>. For error codes and flags, see
+					<xref node="tUsingVFS">Using VFS</xref>.
+				</desc>
+				<sdesc>Encapsulates a file on external storage.</sdesc>
+				<property type="int" name="offset">
+					<desc>Gets or sets the current file offset.</desc>
+				</property>
+				<property type="bool" name="eof">
+					<desc>True if the end of the file has been reached.</desc>
+				</property>
+				<property type="int" name="size">
+					<desc>Gets or sets the size of the file. When setting, the file is
+						expanded or truncated to the new size.
+					</desc>
+				</property>
+				<property type="int" name="attribs">
+					<desc>Gets or sets the file attributes.</desc>
+				</property>
+			<method name="close">
+				<return type="void"/>
+				<desc>Closes the file.</desc>
+			</method>
+			<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">the number of values read</return>
+					<desc>Reads <param>count</param> blocks of data from the file into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>. Advances the
+						current offset.
+					</desc>
+			</method>
+			<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">the number of values written</return>
+					<desc>Writes <param>count</param> blocks of data to the file from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>. Advances the
+						current offset.
+					</desc>
+			</method>
+			<method name="getRec">
+				<param type="int" name="id">record index</param>
+				<param type="DBRecord" name="rec">DBRecord to attach</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Retrieves the record at index <param>id</param> from the file and attaches it to
+					<param>rec</param>. This method can only be called if the current file is a .pdb file.
+					The DBRecord is opened in read-only mode.
+				</desc>
+			</method>
+			<method name="getRes">
+				<param type="string" name="type">resource type</param>
+				<param type="int" name="id">resource id</param>
+				<param type="DBRecord" name="rec">DBRecord to attach</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Retrieves the resource of the given <param>type</param> with the specified
+					<param>id</param> from the file and attaches it to <param>rec</param>. This method
+					can only be called if the current file is a .prc file.
+					The DBRecord is opened in read-only mode.
+				</desc>
+			</method>
+			<method name="setDate">
+				<param type="int" name="which">which date to set</param>
+				<param type="Date" name="date">date value</param>
+				<return type="void"/>
+				<desc>Sets one of the dates associated with the file.</desc>
+				<note>Valid date ids are: <const>vfsDateCreated, vfsDateModified, vfsDateAccessed</const>
+				</note>
+			</method>
+			<method name="getDate">
+				<param type="int" name="which">which date to set</param>
+				<return type="Date">the date value</return>
+				<desc>Gets one of the dates associated with the file.</desc>
+				<note>Valid date ids are: <const>vfsDateCreated, vfsDateModified, vfsDateAccessed</const>
+				</note>
+			</method>
+			</object>
+			<object name="FileStream">
+				<sdesc>Exposes a File as a Stream.</sdesc>
+				<desc>The FileStream is derived from Stream, providing read/write access
+					to a file. To use this object, create and open a
+					<xref node="oFile">File</xref> object, assign it to the file
+					property, then call the read and write methods on
+					<xref node="oStream">Stream</xref>.
+				</desc>
+				<property type="File" name="file">
+					<desc>Sets the File object that this stream should read/write to.
+					</desc>
+				</property>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>Reads <param>count</param> blocks of data from the stream into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>Writes <param>count</param> blocks of data to the stream from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="readInt">
+					<param type="int*" name="pi">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an int from the stream into the memory pointed to
+						by <param>pi</param>.
+					</desc>
+				</method>
+				<method name="writeInt">
+					<param type="int" name="i">int to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write an int to the stream.</desc>
+				</method>
+				<method name="readWord">
+					<param type="int*" name="pw">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an 2-byte word from the stream into the memory pointed to
+						by <param>pw</param>.
+					</desc>
+				</method>
+				<method name="writeWord">
+					<param type="int" name="w">word to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a 2-byte word to the stream.</desc>
+				</method>
+				<method name="readFloat">
+					<param type="float*" name="pf">float pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a float from the stream into the memory pointed to
+						by <param>pf</param>.
+					</desc>
+				</method>
+				<method name="writeFloat">
+					<param type="float" name="f">float to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a float to the stream.</desc>
+				</method>
+				<method name="readString">
+					<param type="string*" name="ps">string pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a string from the stream into the memory pointed to
+						by <param>ps</param>.
+					</desc>
+				</method>
+				<method name="writeString">
+					<param type="string" name="s">string to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a string to the stream.</desc>
+				</method>
+				<method name="readChar">
+					<param type="char*" name="pc">char pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a char from the stream into the memory pointed to
+						by <param>pc</param>.
+					</desc>
+				</method>
+				<method name="writeChar">
+					<param type="char" name="c">char to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a char to the stream.</desc>
+				</method>
+			</object>
+			<object name="Directory">
+				<desc>The Directory object encapsulates a directory on a external memory card, allowing
+					enumeration of its contents. A Directory object is retrieved by calling
+					<xref node="mVolume-openDir">Volume.openDir()</xref>. For error codes and flags, see
+					<xref node="tUsingVFS">Using VFS</xref>.
+				</desc>
+				<sdesc>Encapsulates a directory on external storage.</sdesc>
+				<property type="int" name="attribs">
+					<desc>Gets or sets the file attributes.</desc>
+				</property>
+			<method name="close">
+				<return type="void"/>
+				<desc>Closes the directory.</desc>
+			</method>
+			<method name="setDate">
+				<param type="int" name="which">which date to set</param>
+				<param type="Date" name="date">date value</param>
+				<return type="void"/>
+				<desc>Sets one of the dates associated with the file.</desc>
+				<note>Valid date ids are: <const>vfsDateCreated, vfsDateModified, vfsDateAccessed</const>
+				</note>
+			</method>
+			<method name="getDate">
+				<param type="int" name="which">which date to set</param>
+				<return type="Date">the date value</return>
+				<desc>Gets one of the dates associated with the file.</desc>
+				<note>Valid date ids are: <const>vfsDateCreated, vfsDateModified, vfsDateAccessed</const>
+				</note>
+			</method>
+			<method name="enumerate">
+				<param type="int" name="first">true to start a new enumeration, false to continue</param>
+				<param type="string*" name="name">string address of the file/directory name</param>
+				<param type="int*" name="attribs">int address of the file/directory attributes</param>
+				<return type="bool">true if another entry was found</return>
+				<desc>Enumerate through files and directories in a directory.</desc>
+					<example>
+						<desc>List all files in the root directory</desc>
+<code>
+void listFiles(Volume vol) {
+  string name;
+  int attribs;
+  Directory dir;
+  bool first = true;
+
+  if (vol.openDir("/", dir) == 0) { // open the root directory
+    while (dir.enumerate(first, &amp;name, &amp;attribs)) {
+      first = false;
+      if ((attribs &amp; vfsAttrDirectory) == 0) { // don't list directories
+        alert(name);
+      }
+    }
+    dir.close();
+  }
+}</code>
+					</example>
+			</method>
+			</object>
+			<object name="Volume">
+				<desc>The Volume object represents an external storage volume, such as
+					a compact flash, SD, or MMC card. This object is used to perform operations
+					on files and directories. A Volume object is retrieved by calling
+					<xref node="mVolumeMgr-enumerate">VolumeMgr.enumerate()</xref>. For error
+					codes, flags, and a usage overview, see <xref node="tUsingVFS">Using VFS</xref>.
+				</desc>
+				<sdesc>Encapsulates a volume on external storage.</sdesc>
+				<property type="string" name="label">
+					<desc>Gets the Volume's label</desc>
+				</property>
+			<method name="open">
+				<param type="string" name="path">path to the file</param>
+				<param type="int" name="mode">open mode</param>
+				<param type="File" name="file">associated File object</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Opens the file at <param>path</param>, using the flags specified in <param>mode</param>.</desc>
+				<note><param>mode</param> can be a combination of these flags:
+					<const>vfsModeRead, vfsModeWrite, vfsModeReadWrite, vfsModeCreate, vfsModeTruncate</const>.
+					See <xref node="tUsingVFS">Using VFS</xref> for error codes.
+				</note>
+			</method>
+			<method name="openDir">
+				<param type="string" name="path">path to the directory</param>
+				<param type="Directory" name="dir">associated Directory object</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Opens the directory at <param>path</param>.</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="create">
+				<param type="string" name="path">path to the file</param>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+				<desc>Creates an empty file at <param>path</param>.</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="createDir">
+				<param type="string" name="path">path to the directory</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Creates an empty directory at <param>path</param>.</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="del">
+				<param type="string" name="path">path to file</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Deletes the file or directory at <param>path</param>. If the path is
+					a directory, it must be empty before calling this method.
+				</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="rename">
+				<param type="string" name="path">path to the file</param>
+				<param type="string" name="newname">new name of the file</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Rename a file or directory at <param>path</param> to <param>name</param>.
+					<param>path</param> is the complete path, <param>name</param> is just the
+					new file/directory name.
+				</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="export">
+				<param type="string" name="name">name of database</param>
+				<param type="string" name="path">path to exported file</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Exports the database specified by <param>name</param> to a file
+					at <param>path</param>.
+				</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="import">
+				<param type="string" name="path">path of file to import</param>
+				<param type="string*" name="name">string address of the database name</param>
+				<return type="int">0 if successful, error code otherwise</return>
+				<desc>Imports the database at <param>path</param>, returning the database
+					name in the string specified by <param>name</param>.
+				</desc>
+				<note>See <xref node="tUsingVFS">Using VFS</xref> for error codes.</note>
+			</method>
+			<method name="getDefaultDir">
+				<param type="string" name="type">file type</param>
+				<return type="string">default directory or empty string</return>
+				<desc>Retrieves the name of the default directory for a given <param>type</param>,
+					such as "image/jpeg".
+				</desc>
+			</method>
+			</object>
+			<object name="VolumeMgr">
+				<desc>The VolumeMgr object allows an application to enumerate the volumes present
+					on the device. See <xref node="tUsingVFS">Using VFS</xref> for VFS usage overview.
+				</desc>
+				<sdesc>Exposes an enumeration of Volumes.</sdesc>
+			<method name="enumerate">
+				<param type="int" name="first">true to start a new enumeration, false to continue</param>
+				<param type="Volume" name="vol">Volume to retrieve</param>
+				<return type="bool">true if another entry was found</return>
+				<desc>Enumerate through volumes present on a device. If VFS is not supported by the device,
+					false is returned.
+				</desc>
+					<example>
+						<desc>List the names of all the volumes present</desc>
+<code>
+void listVolumes() {
+  VolumeMgr volMgr;
+  Volume vol;
+  bool first = true;
+
+  while (volMgr.enumerate(first, vol)) {
+    first = false;
+    alert(vol.label);
+  }
+}</code>
+					</example>
+			</method>
+			</object>
+		</category>
+		<category name="Networking" title="Networking">
+			<desc>Objects for IP networking.</desc>
+			<object name="Socket">
+				<desc>The Socket object encapsulates a BSD-style socket used for sending and
+					receiving data over a network. See <xref node="tUsingNet">Using
+					Networking</xref> for an overview.
+				</desc>
+				<sdesc>Encapsulates a BSD-style socket.</sdesc>
+				<property type="string" name="localAddr">
+					<desc>Gets the local address associated with this socket when connected.</desc>
+				</property>
+				<property type="string" name="remoteAddr">
+					<desc>Get the remote address associated with this socket when connected.</desc>
+				</property>
+				<method name="open">
+					<param type="int" name="family">address family</param>
+					<param type="int" name="type">socket type</param>
+					<param type="int" name="protocol">protocol</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Opens this socket for use with the specified <param>family</param>,
+						<param>type</param>, and <param>protocol</param>.
+					</desc>
+					<note>Valid families are: <const>netAfInet</const> (Palm OS does not yet support
+						IPv6). Valid types are: <const>netSockStream</const> (OrbC does not
+						currently support UDP). Valid protocols are: <const>netProtoIpTcp</const>.
+						See <xref node="tUsingNet">Using Networking</xref> for error codes.
+					</note>
+				</method>
+				<method name="close">
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Closes this socket.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="accept">
+					<param type="Socket" name="newSocket">socket to associate with the new connection</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Accepts a connection.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="bind">
+					<param type="string" name="localAddr">local address to bind to</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Binds this socket to a particular local address and port.</desc>
+					<note>The application only needs to specify a port, which can be done with a
+						string like ":1234". See <xref node="tUsingNet">Using Networking</xref>
+						for error codes.
+					</note>
+				</method>
+				<method name="connect">
+					<param type="string" name="addr">remote address to connect to</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Connects this socket to a remote address.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="listen">
+					<param type="int" name="backlog">size of pending cannot list</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Causes this socket to start listening.</desc>
+					<note>Palm OS currently only supports 1 as the backlog parameter.
+						See <xref node="tUsingNet">Using Networking</xref> for error codes.
+					</note>
+				</method>
+				<method name="sends">
+					<param type="string" name="data">string to send</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Sends a string to the remote node.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="send">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Sends <param>count</param> blocks of data over the socket from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="recvs">
+					<param type="string*" name="pdata">string address of received data</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Receives a string from the remote node.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="recv">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Reads <param>count</param> blocks of data from the socket into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="shutdown">
+					<param type="int" name="dir">direction of shutdown</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Shut down this socket in one or both directions.</desc>
+					<note>Valid directions are: <const>netDirInput, netDirOuput, netDirBoth</const>.
+						See <xref node="tUsingNet">Using Networking</xref> for error codes.
+					</note>
+				</method>
+			</object>
+			<object name="SocketStream">
+				<sdesc>Exposes a Socket as a Stream.</sdesc>
+				<desc>The SocketStream is derived from Stream, providing read/write access
+					to a Socket. To use this object, create and open a
+					<xref node="oSocket">Socket</xref> object, assign it to the socket
+					property, then call the read and write methods on
+					<xref node="oStream">Stream</xref>.
+				</desc>
+				<property type="Socket" name="socket">
+					<desc>Sets the Socket object that this stream should read/write to.
+					</desc>
+				</property>
+				<method name="read">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was read</return>
+					<desc>Reads <param>count</param> blocks of data from the stream into the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="write">
+					<param type="void*" name="pdata">data pointer</param>
+					<param type="string" name="type">format string</param>
+					<param type="int" name="count">format count</param>
+					<return type="bool">true if all the data was written</return>
+					<desc>Writes <param>count</param> blocks of data to the stream from the
+						memory pointed to by <param>pdata</param>, using the format specified by
+						the <xref node="ttypeStrings">type string</xref> <param>type</param>. The
+						given memory must be compatible with <param>type</param>.
+					</desc>
+				</method>
+				<method name="readInt">
+					<param type="int*" name="pi">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an int from the stream into the memory pointed to
+						by <param>pi</param>.
+					</desc>
+				</method>
+				<method name="writeInt">
+					<param type="int" name="i">int to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write an int to the stream.</desc>
+				</method>
+				<method name="readWord">
+					<param type="int*" name="pw">int pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read an 2-byte word from the stream into the memory pointed to
+						by <param>pw</param>.
+					</desc>
+				</method>
+				<method name="writeWord">
+					<param type="int" name="w">word to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a 2-byte word to the stream.</desc>
+				</method>
+				<method name="readFloat">
+					<param type="float*" name="pf">float pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a float from the stream into the memory pointed to
+						by <param>pf</param>.
+					</desc>
+				</method>
+				<method name="writeFloat">
+					<param type="float" name="f">float to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a float to the stream.</desc>
+				</method>
+				<method name="readString">
+					<param type="string*" name="ps">string pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a string from the stream into the memory pointed to
+						by <param>ps</param>.
+					</desc>
+				</method>
+				<method name="writeString">
+					<param type="string" name="s">string to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a string to the stream.</desc>
+				</method>
+				<method name="readChar">
+					<param type="char*" name="pc">char pointer</param>
+					<return type="bool">true if successful</return>
+					<desc>Read a char from the stream into the memory pointed to
+						by <param>pc</param>.
+					</desc>
+				</method>
+				<method name="writeChar">
+					<param type="char" name="c">char to write</param>
+					<return type="bool">true if successful</return>
+					<desc>Write a char to the stream.</desc>
+				</method>
+			</object>
+			<object name="Network">
+				<desc>The Network object contains methods and properties for opening and closing
+					the stack, performing DNS queries, and getting the local address and timeout
+					settings. See <xref node="tUsingNet">Using Networking</xref> for an overview.
+				</desc>
+				<sdesc>Encapsulates general network settings and methods.</sdesc>
+				<property type="string" name="localAddr">
+					<desc>Gets the local address of the device when connect.</desc>
+				</property>
+				<property type="int" name="timeout">
+					<desc>Gets or sets the maximum wait time for network operations, expressed
+						in system ticks. -1 implies infinite.
+					</desc>
+				</property>
+				<method name="open">
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Opens the networking stack and connects it to the network according to
+						system settings.
+					</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Closes the networking stack. The stack remains open for a short
+						period in case another app will be using it. In most cases, this is
+						the preferred way to close the stack.
+					</desc>
+				</method>
+				<method name="closei">
+					<return type="void"/>
+					<desc>Closes the networking stack immediately.</desc>
+				</method>
+				<method name="getHostByName">
+					<param type="string" name="name">name to resolve</param>
+					<param type="string*" name="paddr">string address of resolved address</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Looks up the given <param>name</param> using DNS, putting the resulting
+						address in <param>paddr</param>.
+					</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+				<method name="getHostByAddr">
+					<param type="string" name="addr">address to look up</param>
+					<param type="string*" name="pname">string address of retreived name</param>
+					<return type="int">0 if successful, error code otherwise</return>
+					<desc>Attempts to find a matching DNS name for the specified <param>addr</param>.</desc>
+					<note>See <xref node="tUsingNet">Using Networking</xref> for error codes.</note>
+				</method>
+			</object>
+			<topic name="UsingNet" title="Using Networking">
+				<sdesc>An overview of using the Networking objects.</sdesc>
+				<desc>
+				<import name="lib_net.html"/>
+				</desc>
+			</topic>
+		</category>
+		<category name="Printing" title="Printing">
+			<desc>Printing support using PalmPrint.</desc>
+			<object name="PalmPrint">
+				<desc><p>The PalmPrint object provides access to printing through Stevens Creek's
+					<a href="http://www.stevenscreek.com/palm/palmprint.shtml">PalmPrint</a>. In order
+					to use this object, you need to have PalmPrint or SCS Print Server installed. For
+					supplemental documenation, please visit the Stevens Creek website.
+					</p>
+					<p>The PalmPrint object is implemented in the OrbPrint native add-in. To use it,
+						you must #include "OrbPrint.oc".
+					</p>
+					<p><b>Notes:</b><ul>
+						<li>When using Xmit methods rather than Print methods, the text is sent
+						directly to the printer as plain text, ignoring the user's current printer
+						setting.</li>
+						<li>The following properties may only be set before printing begins, and are reset
+						when printing ends: <i>charsPerLine</i>, <i>linesPerPage</i>, <i>leftMargin</i>,
+						<i>topMargin</i>, <i>indent</i>, <i>orientation</i>, <i>numCopies</i>.</li>
+						<li>The follwoing properties may only be set while in line-by-line mode:
+						<i>font</i>, <i>fontSize</i>, <i>style</i>.</li>
+					</ul>
+					</p>
+				</desc>
+				<sdesc>Serial and IR printing support.</sdesc>
+				<property type="int" name="charsPerLine">
+					<desc>Gets or sets the number of characters per line. When setting this property,
+						supply the width of the entire line. When getting this property, the width
+						is adjusted to exclude the margins and indent.
+					</desc>
+				</property>
+				<property type="int" name="linesPerPage">
+					<desc>Gets or sets the number of lines per page. When setting this property,
+						supply the height of the entire page. When getting this property, the height
+						is adjusted to exclude the margins.
+					</desc>
+				</property>
+				<property type="int" name="font">
+					<desc>Sets the current font. Possible fonts are
+						<code>prtFontCourier</code>, <code>prtFontTimes</code>,
+						<code>prtFontHelvetica</code>, <code>prtFontStandard</code>.
+					</desc>
+				</property>
+				<property type="int" name="fontSize">
+					<desc>Sets the current font size. Possible sizes are
+						<code>prtSize9</code>, <code>prtSize10</code>,
+						<code>prtSize12</code>.
+					</desc>
+				</property>
+				<property type="int" name="style">
+					<desc>Sets the current font style. Possible styles are
+						<code>prtStylePlain</code>, <code>prtStyleBold</code>.
+					</desc>
+				</property>
+				<property type="int" name="leftMargin">
+					<desc>Sets the width of the left margin.</desc>
+				</property>
+				<property type="int" name="topMargin">
+					<desc>Sets the height of the top margin.</desc>
+				</property>
+				<property type="int" name="indent">
+					<desc>Sets the current indent.</desc>
+				</property>
+				<property type="int" name="numCopies">
+					<desc>Sets the number of copies to print. This properties does not affect
+					printString() or xmitString().</desc>
+				</property>
+				<property type="int" name="orientation">
+					<desc>Sets the paper orientation. Possible orienations are
+						<code>prtOrientLandscape</code>, <code>prtOrientPortrait</code>.
+					</desc>
+				</property>
+				<method name="open">
+					<return type="bool">true if PalmPrint was opened successfully.</return>
+					<desc>Open the PalmPrint library.
+					</desc>
+				</method>
+				<method name="printString">
+					<param type="string" name="str">string to print</param>
+					<return type="void"/>
+					<desc>Print a complete string</desc>
+				</method>
+				<method name="xmitString">
+					<param type="string" name="str">string to transmit</param>
+					<return type="void"/>
+					<desc>Transmit a complete string as plain text.</desc>
+				</method>
+				<method name="beginPrint">
+					<return type="void"/>
+					<desc>Begin printing in line by line mode.</desc>
+				</method>
+				<method name="endPrint">
+					<return type="void"/>
+					<desc>End printing in line-by-line mode.</desc>
+				</method>
+				<method name="beginXmit">
+					<return type="void"/>
+					<desc>Begin trasmitting in line-by-line mode.</desc>
+				</method>
+				<method name="endXmit">
+					<return type="void"/>
+					<desc>End trasmitting in line-by-line mode.</desc>
+				</method>
+				<method name="printLine">
+					<param type="string" name="line">line to print</param>
+					<return type="void"/>
+					<desc>Print a line in line-by-line mode.</desc>
+				</method>
+				<method name="xmitLine">
+					<param type="string" name="line">line to transmit</param>
+					<return type="void"/>
+					<desc>Transmit a line in line-by-line mode.</desc>
+				</method>
+				<method name="printLinePassThru">
+					<param type="string" name="line">line to print</param>
+					<return type="void"/>
+					<desc>Print a line in line-by-line mode without transforming special characters.</desc>
+				</method>
+				<method name="xmitLinePassThru">
+					<param type="string" name="line">line to transmit</param>
+					<return type="void"/>
+					<desc>Transmit a line in line-by-line mode without transforming special characters.</desc>
+				</method>
+			</object>
+		</category>
+		<category name="DataStructs" title="Data structures">
+			<desc>General purpose objects such as a dictionary and a string list.</desc>
+			<object name="Dict">
+				<desc>A Dict object implements a dictionary, which is a mapping from a string
+					key to a string value. All keys in the dictionary must be unique.
+				</desc>
+				<sdesc>A dictionary, mapping a key string to a value string.</sdesc>
+				<property type="int" name="count">
+					<desc>Gets the number of items in the dictionary.</desc>
+				</property>
+				<method name="clear">
+					<return type="void"/>
+					<desc>Removes all the items from the dictionary.</desc>
+				</method>
+				<method name="add">
+					<param type="string" name="key">key</param>
+					<param type="string" name="value">value</param>
+					<return type="int">number of items</return>
+					<desc>Adds <param>value</param> to the dictionary and associate it
+						with <param>key</param>. Returns the new number of items.
+					</desc>
+				</method>
+				<method name="del">
+					<param type="string" name="key">key</param>
+					<return type="int">number of items</return>
+					<desc>Deletes the specified <param>key</param> and its associated value from
+						the dictionary. Returns the number of remaining items.
+					</desc>
+				</method>
+				<method name="find">
+					<param type="string" name="key">key</param>
+					<return type="string">value</return>
+					<desc>Returns the value associated with <param>key</param>, or the empty
+						string if the key is not found.
+					</desc>
+				</method>
+				<method name="has">
+					<param type="string" name="key">key</param>
+					<return type="bool">true if value is found</return>
+					<desc>Returns true if <param>key</param> is in the dictionary.</desc>
+				</method>
+				<method name="key">
+					<param type="int" name="index">index</param>
+					<return type="string">key at index</return>
+					<desc>Returns the key for the given <param>index</param>
+					in the dictionary.</desc>
+				</method>
+				<method name="value">
+					<param type="int" name="index">index</param>
+					<return type="string">value at index</return>
+					<desc>Returns the value for the given <param>index</param>
+					in the dictionary.</desc>
+				</method>
+			</object>
+			<object name="StringList">
+				<desc>A StringList is an ordered list of strings.</desc>
+				<sdesc>Manages a list of strings.</sdesc>
+				<property type="int" name="count">
+					<desc>Gets the number of strings in the list</desc>
+				</property>
+				<method name="clear">
+					<return type="void"/>
+					<desc>Removes all the strings from the list.</desc>
+				</method>
+				<method name="add">
+					<param type="string" name="str">string to add</param>
+					<return type="int">new number of strings in the list</return>
+					<desc>Adds the string <param>str</param> to the end of the list and returns
+						the new number of strings in the list.
+					</desc>
+				</method>
+				<method name="insert">
+					<param type="int" name="index">insertion location</param>
+					<param type="string" name="str">string to insert</param>
+					<return type="int">new number of strings in the list</return>
+					<desc>Inserts the string <param>str</param> into the list at position
+						<param>index</param> and returns the new number of strings in the list.
+					</desc>
+				</method>
+				<method name="del">
+					<param type="int" name="index">index of string to delete</param>
+					<return type="int">the remaining number of strings in the list</return>
+					<desc>Removes the string at position <param>index</param> and returns
+						the number of strings remaining in the list.
+					</desc>
+				</method>
+				<method name="find">
+					<param type="string" name="str">string to find</param>
+					<return type="int">index of string</return>
+					<desc>Finds the string <param>str</param> in the string list and returns
+						the string's index in the list or -1 if the string is not found.
+					</desc>
+				</method>
+				<method name="sort">
+					<param type="bool" name="caseSensitive">true for case sensitive sort</param>
+					<return type="void"/>
+					<desc>Sorts the strings in the list, using the specified case sensitivity.
+					</desc>
+				</method>
+				<method name="tokens">
+					<param type="string" name="str">string to tokenize</param>
+					<param type="string" name="toks">separators</param>
+					<return type="int">token count</return>
+					<desc>Splits the string <param>str</param> into multiple tokens, and adds
+						each token to the list. Tokens are specified as characters in
+						<param>toks</param>. The number of tokens found is returned.
+					</desc>
+				</method>
+				<method name="item">
+					<param type="int" name="index">index of string to retrieve</param>
+					<return type="string">string at the specified location</return>
+					<desc>Retrieves the string at location <param>index</param>. Returns the
+						empty string if the index is invalid.
+					</desc>
+				</method>
+			</object>
+			<method name="sort">
+				<param type="void*" name="data">data to be sorted</param>
+				<param type="int" name="count">count of objects to be sorted</param>
+				<param type="int" name="size">size of each object</param>
+				<param type="string" name="order">order specifier</param>
+				<return type="void"/>
+				<desc>Sorts an array of objects (or structures). <param>data</param>
+					is a pointer to the first element in the array. The order specifier
+					is a string which first states the direction to sort, followed by
+					the offset into the object of the field to sort. The direction is
+					specified as a '&gt;' for ascending or a '&lt;' for descending. Either
+					one or two fields may be sorted on.
+				</desc>
+				<note>This function is implemented by the OrbSort native add-in. To
+					use it you must #include "OrbSort.oc".
+				</note>
+				<example>
+					<desc>Sort an array of Persons in a variety of ways.</desc>
+<code>
+struct Person {
+  string name; // offset 0
+  int age;     // offset 1
+};
+
+Person people[2];
+
+void SortPeople() {
+  // sort by name, ascending
+  sort(people, 2, sizeof(Person), "&gt;0");
+  // sort by age, descending
+  sort(people, 2, sizeof(Person), "&lt;1");
+  // sort by age first, followed by name
+  sort(people, 2, sizeof(Person), "&lt;1&lt;0");
+
+}</code>
+				</example>
+			</method>
+		</category>
+		<category name="UI" title="User Interface">
+			<desc>Objects and functions representing the application's user interface.</desc>
+			<method name="alert">
+				<param type="string" name="text">text to display</param>
+				<return type="void"/>
+				<desc>Displays an alert dialog containing the text <param>text</param>.</desc>
+			</method>
+			<method name="alertc">
+				<param type="string" name="title">title</param>
+				<param type="string" name="message">message to display</param>
+				<param type="string" name="buttons">button text</param>
+				<param type="int" name="type">alert type</param>
+				<return type="int">the 0-based index of the button pressed</return>
+				<desc>Displays an alert dialog with the specified <param>title</param>,
+					<param>text</param>, and <param>buttons</param>. <param>buttons</param>
+					is the text of a button, or a string containing the names of several
+					buttons separated by colons. "OK:Cancel".
+				</desc>
+				<note>Valid types are: <const>alertInfo, alertQuestion, alertWarning, alertError</const>.</note>
+			</method>
+			<method name="confirm">
+				<param type="string" name="text">text to display</param>
+				<return type="bool">true if the user tapped "yes"</return>
+				<desc>Displays a confirmation dialog containing the text <param>text</param>
+					and "yes" and "no" buttons. Returns true if the user tapped "yes", false
+					otherwise.
+				</desc>
+				<note>This form's default button is "no", so if the user switches
+					applications while the dialog is open, the OS will dismiss it by selecting
+					the "no" option. Therefore, you should ensure that the "no" option
+					does not cause data loss.
+				</note>
+			</method>
+			<method name="prompt">
+				<param type="string" name="text">text to display</param>
+				<return type="string">response entered by user</return>
+				<desc>Displays an input prompt with the specified <param>text</param>, returning
+					the string entered by the user. If the user presses the Cancel button,
+					an empty string is returned. Works only on OS 3.5 and higher.
+				</desc>
+			</method>
+			<method name="promptc">
+				<param type="string" name="title">title</param>
+				<param type="string" name="message">message to display</param>
+				<param type="string" name="buttons">button text</param>
+				<param type="int" name="type">alert type</param>
+				<param type="string*" name="pentry">string address where the entry is stored</param>
+				<return type="int">the 0-based index of the button pressed</return>
+				<desc>Displays an input prompt with the specified <param>title</param>,
+					<param>message</param>, and <param>buttons</param>. <param>buttons</param>
+					is the text of a button, or a string containing the names of several
+					buttons separated by colons. "OK:Cancel".
+				</desc>
+				<note>Valid types are: <const>alertInfo, alertQuestion, alertWarning, alertError</const>.</note>
+			</method>
+			<method name="promptcd">
+				<param type="string" name="title">title</param>
+				<param type="string" name="message">message to display</param>
+				<param type="string" name="buttons">button text</param>
+				<param type="int" name="type">alert type</param>
+				<param type="string" name="text">initial field text</param>
+				<param type="string*" name="pentry">string address where the entry is stored</param>
+				<return type="int">the 0-based index of the button pressed</return>
+				<desc>Displays an input prompt with the specified <param>title</param>,
+					<param>message</param>, and <param>buttons</param>. <param>text</param> is used to initialize
+					the prompt's field. <param>buttons</param>
+					is the text of a button, or a string containing the names of several
+					buttons separated by colons. "OK:Cancel".
+				</desc>
+				<note>Valid types are: <const>alertInfo, alertQuestion, alertWarning, alertError</const>.</note>
+			</method>
+			<method name="keystate">
+				<return type="int">flags of keys currently pressed</return>
+				<desc>Retrieves the current set of pressed keys. Can be zero of more of
+					the following flags: <const>keyPageUp, keyPageDown, keyHard1-keyHard4, keyContrast</const>.
+					The return value may also include other device-specific flags.
+				</desc>
+			</method>
+			<method name="penstate">
+				<return type="bool">true if the pen is down</return>
+				<desc>Retrieves the current state of the pen: true for down, false for up.
+				</desc>
+			</method>
+			<object name="Bitmap">
+				<desc>A Bitmap object represents a bitmap created in the app designer or resource language.
+					An object of this type is automatically created by the app designer or compiler for each
+					bitmap defined in you application. Do not create Bitmap objects manually. A
+					Bitmap can be drawn using <xref node="mDraw-bitmap">Draw.bitmap()</xref>.
+				</desc>
+				<sdesc>A bitmap created in the app designer or resource language.</sdesc>
+			</object>
+			<object name="Draw">
+				<desc>The Draw object provides access to all drawing functions. There are several
+					steps involved in setting up and using a Draw object. First, the object must
+					either be attached to a form or gadget, or created as an offscreen buffer. If
+					the object is attached to a form or gadget, all drawing operations are applied
+					immediately to the form or gadget. There are two ways to create an offscreen
+					buffer -- either using the create method, or the copyForm/copyGadget method.
+					If the object is set up as an offscreen buffer, it must be released when no
+					longer needed.
+					<p/>
+					Before drawing to an object, the begin or nbegin method must be called. When finished,
+					the end method must be called. <b>Note:</b> Only one object may be in
+					drawing mode at a time. For a discussion of drawing in native resolutions,
+					see <a href="thighDensity.html">High Density Graphics</a>.
+					<p/>
+					The available colors are determined by the current color depth. Use
+					<xref node="mUIApp-getdepth">UIApp.getdepth()</xref> to find the current
+					depth. For color tables, see <xref node="tColorTables">Color Tables</xref>.
+					The RGB functions can be used in any color depth - the system will set the
+					color to the nearest palette entry in 1-, 2-, 4-, and 8-bit mode.
+				</desc>
+				<sdesc>Provides all drawing routines.</sdesc>
+				<property type="int" name="handle">
+					<desc>The WinHandle of the the draw object. This handle is only available
+						for offscreen buffers, and only if the begin() method has been called.
+					</desc>
+				</property>
+				<property type="int" name="nw">
+					<desc>Gets the width of the drawing surface in native pixels. This value can
+						only be retrieved after calling nbegin() and before calling end().
+					</desc>
+				</property>
+				<property type="int" name="nh">
+					<desc>Gets the height of the drawing surface in native pixels. This value can
+						only be retrieved after calling nbegin() and before calling end().
+					</desc>
+				</property>
+				<method name="attachForm">
+					<param type="UIForm" name="form">form to attach to</param>
+					<return type="void"/>
+					<desc>Attaches this object to <param>form</param>. All operations performed
+						on this Draw object will immediately affect the attached form. There is
+						no need to call release().
+					</desc>
+				</method>
+				<method name="attachGadget">
+					<param type="UIGadget" name="gadget">gadget to attach to</param>
+					<return type="void"/>
+					<desc>Attaches this object to <param>gadget</param>. All operations performed
+						on this Draw object will immediately affect the attached gadget. There is
+						no need to call release().
+					</desc>
+				</method>
+				<method name="create">
+					<param type="int" name="w">width</param>
+					<param type="int" name="h">height</param>
+					<return type="bool">true on success</return>
+					<desc>Creates an offscreen buffer with width <param>w</param> and height
+						<param>h</param>. release() must be called when the offscreen buffer is
+						no longer needed.
+					</desc>
+				</method>
+				<method name="copyForm">
+					<param type="UIForm" name="form">form to copy</param>
+					<return type="bool">true on success</return>
+					<desc>Creates an offscreen buffer the same size as <param>form</param>, and
+						copies the form's contents to the buffer. release() must be called when
+						the offscreen buffer is no longer needed.
+					</desc>
+				</method>
+				<method name="copyGadget">
+					<param type="UIGadget" name="gadget">gadget to copy</param>
+					<return type="bool">true on success</return>
+					<desc>Creates an offscreen buffer the same size as <param>gadget</param>, and
+						copies the gadget's contents to the buffer. release() must be called when
+						the offscreen buffer is no longer needed.
+					</desc>
+				</method>
+				<method name="release">
+					<return type="void"/>
+					<desc>Releases the offscreen buffer if one was created.</desc>
+				</method>
+				<method name="begin">
+					<return type="void"/>
+					<desc>Prepares the object for drawing. Either this method or nbegin()
+						must be called before any drawing operation.
+					</desc>
+				</method>
+				<method name="nbegin">
+					<return type="void"/>
+					<desc>Prepares the object for drawing at native resolution. Either this
+						method or begin() must be called before any drawing operation.
+					</desc>
+				</method>
+				<method name="end">
+					<return type="void"/>
+					<desc>Cleans up from the drawing process. This must be called after the
+						drawing operations are complete.
+					</desc>
+				</method>
+				<method name="fg">
+					<param type="int" name="index">color index</param>
+					<return type="int">previous color index</return>
+					<desc>Sets the foreground color to the color specified by <param>index</param>
+						in the current palette.
+					</desc>
+				</method>
+				<method name="fgRGB">
+					<param type="int" name="r">red value</param>
+					<param type="int" name="g">green value</param>
+					<param type="int" name="b">blue value</param>
+					<return type="void"/>
+					<desc>Sets the foreground color.</desc>
+				</method>
+				<method name="bg">
+					<param type="int" name="index">color index</param>
+					<return type="int">previous color index</return>
+					<desc>Sets the background color to the color specified by <param>index</param>
+						in the current palette.
+					</desc>
+				</method>
+				<method name="bgRGB">
+					<param type="int" name="r">red value</param>
+					<param type="int" name="g">green value</param>
+					<param type="int" name="b">blue value</param>
+					<return type="void"/>
+					<desc>Sets the background color.</desc>
+				</method>
+				<method name="textColor">
+					<param type="int" name="index">color index</param>
+					<return type="int">previous color index</return>
+					<desc>Sets the text color to the color specified by <param>index</param>
+						in the current palette.
+					</desc>
+				</method>
+				<method name="textRGB">
+					<param type="int" name="r">red value</param>
+					<param type="int" name="g">green value</param>
+					<param type="int" name="b">blue value</param>
+					<return type="void"/>
+					<desc>Sets the text color.</desc>
+				</method>
+				<method name="font">
+					<param type="int" name="fontid">font id to draw with</param>
+					<return type="int">previous font id</return>
+					<desc>Sets the drawing font to be used by the text method.</desc>
+					<note>Valid font ids are: <const>fntStandard, fntBold, fntLarge, fntSymbol,
+						fntSymbol11, fntSymbol7, fntLED, fntLargeBold</const>
+					</note>
+				</method>
+				<method name="textAlign">
+					<param type="int" name="mode">text alignment mode</param>
+					<return type="int">previous text alignment mode</return>
+					<desc>Sets the text alignment mode used by the text method.</desc>
+					<note><param>mode</param> is a number between 0 and 22. The first digit
+						specifies the vertical alignment (0=top, 1=center, 2=bottom), and the
+						second digit specifies horizontal alignment (0=left, 1=center, 2=right).
+						When mode is 0, the point specified to the text method is used as the
+						top left of the text to be drawn.
+					</note>
+				</method>
+				<method name="textWidth">
+					<param type="string" name="str">string to measure</param>
+					<return type="int">pixel width of string in current font</return>
+					<desc>Measures the number of pixel required to display <param>str</param>
+						in the currently selected font.
+					</desc>
+				</method>
+				<method name="textHeight">
+					<return type="int">pixel height of the current font</return>
+					<desc>Measures the height in pixels of the currently selected font.</desc>
+				</method>
+				<method name="underline">
+					<param type="int" name="mode">underline mode</param>
+					<return type="int">previous underline mode</return>
+					<desc>Sets the underline mode to be used by the text method.</desc>
+					<note>Valid underline modes are: <const>ulNone, ulDot, ulSolid</const></note>
+				</method>
+				<method name="indexFromColor">
+					<param type="int" name="r">red value</param>
+					<param type="int" name="g">green value</param>
+					<param type="int" name="b">blue value</param>
+					<return type="int">index of nearest color</return>
+					<desc>Calculates the nearest index in the current color palette to the
+						color specified by (<param>r</param>, <param>g</param>, <param>b</param>).
+					</desc>
+				</method>
+				<method name="uiColor">
+					<param type="int" name="uiType">UI element to retrieve</param>
+					<return type="int">color index of the UI element</return>
+					<desc>Retrieves the color the system uses to draw a particular UI element.
+						Only available on OS 3.5 and higher - on earlier OSes this method returns
+						0.
+					</desc>
+					<note>Valid UI elements are: <const>uiColorObjectFrame, uiColorObjectFill,
+						uiColorObjectForeground,
+						uiColorObjectSelectedFill, uiColorObjectSelectedForeground,
+						uiColorMenuFrame, uiColorMenuFill, uiColorMenuForeground,
+						uiColorMenuSelectedFill, uiColorMenuSelectedForeground,
+						uiColorFieldBackground, uiColorFieldText, uiColorFieldTextLines, uiColorFieldCaret,
+						uiColorFieldTextHighlightBackground, uiColorFieldTextHighlightForeground,
+						uiColorFieldFepRawText, uiColorFieldFepRawBackground, uiColorFieldFepConvertedText,
+						uiColorFieldFepConvertedBackground, uiColorFieldFepUnderline,
+						uiColorFormFrame, uiColorFormFill,
+						uiColorDialogFrame, uiColorDialogFill,
+						uiColorAlertFrame, uiColorAlertFill,
+						uiColorOK, uiColorCaution, uiColorWarning</const>.
+					</note>
+				</method>
+				<method name="selectIndex">
+					<param type="string" name="title">title for color selector dialog</param>
+					<param type="int*" name="pIndex">pointer to index</param>
+					<return type="bool">whether the user selected a color</return>
+					<desc>Displays a color picker dialog box with the given <param>title</param>.
+						<param>pIndex</param> is a pointer to an int which contains initial color index
+						and which will contain the selected index upon return. If the user selected a
+						color, this method return true; if the user canceled, false is returned. Do NOT
+						call this method during a draw operation (between begin and end). Available
+						only on OS 3.5 and higher.
+					</desc>
+				</method>
+				<method name="line">
+					<param type="int" name="c">color</param>
+					<param type="int" name="x1">start x</param>
+					<param type="int" name="y1">start y</param>
+					<param type="int" name="x2">end x</param>
+					<param type="int" name="y2">end y</param>
+					<return type="void"/>
+					<desc>Draws a line from (<param>x1</param>, <param>y1</param>) to
+						(<param>x2</param>, <param>y2</param>) in color <param>c</param>.
+					</desc>
+					<note>Valid colors are: <const>clrFG, clrBG, clrDot, clrXOR</const>.</note>
+				</method>
+				<method name="pixel">
+					<param type="int" name="c">color</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<return type="void"/>
+					<desc>Draws a pixel at (<param>x</param>, <param>y</param>).</desc>
+					<note>Valid colors are: <const>clrFG, clrBG, clrXOR</const>.</note>
+				</method>
+				<method name="rect">
+					<param type="int" name="c">color</param>
+					<param type="int" name="x1">start x</param>
+					<param type="int" name="y1">start y</param>
+					<param type="int" name="x2">end x</param>
+					<param type="int" name="y2">end y</param>
+					<param type="int" name="rad">corner radius</param>
+					<return type="void"/>
+					<desc>Draws a solid rectangle from (<param>x1</param>, <param>y1</param>) to
+						(<param>x2</param>, <param>y2</param>) in color <param>c</param>, with
+						rounded corners of radius <param>rad</param>.
+					</desc>
+					<note>Valid colors are: <const>clrFG, clrBG, clrXOR</const>.</note>
+				</method>
+				<method name="frame">
+					<param type="int" name="c">color</param>
+					<param type="int" name="x1">start x</param>
+					<param type="int" name="y1">start y</param>
+					<param type="int" name="x2">end x</param>
+					<param type="int" name="y2">end y</param>
+					<param type="int" name="rad">corner radius</param>
+					<param type="int" name="thick">thickness</param>
+					<return type="void"/>
+					<desc>Draws an empty frame from (<param>x1</param>, <param>y1</param>) to
+						(<param>x2</param>, <param>y2</param>) in color <param>c</param>, with
+						rounded corners of radius <param>rad</param> and line thickness
+						<param>thick</param>.
+					</desc>
+					<note>Valid colors are: <const>clrFG, clrBG, clrDot, clrXOR</const>.</note>
+				</method>
+				<method name="bitmap">
+					<param type="Bitmap" name="bmp">bitmap to draw</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<return type="void"/>
+					<desc>Draws the bitmap <param>bmp</param> at (<param>x</param>,
+						<param>y</param>).
+					</desc>
+				</method>
+				<method name="bitmapm">
+					<param type="Bitmap" name="bmp">bitmap to draw</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<param type="int" name="mode">mode</param>
+					<return type="void"/>
+					<desc>Draws the bitmap <param>bmp</param> at (<param>x</param>,
+						<param>y</param>), using the specified <param>mode</param>.
+					</desc>
+					<note>Valid modes are: <const>modePaint, modeErase, modeMask, modeInvert, modeOverlay, modePaintInverse, modeSwap</const>.</note>
+				</method>
+				<method name="text">
+					<param type="int" name="c">color</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<param type="string" name="text">text to draw</param>
+					<return type="void"/>
+					<desc>Draws the text <param>text</param> at (<param>x</param>,
+						<param>y</param>).
+					</desc>
+					<note>Valid colors are: <const>clrText, clrInv</const>.
+					</note>
+				</method>
+				<method name="textTrunc">
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<param type="int" name="w">width</param>
+					<param type="string" name="text">text to draw</param>
+					<return type="void"/>
+					<desc>Draws the text <param>text</param> at (<param>x</param>,
+						<param>y</param>), truncating and adding "..." it if necessary so that
+						its width is no more than <param>w</param>.
+					</desc>
+				</method>
+				<method name="draw">
+					<param type="Draw" name="d">source</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<return type="void"/>
+					<desc>Draws the contents of <param>d</param> at (<param>x</param>,
+						<param>y</param>).
+					</desc>
+					<note>The source object must be an offscreen buffer</note>
+				</method>
+				<method name="drawm">
+					<param type="Draw" name="d">source</param>
+					<param type="int" name="x">x value</param>
+					<param type="int" name="y">y value</param>
+					<param type="int" name="mode">mode</param>
+					<return type="void"/>
+					<desc>Draws the contents of <param>d</param> at (<param>x</param>,
+						<param>y</param>), using the specified <param>mode</param>.
+					</desc>
+					<note>The source object must be an offscreen buffer. Valid modes are:
+						<const>modePaint, modeErase, modeMask, modeInvert, modeOverlay, modePaintInverse, modeSwap</const>.
+					</note>
+				</method>
+			</object>
+			<object name="Event">
+				<desc>The Event object provides details about the current user event. Depending
+					on the event that occured, only some of the properties will provide
+					useful information. There is a global Event object named 'event', so there
+					is no need for the user to create one.
+				</desc>
+				<sdesc>Data related to the current event.</sdesc>
+				<property type="int" name="x">
+					<desc>The relative horizontal location at which the event occured</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>The relative vertical location at which the event occured</desc>
+				</property>
+				<property type="int" name="nx">
+					<desc>The relative horizontal location in native pixels at which the event occured</desc>
+				</property>
+				<property type="int" name="ny">
+					<desc>The relative vertical location in native pixels at which the event occured</desc>
+				</property>
+				<property type="bool" name="inside">
+					<desc>True if the pen location is within the object</desc>
+				</property>
+				<property type="int" name="value">
+					<desc>The new value of the object</desc>
+				</property>
+				<property type="int" name="prev">
+					<desc>The previous value of the object</desc>
+				</property>
+				<property type="char" name="key">
+					<desc>The key entered or hard key pressed</desc>
+				</property>
+				<property type="int" name="code">
+					<desc>The form redraw code specified in the call to
+						<xref node="mUIForm-redraw">UIForm.redraw()</xref>. If the form is
+						being redrawn by the system, code is 0x8000</desc>
+				</property>
+			</object>
+			<object name="UIApp">
+				<desc>The UIApp object represents your application. A global UIApp object is
+					created by the app designer or resource language, using the name that you provide. Do not create
+					UIApp objects manually.
+				</desc>
+				<sdesc>Represents the application.</sdesc>
+				<property type="string" name="version">
+					<desc>Gets the string version of the current application.</desc>
+				</property>
+				<property type="string" name="creator">
+					<desc>Gets the creator id of the current application.</desc>
+				</property>
+				<property type="string" name="launchArgs">
+					<desc>Gets the string passed to your app when launched. See <a href="mlaunchCustomString.html">launchCustomString</a>.</desc>
+				</property>
+				<method name="getdepth">
+					<return type="int">color depth</return>
+					<desc>Gets the current color depth in bits per pixel.</desc>
+				</method>
+				<method name="setdepth">
+					<param type="int" name="bits">desired bits per pixel</param>
+					<return type="bool">true if successful</return>
+					<desc>Sets the current color depth to <param>bits</param> bits per pixel.
+						Returns true if successful. This will fail if the hardware does not
+						support the the color depth.
+					</desc>
+				</method>
+				<method name="getScreenAttrib">
+					<param type="int" name="attrib">attribute to retrieve</param>
+					<return type="int">attribute value</return>
+					<desc>Retrieves various screen attributes. This method is only supported
+						on OS 5 and higher - it will always return 0 on earlier OSes.
+					</desc>
+					<note>Valid attribs are: <const>screenWidth, screenHeight, screenDensity,
+						screenResolutionX, screenResolutionY</const>.
+					</note>
+				</method>
+				<method name="getSysPref">
+					<param type="int" name="prefID">preference ID to retreive</param>
+					<return type="int">system preference value</return>
+					<desc>Retrieves various system preference values.</desc>
+					<note>Valid preferences are: <const>sysPrefSysSoundVolume,
+						sysPrefGameSoundVolume, sysPrefAlarmSoundVolume</const>.
+					</note>
+				</method>
+				<method name="hookhard">
+					<param type="bool" name="hook">true to hook the hard keys</param>
+					<return type="void"/>
+					<desc>Enables the app to handle the hard keys (Memo, Address, etc.). If
+						<param>hook</param> is false, the system will process the keys. If
+						<param>hook</param> is true, pressing the hard keys will generate
+						calls to the current form's onhkey handler.
+					</desc>
+				</method>
+				<method name="abort">
+					<return type="void"/>
+					<desc>Forcefully exits the application. This method should only be called
+						in the case of a fatal error since it aborts the application
+						immediately without calling any handlers. If you would like to
+						display an error message before exiting, using <xref node="mfatal">fatal</xref>
+						instead.
+					</desc>
+				</method>
+				<handler name="onstart">Called when the application is started. All app
+					initialization should occur here.
+				</handler>
+				<handler name="onstop">Called when the application is exiting. All app
+					cleanup work should occur here, and should execute quickly. There is no way
+					to keep the app from exiting.
+				</handler>
+			</object>
+			<object name="UIButton">
+				<desc>The UIButton object represents a button in your application. The app
+					designer automatically creates objects of this type for each button in your
+					application. Do not create UIButton objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control is
+						invisible.
+					</p>
+				</desc>
+				<sdesc>A button created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="int" name="bmpid">
+					<desc>Sets the default bitmap for a graphic control. This property cannot be read.
+						Ex. button.bmpid = newbitmap.id;
+					</desc>
+				</property>
+				<property type="int" name="sbmpid">
+					<desc>Sets the selected bitmap for a graphic control. This property cannot be read.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the button caption. Do not use for graphic controls.</desc>
+				</property>
+				<handler name="onselect">Called when the button is tapped.</handler>
+			</object>
+			<object name="UICheckbox">
+				<desc>The UICheckbox object represents a checkbox in your application. The app
+					designer automatically creates objects of this type for each checkbox in your
+					application. Do not create UICheckbox objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control is
+						invisible.
+					</p>
+				</desc>
+				<sdesc>A checkbox created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="int" name="checked">
+					<desc>Gets or sets the check on the checkbox</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the checkbox caption.</desc>
+				</property>
+				<handler name="onselect">Called when the checkbox is tapped. UICheckbox.checked
+					contains the new value.
+				</handler>
+			</object>
+			<object name="UIFBitmap">
+				<desc>The UIFBitmap object represents a form bitmap in your application. The app
+					designer automatically creates objects of this type for each form bitmap in
+					your application. Do not create UIFBitmap objects manually.
+					<p>
+						Setting the x and y properties may only be done when the bitmap is
+						invisible.
+						bitmap must first be made invisible, then visible again to redraw it.
+					</p>
+				</desc>
+				<sdesc>A form bitmap created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of bitmap location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of bitmap location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets the width of the bitmap.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets the height of the bitmap.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+			</object>
+			<object name="UIField">
+				<desc>
+					<p>The UIField object represents a field in your application. The app
+					designer automatically creates objects of this type for each field in you
+					application. Do not create UIField objects manually.</p>
+					<p>For details on how to associate a field to a scroll bar, see
+					<a href="oUIScroll.html">UIScroll</a></p>
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A field created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="editable">
+					<desc>Sets whether of not the field can be edited. This property cannot be read.</desc>
+				</property>
+				<property type="bool" name="numeric">
+					<desc>Sets whether of not the field is restricted to numbers. This property cannot be read.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the text of the field.</desc>
+				</property>
+				<property type="int" name="inspt">
+					<desc>Gets or sets the insertion point as an index into the text.</desc>
+				</property>
+				<property type="string" name="seltext">
+					<desc>Gets or sets the selected text. Setting the text overwrite the current
+						selection, or insert the text at the insertion point if there is no
+						selection.
+					</desc>
+				</property>
+				<property type="int" name="fontid">
+					<desc>Gets or sets the field font. Crashes on OS &lt; 3.5 (OS bug)</desc>
+					<note>Valid font ids are: <const>fntStandard, fntBold, fntLarge, fntSymbol,
+						fntSymbol11, fntSymbol7, fntLED, fntLargeBold</const>
+					</note>
+				</property>
+				<property type="int" name="scrollpos">
+					<desc>Gets the offset of the first visible character in the first visible
+						line in the field.
+					</desc>
+				</property>
+				<property type="int" name="dirty">
+					<desc>Gets or sets the dirty attribute.</desc>
+				</property>
+				<property type="int" name="underline">
+					<desc>Sets the underline style of a field. Valid values are ulNone, ulDot, ulSolid.</desc>
+				</property>
+				<method name="insert">
+					<param type="string" name="text">text to insert</param>
+					<return type="void"/>
+					<desc>Inserts <param>text</param> at the current insertion point.</desc>
+				</method>
+				<method name="select">
+					<param type="int" name="start">first character index</param>
+					<param type="int" name="end">last character index</param>
+					<return type="void"/>
+					<desc>Sets the selection to the characters inclusively between
+						<param>start</param> and <param>end</param>.
+					</desc>
+				</method>
+				<method name="cut">
+					<return type="void"/>
+					<desc>Cuts the current selection and places it on the clipboard.</desc>
+				</method>
+				<method name="copy">
+					<return type="void"/>
+					<desc>Copies the current selection to the clipboard.</desc>
+				</method>
+				<method name="paste">
+					<return type="void"/>
+					<desc>Paste the contents of the clipboard to the current insertion point.
+					</desc>
+				</method>
+				<method name="undo">
+					<return type="void"/>
+					<desc>Undoes the last editing operation. Some operations cannot be undone.
+					</desc>
+				</method>
+				<method name="del">
+					<param type="int" name="start">first character index</param>
+					<param type="int" name="end">last character index</param>
+					<return type="void"/>
+					<desc>Deletes the text inclusively between the <param>start</param> and
+						<param>end</param>.
+					</desc>
+				</method>
+				<method name="grabfocus">
+					<return type="void"/>
+					<desc>Sets the focus of the current form to this field.</desc>
+				</method>
+				<method name="relfocus">
+					<return type="void"/>
+					<desc>Releases the focus from this field.</desc>
+				</method>
+				<method name="scroll">
+					<param type="int" name="nLines">number of lines to scroll down</param>
+					<return type="void"/>
+					<desc>Scrolls the field down <param>nLines</param> lines. If <param>nLines</param>
+						is negative, the field is scrolled up. Call this method if the user
+						drags a scroll bar associated with this field. See
+						<xref node="oUIScroll">UIScroll</xref> for details.
+					</desc>
+				</method>
+				<method name="phonelookup">
+					<return type="void"/>
+					<desc>Searches the address book and replaces the selected text or
+						word at the cursor with the matching entry from the address book.
+					</desc>
+				</method>
+				<handler name="onchange">
+					Called when a key event has occured in the field, usually causing the contents
+					of the field to change. To get the new value of the field, retrieve the
+					text property.
+				</handler>
+				<handler name="onhchange">
+					Called when the height of the field has changed. If this field is associated
+					with a scroll bar, this is the time to call
+					<xref node="mUIScroll-update">UIScroll.update</xref>
+				</handler>
+			</object>
+			<object name="UIForm" keywords="modal">
+				<desc><p>The UIForm object represents a form in your application. The app designer or compiler
+					automatically creates objects of this type for each form in your application.
+					Do not create UIForm objects manually.</p>
+					<p>There are two types of forms - regular and modal (see also <a href=
+					"tFormsControls.html">Forms and Controls</a>). Only one regular form can
+					be displayed at a time. When you load a regular form, any previous normal form is
+					first closed. A modal form is displayed on top of another form (like a dialog
+					box on desktop operating systems). The way that a form must be opened and closed
+					depends on whether it is a regular form or a modal form. The rules are as follows:
+					</p>
+					<ul>
+					<li><b>Regular Forms:</b> A regular form is opened using the
+					<a href="mUIForm-load.html">load</a> method. Since only one regular form can be
+					open at a time, loading a new form closes the previously opened regular form
+					(if there was one). Calling load does not immediately open the form. Instead, it
+					posts a message to the OS event queue which will eventually open it. Because of
+					this you cannot access any controls on the form until the onopen handler is
+					executed.
+					</li>
+					<li><b>Modal Forms:</b> A modal form is opened using the
+					<a href="mUIForm-domodal.html">domodal</a> method. The domodal method does not
+					open the form immediately, instead it schedules the form to be opened in the
+					same way as the load method does for regular forms. A modal form opened with
+					domodal must be closed by using the <a href="mUIForm-close.html">close</a>
+					method. You may NOT load a regular form from a modal form.
+					</li>
+					<li><b>Modal Forms as Dialogs:</b> A modal form can also be opened as a dialog
+					using the <a href="mUIForm-dodialog.html">dodialog</a> method. When opened as a
+					dialog, the modal form is opened immediately and the dodialog method does not
+					return until the user selects a button on the form. Once a button is pressed,
+					the form closes, and the id of the button is returned. <b>Note:</b> A modal form
+					that is opened with dodialog will not receive events, and the controls on the
+					form will not receive events.
+					</li>
+					</ul>
+					<p><b>Resizable Forms:</b> OrbC allows your application to easily handle
+					screen layout changes on devices with a dynamic input area (only OS 5+ devices
+					and later Sony devices are supported). The runtime automatically resizes and
+					moves forms and controls according to the form and control properties. In most
+					cases this will be sufficient. When more complex behavior is required (such
+					as needing to stetch two controls to each grow half of the additional space),
+					you must write a handler for the onresize event. When the event is called, the
+					automatic resizing has already been done, so only the more complicated controls
+					need to be adjusted. The form's current width and height should be used to
+					determine the new control positions and sizes.
+					</p>
+					<p><b>Resizable Form Note:</b> The Tungsten T3 device shipped before Palm
+					standardized the dynamic input area APIs. In order to fully use resizable
+					forms on a T3, the T3 DIA compatibility libraries must be installed on the
+					device. For you convenience, these library are included in the {product}
+					installation directory.</p>
+				</desc>
+				<sdesc>A form created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets the x value of form location</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets the y value of form location</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets the width of the form</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets the height of the form</desc>
+				</property>
+				<property type="string" name="title">
+					<desc>Gets or sets the title of the form</desc>
+				</property>
+				<property type="int" name="menu">
+					<desc>Sets the menu bar of the form using the id of the menu bar.
+					<code>form.menu = menubar.id</code>. This property is write-only.</desc>
+				</property>
+				<property type="bool" name="obscured">
+					<desc>Gets whether or not something is obscuring the form. This property
+						is true when a menu or pop-up list is displayed above the form.
+					</desc>
+				</property>
+				<method name="load">
+					<return type="void"/>
+					<desc>Loads the form and sets it to be displayed. If another form is currently
+						open, it is first closed. Returns immediately.
+					</desc>
+				</method>
+				<method name="close">
+					<return type="void"/>
+					<desc>Close the form and return to the previous form. This should only
+						be called on a modal form, and is usually called in an onselect handler
+						for a button.
+					</desc>
+				</method>
+				<method name="redraw">
+					<param type="int" name="code">redraw code</param>
+					<return type="void"/>
+					<desc>Queues an event to redraw the form, eventually calling the ondraw
+						handler. The <param>code</param> can be retrieved in the ondraw handler
+						through the <xref node="oEvent">Event</xref> object's code property.
+					</desc>
+				</method>
+				<method name="domodal">
+					<return type="void"/>
+					<desc>Loads the modal form and sets it to be displayed. Returns immediately.
+						To execute a modal form synchronously (to wait until the user dismisses the
+						form before continuing), use the <xref node="mevents">events()</xref> function.
+					</desc>
+					<example>
+						<desc>Displays a dialog synchronously. Calling executeDialog() will open
+							myDialog, process all its events, and return when the dialog has
+							been closed.
+						</desc>
+<code>
+bool myDialogClosed;
+handler myDialog.onclose() {
+  myDialogClosed = true;
+}
+void executeDialog() {
+  myDialogClosed = false;
+  myDialog.domodal();
+  while (!myDialogClosed) {
+    events(true);
+  }
+}</code>
+					</example>
+				</method>
+				<method name="dodialog">
+					<return type="int">The id of the button pressed</return>
+					<desc>Loads the modal form, displays it as a dialog, and returns the id of the
+						button the user pressed. The form and its controls will not receive events.
+					</desc>
+					<example>
+						<desc>
+							Open the dialog <i>myDialog</i> which has two buttons (<i>button1</i> and
+							<i>button2</i>), and display which button was pressed.
+						</desc>
+<code>
+int buttonID;
+buttonID = myDialog.dodialog();
+if (buttonID == button1.id) {
+  alert("Button 1 pressed");
+} else if (buttonID == button2.id) {
+  alert("Button 2 pressed");
+}</code>
+					</example>
+				</method>
+				<method name="timer">
+					<param type="int" name="nticks">number of ticks to wait</param>
+					<return type="void"/>
+					<desc>Sets a timer to be fired after <param>nticks</param> clock ticks
+						(approx. 1/100 sec). When the timer is fired, the form's ontimer handler
+						is called. The form will only receive the timer event if it is the
+						active window.
+					</desc>
+				</method>
+				<method name="select">
+					<param type="int" name="groupid">control group id</param>
+					<param type="int" name="ctrlid">control id</param>
+					<return type="void"/>
+					<desc>Selects a pushbutton in the group specified by <param>groupid</param>.
+						Use the id member of the pushbutton as <param>ctrlid</param>.
+					</desc>
+				</method>
+				<method name="help">
+					<param type="UIString" name="str">string to display</param>
+					<return type="void"/>
+					<desc>Display a help form with the specified string <param>str</param> as the
+						help text (same form displayed when clicking the (i) icon on a modal form).
+						The string <param>str</param> is the name of one of the strings in your
+						project.
+					</desc>
+				</method>
+				<method name="activefield">
+					<return type="UIField*">Pointer to the active field, or null</return>
+					<desc>Retrieve the pointer of the currently active field, or null if no
+						field is active.
+					</desc>
+				</method>
+				<method name="keyboard">
+					<return type="void"/>
+					<desc>Displays the system keyboard dialog if there is an active field on
+						the form.
+					</desc>
+				</method>
+				<handler name="onopen">Called when the form is first opening, but before it is
+					displayed. No Draw methods can be called at this point, but controls on the form
+					can be manipulated. This is the appropriate time to initialize the controls
+					(e.g. by checking checkboxes, filling lists).
+				</handler>
+				<handler name="onclose">Called when the form is closing. No drawing can be done
+					at this point.
+				</handler>
+				<handler name="ondraw">Called when the system requires the form to be drawn.
+				</handler>
+				<handler name="onresize">Called after the form and its controls have been resized.
+					This event is only generated for resizable form. In this handler, only controls
+					should be moved or resized - no drawing is allowed.
+				</handler>
+				<handler name="onchar">Called when the user enters a keystroke when no field
+					is active.
+				</handler>
+				<handler name="onhkey">Called when the user presses one of the hard keys, or a virtual
+					key press is generated by the OS. When
+					called, event.key will be one of <const>ev0, ev1, ev2, ev3,
+					evNextField, evPrevField, evUp, evDown, evLeft, evRight, evSelect,
+					evJogPush, evJogPushRepeat, evJogRelease</const>.
+					To receive this event for the four application buttons, you
+					must first call <xref node="mUIApp-hookhard">UIApp.hookhard()</xref>.
+					<const>evLeft, evRight,</const> and <const>evSelect</const> will only occur on a
+					device with a 5-way control (e.g. Tungsten T). <const>evJog</const> only occur
+					on a device with a Jog control.
+				</handler>
+				<handler name="ontimer">Called when the active form has set a timer and it has
+					expired. This is the correct place to set a new timer if you want the timer
+					to fire repeatedly.
+				</handler>
+				<handler name="onpendown">Called when the pen is placed down on the screen
+					within the bounds of this form.
+				</handler>
+				<handler name="onpenup">Called when the pen is removed from the screen and was
+					originally placed down on the screen within the bounds of this form.
+				</handler>
+				<handler name="onpenmove">Called when the pen is moved on the screen and was
+					originally placed down on the screen within the bounds of this form.
+				</handler>
+			</object>
+			<object name="UIGadget">
+				<desc>The UIGadget object is used by user-defined gadgets. Each user defined
+					gadget object type contains an instance of UIGadget as its first member.
+					See the topic <xref node="tGadgets">Gadgets</xref> for full details.
+					<p>
+						The x, y, w, and h properties may only be set when the gadget
+						is invisible. Also, if a Draw object is currently attached to the
+						gadget, it must be re-attached or drawing will occur in the wrong
+						location.
+					</p>
+				</desc>
+				<sdesc>Base implementation of a gadget.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<handler name="onopen">Called when the form containing the gadget is being
+					opened. No Draw method can be called at this time. This is called after the form's
+					onopen event.
+				</handler>
+				<handler name="onclose">Called when the form containing the gadget is being
+					closed. No drawing can be done at this time. This is called before the form's
+					onclose event.
+				</handler>
+				<handler name="ondraw">Called when the form containing the gadget needs to be
+					drawn. This is called after the form's ondraw event.
+				</handler>
+				<handler name="onpendown">Called when the pen is placed down on the screen
+					within the bounds of this gadget.
+				</handler>
+				<handler name="onpenup">Called when the pen is removed from the screen and was
+					originally placed down on the screen within the bounds of this gadget.
+				</handler>
+				<handler name="onpenmove">Called when the pen is move on the screen and was
+					originally placed down on the screen within the bounds of this gadget.
+				</handler>
+			</object>
+			<object name="UILabel">
+				<desc><p>The UILabel object represents a label in your application. The app
+					designer automatically creates objects of this type for label item in your
+					application. Do not create UILabel objects manually.</p>
+					<p>Although the text of the label can be changed programmatically using the
+					<i>text</i> property, the length of the label (in characters) cannot exceed
+					the length of the text defined in the visual designer. So, if the original
+					text was "ABC", and you attempt to set it to "WXYZ", the new text would be
+					truncated to just the first 3 characters, "WXY".
+					</p>
+					<p>
+						Setting the x and y properties may only be done when the control
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A label created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the label caption.</desc>
+				</property>
+			</object>
+			<object name="UIList">
+				<desc>The UIList object represents a list in your application. The app
+					designer automatically creates objects of this type for each list in you
+					application. Do not create UIList objects manually.
+					<p>
+						Setting the x, y, w, and h properties can only be done on a list
+						associated with a popup, and only when it is not visible.
+					</p>
+				</desc>
+				<sdesc>A list created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control. This property only works on OS
+					3.5 and higher. This property cannot be read.</desc>
+				</property>
+				<property type="int" name="selitem">
+					<desc>Gets or sets the item selected. Evaluates to -1 if no item is selected.
+					</desc>
+				</property>
+				<property type="int" name="topitem">
+					<desc>Sets the top visible item. This property cannot be read.</desc>
+				</property>
+				<property type="int" name="count">
+					<desc>Gets the number of items in the list.</desc>
+				</property>
+				<method name="setitems">
+					<param type="int" name="num">number of items</param>
+					<param type="string*" name="ptext">array of strings</param>
+					<return type="bool">true if successful</return>
+					<desc>Sets the items in the list. <param>ptext</param> is an array of
+						<param>num</param> strings in the order in which they will be displayed
+						in the list.
+					</desc>
+				</method>
+				<method name="setitemslist">
+					<param type="StringList" name="sl">string list of items</param>
+					<return type="bool">true if successful</return>
+					<desc>Sets the items in the list to the contents of <param>sl</param>.</desc>
+				</method>
+				<method name="gettext">
+					<param type="int" name="index">index of item</param>
+					<return type="string">text of desired item</return>
+					<desc>Gets the text assosciate with the item at location <param>index</param>.
+					</desc>
+				</method>
+				<method name="makevisible">
+					<param type="int" name="index">index of item</param>
+					<return type="void"/>
+					<desc>Makes the item at location <param>index</param> visible.</desc>
+				</method>
+				<method name="scroll">
+					<param type="int" name="lines">lines to scroll</param>
+					<return type="bool">true if the list was actually scrolled</return>
+					<desc>Scrolls the list down <param>lines</param> lines. If
+						<param>lines</param> is negative, the list is scrolled up. Returns true
+						if the list is actually scrolled.
+					</desc>
+				</method>
+				<method name="popup">
+					<return type="int">the selected item, or -1 if canceled</return>
+					<desc>Displays the list as a popup list and returns the item selected or
+						-1 if none selected.
+					</desc>
+				</method>
+				<method name="redraw">
+					<return type="void"/>
+					<desc>Redraws the list. After the list items are set, the list should be
+						redrawn. Just like other drawing functions, this may not be called
+						in a forms onopen handler.
+					</desc>
+				</method>
+				<method name="setdrawfunc">
+					<param type="UIListDrawFunc" name="func">custom drawing function</param>
+					<return type="void"/>
+					<desc>Sets the custom drawing function for the list. Specifying null causes
+						the OS to draw the list itself.
+					</desc>
+					<note>UIListDrawFunc is defined as <const>funcptr UIListDrawFunc void(int item, int x, int y, int w, int h, string text)</const>,
+						where <i>item</i> is the 0-based
+						item index currently being drawn, <i>x, y</i> are the window-relative
+						coordinates of the upper left of the current item, and <i>text</i> is the
+						text of the item to draw. The OS sets the foreground and background color
+						before calling the function, according to whether the item is selected or not.
+					</note>
+					<example>
+						<desc>Create a color selection list.</desc>
+<code>
+void drawColorList(int item, int x, int y, int w, int h, string text);
+string colorNames[3] = { "red", "green", "blue" };
+int colorRed[3] = { 255, 0, 0 };
+int colorGreen[3] = { 0, 255, 0 };
+int colorBlue[3] = { 0, 0, 255 };
+
+Draw draw;
+handler mainform.onopen() {
+  draw.attachForm(this);
+  listColor.setitems(3, colorNames);
+  listColor.setdrawfunc(drawColorList);
+}
+
+void drawColorList(int item, int x, int y, int w, int h, string text) {
+  draw.begin();
+  draw.textTrunc(x + 12, y, w - 12, text);
+  draw.fgRGB(colorRed[item], colorGreen[item], colorBlue[item]);
+  draw.rect(clrFG, x, y+1, x+9, y+10, 0);
+  draw.end();
+}</code>
+					</example>
+				</method>
+				<handler name="onselect">Called when the user makes a selection. event.value
+					contains the newly selected item.
+				</handler>
+			</object>
+			<object name="UIMenuItem">
+				<desc>The UIMenuItem object represents a menu item in your application. The app
+					designer automatically creates objects of this type for each menu item in your
+					application. Do not create UIMenuItem objects manually.
+				</desc>
+				<sdesc>A menu item created in the app designer or resource language.</sdesc>
+				<handler name="onselect">Called when the user selects the menu item.</handler>
+			</object>
+			<object name="UIPopup">
+				<desc>
+					<p>The UIPopup object represents a popup trigger in your application. The app
+					designer automatically creates objects of this type for each popup in you
+					application. Do not create UIPopup objects manually.</p>
+					<p>When a popup is selected, it should display a <a href="oUIList.html">list</a>
+					from which the user may
+					select an option. To do this, the list must be associated with the popup. In
+					the app designer or resource language, create the popup and the list in the same location. Set the
+					"Trigger ID" property of the list to the name of the popup.</p>
+					<p>Handling the selection of the list item can be done in two ways (these
+					methods may not be used together - you may only define ONE of the two
+					handlers):</p>
+					<ul>
+					<li>Define a handler for the popup's onselect event. In this handler call the
+					<a href="mUIList-popup.html">popup()</a> method of the list, which will
+					return the index of the selected item (or -1). Use this method if you need to
+					set the contents of the list when the popup is selected.</li>
+					<li>Define a handler for the popup's onlistselect event. This event provides
+					you with the index of the selected item and the previously selected item.</li>
+					</ul>
+					<p>When an item from the list is selected, the text of the popup will be updated
+					but ONLY if no handler is defined. If you defing a handler, you will need to
+					update the popup text manually. Also, when the form is first opened, the
+					application must set the text correctly.
+					</p>
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A popup trigger created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the popup caption.</desc>
+				</property>
+				<handler name="onselect">Called when the user taps the popup trigger. If this
+					popup should display a list (which is the primary purpose of the control), this
+					is the appropriate time to call
+					<xref node="mUIList-popup">UIList.popup()</xref>. If this handler is defined,
+					<const>onlistselect</const> will not be executed.
+				</handler>
+				<handler name="onlistselect">Called when/if the user selects an item from the
+					popup list. event.value contains the newly selected item, and event.prev
+					contains the previously selected item. This handler will only be executed if
+					<const>onselect</const> is not defined.
+				</handler>
+			</object>
+			<object name="UIPushButton">
+				<desc>The UIPushButton object represents a push button in your application. The app
+					designer automatically creates objects of this type for each push button in
+					your application. Do not create UIPushButton objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control is
+						invisible.
+					</p>
+				</desc>
+				<sdesc>A push button created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="int" name="bmpid">
+					<desc>Sets the default bitmap for a graphic control. This property cannot be read.
+						Ex. button.bmpid = newbitmap.id;
+					</desc>
+				</property>
+				<property type="int" name="sbmpid">
+					<desc>Sets the selected bitmap for a graphic control. This property cannot be read.</desc>
+				</property>
+				<property type="int" name="checked">
+					<desc>Gets or sets the selection of the pushbutton. However, this method does not
+						uncheck the other buttons in the group. In order to properly select a push
+						button from a group, use <xref node="mUIForm-select">UIForm.select()</xref>.
+					</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the pushbutton caption. Do not use for graphic controls.</desc>
+				</property>
+				<handler name="onselect">Called when the push button is tapped.
+					UIPushButton.checked contains the new value.
+				</handler>
+			</object>
+			<object name="UIRepeatButton">
+				<desc>The UIRepeatButton object represents a repeat button in your application.
+					The app designer or compiler automatically creates objects of this type for each repeat
+					button in your application. Do not create UIRepeatButton objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control is
+						invisible.
+					</p>
+				</desc>
+				<sdesc>A repeat button created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="int" name="bmpid">
+					<desc>Sets the default bitmap for a graphic control. This property cannot be read.
+						Ex. button.bmpid = newbitmap.id;
+					</desc>
+				</property>
+				<property type="int" name="sbmpid">
+					<desc>Sets the selected bitmap for a graphic control. This property cannot be read.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the repeatbutton caption. Do not use for graphic controls.</desc>
+				</property>
+				<handler name="onselect">Called when the repeat button is tapped, or hold long
+					enough to generate another event.
+				</handler>
+			</object>
+			<object name="UIScroll">
+				<desc>
+					<p>The UIScroll object represents a scroll bar in your application. The app
+					designer automatically creates objects of this type for each scroll bar in
+					your application. Do not create UIScroll objects manually.</p>
+					<p>Scroll bars can be used by themselves, but are usually used with
+					a <a href="oUIField.html">UIField</a>. There a few simple things you need
+					to do to associate a field with a scroll bar.</p>
+					<ul>
+						<li>Set the "Has Scroll" property of the field</li>
+						<li>In the form's onopen handler, call <a href="mUIScroll-update.html">UIScroll.update</a></li>
+						<li>In the field's onhchange handler, call <a href="mUIScroll-update.html">UIScroll.update</a></li>
+						<li>In either the onmove OR ondone handler, call
+							<a href="mUIField-scroll.html">UIField.scroll</a>(event.value - event.prev).
+							Follow that with a call
+							to <a href="mUIScroll-update.html">update</a></li>
+						<li>When you set the text of the control using the UIField.text
+							property, call <a href="mUIScroll-update.html">UIScroll.update</a></li>
+					</ul>
+					<p>
+						Setting the x, y, w, and h properties may only be set when the scrollbar
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A scroll bar created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control. This property is only supported on OS 3.5 and higher.</desc>
+				</property>
+				<property type="int" name="value">
+					<desc>Gets or sets the value of the scroll bar position.</desc>
+				</property>
+				<property type="int" name="min">
+					<desc>Gets or sets the minimum value.</desc>
+				</property>
+				<property type="int" name="max">
+					<desc>Gets or sets the maximum value.</desc>
+				</property>
+				<property type="int" name="page">
+					<desc>Gets or sets the page value.</desc>
+				</property>
+				<method name="update">
+					<param name="field" type="UIField">The field associated with this scroll bar</param>
+					<return type="void"/>
+					<desc>Updates the position, min, max, and page values of this scroll bar to
+						match the associated <param>field</param>. Call this method when the
+						height of the field has changed, or when the user drags the scroll bar.
+					</desc>
+				</method>
+				<handler name="onmove">Called when the user has moved the scroll bar, but has not
+					released it yet. event.value has the new value, and event.prev has the
+					previous value. If you implement this handler, you do NOT need to implement
+					ondone.
+				</handler>
+				<handler name="ondone">Called when the user stops moving the slider.
+					event.value has the new value, event.prev has the previous value. If you
+					implement this handler, you do NOT need to implement onmove.
+				</handler>
+			</object>
+			<object name="UISelector">
+				<desc>The UISelector object represents a selector in your application. The app
+					designer automatically creates objects of this type for each selector in you
+					application. Do not create UISelector objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the control
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A selector created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="bool" name="enabled">
+					<desc>Gets or sets whether this control will receive input.</desc>
+				</property>
+				<property type="string" name="text">
+					<desc>Gets or sets the selector caption.</desc>
+				</property>
+				<handler name="onselect">Called when the selector is tapped.</handler>
+			</object>
+			<object name="UISlider">
+				<desc>The UISlider object represents a slider in your application. The app
+					designer automatically creates objects of this type for each slider in your
+					application. Do not create UISlider objects manually.
+					<p>
+						Setting the x, y, w, and h properties may only be set when the slider
+						is invisible.
+					</p>
+				</desc>
+				<sdesc>A slider created in the app designer or resource language.</sdesc>
+				<property type="int" name="x">
+					<desc>Gets or sets the x value of control location.</desc>
+				</property>
+				<property type="int" name="y">
+					<desc>Gets or sets the y value of control location.</desc>
+				</property>
+				<property type="int" name="w">
+					<desc>Gets or sets the width of the control.</desc>
+				</property>
+				<property type="int" name="h">
+					<desc>Gets or sets the height of the control.</desc>
+				</property>
+				<property type="bool" name="visible">
+					<desc>Gets or sets the visibility of the control.</desc>
+				</property>
+				<property type="int" name="value">
+					<desc>Gets or sets the value of the slider position.</desc>
+				</property>
+				<property type="int" name="min">
+					<desc>Gets or sets the minimum value.</desc>
+				</property>
+				<property type="int" name="max">
+					<desc>Gets or sets the maximum value.</desc>
+				</property>
+				<property type="int" name="page">
+					<desc>Gets or sets the page value.</desc>
+				</property>
+				<handler name="onmove">Called when the user has moved the slider, but has not
+					released it yet. event.value has the new value.
+				</handler>
+				<handler name="ondone">Called when the user stops moving the slider.
+					UISlider.value has the new value.
+				</handler>
+			</object>
+			<object name="UIString">
+				<desc>A UIString object represents a project string created in the app designer or resource language.
+					An object of this type is automatically created by the app designer or compiler for each
+					project string defined in you application. Do not create UIString objects
+					manually. A UIString can be displayed in a help form using
+					<xref node="mUIForm-help">UIForm.help()</xref>.
+					<p>A UIString can be specified directly in source code using the following
+					syntax:
+<pre>@resstring UIString <i>stringName</i> {
+  id = <i>string id number</i>
+  text = "<i>your text here</i>"
+}</pre>
+					</p>
+				</desc>
+				<sdesc>A project string created in the app designer or resource language.</sdesc>
+				<property type="string" name="text">
+					<desc>Gets the value of the string resource.</desc>
+				</property>
+			</object>
+			<topic name="ColorTables" title="Color Tables">
+				<sdesc>A table of colors by index.</sdesc>
+				<desc>
+				<import name="colortables.html"/>
+				</desc>
+			</topic>
+		</category>
+		<topic name="typeStrings" title="Type Strings">
+			<sdesc>How type strings work.</sdesc>
+			<desc>
+			<import name="lib_typestrings.html"/>
+			</desc>
+		</topic>
+		<topic name="highDensity" title="High Density Graphics">
+			<sdesc>How to use OS 5 high density graphics.</sdesc>
+			<desc>
+			<import name="lib_highdensity.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="AddIns" title="Native Add-ins">
+		<sdesc>Creating and using native add-ins.</sdesc>
+		<topic name="NativeOverview" title="Add-in Overview">
+			<sdesc>Overview and usage of native add-ins.</sdesc>
+			<desc>
+			<import name="native_overview.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeCreating" title="Creating Add-ins">
+			<sdesc>Creating native add-ins.</sdesc>
+			<desc>
+			<import name="native_creating.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeVM" title="VM Architecture">
+			<sdesc>OrbC virtual machine architecture.</sdesc>
+			<desc>
+			<import name="native_arch.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeObjects" title="Native Structs">
+			<sdesc>Implementing native structs.</sdesc>
+			<desc>
+			<import name="native_objects.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeGadgets" title="Native Gadgets">
+			<sdesc>Implementing native gadgets.</sdesc>
+			<desc>
+			<import name="native_gadgets.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeSysEvents" title="System Events">
+			<sdesc>Intercepting system events.</sdesc>
+			<desc>
+			<import name="native_sysevt.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeTypeStrings" title="Type Strings">
+			<sdesc>Processing type string.</sdesc>
+			<desc>
+			<import name="native_typestrings.html"/>
+			</desc>
+		</topic>
+		<topic name="NativeReference" title="Add-in Reference">
+			<sdesc>OrbC native interface reference.</sdesc>
+			<desc>
+			<import name="native_reference.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="Porting" title="Porting PocketC Applications" product="PocketC">
+		<sdesc>Porting a legacy PocketC application to PocketC Architect</sdesc>
+		<topic name="Approach" title="General Approach" keywords="pc_ headers">
+			<sdesc>The basics of to porting to PocketC Architect.</sdesc>
+			<desc>
+				<import name="pc_porting_approach.html"/>
+			</desc>
+		</topic>
+		<topic name="BreakingChanges" title="Breaking Changes" keywords="Deprecated functions,Changed functions,Native libraries">
+			<sdesc>Breaking changes and common porting errors.</sdesc>
+			<desc>
+				<import name="pc_porting_breaking.html"/>
+			</desc>
+		</topic>
+		<topic name="APInotes" title="API Conversion Notes">
+			<sdesc>Additional notes on converting from old APIs to new.</sdesc>
+			<desc>
+				<import name="pc_porting_api.html"/>
+			</desc>
+		</topic>
+		<topic name="LegacyAPI" title="Legacy API">
+			<sdesc>Reference for legacy PocketC APIs.</sdesc>
+			<desc>
+				<import name="pc_porting_legacyAPI.html"/>
+			</desc>
+		</topic>
+	</book>
+	<book name="About" title="About OrbWorks" product="OrbForms">
+		<sdesc>About OrbWorks.</sdesc>
+		<topic name="ContactInfo" title="Contact Info">
+			<sdesc>How to contact OrbWorks.</sdesc>
+			<desc>
+			<import name="about_orbworks.html"/>
+			</desc>
+		</topic>
+	</book>
+</Documentation>

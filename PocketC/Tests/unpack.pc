@@ -1,0 +1,12 @@
+main() {
+  char charbuf[4];
+  int  intbuf[1];
+  
+  charbuf[0]=0x75;
+  charbuf[1]=0x85;
+  charbuf[2]=0x95;
+  charbuf[3]=0xa5;
+ 
+  unpack(&intbuf[0], charbuf, "<4", 4);
+  puts("unpack test b = " + hex(intbuf[0]));
+}

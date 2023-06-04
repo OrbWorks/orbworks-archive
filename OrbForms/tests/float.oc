@@ -1,0 +1,12 @@
+#include "tests.h"
+
+struct X { int a; };
+
+void main() {
+  float f = 10.0;
+  X x = { 1 };
+  test(f < 20, "10.0 < 20");
+  //test(x == x, "x = x");
+  final();
+}
+    

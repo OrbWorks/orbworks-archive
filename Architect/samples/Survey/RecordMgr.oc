@@ -1,0 +1,121 @@
+// RecordMgr.oc
+// Contains the RecordManager, which handles interactions with the
+// database and manages the record controls (> < + and "Record X of X")
+
+void RecordManager.setControls(UILabel _label, UIButton _prev, UIButton _next) {
+    // since we want to be able to update the controls on more than one
+    // form, we store the controls for the current form.
+    label = _label;
+    btnPrev = _prev;
+    btnNext = _next;
+    
+    updateDisplay();
+}
+
+void RecordManager.updateDisplay() {
+    // show/hide the buttons when not applicable
+    btnPrev.visible = appPrefs.iRecord > 0;
+    btnNext.visible = appPrefs.iRecord < nRecords - 1;
+    label.text = "Record " + (appPrefs.iRecord + 1) + " of " + nRecords;
+}
+
+void RecordManager.prev() {
+    // go to the previous record
+    writeRecord();
+    appPrefs.iRecord--;
+    readRecord();
+    updateDisplay();
+}
+
+void RecordManager.next() {
+    // go to the next record
+    writeRecord();
+    appPrefs.iRecord++;
+    readRecord();
+    updateDisplay();
+}
+
+void RecordManager.add() {
+    // add a new empty record to the end
+    writeRecord();
+    addRecord();
+    updateDisplay();
+}
+
+bool RecordManager.readRecord() {
+    // read the current record from the database
+    Database db;
+    DBRecord rec;
+    bool bRet = false;
+    
+    // open the database
+    if (db.open("SurveyData", false)) {
+        if (db.getrec(appPrefs.iRecord, rec, true)) {
+            rec.read(&entry, typeof(entry), 1);
+            rec.close();
+            nRecords = db.nrecs;
+            bRet = true;
+        }
+        db.close();
+    }
+    return bRet;
+}
+
+void RecordManager.writeRecord() {
+    // write the current record to the database
+    Database db;
+    DBRecord rec;
+    
+    // open the database
+    if (db.open("SurveyData", false)) {
+        if (db.getrec(appPrefs.iRecord, rec, false)) {
+            rec.write(&entry, typeof(entry), 1);
+            rec.close();
+        }
+        db.close();
+    }
+}
+
+void RecordManager.addRecord() {
+    Database db;
+    DBRecord rec;
+    Entry blankEntry;
+    int iRec;
+    
+    // open the database
+    if (db.open("SurveyData", false)) {
+        iRec = -1;
+        if (db.newrec(&iRec, rec)) {
+            // write a new blank entry
+            rec.write(&blankEntry, typeof(blankEntry), 1);
+            rec.close();
+            // clear out the current entry
+            entry = blankEntry;
+            nRecords = db.nrecs;
+            appPrefs.iRecord = iRec;
+        }
+        db.close();
+    }
+}
+
+void RecordManager.init() {
+    // when the app starts, create the database if it doesn't exist
+    // load the last viewed record
+    Database db;
+    DBRecord rec;
+    int iRec;
+    
+    // open the database
+    if (!readRecord()) {
+        // the database has not been created
+        if (db.create("SurveyData", "data", "Srvy", false)) {
+            db.close();
+            addRecord();
+        
+        } else {
+            // unable to create database, so exit
+            alert("Unable to create database!");
+            launch("pref");
+        }
+    }
+}

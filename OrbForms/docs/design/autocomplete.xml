@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+<title>Auto Complete - (Intellisense)</title>
+    <section>
+		<title>Overview</title>
+	    <paragraph>Auto Complete feature will help user to complete the current expression base on the what has been typed so far.  
+	    The user can press keys like Dot(.) Ctrl+Space, LeftParen to invoke the auto complete feature.  In order to find out a possible
+	    list of the keywords for the current expression context, we need to solve following problems.  
+        </paragraph>
+    </section>
+    <section>
+		<title>Find out a list of previous tokens in the expression</title>
+		<paragraph>When auto complete feature is invoked, we need to detect the previous tokens before the current text cursor location.
+		This involves step back token by token until we determine the begining location of the current expression.
+		</paragraph>
+		<paragraph>Implementation will be similiar to the lex code, but reverse the direction.  As previous token is found, we push it on a 
+		stack.  The token consists a string ptr, length, tokenid, and line number.  The process is repeated until unexpected tokens like
+		semicolon, leftbrace etc. are detected.  We need to consider a list of issues when back stepping all the token. 
+		</paragraph>
+		<paragraph>How to deal with line comments?  This is a tricky one.  We probably need keep get previous token until reach begining of the line.
+		if line comments detected, remove all the tokens in the stack which the same line number, and keep searching for previous tokens.
+		</paragraph>
+		<paragraph>How to deal with /* */ comments? As we detect */, the function will skip all the comments, and find the next /*
+		</paragraph>
+		<paragraph>How to deal with function( )?  As we detect ), the function will skip all of the parameters and find the next ( token.
+		</paragraph>
+		<paragraph>How to deal with array[ ]? As we detect ], the function will skip all of the expression in between [] and find the next [ token
+		</paragraph>
+		<paragraph>How to deal with pointer->? As we detect >, look next character for -, if pointer determined, take the next token and keep it.
+		</paragraph>
+		<paragraph>If there are any more cases, please let me know. 
+		</paragraph>
+    </section>
+    <section>
+		<title>User Inputs and the Symbol Table</title>
+		<paragraph>After each compile, the symbol information is kept in memory for the auto complete feature to determine the 
+		function parameter and object type information.  The symbol information can stored on the disk as the project is unloaded.
+		When the project is loaded, if there is symbol information file in the same directory, the symbol info will be loaded in the
+		memory.
+		</paragraph>
+		<paragraph>Depending on the user keyboard input and the expression context, we need to perform various lookup from the symbol table.
+		</paragraph>
+		<paragraph>When the user hit Ctrl+Space, base on the previous token information, and local or global status, we can determine 
+		a list of auto complete tokens for user to pick.  If no previous token is found, we list out all the global variable name, object name,
+		and function names.  If no previous token is found but found couple prefix letters, we can hilite the first possible auto complete token 
+		with the same prefix letter.  If previous token is found, we can narrow down the scope.  The scope will be limited base on the 
+		current expression context.  If the scope is an object, its methods and property will be listed out.
+		</paragraph>
+		<paragraph>When the user hit Dot (.), if the first token in the token list is a local or global variable name,  we will display its type's method
+		and property.  We can walk through the tokens, and narrow down the scope until the last one.  If the token is a method name or function,
+		we need to use the method or function return type to determine the scope.
+		</paragraph>
+		<paragraph>When the user hit left paren, determine the function signature base on the symbol table, provide parameter by parameter guidence to complete
+		the function call.  Parameters are separated by comma, and function is completed by right paren.
+		</paragraph>
+    </section>
+    <section>
+		<title>User Interface</title>
+		<paragraph>After we determine a list of possible auto-complete token for the user, we will fill a inplace edit combobox in the edit window.
+		The position will be on the right side of the text.  When the user select one of them by press enter, the token will be appended to the current
+		text cusor.
+		</paragraph>
+		<paragraph>Another idea is to keep certain special comments in the symboltable.  Maybe the comments next to a function/object/method/property/handler definition
+		are kept in memory.  When such items are listed in the combobox, as the user hilite the selection, a popup will tell them the comments for this item.
+		The purpose is basically to provide dynamic documentation as coding.
+		</paragraph>
+    </section>
+</page>

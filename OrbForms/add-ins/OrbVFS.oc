@@ -1,0 +1,114 @@
+// open modes
+const int vfsModeRead = 2;
+const int vfsModeWrite = 5;
+const int vfsModeReadWrite = 7;
+const int vfsModeCreate = 8;
+const int vfsModeTruncate = 16;
+
+// error codes
+const int vfsErrFileNotFound = 0x2a08;
+const int vfsErrFilePermissionDenied = 0x2a05;
+const int vfsErrCardReadOnly = 0x2907;
+const int vfsErrFileGeneric = 0x2a02;
+const int vfsErrFileStillOpen = 0x2a04;
+const int vfsErrFileAlreadyExists = 0x2a06;
+const int vfsErrFileEOF = 0x2a07;
+const int vfsErrDirNotEmpty = 0x2a0d;
+const int vfsErrBadName = 0x2a0e;
+const int vfsErrVolumeFull = 0x2a0f;
+const int vfsErrNotADirectory = 0x2a11;
+const int vfsErrIsADirectory = 0x2a12;
+const int vfsErrDirectoryNotFound = 0x2a13;
+const int vfsErrNameShortened = 0x2a14;
+
+// attributes
+const int vfsAttrReadOnly = 1;
+const int vfsAttrHidden = 2;
+const int vfsAttrSystem = 4;
+const int vfsAttrVolumeLabel = 8;
+const int vfsAttrDirectory = 16;
+const int vfsAttrArchive = 32;
+const int vfsAttrLink = 64;
+
+// dates
+const int vfsDateCreated = 1;
+const int vfsDateModified = 2;
+const int vfsDateAccessed = 3;
+
+struct File {
+    int id;
+    void _init() @ library("OrbVFS", 24);
+    void _destroy() @ 80;
+    void _copy(File) @ 89;
+
+    void close() @ library("OrbVFS", 10);
+    int read(void* data, string type, int count) @ library("OrbVFS", 11);
+    int write(void* data, string type, int count) @ library("OrbVFS", 12);
+    void setDate(int which, Date date) @ library("OrbVFS", 13);
+    Date getDate(int which) @ library("OrbVFS", 14);
+    int getRec(int id, DBRecord rec);
+    int getRes(string type, int id, DBRecord rec);
+
+    int offset @ library("OrbVFS", 15:16);
+    bool eof @ library("OrbVFS", 17);
+    int size @ library("OrbVFS", 18:19);
+    int attribs @ library("OrbVFS", 20:21);
+    int _fileRef @ library("OrbVFS", 26);
+};
+
+int File.getRec(int id, DBRecord rec) {
+    return rec._getRecFromFile(_fileRef, id);
+}
+
+int File.getRes(string type, int id, DBRecord rec) {
+    return rec._getResFromFile(_fileRef, type, id);
+}
+
+struct Directory {
+    int id;
+    void _init() @ library("OrbVFS", 24);
+    void _destroy() @ 80;
+    void _copy(Directory) @ 89;
+
+    void close() @ library("OrbVFS", 10);
+    void setDate(int which, Date date) @ library("OrbVFS", 13);
+    Date getDate(int which) @ library("OrbVFS", 14);
+    bool enumerate(bool first, string* name, int* attribs) @ library("OrbVFS", 22);
+    int attribs @ library("OrbVFS", 20:21);
+};
+
+struct Volume {
+    int id;
+    void _init() @ library("OrbVFS", 23);
+    void _destroy() @ 80;
+    void _copy(Volume) @ 89;
+
+    int open(string path, int mode, File file) @ library("OrbVFS", 1);
+    int openDir(string path, Directory dir) @ library("OrbVFS", 25);
+    int create(string path) @ library("OrbVFS", 2);
+    int createDir(string path) @ library("OrbVFS", 3);
+    int del(string path) @ library("OrbVFS", 4);
+    int rename(string path, string newname) @ library("OrbVFS", 5);
+    int export(string name, string path) @ library("OrbVFS", 6);
+    int import(string path, string* name) @ library("OrbVFS", 7);
+    string getDefaultDir(string type) @ library("OrbVFS", 8);
+    string label @ library("OrbVFS", 9);
+};
+
+struct VolumeMgr {
+    bool enumerate(bool first, Volume vol) @ library("OrbVFS", 0);
+};
+
+object FileStream : Stream {
+    File file;
+    bool write(void* data, string type, int count);
+    bool read(void* data, string type, int count);
+};
+
+bool FileStream.write(void* data, string type, int count) {
+    return file.write(data, type, count) == __expectedCount(type);
+}
+
+bool FileStream.read(void* data, string type, int count) {
+    return file.read(data, type, count) == __expectedCount(type);
+}

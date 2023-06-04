@@ -1,0 +1,123 @@
+#include "tests.h"
+
+funcptr VV void();
+funcptr VI void(int);
+funcptr II int(int);
+void* pputs = (void*)puts;
+funcptr PUTS void(string);
+
+void VVfunc() {
+    puts("VVfunc\n");
+}
+
+void VIfunc(int) {
+    puts("VIfunc\n");
+}
+
+int IIfunc(int) {
+    puts("IIFunc\n");
+    return 5;
+}
+
+object Vector {
+    void _init();
+    void add(int);
+    int id;
+};
+funcptr VectorAdd void(Vector, int);
+funcptr VectorRet Vector();
+
+void Vector._init() {
+}
+
+void Vector.add(int i) {
+    VectorAdd va = add;
+    _init();
+    puts("Vector.add(" + i + "): id = " + id + "\n");
+    id = 4;
+}
+
+Vector newVector() {
+    Vector a;
+    return a;
+}
+
+void funcArg(void* pfunc) {
+    VV vv = (VV)pfunc;
+    vv();
+}
+
+void funcAddr(string name, void* pfunc) {
+    puts(name + " = " + (int)pfunc + "\n");
+}
+
+void funcPuts(funcptr PUTS2 void(string) pfunc) {
+}
+
+/*
+funcptr MemoFind bool(Memo, string);
+MemoFind memoFind;
+
+void MemoTest() {
+    Memo memo;
+    memoFind = memo.find;
+    
+    if (memoFind(memo, "#make")) {
+        puts("found #make\n");
+    } else {
+        puts("no #make\n");
+    }
+    if (memoFind(memo, "nothere")) {
+        puts("found nothere\n");
+    } else {
+        puts("no nothere\n");
+    }
+}
+*/
+
+void main() {
+    VV vv;
+    VI vi;
+    II ii;
+    II* pii;
+    VV vva = VVfunc;
+    VectorAdd va;
+    void* pv;
+    PUTS pfunc;
+    
+    VectorRet vr = newVector;
+    
+    Vector vec;
+    vec.id = 56;
+    pv = (void*)null;
+    funcArg((void*)vva);
+    funcAddr("main", (void*)main);
+    funcAddr("puts", (void*)puts);
+    funcAddr("puts", (void*)puts);
+    vec = vr();
+    
+    vv = VVfunc;
+    vi = VIfunc;
+    ii = IIfunc;
+    *pii = ii;
+    //5 + vv;
+    vv();
+    vva();
+    vi(ii(6));
+    ii(4);
+    puts((*pii)(6) + "\n");
+    
+    va = vec.add;
+    va(vec, 8);
+    
+    pfunc = puts;
+    //pfunc = main;
+    if (pfunc != puts)
+        pfunc("calling pfunc");
+    
+    funcPuts(puts);
+    
+    //MemoTest();
+    
+    final();
+}

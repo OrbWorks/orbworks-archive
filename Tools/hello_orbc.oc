@@ -1,0 +1,7 @@
+string hello(string name) {
+    return "Hello, " + name + "!";
+}
+
+void main() {
+    puts(hello("world"));
+}

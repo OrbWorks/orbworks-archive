@@ -1,0 +1,111 @@
+// PocketC graphics compatibility functions
+
+Draw _draw;
+
+void _graph_on(Draw) @ 339;
+void graph_on() { _graph_on(_draw); }
+void _graph_off(Draw) @ 340;
+void graph_off() { _graph_off(_draw); }
+
+void title(string title) @ 343;
+void clearg() @ 360;
+
+bool saveg() @ 341;
+void restoreg() @ 342;
+
+void pushdraw() @ 344;
+void popdraw() @ 345;
+
+void drawnative(bool bNative) @ 363;
+
+int getscreenattrib(int attrib) {
+    UIApp app;
+    return app.getScreenAttrib(attrib);
+}
+
+int _textColor = 1;
+void _pctext(Draw, int, int, int, string) @ 359;
+void text(int x, int y, string str) {
+    _pctext(_draw, _textColor, x, y, str);
+}
+
+void textattr(int font, int color, int underline) {
+    _draw.font(font);
+    _draw.underline(underline);
+    _textColor = color;
+}
+
+int _pccolor(int c) {
+    if (c == 0) return 1;
+    if (c == 1) return 0;
+    return c;
+}
+
+void textalign(char xy) { _draw.textAlign((int)xy); }
+int textwidth(string str) { return _draw.textWidth(str); }
+void pixel(int col, int x, int y) {
+    _draw.pixel(_pccolor(col), x, y);
+}
+
+void line(int col, int x1, int y1, int x2, int y2) {
+    _draw.line(_pccolor(col), x1, y1, x2, y2);
+}
+
+void rect(int col, int x1, int y1, int x2, int y2, int radius) {
+    _draw.rect(_pccolor(col), x1, y1, x2, y2, radius);
+}
+
+void frame(int col, int x1, int y1, int x2, int y2, int radius) {
+    _draw.frame(_pccolor(col), x1, y1, x2, y2, radius, 1);
+}
+
+void frame2(int col, int x1, int y1, int x2, int y2, int radius, int width) {
+    _draw.frame(_pccolor(col), x1, y1, x2, y2, radius, width);
+}
+
+void bitmap(int x, int y, string bits) @ 361;
+
+int getcolordepth() {
+    UIApp app;
+    return app.getdepth();	
+}
+
+bool setcolordepth(int i) {
+    UIApp app;
+    return app.setdepth(i);
+}
+
+int setfgi(int i) { return _draw.fg(i); }
+void setfg(int r, int g, int b) { _draw.fgRGB(r, g, b); }
+int setbgi(int i) { return _draw.bg(i); }
+void setbg(int r, int g, int b) { _draw.bgRGB(r, g, b); }
+int settextcolori(int i) { return _draw.textColor(i); }
+void settextcolor(int r, int g, int b) { _draw.textRGB(r, g, b); }
+int rgbtoi(int r, int g, int b) { return _draw.indexFromColor(r, g, b); }
+int getuicolor(int i) { return _draw.uiColor(i); }
+bool chooscolori(string title, pointer pIndex) { return _draw.selectIndex(title, (int*)pIndex); }
+
+bool bucreate(int width, int height) @ 364;
+void budelete(int id) @ 365;
+void buset(int id) @ 366;
+void bucopy(int sid, int did, int x, int y, int mode) @ 367;
+void bucopyrect(int sid, int xs, int ys, int w, int h, int did, int xd, int yd, int mode) @ 368;
+
+int resopen(string dbname) {
+    Database* pdb = new Database;
+    if (pdb->open(dbname, true)) {
+        return (int)pdb;
+    }
+    delete pdb;
+    return 0;
+}
+
+void resclose(int id) {
+    if (id) {
+        ((Database*)id)->close();
+        delete (Database*)id;
+    }
+}
+
+void bitmaprm(int bmpid, int x, int y, int mode) @ 369;
+void bitmapr(int bmpid, int x, int y) { bitmaprm(bmpid, x, y, 0); }

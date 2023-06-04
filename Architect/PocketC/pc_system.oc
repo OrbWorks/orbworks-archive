@@ -1,0 +1,31 @@
+// PocketC system compatibility functions
+
+string getsysval(int index) {
+    switch (index) {
+        case 0: return username();
+        case 1: return osver();
+        case 2: return osvers();
+        case 3: return serialnum();
+        case 4: return tickspersec();
+    }
+    return "";
+}
+
+string clipget() {
+    return getclip();
+}
+
+void clipset(string str) {
+    setclip(str);
+}
+
+void exit() {
+    UIApp app;
+    app.abort();
+}
+
+void atexit(pointer) @ 362;
+
+int version() {
+    return 710; // PocketC compatibility layer will always return the 710
+}

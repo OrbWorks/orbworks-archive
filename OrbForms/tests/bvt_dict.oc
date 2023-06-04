@@ -1,0 +1,27 @@
+#include "tests.h"
+Dict phone, phone2, phone3;
+
+Dict getPhone() {
+    return phone;
+}
+
+void main() {
+    phone.add("Jeremy", "555-3704");
+    phone.add("Megan", "555-5998");
+    phone.add("Larry", "555-1711");
+    test(phone.find("Megan") == "555-5998", "Megan = 555-5998");
+    test(phone.del("Megan") == 2, "del(Megan) = 2");
+    test(phone.find("Jeremy") == "555-3704", "Jeremy = 555-3704");
+    test(phone.find("Larry") == "555-1711", "Larry = 555-1711");
+    test(getPhone().find("Larry") == "555-1711", "getPhone().find()");
+    test(phone.find("Mary") == "", "Mary == \"\"");
+    phone3 = phone2 = phone;
+    test(phone2.has("Larry") == true, "has(Larry) = true");
+    test(phone2.has("Mary") == false, "has(Mary) = false");
+    test(phone3.count == 2, "count = 2");
+    test(phone3.key(1) == "Larry", "key(1) = Larry");
+    test(phone3.value(0) == "555-3704", "value(0) = 555-3704");
+    phone.clear();
+    test(phone2.count == 0, "clear, count = 0");
+    final();
+}

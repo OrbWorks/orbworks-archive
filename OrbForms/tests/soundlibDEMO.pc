@@ -1,0 +1,12 @@
+@cid "WVTT";
+@name "WaveTest";
+@dbname "WaveTest";
+@res "WAVE,1,t.wav";
+library "SoundLib"
+main() {
+    int returnVal;
+    returnVal = PlaySound("WaveTest",1,1024,1);
+    alert(" ");
+    StopSound(returnVal);
+}
+

@@ -1,0 +1,13 @@
+// fib perf
+fib(int x) {
+  if (x==0 || x==1) return 1;
+  return fib(x-1) + fib(x-2);
+}
+
+main() {
+  int t, f;
+  t = ticks();
+  f = fib(15);
+  t = ticks() - t;
+  alert("fib(15) = " + f + "\nTicks: " + t);
+}

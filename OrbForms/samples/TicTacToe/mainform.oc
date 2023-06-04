@@ -1,0 +1,32 @@
+handler miAbout.onselect() {
+    alert("Tic-Tac-Toe\nAn OrbForms sample.");
+}
+
+int numMoves;
+
+handler ticGadget.onusermove() {
+    // the user has moved
+    numMoves++;
+    if (hasWinner()) {
+        // the user has won!
+        enabled = false;
+        alert("You have won! Congratulations!");
+    } else if (numMoves < 5) {
+        cpuMove();
+        drawBoard();
+        if (hasWinner()) {
+            // the CPU has won!
+            enabled = false;
+            alert("The CPU has won! Try again!");
+        }
+    } else {
+        // it's a tie!
+        enabled = false;
+        alert("You've tied!");
+    }
+}
+
+handler mainNewGame.onselect() {
+    numMoves = 0;
+    ticGadget.newGame();
+}

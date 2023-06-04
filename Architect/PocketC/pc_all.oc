@@ -1,0 +1,16 @@
+// All PocketC APIs
+
+#include "pc_io.oc"
+#include "pc_events.oc"
+#include "pc_string.oc"
+#include "pc_math.oc"
+#include "pc_graphics.oc"
+#include "pc_sound.oc"
+#include "pc_date.oc"
+#include "pc_database.oc"
+#include "pc_memo.oc"
+#include "pc_serial.oc"
+#include "pc_system.oc"
+#include "pc_memory.oc"
+#include "pc_network.oc"
+#include "pc_vfs.oc"

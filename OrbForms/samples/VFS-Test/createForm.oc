@@ -1,0 +1,33 @@
+
+handler createForm.onopen() {
+    createFolder.checked = true;
+    createName.grabfocus();
+}
+
+handler createCancel.onselect() {
+    createForm.close();
+}
+
+handler createOK.onselect() {
+    int		rv;
+    
+    if (createName.text == "") {
+        alert("Name required for new objects.");
+        return;
+    }
+
+    if (createFolder.checked) {
+        rv = CurrVolume.createDir(CurrPath + createName.text);
+    }
+    else {	// create a file
+        rv = CurrVolume.create(CurrPath + createName.text);
+    }
+    if (rv == 0)
+        mainForm.timer(1);	// update the directory listing
+    else {
+        alert("Failed to create the new object, error #" + rv);
+        return;
+    }
+    
+    createForm.close();
+}

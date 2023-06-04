@@ -1,0 +1,103 @@
+// Todo.oc
+//
+// utility code for accessing the records in the built-in
+// todo database
+
+object Todo {
+    bool hasDate;
+    int year;
+    int month;
+    int day;
+    int priority;
+    string name;
+    string note;
+};
+
+object TodoDB {
+    bool open();
+    void close();
+    bool read(int id, Todo todo);
+    bool write(int id, Todo todo);
+    bool add(int* pid, Todo todo);
+
+    bool writeInternal(DBRecord rec, Todo todo);
+    
+    Database db;
+};
+
+// open the todo database
+bool TodoDB.open() {
+    return db.open("ToDoDB", false);
+}
+
+// close the todo database
+void TodoDB.close() {
+    db.close();
+}
+
+// read an existing todo entry
+bool TodoDB.read(int id, Todo todo) {
+    DBRecord rec;
+    int packedDate;
+    
+    if (db.getrec(id, rec, true)) {
+        if (rec.read(&packedDate, "w", 1) < 1)
+            return false;
+
+        if (packedDate == 0xffff) {
+            todo.hasDate = false;
+        } else {
+            todo.hasDate = true;
+            todo.day = packedDate & 0x1f;
+            todo.month = (packedDate >> 5) & 0xf;
+            todo.year = ((packedDate >> 9) & 0x7f) + 1904;
+        }
+        // the rest of the todo structure is laid out the
+        // same as the database record, so read it directly into
+        // the structure
+        if (rec.read(&todo.priority, "css", 1) < 3)
+            return false;
+        return true;
+    }
+    return false;
+}
+
+// write an existing todo entry
+bool TodoDB.write(int id, Todo todo) {
+    DBRecord rec;
+
+    if (db.getrec(id, rec, false)) {
+        return writeInternal(rec, todo);
+    }
+    return false;
+}
+
+// add a new todo entry
+bool TodoDB.add(int* pid, Todo todo) {
+    DBRecord rec;
+    
+    if (db.newrec(pid, rec)) {
+        return writeInternal(rec, todo);
+    }
+    return false;
+}
+
+// internal write routine share by add and write
+bool TodoDB.writeInternal(DBRecord rec, Todo todo) {
+    int packedDate;
+    if (todo.hasDate) {
+        packedDate = (((todo.year - 1904) & 0x7f) << 9) |
+            ((todo.month & 0xf) << 5) |
+            (todo.day & 0x1f);
+    } else {
+        packedDate = 0xffff;
+    }
+    
+    if (rec.write(&packedDate, "w", 1) < 1)
+        return false;
+    
+    if (rec.write(&todo.priority, "css", 1) < 3)
+        return false;
+
+    return true;
+}

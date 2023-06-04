@@ -1,0 +1,1241 @@
+Name:    bvt_object.prc
+Version: 0x400
+Has UI:  false
+======  Code ======
+    0   Call (3691) "main"
+    5   Halt 
+: "final"
+    9   Link 0 
+   11  LoadI 0x0000
+   14   JmpZ 26
+   17   CStr (49) "\n## PASSED\n"
+   20 CallBI puts
+   23    Jmp 32
+   26   CStr (61) "\n## FAILED\n"
+   29 CallBI puts
+   32 UnLink 
+   33   RetN 0 
+: "test"
+   38   Link 2 
+   40    Not SP <= [0xc000]
+   44   JmpZ 69
+   47 SCWord [0x0000] <- 0
+   52   CStr (11) "FAIL: "
+   55   AddS SP <= SP,[0xc001]
+   59   CStr (18) "\n"
+   62   AddS 
+   63 CallBI puts
+   66    Jmp 83
+   69   CStr (20) "PASS: "
+   72   AddS SP <= SP,[0xc001]
+   76   CStr (18) "\n"
+   79   AddS 
+   80 CallBI puts
+   83 UnLink 
+   84   RetN 2 
+: "SubB._init"
+   89   Link 1 
+   91   CStr (73) "SubB"
+   94 StorF0 1 
+   97    Pop 
+   98 UnLink 
+   99   RetN 1 
+: "SubB.subb"
+  104   Link 1 
+  106   CStr (142) "SubB.subb"
+  109    Jmp 115
+  112   CStr (0) ""
+  115 SetRet 
+  116 UnLink 
+  117    Ret 1 
+: "A._init"
+  122   Link 1 
+  124 LoadF0 2 
+  127   CStr (92) "A"
+  130   AddS 
+  131 StorF0 2 
+  134    Pop 
+  135 UnLink 
+  136   RetN 1 
+: "A.a"
+  141   Link 1 
+  143   CStr (126) "A.a"
+  146    Jmp 152
+  149   CStr (0) ""
+  152 SetRet 
+  153 UnLink 
+  154    Ret 1 
+: "A.abc"
+  159   Link 1 
+  161   CStr (130) "A.abc"
+  164    Jmp 170
+  167   CStr (0) ""
+  170 SetRet 
+  171 UnLink 
+  172    Ret 1 
+: "A.ib2"
+  177   Link 1 
+  179   CStr (136) "A.ib2"
+  182    Jmp 188
+  185   CStr (0) ""
+  188 SetRet 
+  189 UnLink 
+  190    Ret 1 
+: "B._init"
+  195   Link 1 
+  197 LoadFP 0 
+  200   Call (122) "A._init"
+  205   AddI SP <= [0xc000],0x0005
+  211   Call (89) "SubB._init"
+  216   AddI SP <= [0xc000],0x0008
+  222   CInt 89 
+  227  CWord 3 
+  230  CWord 3 
+  233 CallBI __vector_call
+  236 LoadF0 4 
+  239   CStr (76) "B"
+  242   AddS 
+  243 StorF0 4 
+  246    Pop 
+  247 UnLink 
+  248   RetN 1 
+: "B._copy"
+  253   Link 2 
+  255 LoadFP 0 
+  258 LoadFP 1 
+  261   Copy 3 
+  264    Pop 
+  265   AddI SP <= [0xc000],0x0005
+  271   AddI SP <= SP,0x0002
+  275   Load 
+  276   AddI SP <= [0xc001],0x0005
+  282   AddI SP <= SP,0x0002
+  286   Load 
+  287    EqI 
+  288   CStr (94) "SubB._copy()"
+  291   Call (38) "test"
+  296 LoadF0 1 
+  299 LoadF1 1 
+  302    EqI 
+  303   CStr (107) "B._copy() prolog"
+  306   Call (38) "test"
+  311 LoadF1 4 
+  314 StorF0 4 
+  317    Pop 
+  318 LoadF1 3 
+  321   AddI SP <= SP,0x0001
+  325 StorF0 3 
+  328    Pop 
+  329 LoadFP 0 
+  332 SetRet 
+  333 UnLink 
+  334    Ret 2 
+: "B.abc"
+  339   Link 1 
+  341   CStr (152) "B.abc"
+  344    Jmp 350
+  347   CStr (0) ""
+  350 SetRet 
+  351 UnLink 
+  352    Ret 1 
+: "B.ib"
+  357   Link 1 
+  359   CStr (162) "B.ib"
+  362    Jmp 368
+  365   CStr (0) ""
+  368 SetRet 
+  369 UnLink 
+  370    Ret 1 
+: "B.ibc"
+  375   Link 1 
+  377   CStr (167) "B.ibc"
+  380    Jmp 386
+  383   CStr (0) ""
+  386 SetRet 
+  387 UnLink 
+  388    Ret 1 
+: "B.ib1"
+  393   Link 1 
+  395   CStr (173) "B.ib1"
+  398    Jmp 404
+  401   CStr (0) ""
+  404 SetRet 
+  405 UnLink 
+  406    Ret 1 
+: "B.ib12"
+  411   Link 1 
+  413   CStr (179) "B.ib12"
+  416    Jmp 422
+  419   CStr (0) ""
+  422 SetRet 
+  423 UnLink 
+  424    Ret 1 
+: "C._init"
+  429   Link 1 
+  431 LoadFP 0 
+  434   Call (195) "B._init"
+  439 LoadF0 18 
+  442   CStr (124) "C"
+  445   AddS 
+  446 StorF0 18 
+  449    Pop 
+  450 UnLink 
+  451   RetN 1 
+: "C._copy"
+  456   Link 2 
+  458 LoadFP 0 
+  461 LoadFP 1 
+  464   Call (253) "B._copy"
+  469    Pop 
+  470 LoadF0 3 
+  473 LoadF1 3 
+  476   AddI SP <= SP,0x0001
+  480    EqI 
+  481   CStr (97) "B._copy()"
+  484   Call (38) "test"
+  489 LoadF1 17 
+  492   AddI SP <= SP,0x0002
+  496 StorF0 17 
+  499    Pop 
+  500 LoadFP 0 
+  503 SetRet 
+  504 UnLink 
+  505    Ret 2 
+: "C.abc"
+  510   Link 1 
+  512   CStr (186) "C.abc"
+  515    Jmp 521
+  518   CStr (0) ""
+  521 SetRet 
+  522 UnLink 
+  523    Ret 1 
+: "C.ic"
+  528   Link 1 
+  530   CStr (196) "C.ic"
+  533    Jmp 539
+  536   CStr (0) ""
+  539 SetRet 
+  540 UnLink 
+  541    Ret 1 
+: "C.ibc"
+  546   Link 1 
+  548   CStr (201) "C.ibc"
+  551    Jmp 557
+  554   CStr (0) ""
+  557 SetRet 
+  558 UnLink 
+  559    Ret 1 
+: "C.ib1"
+  564   Link 1 
+  566   CStr (207) "C.ib1"
+  569    Jmp 575
+  572   CStr (0) ""
+  575 SetRet 
+  576 UnLink 
+  577    Ret 1 
+: "C.ib12"
+  582   Link 1 
+  584   CStr (213) "C.ib12"
+  587    Jmp 593
+  590   CStr (0) ""
+  593 SetRet 
+  594 UnLink 
+  595    Ret 1 
+: "D._init"
+  600   Link 1 
+  602 LoadFP 0 
+  605   Call (429) "C._init"
+  610 UnLink 
+  611   RetN 1 
+: "D._copy"
+  616   Link 2 
+  618 LoadFP 0 
+  621 LoadFP 1 
+  624   Call (456) "C._copy"
+  629    Pop 
+  630   AddI SP <= [0xc000],0x0013
+  636   AddI SP <= [0xc001],0x0013
+  642   Copy 4 
+  645    Pop 
+  646 LoadFP 0 
+  649 SetRet 
+  650 UnLink 
+  651    Ret 2 
+: "CopySubB._copy"
+  656   Link 2 
+  658 LoadF1 0 
+  661 StorF0 0 
+  664    Pop 
+  665 LoadF1 1 
+  668  MultI SP <= SP,0x0003
+  672 StorF0 1 
+  675    Pop 
+  676 LoadFP 0 
+  679 SetRet 
+  680 UnLink 
+  681    Ret 2 
+: "CopyB._copy"
+  686   Link 2 
+  688 LoadFP 0 
+  691 LoadFP 1 
+  694   Copy 3 
+  697    Pop 
+  698   AddI SP <= [0xc000],0x0003
+  704   AddI SP <= [0xc001],0x0003
+  710   Call (656) "CopySubB._copy"
+  715    Pop 
+  716 LoadFP 0 
+  719 SetRet 
+  720 UnLink 
+  721    Ret 2 
+: "Animal._destroy"
+  726   Link 1 
+  728   CStr (92) "A"
+  731   AddS SP <= [0x0001],SP
+  735 StoreI 0x0001
+  738    Pop 
+  739 UnLink 
+  740   RetN 1 
+: "Animal.speak"
+  745   Link 1 
+  747   CStr (220) "?"
+  750    Jmp 756
+  753   CStr (0) ""
+  756 SetRet 
+  757 UnLink 
+  758    Ret 1 
+: "Animal.getB"
+  763   Link 2 
+  765 StInit (222) "iisisisiisiisiisi"
+  768 SCWord [0xc005] <- 106
+  773 SCWord [0xc00a] <- 64
+  778 SCWord [0xc00d] <- 64
+  783 SCWord [0xc00d] <- 64
+  788 SCWord [0xc00d] <- 64
+  793 CWdPFP 5 
+  796   Call (195) "B._init"
+  801 LoadFP 0 
+  804 CWdPFP 5 
+  807   Call (253) "B._copy"
+  812    Jmp 818
+  815 LoadFP 0 
+  818 SetRet 
+  819   PopN 17 
+  822 UnLink 
+  823    Ret 2 
+: "Animal.eat"
+  828   Link 3 
+  830 StInit (222) "iisisisiisiisiisi"
+  833 SCWord [0xc006] <- 106
+  838 SCWord [0xc00b] <- 64
+  843 SCWord [0xc00e] <- 64
+  848 SCWord [0xc00e] <- 64
+  853 SCWord [0xc00e] <- 64
+  858 CWdPFP 6 
+  861   Call (195) "B._init"
+  866 SCStri [0xc00a] <- (240) "eatB"
+  871 LoadFP 0 
+  874 CWdPFP 6 
+  877   Call (253) "B._copy"
+  882    Jmp 888
+  885 LoadFP 0 
+  888 SetRet 
+  889   PopN 17 
+  892 UnLink 
+  893    Ret 3 
+: "Dog._destroy"
+  898   Link 1 
+  900   CStr (250) "D"
+  903   AddS SP <= [0x0001],SP
+  907 StoreI 0x0001
+  910    Pop 
+  911 LoadFP 0 
+  914   Call (726) "Animal._destroy"
+  919 UnLink 
+  920   RetN 1 
+: "Dog.speak"
+  925   Link 1 
+  927   CStr (245) "woof"
+  930    Jmp 936
+  933   CStr (0) ""
+  936 SetRet 
+  937 UnLink 
+  938    Ret 1 
+: "Dog.getB"
+  943   Link 2 
+  945 StInit (222) "iisisisiisiisiisi"
+  948 SCWord [0xc005] <- 106
+  953 SCWord [0xc00a] <- 64
+  958 SCWord [0xc00d] <- 64
+  963 SCWord [0xc00d] <- 64
+  968 SCWord [0xc00d] <- 64
+  973 CWdPFP 5 
+  976   Call (195) "B._init"
+  981 SCStri [0xc009] <- (252) "DogB"
+  986 LoadFP 0 
+  989 CWdPFP 5 
+  992   Call (253) "B._copy"
+  997    Jmp 1003
+ 1000 LoadFP 0 
+ 1003 SetRet 
+ 1004   PopN 17 
+ 1007 UnLink 
+ 1008    Ret 2 
+: "Hairball._destroy"
+ 1013   Link 1 
+ 1015   CStr (257) "H"
+ 1018   AddS SP <= [0x0001],SP
+ 1022 StoreI 0x0001
+ 1025    Pop 
+ 1026 UnLink 
+ 1027   RetN 1 
+: "Cat._destroy"
+ 1032   Link 1 
+ 1034   CStr (124) "C"
+ 1037   AddS SP <= [0x0001],SP
+ 1041 StoreI 0x0001
+ 1044    Pop 
+ 1045   AddI SP <= [0xc000],0x0001
+ 1051   Call (1013) "Hairball._destroy"
+ 1056 LoadFP 0 
+ 1059   Call (726) "Animal._destroy"
+ 1064 UnLink 
+ 1065   RetN 1 
+: "Cat.speak"
+ 1070   Link 1 
+ 1072   CStr (259) "meow"
+ 1075    Jmp 1081
+ 1078   CStr (0) ""
+ 1081 SetRet 
+ 1082 UnLink 
+ 1083    Ret 1 
+: "Lion._destroy"
+ 1088   Link 1 
+ 1090   CStr (269) "L"
+ 1093   AddS SP <= [0x0001],SP
+ 1097 StoreI 0x0001
+ 1100    Pop 
+ 1101 LoadFP 0 
+ 1104   Call (1032) "Cat._destroy"
+ 1109 UnLink 
+ 1110   RetN 1 
+: "Lion.speak"
+ 1115   Link 1 
+ 1117   CStr (264) "roar"
+ 1120    Jmp 1126
+ 1123   CStr (0) ""
+ 1126 SetRet 
+ 1127 UnLink 
+ 1128    Ret 1 
+: "Lion.testBase"
+ 1133   Link 1 
+ 1135 LoadFP 0 
+ 1138 CallVi 2 (st:0)
+ 1141   CStr (264) "roar"
+ 1144    EqS 
+ 1145   CStr (271) "non-base"
+ 1148   Call (38) "test"
+ 1153 CWdPFP 0 
+ 1156   Call (1070) "Cat.speak"
+ 1161   CStr (259) "meow"
+ 1164    EqS 
+ 1165   CStr (280) "base.speak()"
+ 1168   Call (38) "test"
+ 1173 UnLink 
+ 1174   RetN 1 
+: "FakeAnimal._destroy"
+ 1179   Link 1 
+ 1181 LoadFP 0 
+ 1184   Call (726) "Animal._destroy"
+ 1189 UnLink 
+ 1190   RetN 1 
+: "testIfaces"
+ 1195   Link 0 
+ 1197 StInit (455) "iisisisiisiisiis3isisisiisiisiisiis6i"
+ 1200 SCWord [0xc003] <- 106
+ 1205 SCWord [0xc008] <- 64
+ 1210 SCWord [0xc00b] <- 64
+ 1215 SCWord [0xc00b] <- 64
+ 1220 SCWord [0xc00b] <- 64
+ 1225 CWdPFP 3 
+ 1228   Call (195) "B._init"
+ 1233 SCWord [0xc004] <- 55
+ 1238 SCStri [0xc005] <- (293) "Not b"
+ 1243 SCWord [0xc014] <- 205
+ 1248 SCWord [0xc019] <- 64
+ 1253 SCWord [0xc01c] <- 64
+ 1258 SCWord [0xc01c] <- 64
+ 1263 SCWord [0xc01c] <- 64
+ 1268 CWdPFP 20 
+ 1271   Call (429) "C._init"
+ 1276  CWord 1 
+ 1279   CStr (299) "oisisosiosiosiosi"
+ 1282 NewObj 106 
+ 1285  StDup 
+ 1286   JmpZ 1295
+ 1289  StDup 
+ 1290   Call (195) "B._init"
+ 1295 StorFP 43 
+ 1298    Pop 
+ 1299  CWord 1 
+ 1302   CStr (317) "oisisosiosiosiosiis"
+ 1305 NewObj 205 
+ 1308  StDup 
+ 1309   JmpZ 1318
+ 1312  StDup 
+ 1313   Call (429) "C._init"
+ 1318 StorFP 44 
+ 1321    Pop 
+ 1322   CStr (337) "*** Interfaces\n"
+ 1325 CallBI puts
+ 1328 CWdPFP 3 
+ 1331 StorFP 39 
+ 1334    Pop 
+ 1335 LoadFP 39 
+ 1338 CallIf IB.4 (st:0)
+ 1343   CStr (162) "B.ib"
+ 1346    EqS 
+ 1347   CStr (353) "IB.ib"
+ 1350   Call (38) "test"
+ 1355 LoadFP 39 
+ 1358 CallIf IB.0 (st:0)
+ 1363   CStr (173) "B.ib1"
+ 1366    EqS 
+ 1367   CStr (359) "IB.ib1"
+ 1370   Call (38) "test"
+ 1375 LoadFP 39 
+ 1378 CallIf IB.3 (st:0)
+ 1383   CStr (136) "A.ib2"
+ 1386    EqS 
+ 1387   CStr (366) "IB.ib2"
+ 1390   Call (38) "test"
+ 1395 LoadFP 39 
+ 1398 CallIf IB.1 (st:0)
+ 1403   CStr (179) "B.ib12"
+ 1406    EqS 
+ 1407   CStr (373) "IB.ib12"
+ 1410   Call (38) "test"
+ 1415 LoadFP 39 
+ 1418 CallIf IB.5 (st:0)
+ 1423   CStr (167) "B.ibc"
+ 1426    EqS 
+ 1427   CStr (381) "IB.ibc"
+ 1430   Call (38) "test"
+ 1435 CWdPFP 3 
+ 1438 StorFP 40 
+ 1441    Pop 
+ 1442 LoadFP 40 
+ 1445 CallIf IB1.0 (st:0)
+ 1450   CStr (173) "B.ib1"
+ 1453    EqS 
+ 1454   CStr (388) "IB1.ib1"
+ 1457   Call (38) "test"
+ 1462 LoadFP 40 
+ 1465 CallIf IB1.1 (st:0)
+ 1470   CStr (179) "B.ib12"
+ 1473    EqS 
+ 1474   CStr (396) "IB1.ib12"
+ 1477   Call (38) "test"
+ 1482 CWdPFP 3 
+ 1485 StorFP 41 
+ 1488    Pop 
+ 1489 LoadFP 41 
+ 1492 CallIf IB2.1 (st:0)
+ 1497   CStr (136) "A.ib2"
+ 1500    EqS 
+ 1501   CStr (405) "IB2.ib2"
+ 1504   Call (38) "test"
+ 1509 LoadFP 41 
+ 1512 CallIf IB2.0 (st:0)
+ 1517   CStr (179) "B.ib12"
+ 1520    EqS 
+ 1521   CStr (413) "IB2.ib12"
+ 1524   Call (38) "test"
+ 1529 CWdPFP 20 
+ 1532 StorFP 42 
+ 1535    Pop 
+ 1536 LoadFP 42 
+ 1539 CallIf IC.0 (st:0)
+ 1544   CStr (196) "C.ic"
+ 1547    EqS 
+ 1548   CStr (422) "IC.ic"
+ 1551   Call (38) "test"
+ 1556 LoadFP 42 
+ 1559 CallIf IC.1 (st:0)
+ 1564   CStr (201) "C.ibc"
+ 1567    EqS 
+ 1568   CStr (428) "IC.ibc"
+ 1571   Call (38) "test"
+ 1576   CStr (435) "C:\n"
+ 1579 CallBI puts
+ 1582 CWdPFP 20 
+ 1585 StorFP 39 
+ 1588    Pop 
+ 1589 LoadFP 39 
+ 1592 CallIf IB.4 (st:0)
+ 1597   CStr (162) "B.ib"
+ 1600    EqS 
+ 1601   CStr (353) "IB.ib"
+ 1604   Call (38) "test"
+ 1609 LoadFP 39 
+ 1612 CallIf IB.0 (st:0)
+ 1617   CStr (207) "C.ib1"
+ 1620    EqS 
+ 1621   CStr (359) "IB.ib1"
+ 1624   Call (38) "test"
+ 1629 LoadFP 39 
+ 1632 CallIf IB.3 (st:0)
+ 1637   CStr (136) "A.ib2"
+ 1640    EqS 
+ 1641   CStr (366) "IB.ib2"
+ 1644   Call (38) "test"
+ 1649 LoadFP 39 
+ 1652 CallIf IB.1 (st:0)
+ 1657   CStr (213) "C.ib12"
+ 1660    EqS 
+ 1661   CStr (373) "IB.ib12"
+ 1664   Call (38) "test"
+ 1669 LoadFP 39 
+ 1672 CallIf IB.5 (st:0)
+ 1677   CStr (201) "C.ibc"
+ 1680    EqS 
+ 1681   CStr (381) "IB.ibc"
+ 1684   Call (38) "test"
+ 1689 CWdPFP 20 
+ 1692 StorFP 40 
+ 1695    Pop 
+ 1696 LoadFP 40 
+ 1699 CallIf IB1.0 (st:0)
+ 1704   CStr (207) "C.ib1"
+ 1707    EqS 
+ 1708   CStr (388) "IB1.ib1"
+ 1711   Call (38) "test"
+ 1716 LoadFP 40 
+ 1719 CallIf IB1.1 (st:0)
+ 1724   CStr (213) "C.ib12"
+ 1727    EqS 
+ 1728   CStr (396) "IB1.ib12"
+ 1731   Call (38) "test"
+ 1736 CWdPFP 20 
+ 1739 StorFP 41 
+ 1742    Pop 
+ 1743 LoadFP 41 
+ 1746 CallIf IB2.1 (st:0)
+ 1751   CStr (136) "A.ib2"
+ 1754    EqS 
+ 1755   CStr (405) "IB2.ib2"
+ 1758   Call (38) "test"
+ 1763 LoadFP 41 
+ 1766 CallIf IB2.0 (st:0)
+ 1771   CStr (213) "C.ib12"
+ 1774    EqS 
+ 1775   CStr (413) "IB2.ib12"
+ 1778   Call (38) "test"
+ 1783   CStr (439) "new B:\n"
+ 1786 CallBI puts
+ 1789   Move [0xc027] <- [0xc02b]
+ 1794 LoadFP 39 
+ 1797 CallIf IB.4 (st:0)
+ 1802   CStr (162) "B.ib"
+ 1805    EqS 
+ 1806   CStr (353) "IB.ib"
+ 1809   Call (38) "test"
+ 1814 LoadFP 39 
+ 1817 CallIf IB.0 (st:0)
+ 1822   CStr (173) "B.ib1"
+ 1825    EqS 
+ 1826   CStr (359) "IB.ib1"
+ 1829   Call (38) "test"
+ 1834 LoadFP 39 
+ 1837 CallIf IB.3 (st:0)
+ 1842   CStr (136) "A.ib2"
+ 1845    EqS 
+ 1846   CStr (366) "IB.ib2"
+ 1849   Call (38) "test"
+ 1854 LoadFP 39 
+ 1857 CallIf IB.1 (st:0)
+ 1862   CStr (179) "B.ib12"
+ 1865    EqS 
+ 1866   CStr (373) "IB.ib12"
+ 1869   Call (38) "test"
+ 1874 LoadFP 39 
+ 1877 CallIf IB.5 (st:0)
+ 1882   CStr (167) "B.ibc"
+ 1885    EqS 
+ 1886   CStr (381) "IB.ibc"
+ 1889   Call (38) "test"
+ 1894   Move [0xc028] <- [0xc02b]
+ 1899 LoadFP 40 
+ 1902 CallIf IB1.0 (st:0)
+ 1907   CStr (173) "B.ib1"
+ 1910    EqS 
+ 1911   CStr (388) "IB1.ib1"
+ 1914   Call (38) "test"
+ 1919 LoadFP 40 
+ 1922 CallIf IB1.1 (st:0)
+ 1927   CStr (179) "B.ib12"
+ 1930    EqS 
+ 1931   CStr (396) "IB1.ib12"
+ 1934   Call (38) "test"
+ 1939   Move [0xc029] <- [0xc02b]
+ 1944 LoadFP 41 
+ 1947 CallIf IB2.1 (st:0)
+ 1952   CStr (136) "A.ib2"
+ 1955    EqS 
+ 1956   CStr (405) "IB2.ib2"
+ 1959   Call (38) "test"
+ 1964 LoadFP 41 
+ 1967 CallIf IB2.0 (st:0)
+ 1972   CStr (179) "B.ib12"
+ 1975    EqS 
+ 1976   CStr (413) "IB2.ib12"
+ 1979   Call (38) "test"
+ 1984   CStr (447) "new C:\n"
+ 1987 CallBI puts
+ 1990   Move [0xc02a] <- [0xc02c]
+ 1995 LoadFP 42 
+ 1998 CallIf IC.0 (st:0)
+ 2003   CStr (196) "C.ic"
+ 2006    EqS 
+ 2007   CStr (422) "IC.ic"
+ 2010   Call (38) "test"
+ 2015 LoadFP 42 
+ 2018 CallIf IC.1 (st:0)
+ 2023   CStr (201) "C.ibc"
+ 2026    EqS 
+ 2027   CStr (428) "IC.ibc"
+ 2030   Call (38) "test"
+ 2035   Move [0xc027] <- [0xc02c]
+ 2040 LoadFP 39 
+ 2043 CallIf IB.4 (st:0)
+ 2048   CStr (162) "B.ib"
+ 2051    EqS 
+ 2052   CStr (353) "IB.ib"
+ 2055   Call (38) "test"
+ 2060 LoadFP 39 
+ 2063 CallIf IB.0 (st:0)
+ 2068   CStr (207) "C.ib1"
+ 2071    EqS 
+ 2072   CStr (359) "IB.ib1"
+ 2075   Call (38) "test"
+ 2080 LoadFP 39 
+ 2083 CallIf IB.3 (st:0)
+ 2088   CStr (136) "A.ib2"
+ 2091    EqS 
+ 2092   CStr (366) "IB.ib2"
+ 2095   Call (38) "test"
+ 2100 LoadFP 39 
+ 2103 CallIf IB.1 (st:0)
+ 2108   CStr (213) "C.ib12"
+ 2111    EqS 
+ 2112   CStr (373) "IB.ib12"
+ 2115   Call (38) "test"
+ 2120 LoadFP 39 
+ 2123 CallIf IB.5 (st:0)
+ 2128   CStr (201) "C.ibc"
+ 2131    EqS 
+ 2132   CStr (381) "IB.ibc"
+ 2135   Call (38) "test"
+ 2140   Move [0xc028] <- [0xc02c]
+ 2145 LoadFP 40 
+ 2148 CallIf IB1.0 (st:0)
+ 2153   CStr (207) "C.ib1"
+ 2156    EqS 
+ 2157   CStr (388) "IB1.ib1"
+ 2160   Call (38) "test"
+ 2165 LoadFP 40 
+ 2168 CallIf IB1.1 (st:0)
+ 2173   CStr (213) "C.ib12"
+ 2176    EqS 
+ 2177   CStr (396) "IB1.ib12"
+ 2180   Call (38) "test"
+ 2185   Move [0xc029] <- [0xc02c]
+ 2190 LoadFP 41 
+ 2193 CallIf IB2.1 (st:0)
+ 2198   CStr (136) "A.ib2"
+ 2201    EqS 
+ 2202   CStr (405) "IB2.ib2"
+ 2205   Call (38) "test"
+ 2210 LoadFP 41 
+ 2213 CallIf IB2.0 (st:0)
+ 2218   CStr (213) "C.ib12"
+ 2221    EqS 
+ 2222   CStr (413) "IB2.ib12"
+ 2225   Call (38) "test"
+ 2230 LoadFP 43 
+ 2233  StDup 
+ 2234   JmpZ 2238
+ 2237 Delete 
+ 2238    Pop 
+ 2239 LoadFP 44 
+ 2242  StDup 
+ 2243   JmpZ 2247
+ 2246 Delete 
+ 2247    Pop 
+ 2248   PopN 42 
+ 2251 UnLink 
+ 2252   RetN 0 
+: "testInit"
+ 2257   Link 0 
+ 2259 StInit (528) "iisisisiisiisiis3isisisiisiisiisiis4i"
+ 2262 SCWord [0xc003] <- 106
+ 2267 SCWord [0xc008] <- 64
+ 2272 SCWord [0xc00b] <- 64
+ 2277 SCWord [0xc00b] <- 64
+ 2282 SCWord [0xc00b] <- 64
+ 2287 CWdPFP 3 
+ 2290   Call (195) "B._init"
+ 2295 SCWord [0xc014] <- 205
+ 2300 SCWord [0xc019] <- 64
+ 2305 SCWord [0xc01c] <- 64
+ 2310 SCWord [0xc01c] <- 64
+ 2315 SCWord [0xc01c] <- 64
+ 2320 CWdPFP 20 
+ 2323   Call (429) "C._init"
+ 2328   CStr (493) "*** Init\n"
+ 2331 CallBI puts
+ 2334  CWord 2 
+ 2337 SetReg 0 
+ 2339   CStr (299) "oisisosiosiosiosi"
+ 2342 NewObj 106 
+ 2345  StDup 
+ 2346   JmpZ 2363
+ 2349  StDup 
+ 2350   CInt 195 
+ 2355  CWord 17 
+ 2358 GetReg 0 
+ 2360 CallBI __vector_call
+ 2363 StorFP 40 
+ 2366    Pop 
+ 2367   AddI SP <= [0xc028],0x0011
+ 2373 StorFP 39 
+ 2376    Pop 
+ 2377  CWord 1 
+ 2380   CStr (317) "oisisosiosiosiosiis"
+ 2383 NewObj 205 
+ 2386  StDup 
+ 2387   JmpZ 2396
+ 2390  StDup 
+ 2391   Call (429) "C._init"
+ 2396 StorFP 41 
+ 2399    Pop 
+ 2400 CWdPFP 8 
+ 2403 StorFP 42 
+ 2406    Pop 
+ 2407   CStr (92) "A"
+ 2410    EqS SP <= [0xc005],SP
+ 2414   CStr (503) "sa"
+ 2417   Call (38) "test"
+ 2422   CStr (76) "B"
+ 2425    EqS SP <= [0xc007],SP
+ 2429   CStr (506) "sb"
+ 2432   Call (38) "test"
+ 2437   CStr (73) "SubB"
+ 2440    EqS SP <= [0xc009],SP
+ 2444   CStr (509) "ssubb"
+ 2447   Call (38) "test"
+ 2452 LoadFP 42 
+ 2455 CallVi 0 (st:0)
+ 2458   CStr (142) "SubB.subb"
+ 2461    EqS 
+ 2462   CStr (515) "subb()"
+ 2465   Call (38) "test"
+ 2470   AddI SP <= [0xc027],0x0005
+ 2476 StorFP 42 
+ 2479    Pop 
+ 2480   CStr (522) "new:\n"
+ 2483 CallBI puts
+ 2486   AddI SP <= [0xc027],0x0002
+ 2492   Load 
+ 2493   CStr (92) "A"
+ 2496    EqS 
+ 2497   CStr (503) "sa"
+ 2500   Call (38) "test"
+ 2505   AddI SP <= [0xc027],0x0004
+ 2511   Load 
+ 2512   CStr (76) "B"
+ 2515    EqS 
+ 2516   CStr (506) "sb"
+ 2519   Call (38) "test"
+ 2524   AddI SP <= [0xc027],0x0005
+ 2530   AddI SP <= SP,0x0001
+ 2534   Load 
+ 2535   CStr (73) "SubB"
+ 2538    EqS 
+ 2539   CStr (509) "ssubb"
+ 2542   Call (38) "test"
+ 2547 LoadFP 42 
+ 2550 CallVi 0 (st:0)
+ 2553   CStr (142) "SubB.subb"
+ 2556    EqS 
+ 2557   CStr (515) "subb()"
+ 2560   Call (38) "test"
+ 2565   PopN 40 
+ 2568 UnLink 
+ 2569   RetN 0 
+: "testCopy"
+ 2574   Link 0 
+ 2576 StInit (636) "iisisisiisiisiisiisiisisisiisiisiisiisiisisisiisiisiisiis6isisisiisiisiisiis14i"
+ 2579 SCWord [0xc003] <- 205
+ 2584 SCWord [0xc008] <- 64
+ 2589 SCWord [0xc00b] <- 64
+ 2594 SCWord [0xc00b] <- 64
+ 2599 SCWord [0xc00b] <- 64
+ 2604 CWdPFP 3 
+ 2607   Call (429) "C._init"
+ 2612 SCWord [0xc016] <- 205
+ 2617 SCWord [0xc01b] <- 64
+ 2622 SCWord [0xc01e] <- 64
+ 2627 SCWord [0xc01e] <- 64
+ 2632 SCWord [0xc01e] <- 64
+ 2637 CWdPFP 22 
+ 2640   Call (429) "C._init"
+ 2645 SCWord [0xc029] <- 322
+ 2650 SCWord [0xc02e] <- 64
+ 2655 SCWord [0xc031] <- 64
+ 2660 SCWord [0xc031] <- 64
+ 2665 SCWord [0xc031] <- 64
+ 2670 CWdPFP 41 
+ 2673   Call (600) "D._init"
+ 2678 SCWord [0xc040] <- 322
+ 2683 SCWord [0xc045] <- 64
+ 2688 SCWord [0xc048] <- 64
+ 2693 SCWord [0xc048] <- 64
+ 2698 SCWord [0xc048] <- 64
+ 2703 CWdPFP 64 
+ 2706   Call (600) "D._init"
+ 2711 SCWord [0xc057] <- 480
+ 2716 SCWord [0xc05a] <- 463
+ 2721 SCWord [0xc05c] <- 480
+ 2726 SCWord [0xc05f] <- 463
+ 2731   CStr (566) "*** Copy\n"
+ 2734 CallBI puts
+ 2737 CWdPFP 3 
+ 2740 CWdPFP 22 
+ 2743   Call (456) "C._copy"
+ 2748    Pop 
+ 2749   AddI SP <= [0xc027],0x0002
+ 2755    EqI SP <= [0xc014],SP
+ 2759   CStr (576) "C._copy()"
+ 2762   Call (38) "test"
+ 2767 SCWord [0xc053] <- 5
+ 2772 SCWord [0xc041] <- 8
+ 2777 CWdPFP 41 
+ 2780 CWdPFP 64 
+ 2783   Call (616) "D._copy"
+ 2788    Pop 
+ 2789    EqI SP <= [0xc02a],0x0008
+ 2795   CStr (107) "B._copy() prolog"
+ 2798   Call (38) "test"
+ 2803   AddI SP <= [0xc051],0x0002
+ 2809    EqI SP <= [0xc03a],SP
+ 2813   CStr (576) "C._copy()"
+ 2816   Call (38) "test"
+ 2821    EqI SP <= [0xc03c],0x0005
+ 2827   CStr (586) "D._copy()"
+ 2830   Call (38) "test"
+ 2835 SCWord [0xc05d] <- 9
+ 2840 SCWord [0xc060] <- 11
+ 2845 CWdPFP 87 
+ 2848 CWdPFP 92 
+ 2851   Call (686) "CopyB._copy"
+ 2856    Pop 
+ 2857    EqI SP <= [0xc058],0x0009
+ 2863   CStr (596) "CopyB._copy() auto"
+ 2866   Call (38) "test"
+ 2871    EqI SP <= [0xc05b],0x0021
+ 2877   CStr (615) "CopyB._copy() auto 2"
+ 2880   Call (38) "test"
+ 2885   PopN 94 
+ 2888 UnLink 
+ 2889   RetN 0 
+: "testVirtual"
+ 2894   Link 0 
+ 2896 StInit (490) "6i"
+ 2899   CStr (716) "*** Virtual\n"
+ 2902 CallBI puts
+ 2905  CWord 1 
+ 2908   CStr (613) "o"
+ 2911 NewObj 519 
+ 2914 StorFP 3 
+ 2917    Pop 
+ 2918  CWord 1 
+ 2921   CStr (613) "o"
+ 2924 NewObj 560 
+ 2927 StorFP 4 
+ 2930    Pop 
+ 2931  CWord 1 
+ 2934   CStr (729) "oo"
+ 2937 NewObj 625 
+ 2940 StorFP 5 
+ 2943    Pop 
+ 2944  CWord 1 
+ 2947   CStr (729) "oo"
+ 2950 NewObj 671 
+ 2953 StorFP 6 
+ 2956    Pop 
+ 2957  CWord 1 
+ 2960   CStr (613) "o"
+ 2963 NewObj 723 
+ 2966 StorFP 7 
+ 2969    Pop 
+ 2970 LoadFP 3 
+ 2973 CallVi 2 (st:0)
+ 2976   CStr (220) "?"
+ 2979    EqS 
+ 2980   CStr (732) "Animal.speak"
+ 2983   Call (38) "test"
+ 2988 LoadFP 4 
+ 2991 CallVi 2 (st:0)
+ 2994   CStr (245) "woof"
+ 2997    EqS 
+ 2998   CStr (745) "Dog.speak"
+ 3001   Call (38) "test"
+ 3006 LoadFP 5 
+ 3009 CallVi 2 (st:0)
+ 3012   CStr (259) "meow"
+ 3015    EqS 
+ 3016   CStr (755) "Cat.speak"
+ 3019   Call (38) "test"
+ 3024 LoadFP 6 
+ 3027 CallVi 2 (st:0)
+ 3030   CStr (264) "roar"
+ 3033    EqS 
+ 3034   CStr (765) "Lion.speak"
+ 3037   Call (38) "test"
+ 3042 SCStri [0x0001] <- (0) ""
+ 3047 LoadFP 3 
+ 3050  StDup 
+ 3051   JmpZ 3068
+ 3054  StDup 
+ 3055  CWord 1 
+ 3058  CWord 65535 
+ 3061  CWord 65535 
+ 3064 CallBI <Invalid #>
+ 3067 Delete 
+ 3068    Pop 
+ 3069   CStr (92) "A"
+ 3072    EqS SP <= [0x0001],SP
+ 3076   CStr (776) "Animal._destroy"
+ 3079   Call (38) "test"
+ 3084 SCStri [0x0001] <- (0) ""
+ 3089 LoadFP 4 
+ 3092  StDup 
+ 3093   JmpZ 3110
+ 3096  StDup 
+ 3097  CWord 1 
+ 3100  CWord 65535 
+ 3103  CWord 65535 
+ 3106 CallBI <Invalid #>
+ 3109 Delete 
+ 3110    Pop 
+ 3111   CStr (792) "DA"
+ 3114    EqS SP <= [0x0001],SP
+ 3118   CStr (795) "Dog._destroy"
+ 3121   Call (38) "test"
+ 3126 SCStri [0x0001] <- (0) ""
+ 3131 LoadFP 5 
+ 3134  StDup 
+ 3135   JmpZ 3152
+ 3138  StDup 
+ 3139  CWord 1 
+ 3142  CWord 65535 
+ 3145  CWord 65535 
+ 3148 CallBI <Invalid #>
+ 3151 Delete 
+ 3152    Pop 
+ 3153   CStr (808) "CHA"
+ 3156    EqS SP <= [0x0001],SP
+ 3160   CStr (812) "Cat._destroy"
+ 3163   Call (38) "test"
+ 3168 SCStri [0x0001] <- (0) ""
+ 3173 LoadFP 6 
+ 3176  StDup 
+ 3177   JmpZ 3194
+ 3180  StDup 
+ 3181  CWord 1 
+ 3184  CWord 65535 
+ 3187  CWord 65535 
+ 3190 CallBI <Invalid #>
+ 3193 Delete 
+ 3194    Pop 
+ 3195   CStr (825) "LCHA"
+ 3198    EqS SP <= [0x0001],SP
+ 3202   CStr (830) "Lion._destroy"
+ 3205   Call (38) "test"
+ 3210 SCStri [0x0001] <- (0) ""
+ 3215 LoadFP 7 
+ 3218  StDup 
+ 3219   JmpZ 3236
+ 3222  StDup 
+ 3223  CWord 1 
+ 3226  CWord 65535 
+ 3229  CWord 65535 
+ 3232 CallBI <Invalid #>
+ 3235 Delete 
+ 3236    Pop 
+ 3237   CStr (92) "A"
+ 3240    EqS SP <= [0x0001],SP
+ 3244   CStr (844) "FakeAnimal._destroy"
+ 3247   Call (38) "test"
+ 3252  CWord 3 
+ 3255   CStr (729) "oo"
+ 3258 NewObj 671 
+ 3261 StorFP 8 
+ 3264    Pop 
+ 3265 SCStri [0x0001] <- (0) ""
+ 3270 LoadFP 8 
+ 3273  StDup 
+ 3274   JmpZ 3291
+ 3277  StDup 
+ 3278  CWord 1 
+ 3281  CWord 65535 
+ 3284  CWord 65535 
+ 3287 CallBI <Invalid #>
+ 3290 Delete 
+ 3291    Pop 
+ 3292   CStr (864) "LCHALCHALCHA"
+ 3295    EqS SP <= [0x0001],SP
+ 3299   CStr (877) "delete Lion[]"
+ 3302   Call (38) "test"
+ 3307   PopN 6 
+ 3310 UnLink 
+ 3311   RetN 0 
+: "testBase"
+ 3316   Link 0 
+ 3318 StInit (901) "ii"
+ 3321 SCWord [0xc003] <- 671
+ 3326 SCWord [0xc004] <- 606
+ 3331   CStr (891) "*** base\n"
+ 3334 CallBI puts
+ 3337 CWdPFP 3 
+ 3340   Call (1133) "Lion.testBase"
+ 3345 CWdPFP 3 
+ 3348   Call (1088) "Lion._destroy"
+ 3353   PopN 2 
+ 3356 UnLink 
+ 3357   RetN 0 
+: "paramTestFunc"
+ 3362   Link 1 
+ 3364 LoadFP 0 
+ 3367 CallVi 2 (st:0)
+ 3370   CStr (245) "woof"
+ 3373    EqS 
+ 3374   CStr (904) "pAnimal->speak()"
+ 3377   Call (38) "test"
+ 3382 UnLink 
+ 3383   RetN 1 
+: "testImplicitCast"
+ 3388   Link 0 
+ 3390 StInit (901) "ii"
+ 3393 SCWord [0xc004] <- 560
+ 3398   CStr (921) "*** Implicit cast\n"
+ 3401 CallBI puts
+ 3404 CWdPFP 4 
+ 3407 StorFP 3 
+ 3410    Pop 
+ 3411 CWdPFP 4 
+ 3414   Call (3362) "paramTestFunc"
+ 3419 CWdPFP 4 
+ 3422   Call (898) "Dog._destroy"
+ 3427   PopN 2 
+ 3430 UnLink 
+ 3431   RetN 0 
+: "testOptimize"
+ 3436   Link 0 
+ 3438 UnLink 
+ 3439   RetN 0 
+: "testReturn"
+ 3444   Link 2 
+ 3446 StInit (1) "i"
+ 3449 SCWord [0xc005] <- 560
+ 3454 LoadF1 4 
+ 3457   CStr (76) "B"
+ 3460    EqS 
+ 3461   CStr (940) "B arg"
+ 3464   Call (38) "test"
+ 3469 LoadFP 0 
+ 3472 CWdPFP 5 
+ 3475   Copy 1 
+ 3478    Jmp 3484
+ 3481 LoadFP 0 
+ 3484 CWdPFP 5 
+ 3487   Call (898) "Dog._destroy"
+ 3492 SetRet 
+ 3493    Pop 
+ 3494 UnLink 
+ 3495    Ret 2 
+: "testFuncArgs"
+ 3500   Link 0 
+ 3502 StInit (981) "5isisisiisiisiis3i"
+ 3505 SCWord [0xc003] <- 560
+ 3510 SCWord [0xc004] <- 671
+ 3515 SCWord [0xc005] <- 606
+ 3520 SCWord [0xc006] <- 106
+ 3525 SCWord [0xc00b] <- 64
+ 3530 SCWord [0xc00e] <- 64
+ 3535 SCWord [0xc00e] <- 64
+ 3540 SCWord [0xc00e] <- 64
+ 3545 CWdPFP 6 
+ 3548   Call (195) "B._init"
+ 3553 CWdPFP 3 
+ 3556 CWdPFP 6 
+ 3559   Call (3444) "testReturn"
+ 3564    Pop 
+ 3565 CWdPFP 4 
+ 3568 StorFP 23 
+ 3571    Pop 
+ 3572 CWdPFP 6 
+ 3575 LoadFP 23 
+ 3578 CallVi 3 (st:0)
+ 3581    Pop 
+ 3582   CStr (76) "B"
+ 3585    EqS SP <= [0xc00a],SP
+ 3589   CStr (946) "lion.getB()"
+ 3592   Call (38) "test"
+ 3597 CWdPFP 3 
+ 3600 StorFP 23 
+ 3603    Pop 
+ 3604 CWdPFP 6 
+ 3607 LoadFP 23 
+ 3610 CallVi 3 (st:0)
+ 3613    Pop 
+ 3614   CStr (252) "DogB"
+ 3617    EqS SP <= [0xc00a],SP
+ 3621   CStr (958) "dog.getB()"
+ 3624   Call (38) "test"
+ 3629 CWdPFP 4 
+ 3632 StorFP 24 
+ 3635    Pop 
+ 3636 CWdPFP 6 
+ 3639 LoadFP 24 
+ 3642  CWord 5 
+ 3645 CallIf IFood.0 (st:1)
+ 3650    Pop 
+ 3651   CStr (240) "eatB"
+ 3654    EqS SP <= [0xc00a],SP
+ 3658   CStr (969) "IFood.eat()"
+ 3661   Call (38) "test"
+ 3666 CWdPFP 4 
+ 3669   Call (1088) "Lion._destroy"
+ 3674 CWdPFP 3 
+ 3677   Call (898) "Dog._destroy"
+ 3682   PopN 22 
+ 3685 UnLink 
+ 3686   RetN 0 
+: "main"
+ 3691   Link 0 
+ 3693   CStr (1000) "calling testIfaces()\n"
+ 3696 CallBI puts
+ 3699   Call (1195) "testIfaces"
+ 3704   Call (2257) "testInit"
+ 3709   Call (2574) "testCopy"
+ 3714   Call (2894) "testVirtual"
+ 3719   Call (3316) "testBase"
+ 3724   Call (3388) "testImplicitCast"
+ 3729   Call (3436) "testOptimize"
+ 3734   Call (3500) "testFuncArgs"
+ 3739   Call (9) "final"
+ 3744 UnLink 
+ 3745   RetN 0 
+

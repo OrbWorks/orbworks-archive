@@ -1,0 +1,25 @@
+// PointerTest
+ 
+@cid "RobK";
+@name "PointerTest";
+@dbname "PointerTest";
+@ver "4.03";
+ 
+int func1() { alert("func1"); }
+int func2() { alert("func2"); }
+int func3() { alert("func3"); }
+pointer external_func_list[3] = {func1, func2, func3};
+ 
+main()
+{
+  pointer ptr;
+  pointer internal_func_list[3] = {func1, func2, func3};
+  
+  ptr = external_func_list[0];
+  alert("1: " + ptr);
+  (*ptr)();
+  
+  ptr = internal_func_list[0];
+  alert("2: " + ptr);
+  (*ptr)();
+}

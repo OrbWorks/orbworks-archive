@@ -1,0 +1,5 @@
+// gets
+main() {
+    alert(getsm(10, 30, 60, 4, "Hello!?"));
+    //alert("Hello, World!");
+}

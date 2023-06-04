@@ -1,0 +1,34 @@
+// B-ERLANG
+main()
+{
+float EAN,EAN1,A,y;
+int N,x;
+string st;
+ 
+x=mathlib();
+if  (x=0)
+    {
+    alert("No MathLib");
+    exit();
+    };
+ 
+clear();
+puts("B-Erlang formula\n");
+A=(float)getsd("Offered traffic A","1");
+N=(int)getsd("Number of servers N","1");
+ 
+EAN1=1;
+for (x=1;x<=N;x++)
+    {
+    y=(float)(x/A);
+    EAN=EAN1/(EAN1+y);
+    EAN1=EAN;
+    };
+ 
+puts("For parameters A(traffic),N(servers):\n");
+puts((float)A+", "+(int)N);
+puts("\nProbability of blocking E(A,N) is: "+(float)EAN+"\n");
+st=format((EAN*100),5);
+puts("it means: "+st+" %\n");
+ 
+}

@@ -1,0 +1,142 @@
+   Name: speed.c
+Version: 4.03
+ Header: 2 bytes
+
+    7	CWord		93
+   10	Call
+   11	Pop
+   12	Halt
+
+int t;
+
+//Declare some helper functions
+start() {
+ t=ticks();
+
+Func 0:
+   31	Link		(0 args)
+   33	CWord		0
+   36	CallBI		ticks
+   38	Save
+   39	Pop
+}
+   43	SetRet0
+   44	UnLink
+   45	Ret		0
+
+stop(string s) {
+ puts(s+": "+(ticks()-t)+"\n");
+
+Func 1:
+   56	Link		(1 args)
+   58	GetL		0
+   61	CString	122	": "
+   64	Add
+   65	CallBI		ticks
+   67	GetG		0
+   70	Sub
+   71	Add
+   72	CString	125	"\n"
+   75	Add
+   76	ToString
+   77	CallBI		puts
+   79	Pop
+}
+   83	SetRet0
+   84	UnLink
+   85	Ret		1
+
+main() {
+int x;
+
+Func 2:
+   96	Link		(0 args)
+   98	CInt		0
+pointer a;
+  106	CInt		0
+int k[1000];
+  114	CWord		1000
+  117	Array
+  118	CInt		0
+clear();
+  126	CallBI		clear
+  128	Pop
+
+a = malloc(1000);
+  135	CWordPFP	local 1
+  138	CWord		1000
+  141	CallBI		malloc
+  143	Save
+  144	Pop
+
+start();
+  151	OldCall		28
+  154	Pop
+x=1000;
+  158	CWordPFP	local 0
+  161	CWord		1000
+  164	Save
+  165	Pop
+while(x--) a[x]=0;
+  169	CWordPFP	local 0
+  172	DecB
+  173	JmpZ		193
+  176	AddExtI		[0x6003+FP], [0x6002+FP]
+  182	CWord		0
+  185	Save
+  186	Pop
+stop("Dynamic Array");
+  190	Jmp		169
+  193	CString	263	"Dynamic Array"
+  196	OldCall		53
+  199	Pop
+
+start();
+  206	OldCall		28
+  209	Pop
+x=1000;
+  213	CWordPFP	local 0
+  216	CWord		1000
+  219	Save
+  220	Pop
+while(x--) k[x]=0;
+  224	CWordPFP	local 0
+  227	DecB
+  228	JmpZ		248
+  231	AddExtI		24580, [0x6002+FP]
+  237	CWord		0
+  240	Save
+  241	Pop
+stop("Static Array");
+  245	Jmp		224
+  248	CString	320	"Static Array"
+  251	OldCall		53
+  254	Pop
+
+}
+  261	SetRet0
+  262	PopN		1002
+  265	UnLink
+  266	Ret		0
+
+
+Instruction count:
+    CInt 3	   CChar 0	  CFloat 0	 CString 4	
+   ToInt 0	  ToChar 0	 ToFloat 0	ToString 1	
+    GetG 1	    SetG 0	    GetL 1	    SetL 0	
+   Array 1	   IncGA 0	   DecGA 0	   IncLA 0	
+   DecLA 0	   IncGB 0	   DecGB 0	   IncLB 0	
+   DecLB 0	     Add 3	     Sub 1	    Mult 0	
+     Div 0	     Mod 0	     Neg 0	     Not 0	
+     And 0	      Or 0	      Eq 0	     NEq 0	
+      LT 0	     LTE 0	      GT 0	     GTE 0	
+     Jmp 2	    JmpZ 2	   JmpNZ 0	 OldCall 4	
+  CallBI 5	     Ret 3	  SetRet 0	 SetRet0 3	
+     Pop 13	    PopN 1	    Link 3	  UnLink 3	
+    Halt 1	    Swap 0	 LibCall 0	   CWord 8	
+CWordPFP 5	    Call 1	    Load 0	    Save 6	
+    IncA 0	    DecA 0	    IncB 0	    DecB 2	
+    BAnd 0	     BOr 0	    BNot 0	      SL 0	
+      SR 0	     Xor 0	    NoOp 0	   NoOp2 31	
+     XXX 0	     XXX 0	 AddExtI 2	    GetC 0	
+    SetC 0	    Case 0	

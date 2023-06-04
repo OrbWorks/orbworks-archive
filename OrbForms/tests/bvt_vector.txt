@@ -1,0 +1,922 @@
+Name:    bvt_vector.prc
+Version: 0x300
+Has UI:  false
+======  Code ======
+    0   Call (2583) "main"
+    5   Halt 
+: "__global_init"
+    9  CWord 1 
+   12   Call (147) "OVector._init"
+   17  CWord 3 
+   20   Call (147) "OVector._init"
+   25   RetN 0 
+: "__global_destroy"
+   30  CWord 11 
+   33   Call (925) "Vector._destroy"
+   38  CWord 5 
+   41   Call (925) "Vector._destroy"
+   46  CWord 3 
+   49   Call (162) "OVector._destroy"
+   54  CWord 1 
+   57   Call (162) "OVector._destroy"
+   62   RetN 0 
+: "test"
+   67   Link 2 
+   69    Not SP <= [0xc000]
+   73   JmpZ 98
+   76 SCWord [0x0000] <- 0
+   81   CStr (11) "FAIL: "
+   84   AddS SP <= SP,[0xc001]
+   88   CStr (18) "\n"
+   91   AddS 
+   92 CallBI puts
+   95    Jmp 112
+   98   CStr (20) "PASS: "
+  101   AddS SP <= SP,[0xc001]
+  105   CStr (18) "\n"
+  108   AddS 
+  109 CallBI puts
+  112 UnLink 
+  113   RetN 2 
+: "final"
+  118   Link 0 
+  120  LoadI 0x0000
+  123   JmpZ 135
+  126   CStr (38) "\n## PASSED\n"
+  129 CallBI puts
+  132    Jmp 141
+  135   CStr (50) "\n## FAILED\n"
+  138 CallBI puts
+  141 UnLink 
+  142   RetN 0 
+: "OVector._init"
+  147   Link 1 
+  149  CWord 0 
+  152 StorF0 1 
+  155    Pop 
+  156 UnLink 
+  157   RetN 1 
+: "OVector._destroy"
+  162   Link 1 
+  164 LoadF0 1 
+  167 JmpPop 182
+  170 LoadF0 1 
+  173   AddI SP <= SP,0x0002
+  177  DecBI 
+  178    EqI SP <= SP,0x0000
+  182   JmpZ 202
+  185 LoadFP 0 
+  188   Call (654) "OVector.clear"
+  193 LoadF0 1 
+  196  StDup 
+  197   JmpZ 201
+  200 Delete 
+  201    Pop 
+  202 UnLink 
+  203   RetN 1 
+: "OVector._copy"
+  208   Link 2 
+  210 LoadF1 0 
+  213 StorF0 0 
+  216    Pop 
+  217 LoadF0 1 
+  220 JmpPop 235
+  223 LoadF0 1 
+  226   AddI SP <= SP,0x0002
+  230  DecBI 
+  231    EqI SP <= SP,0x0000
+  235   JmpZ 262
+  238 LoadFP 0 
+  241   Call (654) "OVector.clear"
+  246 LoadF0 1 
+  249  StDup 
+  250   JmpZ 254
+  253 Delete 
+  254    Pop 
+  255  CWord 0 
+  258 StorF0 1 
+  261    Pop 
+  262 LoadF1 1 
+  265   JmpZ 284
+  268 LoadF1 1 
+  271 StorF0 1 
+  274    Pop 
+  275 LoadF0 1 
+  278   AddI SP <= SP,0x0002
+  282  IncAI 
+  283    Pop 
+  284 LoadFP 0 
+  287 SetRet 
+  288 UnLink 
+  289    Ret 2 
+: "OVector.add"
+  294   Link 2 
+  296 StInit (1) "i"
+  299 LoadF0 1 
+  302    Not 
+  303   JmpZ 329
+  306  CWord 1 
+  309   CStr (62) "piii"
+  312    New 
+  313 StorF0 1 
+  316    Pop 
+  317 LoadF0 1 
+  320   AddI SP <= SP,0x0002
+  324  CWord 1 
+  327  Store 
+  328    Pop 
+  329 LoadF0 1 
+  332   AddI SP <= SP,0x0003
+  336   Load 
+  337   AddI SP <= SP,0x0001
+  341 LoadF0 1 
+  344   AddI SP <= SP,0x0001
+  348   Load 
+  349    GTI 
+  350   JmpZ 431
+  353 LoadF0 1 
+  356   AddI SP <= SP,0x0001
+  360   Load 
+  361   AddI SP <= SP,0x000a
+  365   CStr (67) "p"
+  368    New 
+  369 StorFP 5 
+  372    Pop 
+  373 LoadF0 1 
+  376   Load 
+  377   JmpZ 408
+  380 LoadFP 5 
+  383 LoadF0 1 
+  386   Load 
+  387 LoadF0 1 
+  390   AddI SP <= SP,0x0001
+  394   Load 
+  395 CallBI memcpy
+  398 LoadF0 1 
+  401   Load 
+  402  StDup 
+  403   JmpZ 407
+  406 Delete 
+  407    Pop 
+  408 LoadF0 1 
+  411 LoadFP 5 
+  414  Store 
+  415    Pop 
+  416 LoadF0 1 
+  419   AddI SP <= SP,0x0001
+  423  StDup 
+  424   Load 
+  425   AddI SP <= SP,0x000a
+  429  Store 
+  430    Pop 
+  431 LoadF0 1 
+  434   Load 
+  435 LoadF0 1 
+  438   AddI SP <= SP,0x0003
+  442   Load 
+  443   AddI 
+  444 LoadFP 1 
+  447  Store 
+  448    Pop 
+  449 LoadF0 1 
+  452   AddI SP <= SP,0x0003
+  456  IncBI 
+  457    Jmp 463
+  460  CWord 0 
+  463 SetRet 
+  464    Pop 
+  465 UnLink 
+  466    Ret 2 
+: "OVector.del"
+  471   Link 2 
+  473 LoadF0 1 
+  476   JmpZ 587
+  479 LoadF0 1 
+  482   AddI SP <= SP,0x0003
+  486   Load 
+  487    LTI SP <= [0xc001],SP
+  491   JmpZ 576
+  494 LoadF0 1 
+  497   Load 
+  498   AddI SP <= SP,[0xc001]
+  502   Load 
+  503  StDup 
+  504   JmpZ 508
+  507 Delete 
+  508    Pop 
+  509 LoadF0 1 
+  512   AddI SP <= SP,0x0003
+  516   Load 
+  517   SubI SP <= SP,0x0001
+  521    LTI SP <= [0xc001],SP
+  525   JmpZ 567
+  528 LoadF0 1 
+  531   Load 
+  532   AddI SP <= SP,[0xc001]
+  536 LoadF0 1 
+  539   Load 
+  540   AddI SP <= SP,[0xc001]
+  544   AddI SP <= SP,0x0001
+  548 LoadF0 1 
+  551   AddI SP <= SP,0x0003
+  555   Load 
+  556   SubI SP <= SP,[0xc001]
+  560   SubI SP <= SP,0x0001
+  564 CallBI memcpy
+  567 LoadF0 1 
+  570   AddI SP <= SP,0x0003
+  574  DecAI 
+  575    Pop 
+  576 LoadF0 1 
+  579   AddI SP <= SP,0x0003
+  583   Load 
+  584    Jmp 596
+  587  CWord 0 
+  590    Jmp 596
+  593  CWord 0 
+  596 SetRet 
+  597 UnLink 
+  598    Ret 2 
+: "OVector.get"
+  603   Link 2 
+  605 LoadF0 1 
+  608 JmpPop 623
+  611 LoadF0 1 
+  614   AddI SP <= SP,0x0003
+  618   Load 
+  619    LTI SP <= [0xc001],SP
+  623   JmpZ 638
+  626 LoadF0 1 
+  629   Load 
+  630   AddI SP <= SP,[0xc001]
+  634   Load 
+  635    Jmp 647
+  638  CWord 0 
+  641    Jmp 647
+  644  CWord 0 
+  647 SetRet 
+  648 UnLink 
+  649    Ret 2 
+: "OVector.clear"
+  654   Link 1 
+  656 StInit (1) "i"
+  659 LoadF0 1 
+  662   JmpZ 748
+  665  CWord 0 
+  668 StorFP 4 
+  671    Pop 
+  672 LoadF0 1 
+  675   AddI SP <= SP,0x0003
+  679   Load 
+  680    LTI SP <= [0xc004],SP
+  684   JmpZ 710
+  687 LoadF0 1 
+  690   Load 
+  691   AddI SP <= SP,[0xc004]
+  695   Load 
+  696  StDup 
+  697   JmpZ 701
+  700 Delete 
+  701    Pop 
+  702  IncAI SP <= 0xc004
+  706    Pop 
+  707    Jmp 672
+  710 LoadF0 1 
+  713   Load 
+  714  StDup 
+  715   JmpZ 719
+  718 Delete 
+  719    Pop 
+  720 LoadF0 1 
+  723  CWord 0 
+  726  Store 
+  727    Pop 
+  728 LoadF0 1 
+  731   AddI SP <= SP,0x0001
+  735 LoadF0 1 
+  738   AddI SP <= SP,0x0003
+  742  CWord 0 
+  745  Store 
+  746  Store 
+  747    Pop 
+  748    Pop 
+  749 UnLink 
+  750   RetN 1 
+: "OVector.count"
+  755   Link 1 
+  757 LoadF0 1 
+  760   JmpZ 774
+  763 LoadF0 1 
+  766   AddI SP <= SP,0x0003
+  770   Load 
+  771    Jmp 783
+  774  CWord 0 
+  777    Jmp 783
+  780  CWord 0 
+  783 SetRet 
+  784 UnLink 
+  785    Ret 1 
+: "OVector.reserve"
+  790   Link 2 
+  792 StInit (1) "i"
+  795    LTI SP <= [0xc001],0x0001
+  801   JmpZ 807
+  804    Jmp 918
+  807 LoadF0 1 
+  810    Not 
+  811   JmpZ 837
+  814  CWord 1 
+  817   CStr (62) "piii"
+  820    New 
+  821 StorF0 1 
+  824    Pop 
+  825 LoadF0 1 
+  828   AddI SP <= SP,0x0002
+  832  CWord 1 
+  835  Store 
+  836    Pop 
+  837 LoadF0 1 
+  840   AddI SP <= SP,0x0001
+  844   Load 
+  845    GTI SP <= [0xc001],SP
+  849   JmpZ 918
+  852 LoadFP 1 
+  855   CStr (67) "p"
+  858    New 
+  859 StorFP 5 
+  862    Pop 
+  863 LoadF0 1 
+  866   Load 
+  867   JmpZ 898
+  870 LoadFP 5 
+  873 LoadF0 1 
+  876   Load 
+  877 LoadF0 1 
+  880   AddI SP <= SP,0x0001
+  884   Load 
+  885 CallBI memcpy
+  888 LoadF0 1 
+  891   Load 
+  892  StDup 
+  893   JmpZ 897
+  896 Delete 
+  897    Pop 
+  898 LoadF0 1 
+  901 LoadFP 5 
+  904  Store 
+  905    Pop 
+  906 LoadF0 1 
+  909   AddI SP <= SP,0x0001
+  913 LoadFP 1 
+  916  Store 
+  917    Pop 
+  918    Pop 
+  919 UnLink 
+  920   RetN 2 
+: "Vector._destroy"
+  925   Link 1 
+  927 LoadF0 2 
+  930  StDup 
+  931   JmpZ 935
+  934 Delete 
+  935    Pop 
+  936 UnLink 
+  937   RetN 1 
+: "Vector._copy"
+  942   Link 2 
+  944 StInit (1) "i"
+  947 LoadF1 0 
+  950 StorF0 0 
+  953    Pop 
+  954 LoadF1 4 
+  957 LoadF0 4 
+  960   NEqI 
+  961 JmpPop 971
+  964 LoadF1 5 
+  967 LoadF0 5 
+  970   NEqS 
+  971   JmpZ 980
+  974   CStr (69) "different data types"
+  977 CallBI <Invalid #>
+  980 LoadFP 0 
+  983   Call (1348) "Vector.clear"
+  988 LoadFP 0 
+  991 LoadF1 1 
+  994   Call (1388) "Vector.reserve"
+  999 LoadF1 1 
+ 1002 StorF0 1 
+ 1005    Pop 
+ 1006 LoadF0 2 
+ 1009 LoadF1 2 
+ 1012 LoadF0 1 
+ 1015 LoadF0 4 
+ 1018  MultI 
+ 1019 CallBI memcpy
+ 1022 LoadFP 0 
+ 1025 SetRet 
+ 1026    Pop 
+ 1027 UnLink 
+ 1028    Ret 2 
+: "Vector.init"
+ 1033   Link 3 
+ 1035 LoadFP 1 
+ 1038 StorF0 5 
+ 1041    Pop 
+ 1042 LoadFP 2 
+ 1045 StorF0 4 
+ 1048    Pop 
+ 1049 UnLink 
+ 1050   RetN 3 
+: "Vector.add"
+ 1055   Link 2 
+ 1057 StInit (1) "i"
+ 1060 LoadF0 1 
+ 1063   AddI SP <= SP,0x0001
+ 1067 LoadF0 3 
+ 1070    GTI 
+ 1071   JmpZ 1169
+ 1074   CStr (90) "_size != 0"
+ 1077 LoadF0 4 
+ 1080   NEqI SP <= SP,0x0000
+ 1084 CallBI <Invalid #>
+ 1087 LoadF0 4 
+ 1090    EqI SP <= SP,0x0000
+ 1094   JmpZ 1103
+ 1097   CStr (101) "Vector not initialized"
+ 1100 CallBI <Invalid #>
+ 1103 LoadF0 5 
+ 1106 LoadF0 3 
+ 1109   AddI SP <= SP,0x000a
+ 1113 CallBI malloct
+ 1116 StorFP 5 
+ 1119    Pop 
+ 1120 LoadF0 2 
+ 1123   JmpZ 1151
+ 1126 LoadFP 5 
+ 1129 LoadF0 2 
+ 1132 LoadF0 1 
+ 1135 LoadF0 4 
+ 1138  MultI 
+ 1139 CallBI memcpy
+ 1142 LoadF0 2 
+ 1145  StDup 
+ 1146   JmpZ 1150
+ 1149 Delete 
+ 1150    Pop 
+ 1151 LoadFP 5 
+ 1154 StorF0 2 
+ 1157    Pop 
+ 1158 LoadF0 3 
+ 1161   AddI SP <= SP,0x000a
+ 1165 StorF0 3 
+ 1168    Pop 
+ 1169 LoadF0 2 
+ 1172 LoadF0 1 
+ 1175 LoadF0 4 
+ 1178  MultI 
+ 1179   AddI 
+ 1180 LoadFP 1 
+ 1183 LoadF0 4 
+ 1186 CallBI memcpy
+ 1189   AddI SP <= [0xc000],0x0001
+ 1195  IncBI 
+ 1196    Jmp 1202
+ 1199  CWord 0 
+ 1202 SetRet 
+ 1203    Pop 
+ 1204 UnLink 
+ 1205    Ret 2 
+: "Vector.del"
+ 1210   Link 2 
+ 1212 LoadF0 1 
+ 1215    LTI SP <= [0xc001],SP
+ 1219   JmpZ 1287
+ 1222 LoadF0 1 
+ 1225   SubI SP <= SP,0x0001
+ 1229    LTI SP <= [0xc001],SP
+ 1233   JmpZ 1279
+ 1236 LoadF0 2 
+ 1239 LoadF0 4 
+ 1242  MultI SP <= [0xc001],SP
+ 1246   AddI 
+ 1247 LoadF0 2 
+ 1250   AddI SP <= [0xc001],0x0001
+ 1256 LoadF0 4 
+ 1259  MultI 
+ 1260   AddI 
+ 1261 LoadF0 1 
+ 1264   SubI SP <= SP,[0xc001]
+ 1268   SubI SP <= SP,0x0001
+ 1272 LoadF0 4 
+ 1275  MultI 
+ 1276 CallBI memcpy
+ 1279   AddI SP <= [0xc000],0x0001
+ 1285  DecAI 
+ 1286    Pop 
+ 1287 LoadF0 1 
+ 1290    Jmp 1296
+ 1293  CWord 0 
+ 1296 SetRet 
+ 1297 UnLink 
+ 1298    Ret 2 
+: "Vector.get"
+ 1303   Link 2 
+ 1305 LoadF0 1 
+ 1308    LTI SP <= [0xc001],SP
+ 1312   JmpZ 1332
+ 1315 LoadF0 2 
+ 1318 LoadF0 4 
+ 1321  MultI SP <= [0xc001],SP
+ 1325   AddI 
+ 1326    Jmp 1341
+ 1329    Jmp 1338
+ 1332  CWord 0 
+ 1335    Jmp 1341
+ 1338  CWord 0 
+ 1341 SetRet 
+ 1342 UnLink 
+ 1343    Ret 2 
+: "Vector.clear"
+ 1348   Link 1 
+ 1350 LoadF0 2 
+ 1353   JmpZ 1382
+ 1356 LoadF0 2 
+ 1359  StDup 
+ 1360   JmpZ 1364
+ 1363 Delete 
+ 1364    Pop 
+ 1365  CWord 0 
+ 1368 StorF0 2 
+ 1371    Pop 
+ 1372  CWord 0 
+ 1375 StorF0 3 
+ 1378 StorF0 1 
+ 1381    Pop 
+ 1382 UnLink 
+ 1383   RetN 1 
+: "Vector.reserve"
+ 1388   Link 2 
+ 1390 StInit (1) "i"
+ 1393 LoadF0 3 
+ 1396    GTI SP <= [0xc001],SP
+ 1400   JmpZ 1490
+ 1403   CStr (90) "_size != 0"
+ 1406 LoadF0 4 
+ 1409   NEqI SP <= SP,0x0000
+ 1413 CallBI <Invalid #>
+ 1416 LoadF0 4 
+ 1419    EqI SP <= SP,0x0000
+ 1423   JmpZ 1432
+ 1426   CStr (101) "Vector not initialized"
+ 1429 CallBI <Invalid #>
+ 1432 LoadF0 5 
+ 1435 LoadFP 1 
+ 1438 CallBI malloct
+ 1441 StorFP 5 
+ 1444    Pop 
+ 1445 LoadF0 2 
+ 1448   JmpZ 1476
+ 1451 LoadFP 5 
+ 1454 LoadF0 2 
+ 1457 LoadF0 1 
+ 1460 LoadF0 4 
+ 1463  MultI 
+ 1464 CallBI memcpy
+ 1467 LoadF0 2 
+ 1470  StDup 
+ 1471   JmpZ 1475
+ 1474 Delete 
+ 1475    Pop 
+ 1476 LoadFP 5 
+ 1479 StorF0 2 
+ 1482    Pop 
+ 1483 LoadFP 1 
+ 1486 StorF0 3 
+ 1489    Pop 
+ 1490    Pop 
+ 1491 UnLink 
+ 1492   RetN 2 
+: "test_OVector"
+ 1497   Link 0 
+ 1499 StInit (278) "4i"
+ 1502  CWord 1 
+ 1505   CStr (124) "oii"
+ 1508 NewObj 75 
+ 1511 StorFP 5 
+ 1514    Pop 
+ 1515   AddI SP <= [0xc005],0x0001
+ 1521  CWord 5 
+ 1524  Store 
+ 1525    Pop 
+ 1526   AddI SP <= [0xc005],0x0002
+ 1532  CWord 8 
+ 1535  Store 
+ 1536    Pop 
+ 1537  CWord 1 
+ 1540 LoadFP 5 
+ 1543   Call (294) "OVector.add"
+ 1548    EqI SP <= SP,0x0001
+ 1552   CStr (128) "OVector.add"
+ 1555   Call (67) "test"
+ 1560  CWord 1 
+ 1563   CStr (124) "oii"
+ 1566 NewObj 75 
+ 1569 StorFP 5 
+ 1572    Pop 
+ 1573   AddI SP <= [0xc005],0x0001
+ 1579  CWord 13 
+ 1582  Store 
+ 1583    Pop 
+ 1584   AddI SP <= [0xc005],0x0002
+ 1590  CWord 7 
+ 1593  Store 
+ 1594    Pop 
+ 1595  CWord 1 
+ 1598 LoadFP 5 
+ 1601   Call (294) "OVector.add"
+ 1606    EqI SP <= SP,0x0002
+ 1610   CStr (128) "OVector.add"
+ 1613   Call (67) "test"
+ 1618  CWord 1 
+ 1621   Call (755) "OVector.count"
+ 1626    EqI SP <= SP,0x0002
+ 1630   CStr (140) "OVector.count"
+ 1633   Call (67) "test"
+ 1638  CWord 0 
+ 1641 StorFP 3 
+ 1644    Pop 
+ 1645  CWord 1 
+ 1648   Call (755) "OVector.count"
+ 1653    LTI SP <= [0xc003],SP
+ 1657   JmpZ 1770
+ 1660  CWord 1 
+ 1663 LoadFP 3 
+ 1666   Call (603) "OVector.get"
+ 1671 StorFP 5 
+ 1674    Pop 
+ 1675    EqI SP <= [0xc003],0x0000
+ 1681   JmpZ 1720
+ 1684   AddI SP <= [0xc005],0x0001
+ 1690   Load 
+ 1691    EqI SP <= SP,0x0005
+ 1695 JmpPop 1709
+ 1698   AddI SP <= [0xc005],0x0002
+ 1704   Load 
+ 1705    EqI SP <= SP,0x0008
+ 1709   CStr (154) "OVector.get"
+ 1712   Call (67) "test"
+ 1717    Jmp 1762
+ 1720    EqI SP <= [0xc003],0x0001
+ 1726   JmpZ 1762
+ 1729   AddI SP <= [0xc005],0x0001
+ 1735   Load 
+ 1736    EqI SP <= SP,0x000d
+ 1740 JmpPop 1754
+ 1743   AddI SP <= [0xc005],0x0002
+ 1749   Load 
+ 1750    EqI SP <= SP,0x0007
+ 1754   CStr (154) "OVector.get"
+ 1757   Call (67) "test"
+ 1762  IncAI SP <= 0xc003
+ 1766    Pop 
+ 1767    Jmp 1645
+ 1770  LoadI 0x0002
+ 1773   Load 
+ 1774 StorFP 6 
+ 1777    Pop 
+ 1778  CWord 0 
+ 1781 StorFP 3 
+ 1784    Pop 
+ 1785    LTI SP <= [0xc003],0x000a
+ 1791   JmpZ 1852
+ 1794  CWord 1 
+ 1797   CStr (124) "oii"
+ 1800 NewObj 75 
+ 1803 StorFP 5 
+ 1806    Pop 
+ 1807   AddI SP <= [0xc005],0x0001
+ 1813 LoadFP 3 
+ 1816  Store 
+ 1817    Pop 
+ 1818   AddI SP <= [0xc005],0x0002
+ 1824  MultI SP <= [0xc003],[0xc003]
+ 1830  Store 
+ 1831    Pop 
+ 1832  CWord 1 
+ 1835 LoadFP 5 
+ 1838   Call (294) "OVector.add"
+ 1843    Pop 
+ 1844  IncAI SP <= 0xc003
+ 1848    Pop 
+ 1849    Jmp 1785
+ 1852  LoadI 0x0002
+ 1855   Load 
+ 1856   NEqI SP <= SP,[0xc006]
+ 1860   CStr (166) "OVector.add - grow"
+ 1863   Call (67) "test"
+ 1868  CWord 1 
+ 1871   Call (755) "OVector.count"
+ 1876    EqI SP <= SP,0x000c
+ 1880   CStr (166) "OVector.add - grow"
+ 1883   Call (67) "test"
+ 1888  CWord 1 
+ 1891  CWord 9 
+ 1894   Call (603) "OVector.get"
+ 1899   AddI SP <= SP,0x0001
+ 1903   Load 
+ 1904    EqI SP <= SP,0x0007
+ 1908   CStr (185) "OVector.get - grow"
+ 1911   Call (67) "test"
+ 1916  CWord 3 
+ 1919  CWord 1 
+ 1922   Call (208) "OVector._copy"
+ 1927    Pop 
+ 1928    EqI SP <= [0x0002],[0x0002]
+ 1934   CStr (204) "OVector._copy"
+ 1937   Call (67) "test"
+ 1942  LoadI 0x0002
+ 1945   Load 
+ 1946 StorFP 6 
+ 1949    Pop 
+ 1950  CWord 1 
+ 1953  CWord 28 
+ 1956   Call (790) "OVector.reserve"
+ 1961   AddI SP <= [0x0002],0x0001
+ 1967   Load 
+ 1968    EqI SP <= SP,0x001c
+ 1972   CStr (218) "OVector.reserve"
+ 1975   Call (67) "test"
+ 1980  LoadI 0x0002
+ 1983   Load 
+ 1984   NEqI SP <= SP,[0xc006]
+ 1988   CStr (218) "OVector.reserve"
+ 1991   Call (67) "test"
+ 1996  CWord 1 
+ 1999  CWord 0 
+ 2002   Call (471) "OVector.del"
+ 2007    EqI SP <= SP,0x000b
+ 2011   CStr (234) "OVector.del"
+ 2014   Call (67) "test"
+ 2019  CWord 1 
+ 2022  CWord 9 
+ 2025   Call (603) "OVector.get"
+ 2030   AddI SP <= SP,0x0001
+ 2034   Load 
+ 2035    EqI SP <= SP,0x0008
+ 2039   CStr (246) "OVector.get - del"
+ 2042   Call (67) "test"
+ 2047  CWord 1 
+ 2050   Call (654) "OVector.clear"
+ 2055  CWord 1 
+ 2058   Call (755) "OVector.count"
+ 2063    EqI SP <= SP,0x0000
+ 2067   CStr (264) "OVector.clear"
+ 2070   Call (67) "test"
+ 2075   PopN 4 
+ 2078 UnLink 
+ 2079   RetN 0 
+: "test_Vector"
+ 2084   Link 0 
+ 2086 StInit (281) "8i"
+ 2089 SCWord [0xc005] <- 5
+ 2094 SCWord [0xc006] <- 8
+ 2099 SCWord [0xc007] <- 13
+ 2104 SCWord [0xc008] <- 7
+ 2109  CWord 11 
+ 2112   CStr (64) "ii"
+ 2115  CWord 2 
+ 2118   Call (1033) "Vector.init"
+ 2123  CWord 5 
+ 2126 CWdPFP 5 
+ 2129   Call (1055) "Vector.add"
+ 2134    EqI SP <= SP,0x0001
+ 2138   CStr (129) "Vector.add"
+ 2141   Call (67) "test"
+ 2146  CWord 5 
+ 2149 CWdPFP 7 
+ 2152   Call (1055) "Vector.add"
+ 2157    EqI SP <= SP,0x0002
+ 2161   CStr (129) "Vector.add"
+ 2164   Call (67) "test"
+ 2169    EqI SP <= [0x0006],0x0002
+ 2175   CStr (141) "Vector.count"
+ 2178   Call (67) "test"
+ 2183  CWord 0 
+ 2186 StorFP 3 
+ 2189    Pop 
+ 2190    LTI SP <= [0xc003],[0x0006]
+ 2196   JmpZ 2303
+ 2199  CWord 5 
+ 2202 LoadFP 3 
+ 2205   Call (1303) "Vector.get"
+ 2210 StorFP 9 
+ 2213    Pop 
+ 2214    EqI SP <= [0xc003],0x0000
+ 2220   JmpZ 2256
+ 2223 LoadFP 9 
+ 2226   Load 
+ 2227    EqI SP <= SP,0x0005
+ 2231 JmpPop 2245
+ 2234   AddI SP <= [0xc009],0x0001
+ 2240   Load 
+ 2241    EqI SP <= SP,0x0008
+ 2245   CStr (155) "Vector.get"
+ 2248   Call (67) "test"
+ 2253    Jmp 2295
+ 2256    EqI SP <= [0xc003],0x0001
+ 2262   JmpZ 2295
+ 2265 LoadFP 9 
+ 2268   Load 
+ 2269    EqI SP <= SP,0x000d
+ 2273 JmpPop 2287
+ 2276   AddI SP <= [0xc009],0x0001
+ 2282   Load 
+ 2283    EqI SP <= SP,0x0007
+ 2287   CStr (155) "Vector.get"
+ 2290   Call (67) "test"
+ 2295  IncAI SP <= 0xc003
+ 2299    Pop 
+ 2300    Jmp 2190
+ 2303   Move [0xc00a] <- [0x0007]
+ 2308  CWord 0 
+ 2311 StorFP 3 
+ 2314    Pop 
+ 2315    LTI SP <= [0xc003],0x000a
+ 2321   JmpZ 2359
+ 2324   Move [0xc005] <- [0xc003]
+ 2329  MultI SP <= [0xc003],[0xc003]
+ 2335 StorFP 6 
+ 2338    Pop 
+ 2339  CWord 5 
+ 2342 CWdPFP 5 
+ 2345   Call (1055) "Vector.add"
+ 2350    Pop 
+ 2351  IncAI SP <= 0xc003
+ 2355    Pop 
+ 2356    Jmp 2315
+ 2359   NEqI SP <= [0x0007],[0xc00a]
+ 2365   CStr (167) "Vector.add - grow"
+ 2368   Call (67) "test"
+ 2373    EqI SP <= [0x0006],0x000c
+ 2379   CStr (167) "Vector.add - grow"
+ 2382   Call (67) "test"
+ 2387  CWord 5 
+ 2390  CWord 9 
+ 2393   Call (1303) "Vector.get"
+ 2398   Load 
+ 2399    EqI SP <= SP,0x0007
+ 2403   CStr (186) "Vector.get - grow"
+ 2406   Call (67) "test"
+ 2411  CWord 11 
+ 2414  CWord 5 
+ 2417   Call (942) "Vector._copy"
+ 2422    Pop 
+ 2423   NEqI SP <= [0x0007],[0x000d]
+ 2429   CStr (205) "Vector._copy"
+ 2432   Call (67) "test"
+ 2437  CWord 11 
+ 2440  CWord 9 
+ 2443   Call (1303) "Vector.get"
+ 2448   Load 
+ 2449    EqI SP <= SP,0x0007
+ 2453   CStr (205) "Vector._copy"
+ 2456   Call (67) "test"
+ 2461   Move [0xc00a] <- [0x0007]
+ 2466  CWord 5 
+ 2469  CWord 28 
+ 2472   Call (1388) "Vector.reserve"
+ 2477    EqI SP <= [0x0008],0x001c
+ 2483   CStr (219) "Vector.reserve"
+ 2486   Call (67) "test"
+ 2491   NEqI SP <= [0x0007],[0xc00a]
+ 2497   CStr (219) "Vector.reserve"
+ 2500   Call (67) "test"
+ 2505  CWord 5 
+ 2508  CWord 0 
+ 2511   Call (1210) "Vector.del"
+ 2516    EqI SP <= SP,0x000b
+ 2520   CStr (235) "Vector.del"
+ 2523   Call (67) "test"
+ 2528  CWord 5 
+ 2531  CWord 9 
+ 2534   Call (1303) "Vector.get"
+ 2539   Load 
+ 2540    EqI SP <= SP,0x0008
+ 2544   CStr (247) "Vector.get - del"
+ 2547   Call (67) "test"
+ 2552  CWord 5 
+ 2555   Call (1348) "Vector.clear"
+ 2560    EqI SP <= [0x0006],0x0000
+ 2566   CStr (265) "Vector.clear"
+ 2569   Call (67) "test"
+ 2574   PopN 8 
+ 2577 UnLink 
+ 2578   RetN 0 
+: "main"
+ 2583   Link 0 
+ 2585   Call (2084) "test_Vector"
+ 2590   Call (1497) "test_OVector"
+ 2595   Call (118) "final"
+ 2600 UnLink 
+ 2601   RetN 0 
+

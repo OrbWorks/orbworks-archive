@@ -1,0 +1,80 @@
+// Timer.oc
+// implementation of a reusable timer object
+
+// Timer: a base object for managing a timer.
+// To use this object, you must:
+// *  derive a custom Timer object which implements
+//    ondisplay() and ontimeout()
+// *  call reset() to give the timer an initial value
+// *  call start() to start the timer
+// *  call ontimer() several times each second (see
+//    BloggleTimer for an example of how to do this)
+object Timer {
+    // resets the time remaining
+    void reset(int secs);
+    // start the timer
+    void start();
+    // stop the timer
+    void stop();
+    // notify the timer that time has passed (call this
+    // in response to a form's ontimer event)
+    void ontimer();
+    // called by Timer when the time display should be
+    // updated - a derived object must override this
+    virtual void ondisplay(int secs);
+    // called by Timer when the time has expired -
+    // a derived object must override this
+    virtual void ontimeout();
+    
+    // time remaining in ticks
+    int remaining;
+    // tickcount when the timer will expire
+    int timeout;
+    // true if currently running
+    bool running;
+    // last time that was displayed (secs)
+    int lastdisplay;
+    // cached number of ticks per second
+    int tpc;
+};
+
+void Timer.reset(int secs) {
+    tpc = tickspersec();
+    remaining = secs * tpc;
+    lastdisplay = secs;
+    ondisplay(lastdisplay);
+}
+
+void Timer.start() {
+    timeout = ticks() + remaining;
+    running = true;
+}
+
+void Timer.stop() {
+    running = false;
+    remaining = timeout - ticks();
+}
+
+void Timer.ontimer() {
+    int display;
+    if (running) {
+        remaining = timeout - ticks();
+        display = (remaining + tpc - 1) / tpc;
+        if (lastdisplay != display)
+            ondisplay(display);
+        if (display == 0) {
+            ontimeout();
+            running = false;
+        }
+    }
+}
+
+void Timer.ondisplay(int secs) {
+    // ondisplay must be overridden in a derived object
+    assert(false);
+}
+
+void Timer.ontimeout() {
+    // ontimeout must be overridden in a derived object
+    assert(false);
+}

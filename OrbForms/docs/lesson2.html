@@ -1,0 +1,155 @@
+<p>In this lesson, you will learn how a simple calculator can be developed
+quickly. Instead of going through the entire development phase, we will just highlight the key steps. By now,
+you should be able to create new projects using the project wizard, build the project,
+and copy the compiled .prc file to the emulator or the actual device 
+with the OrbFormRT.prc installed. </p>
+<h3>Determine the Required Features</h3>
+<ul>
+  <li>Allow multiply, division, subtraction and addition</li>
+  <li>Allow user to input using a keypad</li>
+  <li>Has a display shows the input and output</li>
+  <li>Has a Clear button that clear the calculation</li>
+  <li>Has a equal button </li>
+</ul>
+<h3>Design the User Interface</h3>
+<p>To the main form we add 16 buttons and one field, and give each one of them 
+a name and a text string. Adding a button is as easy as right-clicking the form
+and selecting &quot;Add Button&quot;. Once all the buttons are added, arrange
+them neatly and change the names and text so that your environment looks
+something like the picture below. Also, change the properties of the field such
+that it uses the LED font, is not editable, and has no underline.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="47%">Form's Tree Structure in the Workspace</td>
+    <td width="53%">Form Layout in the Visual Design</td>
+  </tr>
+  <tr>
+    <td width="47%"><img border="0" src="calctree.gif" width="116" height="291"></img>
+    <p>the button's name is used during coding. They are used to represent 
+    the button in the Workspace</p>
+    </td>
+    <td width="53%"><img border="1" src="basics1.gif" width="160" height="159"></img>
+    <p>the button's text is used during the programming running.</p></td>
+  </tr>
+</table>
+<h3>Provide event handlers</h3>
+<p>The calculator looks pretty good now. However it doesn't do anything 
+when you run it. To make it function, we need to add handlers for all the
+buttons. </p>
+<p>When you click on the button in the tree or on the form, the Inspection bar will 
+display the button's properties, size, and handlers.</p>
+<p>A button has only one handler which is onselect. This handler is executed
+whenever the user taps on the button. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="36%">
+    <img border="0" src="buthandler.gif" width="229" height="42"></img></td>
+    <td width="64%">Bold handler text indicates the event is already handled. 
+    Clicking on the text will jump to the location in source code where the
+      handler is defined.</td>
+  </tr>
+  <tr>
+    <td width="36%">
+    <img border="0" src="buthandler2.gif" width="229" height="42"></img></td>
+    <td width="64%">Normal handler text indicates the event is not yet handled. 
+    Clicking on the handler name will generate code to handle the event for you.</td>
+  </tr>
+</table>
+<p>Since all the number buttons do essentially the same thing, we've created a
+function called &quot;doNumber&quot; to do the actual work for each button. So,
+the code to handle each event is rather simple. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="100%">
+<pre>handler key0.onselect() {
+    doNumber(0);
+}
+
+handler key1.onselect() {
+    doNumber(1);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The complete code can be found in the SimpleCalc sample directory. </p>
+<h3>Provide User Feedback</h3>
+<p>The calculation result must be displayed on the screen. We will use a field to accomplish this task.
+A field's text can be set and retrieved during the program execution through the
+field's &quot;text&quot; property. We initialize this field to &quot;0&quot;
+when the main form opens. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="100%">
+<pre>handler mainForm.onopen() {
+    fldResult.text = &quot;0&quot;;
+}
+</pre></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    This is a handler for mainForm's onopen event. <br/>
+    <b>mainForm</b> is the calculator's form<br/>
+    <b>fldResult</b> is a Field we added in the mainForm<br/>
+    fldResult.<b>text</b> is a property of the field which allows us to get/set the 
+    text it displays.
+    </td>
+  </tr>
+</table>
+<p>The display also needs to be updated each time the user enters a number. This is the function that all of the number button handlers
+call:</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td>
+<pre>void doNumber(int num) {
+    operand = operand * 10 + num;
+    fldResult.text = operand;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>For a complete list of the field's properties and methods, refer to the <a href="oUIField.html">UIField</a>
+object the Library Reference.</p>
+<h3>Add an About Menu</h3>
+<p>A menu item has an onselect handler as well. In our case, we want to make a 
+menu item whose text is &quot;About...&quot;. In order to add a menu item, we
+must first add a menu bar and a menu. First, create a menu bar on the main form
+called &quot;mbarMain&quot;. Traditionally the &quot;About&quot; menu item in a
+Palm application resides in a menu named &quot;Options&quot;, so add a menu to
+mbarMain called &quot;menuOptions&quot; whose text is &quot;Options&quot;.
+Finally, add a menu item to menuOptions called &quot;miOptionsAbout&quot;. Set
+its text to &quot;About...&quot;, and its shortcut to &quot;A&quot;. When the 
+user select the &quot;About...&quot; menu item, we want to display a message box with the 
+program's description.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="33%">What you see in the Workspace and Inspection bar.</td>
+    <td width="33%"><img border="0" src="calcmenu.gif" width="400" height="116"></img></td>
+  </tr>
+  <tr>
+    <td width="33%">Handler source
+</td>
+    <td width="33%">
+<pre>handler miOptionsAbout.onselect() {
+    alert(&quot;SimpleCalc\nAn OrbForms sample application&quot;);
+
+}</pre>
+    alert is a function that creates a popup message box. Inside the 
+    message box, it displays the text you passed in.</td>
+  </tr>
+  <tr>
+    <td width="33%">Final result when the user selects the About menu</td>
+    <td width="33%"><img border="0" src="calcalert.gif" width="171" height="93"></img></td>
+  </tr>
+</table>
+<h3>Conclusion</h3>
+<p>These are all the major parts of a simple calculator. You should now be
+comfortable adding custom handlers on your own. In order to take full 
+advantage of each type of control, study the <a href="cUI.html">User Interface</a>
+section of the Library Reference. </p>
+<h3>Exercise:</h3>
+<p>1. A field is a very powerful user interface element. Can you make the 
+output display in different fonts? Or add an underline to the output number?</p>
+<p>2. In the current calculator state, f you try to divide a number by 0 a runtime error will
+occur. It is not a desirable thing to have runtime errors. Can you 
+add a feature that when the user tries to divide a number by 0, an <a href="mAlert.html"> alert</a> box 
+pops up and tell the user that this operation is invalid?</p>

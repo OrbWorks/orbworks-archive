@@ -1,0 +1,85 @@
+// personalForm.oc
+// Created for personalForm
+
+void loadPersonalData() {
+    string status[3] = { "Single", "Married", "Divorced" };
+
+    // initialize the form with the current record
+    fldPersonalName.text = entry.per.name;
+    fldPersonalAge.text = entry.per.age;
+    
+    // set the sex pushbutton	
+    if (entry.per.sex) {
+        personalForm.select(1, pushFemale.id);
+    } else {
+        personalForm.select(1, pushMale.id);
+    }
+    
+    // initialize the marital status list
+    listPersonalStatus.selitem = entry.per.status;
+    popPersonalStatus.text = status[entry.per.status];	
+}
+
+void savePersonalData() {
+    // save the data from the form into the current record
+    entry.per.name = fldPersonalName.text;
+    entry.per.age = fldPersonalAge.text;
+    if (pushMale.checked) {
+        entry.per.sex = 0;
+    } else {
+        entry.per.sex = 1;
+    }
+    entry.per.status = listPersonalStatus.selitem;
+}
+
+handler personalForm.onopen() {
+    string pages[2] = { "Personal", "Work" };
+    string status[3] = { "Single", "Married", "Divorced" };
+
+    // setup the form popup
+    listPersonalPages.setitems(2, pages);
+    listPersonalPages.selitem = 0;
+    popPersonalPage.text = "Personal";
+
+    // setup the status popup
+    listPersonalStatus.setitems(3, status);
+    
+    loadPersonalData();
+    
+    // setup the record manager to modify the controls
+    // on this form
+    recMgr.setControls(lblPersonalRecord, btnPersonalPrevious, btnPersonalNext);
+}
+
+handler personalForm.onclose() {
+    savePersonalData();
+}
+
+handler miPersonalOptionsAbout.onselect() {
+    doAbout();
+}
+
+handler popPersonalPage.onlistselect() {
+    if (event.value == 1) {
+        workForm.load();
+        appPrefs.iPage = PAGE_WORK;
+    }
+}
+
+handler btnPersonalPrevious.onselect() {
+    savePersonalData();
+    recMgr.prev();
+    loadPersonalData();
+}
+
+handler btnPersonalNext.onselect() {
+    savePersonalData();
+    recMgr.next();
+    loadPersonalData();
+}
+
+handler btnPersonalAdd.onselect() {
+    savePersonalData();
+    recMgr.add();
+    loadPersonalData();
+}

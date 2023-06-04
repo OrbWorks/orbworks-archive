@@ -1,0 +1,95 @@
+// PocketC network compatibility functions
+
+#include "pc_format.oc"
+#include "add-ins/OrbNetwork.oc"
+
+Network _network;
+
+int netopen() {
+    return _network.open();
+}
+
+void netclose() {
+    _network.close();
+}
+
+string netlocaladdr() {
+    return _network.localAddr;
+}
+
+int nethostbyname(string name, pointer paddr) {
+    return _network.getHostByName(name, (string*)paddr);
+}
+
+int nethostbyaddr(string addr, pointer pname) {
+    return _network.getHostByAddr(addr, (string*)pname);
+}
+
+int netgettimeout() {
+    return _network.timeout;
+}
+
+void netsettimeout(int timeout) {
+    _network.timeout = timeout;
+}
+
+int sockopen(pointer pid) {
+    Socket* pSocket = new Socket;
+    int ret = pSocket->open(netAfInet, netSockStream, netProtoIpTcp);
+    if (ret == 0) {
+        *pid = (int)pSocket;
+    } else {
+        delete pSocket;
+    }
+    return ret;
+}
+
+int sockclose(int id) {
+    int ret = ((Socket*)id)->close();
+    delete ((Socket*)id);
+    return ret;
+}
+
+int sockaccept(int id, pointer pnewid) {
+    Socket* pNewSocket = new Socket;
+    int ret = ((Socket*)id)->accept(*pNewSocket);
+    if (ret == 0) {
+        *pnewid = (int)pNewSocket;
+    } else {
+        delete pNewSocket;
+    }
+    return ret;
+}
+
+int sockbind(int id, string localAddr) {
+    return ((Socket*)id)->bind(localAddr);
+}
+
+int sockconnect(int id, string addr) {
+    return ((Socket*)id)->connect(addr);
+}
+
+int socklisten(int id, int backlog) {
+    return ((Socket*)id)->listen(backlog);
+}
+
+int socksend(int id, pointer data, string format, int count) {
+    return ((Socket*)id)->send(data, _convertFormat(format), count);
+}
+
+int sockrecv(int id, pointer data, string format, int count) {
+    return ((Socket*)id)->recv(data, _convertFormat(format), count);
+}
+
+int sockshutdown(int id, int dir) {
+    return ((Socket*)id)->shutdown(dir);
+}
+
+string socklocaladdr(int id) {
+    return ((Socket*)id)->localAddr;
+}
+
+string sockremoteaddr(int id) {
+    return ((Socket*)id)->remoteAddr;
+}
+

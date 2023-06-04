@@ -1,0 +1,22 @@
+// dbtest
+w() {
+  dbcreate("dbtest");
+  dbwrite("line 1");
+  dbrec(1);
+  dbwrite("line 2");
+  dbclose();
+}
+
+e() {
+  dbopen("dbtest");
+  dberase();
+  dbrec(1);
+  dberase();
+  dbclose();
+}
+
+main() {
+  w();
+  e();
+  w();
+}

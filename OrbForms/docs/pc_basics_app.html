@@ -1,0 +1,56 @@
+<p>Creating an application with PocketC Architect is done by declaring the 
+application properties, declaring the forms and controls, and implementing 
+handlers for the events. This topic walks you through these steps to create a 
+simple application.</p>
+<h3>Define Application Properties</h3>
+<p>The first step in creating an application is to declare the app and set its 
+properties. To do this, use the <a href="tResources.html">OrbC resource language</a>, 
+for example:</p>
+<pre>@app myApp {
+  creator = "MyAp"; // creator id
+  name = "App Name"; // display name
+  dbname = "AppName-MyAp"; // name of .prc database
+}</pre>
+<p>After declaring the application, you will need to implement at handler for 
+the onstart event, discussed below.</p>
+<h3>Create Forms</h3>
+<p>An application needs at least one form. The following is a simple form with a 
+single button:</p>
+<pre>@form myForm {
+  id = 1000
+  text = "My Form"
+  x = 0, y = 0, w = 160, h = 160
+
+  button myButton {
+    id = 1001
+    x = 60, y = 80, w = 40, h = 12
+    text = "My Button"
+  }
+}
+</pre>
+<p>The code above declares a form named <code>myForm</code>, containing a 
+button named <code>myButton</code>. 
+Both the form and the button use default values for all optional properties, e.g. a full screen non-modal form, a button 
+with a standard frame and standard font. One thing you may notice is that both objects declared above have names and ids. Each 
+id must be unique within the application, and must be less than 9000. Each name 
+must also be unique.</p>
+<p>The most interesting parts of the declaration above are the names of the 
+objects. Declaring an app, form, or control actually creates a global variable 
+by that name which can be referenced in code, and is used in implementing 
+handlers.</p>
+<h3>Implement Handlers</h3>
+<p>In order for an application to do anything, it must handle events. An event 
+is handled by declaring an event handler, which is similar to a method - for 
+complete details, see <a href="tEvents.html">Event Handlers</a>. All 
+applications must implement the app handler onstart, which must load the main 
+form:</p>
+<pre>handler myApp.onstart() {
+  myForm.load();
+}</pre>
+<p>To make the application more useful, implement handlers for the rest of the 
+objects. For example, the following code will cause an alert to be displayed 
+when the <code>myButton</code> is pressed:</p>
+<pre>handler myButton.onselect() {
+  alert("Button pressed");
+}
+</pre>

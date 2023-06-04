@@ -1,0 +1,12 @@
+//memtest
+main(){
+  string  foo;
+  pointer bar;
+
+  *foo = "bar";
+  *bar = foo;
+
+  alert(foo + " " + bar);
+}
+
+

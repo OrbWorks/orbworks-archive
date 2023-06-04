@@ -1,0 +1,60 @@
+<p>Beginning with version 5, the Palm OS supports screen resolutions higher than
+160 by 160. OrbC provides support for these higher resolutions as
+described below.</p>
+<h3>Coordinates versus Pixels</h3>
+<p>To maintain compatibility with older applications, the OS treats forms and
+controls based on a 160 by 160 &quot;coordinates&quot;. The OS stretches them to
+fit the actual resolution of the device - on a 320 by 320 device, one coordinate
+represents a 2 by 2 block of pixels.</p>
+<p>When creating forms and controls in OrbC, or when accessing
+their x,y,w,h properties at runtime, 160 by 160 coordinates are used. Also, when
+an older application draws to the screen, 160 by 160 coordinates are used and
+stretched by the OS to match the resolution of the device.</p>
+<h3>Bitmaps and Icons</h3>
+<p>The easiest way to make an app look better on high-density devices is to
+provide high-density versions of the app bitmaps and icons. To use these
+high-density images, no application changes are required - the OS will
+automatically display the high-density image on a supported device (older
+devices will use the standard image instead).</p>
+<p>To define a high-density bitmap or icon, create an additional .bmp file that is
+exactly twice as wide and twice as tall as the standard image. Select the bitmap
+or icon in the IDE and add the new .bmp file in the property inspector.</p>
+<h3>Drawing </h3>
+<p>When using the Draw object, the parameters passed to e.g. line() are
+interpreted as 160 by 160 coordinates. This allows older applications (and
+applications that don't care about the high density screen) to work without
+modification.</p>
+<p>To allow easy drawing on both high-density and standard devices (including
+pre OS 5 devices), OrbC supports drawing at &quot;native&quot; resolution.
+Native resolution will be 160 by 160 on older devices and may be higher (e.g.
+320 by 320) on newer high density devices. To draw
+in native resolution, an application should call Draw.nbegin() rather than
+Draw.begin() and then use the graphics functions as usual. Once Draw.nbegin()
+has been called, the native width and height of the drawing surface can be
+retrieved using the Draw object's nw and nh properties. For example, a gadget
+may draw like this:</p>
+<pre>object MyGadget {
+  UIGadget gadget;
+  void onopen();
+  void ondraw();
+  Draw draw;
+}
+void MyGadget.onopen() {
+  draw.attachGadget(gadget);
+}
+void MyGadget.ondraw() {
+  // draw an X
+  draw.nbegin();
+  draw.line(clrFG, 0, 0, draw.nw, draw.nh);
+  draw.line(clrFG, 0, draw.nh, draw.nw, 0);
+  draw.end();
+}</pre>
+<h3>Pen Input</h3>
+<p>To determine the location of a pen event in native pixels rather than
+coordinates, two new properties have been added to the Event structure: nx
+(native x) and ny (native y). </p>
+<h3>Pre OS 5 Devices</h3>
+<p>Although other Palm OS based devices added high resolution support before OS
+5 (such as the Sony Clie and Handera), the API was not standardized. All future
+versions of these devices will use the new standardized API. OrbC does not
+currently support the non-standard APIs.</p>

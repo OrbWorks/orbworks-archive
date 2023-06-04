@@ -1,0 +1,10 @@
+// OldLibraryTest
+#library "GrayLib"
+
+main() {
+    puts("reverse(\"reverse\") = " + reverse("reverse") + "\n");
+    setdepth(8);
+    graph_on();
+    gbitmap(20, 20, "18123123456456789789abcabcdefdef");
+    wait();
+}

@@ -1,0 +1,9 @@
+struct Data { string str; } datas[2];
+struct Item { int class; } item;
+
+void main() {
+    Item* pitem = &item;
+    if (datas[0].str[pitem->class] =='1') {
+    }
+}
+    

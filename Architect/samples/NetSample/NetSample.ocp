@@ -1,0 +1,85 @@
+// PocketC Architect sample
+// NetSample - demonstrates the use of network APIs
+
+// app definition
+@app UIApp app {
+  name = "NetSample"
+  dbname = "NetSample"
+  creator = "OFs9"
+  version = "1.0"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form UIForm mainForm {
+    id = 1000
+    text = "NetSample"
+    x = 0, y = 0, w = 160, h = 160
+    menuid = 1001
+
+    menubar UIMenuBar barMain {
+      id = 1001
+      menu UIMenu menuMainOptions {
+        text = "Options"
+        menuitem UIMenuItem mainOptionsAbout {
+          id = 1002, sysid = 0, text = "About", shortcut = "A"
+        }
+      }
+    }
+
+    button UIButton buttonHeadlines {
+      id = 1009
+      x = 113, y = 71, w = 42, h = 12
+      text = "Headlines"
+    }
+
+    label UILabel label1004 {
+      id = 1004
+      x = 4, y = 18
+      text = "Resovle a hostname:"
+    }
+
+    field UIField fieldHostName {
+      id = 1005
+      x = 4, y = 33, w = 108, h = 12
+      maxchars = 80, autoshift = true
+    }
+
+    button UIButton buttonResolve {
+      id = 1006
+      x = 119, y = 33, w = 36, h = 12
+      text = "Resolve"
+    }
+
+    field UIField fieldIpAddress {
+      id = 1007
+      x = 4, y = 48, w = 108, h = 12
+      maxchars = 36, editable = false
+    }
+
+    label UILabel label1008 {
+      id = 1008
+      x = 4, y = 72
+      text = "Get news.com headlines:"
+    }
+    
+    field UIField fieldHeadlines {
+      id = 1013
+      x = 4, y = 92, w = 144, h = 56
+      maxchars = 36, singleline = false, hasscroll = true
+      editable = false
+    }
+
+    scroll UIScroll scrollHeadlines {
+      id = 1014
+      x = 151, y = 92, w = 7, h = 59
+      min = 0, max = 10, page = 0
+    }
+  }
+}
+
+// source files
+#include "NetSample.oc"
+#include "mainform.oc"

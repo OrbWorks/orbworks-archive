@@ -1,0 +1,56 @@
+// big array sort
+
+int a[2000], b[2000], x[1000];
+
+init() {
+  int i;
+  for (i=0;i<2000;i++) {
+    a[i] = random(8000);
+    b[i] = random(26);
+  }
+  for (i=0;i<1000;i++) {
+    x[i] = random(8000);
+  }
+}
+
+insertionsortAB (int offset, int n, int incr) {
+  int i, j, temp;
+
+  for (i = incr; i < n; i = i+incr)
+    for (j = i; (j >= incr); j=j-incr) {
+      if (a[offset+j] >= a[offset+j-incr])
+        break;
+      temp = a[offset+j];
+      a[offset+j] = a[offset+j-incr];
+      a[offset+j-incr] = temp;
+      
+      temp = b[offset+j];
+      b[offset+j] = b[offset+j-incr];
+      b[offset+j-incr] = temp;
+    }
+}
+
+shellsortAB (int n) {
+  int i, j;
+
+  for (i = (n/2); i > 1; i = i/2)
+    for (j = 0; j < i; j++)
+      insertionsortAB(j, n-j, i);
+
+  insertionsortAB(0, n, 1);
+}
+
+main() {
+  int t;
+  puts("Initializing...");
+  t = ticks();
+  init();
+  t = ticks() - t;
+  puts("[" + t + "]\n");
+
+  puts("Sorting...");
+  t = ticks();
+  shellsortAB(2000);
+  t = ticks() - t;
+  puts("[" + t + "]\n");
+}

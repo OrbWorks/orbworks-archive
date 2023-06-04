@@ -1,0 +1,36 @@
+// Triangle
+@cid "TriA";
+@ver "1.0";
+@category "Games";
+@name "Sierpinsky's Triangle";
+@dbname "Triangle";
+@licon1 "../large1.bmp";
+@licon2 "../large2.bmp";
+@licon8 "../large8.bmp";
+@sicon1 "../small1.bmp";
+@sicon2 "../small2.bmp";
+@sicon8 "../small8.bmp";
+
+
+int tx[3], ty[3], x, y;
+
+main() {
+  int i, r;
+  
+  tx[0] = 80;  ty[0] = 24;
+  tx[1] = 10;  ty[1] = 150;
+  tx[2] = 150; ty[2] = 150;
+  
+  r = random(3);
+  x = tx[r]; y = ty[r];
+  
+  graph_on();
+  title("Sierpinsky's Triangle");
+  
+  while (true) {
+    r = random(3);
+    x = (x + tx[r])/2;
+    y = (y + ty[r])/2;
+    line(1, x, y, x, y);
+  }
+}

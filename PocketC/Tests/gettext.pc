@@ -1,0 +1,6 @@
+// gettext
+main() {
+    string s;
+    s = getsi(20, 20, 60, "hello");
+    puts(s);
+}

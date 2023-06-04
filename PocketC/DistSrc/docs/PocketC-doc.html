@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PocketC Overview</title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h1>PocketC Overview</h1>
+
+<p>PocketC is a PalmOS-based compiler that can take source code from a memo and compile
+it to bytecode that will run in the PocketC virtual machine. Currently there is no way to
+create a standalone application with PocketC (the PocketC application is required to run
+any applet that you create.</p>
+
+<p>PocketC version 7.1 (with which this file came) is shareware with registration
+information available at <a href="http://www.orbworks.com/pcpalm/buy.html">http://www.orbworks.com/pcpalm/buy.html</a>.<br>
+The latest version will always be available at the <a href="http://www.orbworks.com/">OrbWorks</a>
+homepage.</p>
+
+<p>In addition to the features of the PocketC compiler on the device, PocketC
+Desktop Edition can build standalone applications.</p>
+
+<p><a href="Language-brief.html">Language reference</a><br>
+<a href="Functions.html">Library routines reference</a> <br>
+<a href="native.html">Developing native libraries</a></p>
+
+<h3>Installing an Applet</h3>
+
+<p>Applets are installed the same way normal applications are installed. Run the Palm
+Install Tool, select the applet database you want to install, and HotSync. </p>
+
+<h3>Installing Source Code</h3>
+
+<p>Source code can be copied from your computer by running the Palm Desktop application,
+creating a new memo, and copying the source code to the new memo. </p>
+
+<h3>Writing an Applet</h3>
+
+<p>A PocketC applet is written as a memopad record or a doc file. The first line of the
+source code must be a
+comment (//-style) which states the name of the applet. If the source code is a
+doc file, it's name must end in &quot;.c&quot; or &quot;.pc&quot; in order to be
+displayed in he compile dialog.<br>
+Example: <code>&#147;// Hello World&#148;</code>.<br>
+<br>
+You may also write source code on your computer, copy it to a memo (with the Palm Desktop
+software), and Hotsync. </p>
+
+<h3>Compiling an Applet</h3>
+
+<p>Press the Compile&#133; button. Select the source file that you would like to compile, and
+press Compile. In the case of an error, an alert will popup to indicate the location and type of the first error. </p>
+
+<h3>Executing an Applet</h3>
+
+<p>Select a compiled applet from the list, and press Execute. The Output form will open,
+and your applet will run. When the applet exits (either normally or by pressing the Done
+button), the main form reappears. To switch back to the Output form, press the output
+button. </p>
+
+<h3>Backing Up an Applet</h3>
+
+<p>Backing up an applet is a way to share the compiled form of an applet without sharing
+the source. To backup an individual applet, select it from the main form, and choose
+&#145;Backup...&#146; from the Applet menu. The applet will be backed up at the next
+HotSync. </p>
+
+<h3>Deleting a User-Database</h3>
+
+<p>Some applets will create databases to store preferences or other useful data. However,
+if you delete an applet, you may also want to delete the database(s) that it created. To
+do this, select the Applet | Databases... menu item. A list of user databases will be
+presented. Press the Delete... button to delete the selected database. </p>
+
+<h3>Using &quot;Doc&quot; Files </h3>
+<p>Rather than using MemoPad to edit your source code, you can use the numerous
+doc editors available. A doc file's name must end in .c or .pc to show up in the
+Compile dialog, and must have the applet name as a // comment on the first line.
+The applet name may not be the same as the doc file name. Doc files that are
+&quot;include&quot;d do not have file name restrictions. Many doc editors
+support automatic bookmarks by beginning a line with a special character/word
+and including that character/word in angle brackets at the end of the file. To
+use bookmarks in PocketC source files, you must specify the bookmark character
+as the backtick `. This is very useful for adding bookmarks at the the location
+of functions. The uncompressed size of a doc file must be less than 64K. </p>
+
+<h3>Launching PocketC from an editor</h3>
+<p>If you are developing an editor, you can launch PocketC to compile a given 
+file. To do this, use the code snippet below to pass the name of the file (as it 
+would be displayed in PocketC's Compile dialog).</p>
+<pre>#define sysAppLaunchCmdCompile (sysAppLaunchCmdCustomBase + 1)
+char* name = (char*)MemPtrNew(33);
+StrCopy(name, "NameOfFile");
+MemPtrSetOwner(name, 0); // so that the OS doesn't clean up when the app exits
+AppLaunchWithCommand('PktC', sysAppLaunchCmdCompile, name);
+</pre>
+<p>This will launch PocketC, open the Compile dialog, and begin compiling the 
+file specified.</p>
+</body>
+</html>

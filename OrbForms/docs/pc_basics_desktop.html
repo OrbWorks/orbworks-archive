@@ -1,0 +1,66 @@
+<p>PocketC Architect Desktop is a Windows-based editor and compiler
+for the OrbC language.</p>
+
+<h3>Building a Project</h3>
+
+<p>Selecting Project | Build Project compiles the current project file using the 
+settings in the Compile dialog and the properties in the <code>@app</code> 
+resource. The first source file opened is considered to be the project file. To 
+explicitly change the project file, select Project | Set Project File or 
+right-click within a file and select Set as Project.</p>
+
+<h3>Compile Dialog </h3>
+
+<p>The compile dialog gives you two options:</p>
+
+<ul>
+  <li><i>Generate standalone application </i><b>- </b>Selecting this check box 
+  will create a standalone application - a .prc file which contains an embedded 
+  runtime and any required native add-ins. When developing an application, it is 
+  generally better not to create standalone applications, because using the 
+  debug version of OrbFormsRT-debug.prc will enable you to find bugs in your 
+  code more easily. When distributing an application, it is best to use 
+  standalone applications so that your users will only need to install one file. 
+  Legacy PocketC native libraries are not embedded in a standalone application.
+  <i>The demo version is not able to build standalone applications, so this 
+  checkbox will be disabled.</i></li>
+  <li><i>Enable debug code</i>- Selecting this checkbox enables all the features 
+  provided by the <a href="tDebug.html">debug support</a>.</li>
+</ul>
+<h3>File Extensions</h3>
+<p>PocketC Architect uses three file extensions. The compiler and editor treats 
+all files types the same, but their intent is as follows:</p>
+<ul>
+  <li><i>OrbC Project File (.ocp)</i> - An OrbC source file which is the primary 
+  project file. If other files are used in the project, they are included from 
+  this file. Generally the application resources are also defined in this file.</li>
+  <li><i>OrbC Source File (.oc)</i> - An OrbC source file other than the primary 
+  project file. It is convenient to use a separate .oc file for each form and 
+  gadget implementation in your application.</li>
+  <li><i>PocketC Source File (.pc)</i> - A legacy PocketC source file.</li>
+</ul>
+<h3>QuickDocs</h3>
+<p>When you place the cursor on a function name, it displays the function
+declaration along with short documentation. The documentation for built-in
+functions is provided by the compiler. However, you can add documentation to
+your own functions very easily by adding an @doc directive before the function
+definition. For example:</p>
+<pre>@doc &quot;Create a new button&quot;;
+addButton(int x, int y, string name) { ... }</pre>
+<h3>Uploading to the Emulator or Simulator</h3>
+<p>The application's .prc will be automatically installed on the
+emulator or simulator if it is running. If the .prc file on the device is in use (i.e.
+the application is running), the file will not upload successfully. Select 
+Options | Upload on Build to enable or disable this feature.</p>
+<h3>Automatic Updates</h3>
+<p>PocketC Architect can automatically look for updates each time it is run. Select 
+Options | Auto Update to enable or disable this feature. Checking for updates 
+involves downloading a version info file from the OrbWorks server. No personally 
+identifiable information is transfered.</p>
+<h3>Compiling from the Command Line</h3>
+<p>To compile a project from the command line, you can use the included command 
+line compiler, oc.exe.</p>
+<p><code>oc.exe -pocketc [-standalone] [-debug] project.ocp</code></p>
+<p>The -pocketc switch must always be used to provide PocketC compatibility. The 
+remaining switches relate directly to the options specified in the Compile 
+dialog when building from the editor.</p>

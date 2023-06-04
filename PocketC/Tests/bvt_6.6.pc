@@ -1,0 +1,25 @@
+#include "tests.h"
+@cid "bvt6";
+@dbname "bvt 6.6";
+@name "bvt 6.6";
+@ver "1.0";
+@licon1 "icon_l1.bmp";
+@licon4 "icon_l4.bmp";
+@licon8 "icon_l8.bmp";
+@licon8h "icon_lh8.bmp";
+@sicon1 "icon_s1.bmp";
+@sicon4 "icon_s4.bmp";
+@sicon8 "icon_s8.bmp";
+@sicon8h "icon_sh8.bmp";
+// embed the source in the output
+
+main() {
+    int res;
+    string sres;
+    
+    res = alertc("title", "message", "OK:Cancel", 1);
+    alert("button " + res + " pressed");
+    res = promptc("title", "message", "OK:Cancel", 2, &sres);
+    alert("button " + res + " pressed\nEntry: " + sres);
+    final();
+}

@@ -1,0 +1,33 @@
+// PocketC Architect sample
+// ChessClock - implements a chess clock, and demonstrates separation of the
+// application into resources and code.
+//
+// This project file builds the resources.
+
+// app definition
+@app UIApp app {
+  name = "ChessClockRes"
+  dbname = "ChessClockRes"
+  creator = "ChCk"
+  resonly = true
+  
+  icon {
+    large1 = "icon_l1.bmp"
+    small1 = "icon_s1.bmp"
+    large2 = "icon_l2.bmp"
+    small2 = "icon_s2.bmp"
+    large8 = "icon_l8.bmp"
+    small8 = "icon_s8.bmp"
+    largeh8 = "icon_l8h.bmp"
+    smallh8 = "icon_s8h.bmp"
+  }
+  
+  bitmap Bitmap bmpPawn {
+    id = 110
+    image1 = "pawn1.bmp"
+    image2 = "pawn2.bmp"
+    image4 = "pawn4.bmp"
+    image8 = "pawn8.bmp"
+    imageh8 = "knight8h.bmp"
+  }
+}

@@ -1,0 +1,14 @@
+// application code
+
+// include for hookcontrast
+#include "add-ins/SampleAddIn.oc"
+
+handler app.onstart() {
+    hookcontrast(true);
+    // load the main form
+    mainForm.load();
+}
+
+handler app.onstop() {
+    hookcontrast(false);
+}

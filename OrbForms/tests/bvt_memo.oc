@@ -1,0 +1,26 @@
+// Memo Test
+#include "tests.h"
+
+// TODO: end(), rewind(), close(), remove(), erase()
+
+Memo iter, summary;
+
+void main() {
+    int i, nRecs;
+    summary.create();
+    summary.text = "Summary\n";
+    for (i=0;i<iter.nrecs;i++) {
+        if (iter.open(i)) {
+            summary.puts(iter.line() + "\n");
+        }
+    }
+    summary.rewind();
+    while (!summary.end()) {
+        puts(summary.line() + "\n");
+    }
+    summary.del();
+    
+    test(false, "Memo BVT incomplete");
+    
+    final();
+}

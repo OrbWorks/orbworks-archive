@@ -1,0 +1,173 @@
+
+
+			<p>It seems every programming book's first program is 
+always a "Hello World" example, so we will follow the tradition here. 
+This example consists a minimal Palm program which simply displays a "Hello World" 
+message on the screen.</p>
+<p>This tutorial's goal is to get you comfortable with the tool 
+and the development process. </p>
+<h3>Create a Project</h3>
+<table border="3" cellspacing="3" style="BORDER-COLLAPSE: collapse" bordercolor="#c0c0c0" width="100%" cellpadding="3">
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>Select the Project menu and choose New Project</li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">
+    <img border="0" src="hellol1.gif" width="177" height="108"></img></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>A dialog will appear and collect the project 
+        related information. 
+ 
+      <li>Please enter the project name as "HelloWorld" 
+ 
+  <li>Enter the project location. This determines 
+        where you want to store the project. 
+ 
+  <li>Select the Basic Application Wizard. 
+ 
+      <li>Click Finish button. </li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">
+    <img border="0" src="hellol2.gif" width="487" height="384"></img></td>
+  </tr>
+</table>
+<p>Now the project is created, so let us briefly go through the things you see on the screen.</p>
+<p><img border="0" src="hellol3.gif" ></img></p>
+<ul>
+  <li>The Workspace bar has two tabs, "Project" and 
+  "Source". 
+  <li>The Project tab shows the entire project as a tree. 
+  Each tree node represents a component of the project. You can view and edit 
+  their properties using the Inspection bar. 
+  <li>The Source tab shows all the source files as a tree. 
+  You can double click on a source file to open it (which also displays a list 
+  of functions in the file). 
+  <li>The Inspection bar is where you can view the properties of the currently
+    selected node. </li>
+</ul>
+<h3>Add Customized Code</h3>
+<table border="3" cellspacing="3" style="BORDER-COLLAPSE: collapse" bordercolor="#c0c0c0" width="100%" cellpadding="3">
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>Select the root node "app" in the Workspace 
+        Project, and see what appears in the Inspection bar. 
+ 
+      <li>Property <i>PRC File</i> 
+        is the final output PRC file name. For example, the output file will be 
+        MyAPP.prc by default. 
+ 
+      <li>Change the Display Name from "My App" to "Hello World". It is important to set the 
+display name property since that is the name will be displayed on the device 
+      powered Palm OS.</li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">
+    <img border="0" src="hellol4.gif"></img></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>Select the mainForm node from the Workspace 
+        Project. You should now see a list of properties and handlers in the 
+        Inspection. 
+ 
+      <li>Click on the "ondraw" handler. </li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">
+    <img border="0" src="hellol5.gif"></img></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>Now the code template will be automatically inserted in the mainform.oc source file.
+      If the source file wasn't already open, OrbForms Designer will open the source file 
+      automatically and append the code at the end.</li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">
+    <img border="0" src="hellol6.gif" width="399" height="247"></img></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+    <ul>
+      <li>Edit the ondraw() handler with customized code</li>
+    </ul>
+    </td>
+    <td width="50%" align="middle">;<table border="1" cellpadding="6" cellspacing="0" style="BORDER-COLLAPSE: collapse" bordercolor="#111111">
+  <tr>
+    <td width="100%">
+<pre>handler mainForm.ondraw() {
+
+    // create a draw object
+    Draw draw;
+    // attach to this form
+    draw.attachForm(this);
+
+    draw.begin();
+
+    // write the Hello World string at the form position (40,80)
+    draw.text(clrText, 40, 80, "Hello World");
+
+    draw.end();
+}</pre>
+    </td>
+  </tr>
+</table>
+    </td>
+  </tr>
+</table>
+<h3>Compile the Project</h3>
+<p>Select the Project menu and choose Build, or press the F7 key.</p>
+<p>If everything goes smoothly, you should see following messages in the Output:; 
+The actual build time depending on your desktop computer speed.</p>
+<table border="1" cellpadding="6" cellspacing="0" style="BORDER-COLLAPSE: collapse" bordercolor="#111111">
+  <tr>
+    <td width="100%">
+<pre>Compiling...
+Build duration [98.86] ms
+Build completed</pre>
+    </td>
+  </tr>
+</table>
+<p>The resulting MyApp.prc file should now be located in your project directory.</p>
+<h3>Test the Application</h3>
+<p>Copy the MyApp.prc file to the emulator. There are two quick 
+ways to do so.</p>
+<ul>
+  <li>Right click on the Emulator and select Install 
+  Application/Database-&gt;Others. 
+  <li>Use mouse to drag the MyApp.prc to the Palm OS Emulator screen area.</li>
+</ul>
+<p>Go to the Palm OS application launcher on the emulator. You should see an
+application named "Hello World" on the emulator. Click on the application 
+and see what happens! </p>
+<p><img border="0" src="helloworld.gif" width="160" height="160"></img></p>
+<h3>Deliver the Final Palm Application</h3>
+<p>The last but not the least, after developing your first HelloWorld program, 
+you might want to share it with other friends who has Palm OS devices. 
+Just give the MyApp.prc file to your friends through email attachments or 
+web downloads. Make sure give them the OrbFormsRT.prc as well! </p>
+<p>OrbForms Designer also allows you to build a full standalone PRC file as 
+well. Just change the project root node's property <i>standalone</i> from 
+FALSE to TRUE, and build the project again.</p>
+<p>If you create an application that you intend to give to others, you MUST get
+a unique creator id for each application. You can register a creator ID at the
+Palm development site - click on the OrbForms Designer's Help menu and select
+"Palm OS Creator ID" to go there. </p>
+<h3>Exercise:</h3>
+<p>1. Did you notice the HelloWorld program's title is "Form Title"? Can 
+you give it a more appropriate name? </p>
+<p>Hint: Click on the mainForm node in the Workspace Project, and take a look at the 
+Inspection.</p>
+<p>2. The message "Hello World" is rather meaningless. How about replace it 
+with your favorite proverb or fortune cookie saying?</p>
+<p>Hint: Be aware the screen width limitation. You might need to break the 
+words into a few different lines.</p>

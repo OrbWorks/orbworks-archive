@@ -1,0 +1,67 @@
+<p>PocketC Architect is a PalmOS-based compiler for the OrbC language.</p>
+<h3>Installing Source Code</h3>
+
+<p>Source code can be copied from your computer by running the Palm Desktop application,
+creating a new memo, and copying the source code to the new memo. PocketC 
+architect also supports PDOC files, such as those created by Qed, SrcEdit, or 
+TealDoc.</p>
+
+<h3>Writing an Application</h3>
+
+<p>A PocketC Architect application can be written as a memo or a PDOC file. When 
+using a memo, the first line of the
+source code must be a
+//-style comment which states the name of the file with a .ocp or .oc extension. If the source code is a
+doc file, it's name must end in .ocp or .oc in order to be
+displayed in the source code list.<br>
+Example: <code>&quot;// Hello World.ocp&quot;</code>.<br>
+<br>
+You may also write source code on your computer, copy it to a memo (with the Palm Desktop
+software), and Hotsync. </p>
+
+<h3>Compiling an Application</h3>
+
+<p>Select the source file that you would like to compile, and press the Compile button. 
+The source 
+code list displays all source files that end in .ocp or .orb (to make compiler 
+OrbForms applications easy). If the Show classic PocketC checkbox is checked, 
+all memo's that begin with // and all docs that end in .c or .pc will also be 
+displayed in the list.</p>
+<p>Selecting the Debug checkbox enables all the runtime features provided by the
+<a href="tDebug.html">debug support</a>.</p>
+<p>Once an application is successfully compiled, return to the application 
+launcher to run it. In the case of an error, an alert will popup to indicate the 
+location and type of the first error, with an option to jump to the error 
+location.</p>
+
+<h3>Launching PocketC Architect from an Editor</h3>
+<p>If you are developing an editor, you can launch PocketC Architect to compile a given 
+file. To do this, use the code snippet below to pass the name of the file (as it 
+would be displayed in PocketC's source code list).</p>
+<pre>#define sysAppLaunchCmdCompile (sysAppLaunchCmdCustomBase + 1)
+char* name = (char*)MemPtrNew(33);
+StrCopy(name, "NameOfFile");
+MemPtrSetOwner(name, 0); // so that the OS doesn't clean up when the app exits
+AppLaunchWithCommand('PCAr', sysAppLaunchCmdCompile, name);
+</pre>
+<p>This will launch PocketC Architect and begin compiling the 
+file specified. If you would like PocketC Architect to also give you the results 
+of the compile, use this code below:</p>
+<pre>#define sysAppLaunchCmdCompileAndReturn (sysAppLaunchCmdCustomBase + 2)
+char* name = (char*)MemPtrNew(38); // room for file + creator id
+StrCopy(name, "NameOfFile,&lt;id&gt;");
+MemPtrSetOwner(name, 0); // so that the OS doesn't clean up when the app exits
+AppLaunchWithCommand('PCAr', sysAppLaunchCmdCompileAndReturn, name);
+</pre>
+<p>This will cause PocketC Architect to compile the specified file. After the 
+compile, it will launch the app whose creator id is specified after the comma in 
+the command line. In the snippet above, the creator id is &quot;&lt;id&gt;&quot;. When the 
+specified app is launched, it will be launched with the a launch code of 0x8001 
+and a parameter block which is a string containing the results. The results 
+string is either &quot;0&quot; if the compile failed, or &quot;1,&lt;id&gt;&quot; if the compile 
+succeeded. If it succeeded, &quot;&lt;id&gt;&quot; is the creator id of the application just 
+compiled.</p>
+<p>Calling the compiler in this way can also be done from an OrbC application 
+using the launchCustomString() function. For example, to compile "file.ocp" from an application whose
+creator id is "Shll", use this code:</p>
+<pre>launchCustomString("PCAr", 0x8002, "file.ocp,Shll");</pre>

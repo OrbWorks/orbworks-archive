@@ -1,0 +1,97 @@
+// mainform.oc
+// Created for mainForm
+
+void saveData() {
+    options.name = popupGames.text;
+    options.minWhite = fieldWhite.text;
+    options.minBlack = fieldBlack.text;
+    options.secAdd = fieldAdd.text;
+    options.addType = listAddType.selitem;
+    appPrefs.bTurnSound = checkboxTurnSound.checked;
+    appPrefs.bEndSound = checkboxEndSound.checked;
+}
+
+void loadData() {
+    popupGames.text = options.name;
+    fieldWhite.text = options.minWhite;
+    fieldBlack.text = options.minBlack;
+    fieldAdd.text = options.secAdd;
+    popupAddType.text = listAddType.gettext(options.addType);
+    listAddType.selitem = options.addType;
+    checkboxTurnSound.checked = appPrefs.bTurnSound;
+    checkboxEndSound.checked = appPrefs.bEndSound;
+}
+
+handler mainForm.onopen() {
+    string addTypes[3] = { "Added before", "Added after", "Delay" };
+    listAddType.setitems(3, addTypes);
+    loadData();	
+}
+
+handler mainForm.onclose() {
+    saveData();
+}
+
+handler mainOptionsAbout.onselect() {
+    alert("Chess Clock v1.1\nby Jeremy Dewey\n\nDesigned and built with OrbForms Designer and PocketC Architect.\nwww.orbworks.com");
+}
+
+handler mainOptionsVersion.onselect() {
+    mainForm.help(strVersion);
+}
+
+handler buttonStart.onselect() {
+    saveData();
+    // setup the new game
+    game.timeWhite = options.minWhite * 6000;
+    game.timeBlack = options.minBlack * 6000;
+    if (options.addType == ADD_DELAY)
+        game.delay = options.secAdd * 100;
+    else
+        game.delay = 0;
+    game.bWhite = true;
+    gameForm.domodal();
+}
+
+handler popupGames.onselect() {
+    StringList sl;
+    int listToGame[c_numSaved];
+    int i, listCount;
+    
+    for (i=0;i<c_numSaved;i++) {
+        if (appPrefs.options[i].name) {
+            listToGame[sl.count] = i;
+            sl.add(appPrefs.options[i].name);
+        }
+    }
+    
+    listGames.setitemslist(sl);
+    listCount = sl.count;
+    if (listCount > 5)
+        listCount = 5;
+    listGames.h = listCount * 11; // height of standard font
+    i = listGames.popup();
+    if (i != -1) {
+        i = listToGame[i];
+        options = appPrefs.options[i];
+        loadData();
+    }
+}
+
+handler buttonSave.onselect() {
+    nameForm.domodal();
+    popupGames.text = options.name;
+}
+
+handler buttonDelete.onselect() {
+    deleteOptions();
+    loadData();
+}
+
+handler checkboxTurnSound.onselect() {
+    appPrefs.bTurnSound = checked;
+}
+
+handler checkboxEndSound.onselect() {
+    appPrefs.bEndSound = checked;
+}

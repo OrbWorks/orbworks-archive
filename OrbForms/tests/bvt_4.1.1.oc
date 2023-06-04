@@ -1,0 +1,37 @@
+@app { creator="oBVT" name="bvt_4.1.1.oc" dbname="bvt_4.1.1.oc" }
+
+#include "tests.h"
+
+struct Data {
+    string s1, s2;
+};
+
+void test_record() {
+    Database db;
+    DBRecord rec;
+    int irec = 0xffffffff, i, uid;
+    Data d = { "Jeremy", "Dewey" };
+    
+    if (db.open("OrbForms_testDB", true)) {
+        db.deldb();
+    }
+    if (db.create("OrbForms_testDB", "tTyp", "tCid", false)) {
+        db.newrec(&irec, rec);
+        test(rec.write(&d, typeof(d), 1) == 2, "rec.write() == 2");
+        rec.offset = 0;
+        test(rec.read(&d, typeof(d), 1) == 2, "rec.read() == 2");
+        putsl("d.s1 = " + d.s1);
+        putsl("d.s2 = " + d.s2);
+        test(d.s1 == "Jeremy", "d.s1");
+        test(d.s2 == "Dewey", "d.s2");
+        rec.close();
+        db.close();
+    } else {
+        test(false, "Unable to create OrbForms_testDB");
+    }
+}
+
+void main() {
+    test_record();
+    final();
+}

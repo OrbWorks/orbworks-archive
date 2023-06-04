@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<faq>
+<title>Frequent Asked Questions</title>
+    <section id="general">
+		<title>General Questions</title>
+		<content>
+			<question>How large is a standalone application?</question>
+			<answer>A standalone application is about 63k larger than an app that requires the OrbForms runtime.</answer>
+		</content>
+	</section>
+    <section id="ide">
+		<title>Integrated Development Environment Questions</title>
+        <content>
+			<question>How do I build a standalone application?</question>
+			<answer>In the Project bar, select the root node, usually called "app". Once selected, the application properties will be displayed in the Inspection bar. Select the "Standalone" property and set it to "TRUE". This is feature is not available in the DEMO version.</answer>
+        </content>
+		<content>
+			<question>How do I edit a bitmap?</question>
+			<answer>In the Project bar, select the bitmap you wish to edit. Once selected, the Inspection bar will display the bitmaps associated with each color-depth. Right-click the image (or the "&lt;None&gt;" text) and select "Edit Bitmap".</answer>
+		</content>
+		<content>
+			<question>I compiled my app, so why isn't the version of my app on the emulator updated?</question>
+			<answer>You must enable "Emulator Upload" in Tools | Options. Also, if your application is running on the emulator when you compile, the IDE will be unable to update it.</answer>
+		</content>
+    </section>
+    <section id="language">
+		<title>Language Questions</title>
+	</section>
+    <section id="api">
+		<title>API Questions</title>
+		<content>
+			<question>How do I exit my app?</question>
+			<answer>Under normal circumstances a Palm application should not exit until the user selects another application. However, if a fatal error occurs, you can quickly bail out using UIApp.abort(). Please see the API docs for details.</answer>
+		</content>
+		<content>
+			<question>How do I draw a circle?</question>
+			<answer>The Palm OS does not provide a method for drawing circles or ellipses. However, the Draw.frame method draws a rectangle with a given corner radius. To draw a circle, draw a frame with the circle's radius as the corner radius.</answer>
+		</content>
+		<content>
+			<question>How do I place an image on the form?</question>
+			<answer>Right click on the Bitmaps node in the Project tree and select "Add Bitmap Files".  
+			One bitmap object will be created under Bitmaps.  Let us call it bmpFace
+			Now adjust its properties to set the bitmap image file for b/w, 2bit gray, 4bit gray, and 256 color by right click on each property value, and pick the file.
+			Note: The image sizes much be the same for all 4 different mode.
+			Now right click on the form to Add Bitmap, change its following properties: Normal Bitmap=bmpFace.
+			You should see the image displayed on the form in the visual designer by now.  
+			</answer>
+		</content>
+	</section>
+    <section id="errors">
+		<title>Runtime Errors</title>
+	</section>
+</faq>

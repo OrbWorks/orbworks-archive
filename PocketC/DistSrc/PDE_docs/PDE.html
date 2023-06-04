@@ -1,0 +1,164 @@
+
+
+<h1>PocketC Desktop Edition</h1>
+<p>PocketC Desktop Edition is Windows-based editor and compiler
+for the PocketC language.</p>
+
+<h3>Compiling a File</h3>
+
+<p>Selecting Project | Compile compiles the currently active file. The compile
+dialog will open allowing you to specify an output file, along with .prc
+options.</p>
+
+<h3>Project File</h3>
+
+<p>When you hit the compile button (or hit F7), PocketC compile the current
+project file. The first file you open in PocketC is considered the project file.
+To change the project file, select the Project | Set Project File menu.&nbsp; </p>
+
+<h3>Compile Dialog </h3>
+
+<p>Their are three forms of apps that you can generate: </p>
+
+<ul>
+  <li><b>.pdb applet file - </b>Selecting nothing in the dialog will result in a
+    .pdb file. To execute it, you must launch PocketC runtime (or compiler), and
+    select your applet in the list. To distribute it, you must distribute both
+    the .pdb file and the PocketC runtime.</li>
+  <li><b>.prc app file</b> - Selecting only the &quot;Generate .prc&quot; will
+    result in a .prc file. To execute it, you select its icon from the
+    application launcher. The application requires that the PocketC runtime (or
+    compiler) be installed, but the user does not interact with it and need not
+    be aware that it is running. To
+    distribute it, you must distribute both the .prc file and the PocketC
+    runtime.</li>
+  <li><b>Standalone .prc app</b> - Selecting both the checkboxes will build a
+    standalone application. PocketC does not need to be installed. To distribute
+    it you must only distribute the .prc file (and any native libraries you
+    require). This results in a much larger app file.</li>
+</ul>
+<h3>.prc Properties</h3>
+<p>In order to generate a .prc file, you must specify the properties of the app
+in your source. Each property is an '@' followed by the property name, then the
+value (always a string), terminated with a semicolon. See the &quot;triangle.pc&quot;
+sample for an example.</p>
+<table border="0">
+  <tr>
+    <td valign="top"><code>@cid &quot;MyAp&quot;;</code></td>
+    <td valign="top">The creator ID for the app. This ID must be unique for each
+      application created. If you plan to distribute it, the ID <b>MUST</b> be
+      registered with Palm. Register at the <a href="http://www.palmos.com/dev">PalmOS
+      developer</a> site. The ID must be 4 characters, at least one of which
+      must not be lowercase.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@name &quot;My App&quot;;</code></td>
+    <td valign="top">The name of the application as it appears in the
+      application launcher.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@dbname &quot;MyApp&quot;;</code></td>
+    <td valign="top">The name of the database (file). Must be less than 32
+      characters.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@category &quot;Games&quot;;</code></td>
+    <td valign="top">The name of the default launcher category this app should 
+    be installed into. In order to honor multiple languages, you should specify 
+    one of the predefined English categories (the OS will translate it 
+    appropriately): Games, Main, System, Utilities</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@ver &quot;1.0&quot;;</code></td>
+    <td valign="top">A short string describing the version number, usually in
+      the format MAJOR.MINOR.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@licon1 &quot;icons/large1.bmp&quot;;</code></td>
+    <td valign="top">1-bit/pixel large icon. This icon must be specified. You
+      may optionally also specify a 2-, 4-, 8-, and 16-bit/pixel icon using <code>
+      licon2</code>, <code>licon4</code>, <code>licon8</code>, and <code>licon16</code>. 
+    You may also specify a double-density icon by appending 'h' to the property 
+    (e.g. <code>licon8h</code>). If you use a
+      '\' in the path, you must escape it, i.e. '\\'. Instead use '/'.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@sicon1 &quot;icons/small1.bmp&quot;;</code></td>
+    <td valign="top">1-bit/pixel small icon. This icon must be specified. You
+      may optionally also specify a 2-, 4-, 8-, and 16-bit/pixel icon using <code>sicon2</code>,
+      <code>sicon4</code>,
+      <code>sicon8</code>, and <code>sicon16</code>. Double-density icons are 
+    specified with 'h' properties (e.g. <code>sicon8h</code>).</td>
+  </tr>
+  </table>
+<h3>Compiler Directives</h3>
+<p>In order to support some advanced scenarios, you can use the following 
+directives:</p>
+  <table>
+  <tr>
+    <td valign="top"><code>@cmd &quot;command to be executed&quot;</code></td>
+    <td valign="top">This is an optional post-build command that is executed in
+      a command window (DOS prompt) in the directory of the output file. There can be multiple post-build
+      commands.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@bmp &quot;1200,1,a.bmp,8h,b.bmp&quot;</code></td>
+    <td valign="top">Embeds a bitmap family in the .prc file, which can be drawn
+      with the bitmapr() function. The string is a comma separated list. The
+      first number is the resource id, which must be unique for all bitmaps.
+      Next is a list of 1 or more pairs of bitmap depths and bitmap files which
+      make the bitmap family (the OS will select and draw the most appropriate
+      bitmap in the family). The depth can be 1, 2, 4, 8, 16, 1h, 2h, 4h, 8h, or
+      16h, where the number specifies the number of bits per pixel that the
+      image should represent (the compiler will do the depth conversion). All
+      images in the family must be the same dimensions. If the number is
+      followed by an 'h', this is a high-density bitmap and its dimensions must
+      be exactly twice the size of the normal-density bitmaps. You need not (and
+      should not) supply all depths and sizes. To make part of an 8-bit/pixel icon transparent, set the pixel color to RGB 
+    (255, 128, 255), which is a pale pink. This directive can only be used 
+    when building a .prc file.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>@res &quot;type,1,file.bin&quot;</code></td>
+    <td valign="top">Embeds a the contents of a given file in the application. 
+    The first parameter is a 4-character resource type, the second parameter is 
+    the resource id, and the final parameter is the name of the file to embed. 
+    This directive can only be used when building a .prc file.</td>
+  </tr>
+</table>
+<h3>Icons</h3>
+<p>Icons are defined in bitmap files of any color depth. The large icons must be
+32 x 32, 32 x 22, or 22 x 22 pixels. If more than one large icon is specified,
+they must all be the same dimensions. The small icon must be 15 x 9 pixels.</p>
+<p>To make part of an 8-bit/pixel icon transparent, set the pixel color to RGB
+(255, 128, 255), which is a pale pink. It is recommended that you use 24-bit
+bitmap files for this to ensure that the desired pixel color is not changed to
+match a predefined palette.</p>
+<h3>QuickDocs</h3>
+<p>When you place the cursor on a function name, it displays the function
+declaration along with short documentation. The documentation for built-in
+functions is provided by the compiler. However, you can add documentation to
+your own functions very easily by adding an @doc directive before the function
+definition. For example:</p>
+<pre>@doc &quot;Create a new button&quot;;
+addButton(int x, int y, string name) { ... }</pre>
+<p>This can also be used in the ".lib" files for native libraries - just add the @doc before each
+function declaration.</p>
+<h3>Using Native Libraries</h3>
+<p>To use a native library within PocketC Desktop Edition, you must have the
+native library's &quot;.lib&quot; file in the same directory as the source code
+that uses it. Use the library keyword followed by the name of the
+&quot;.lib&quot; file without the file extension. For example:</p>
+<p><code>library &quot;PToolboxLib&quot;</code></p>
+<h3> Native Libraries Setup</h3>
+<p>In order to have the PocketC Desktop Edition's editor highlight native
+library functions and provide parameter help, you must add the .lib file to the
+list of native libraries. To do this, select the Project | Native Library Setup
+menu item and add the .lib file.</p>
+<h3>Uploading to the Emulator</h3>
+<p>The application's .prc or .pdb will be automatically installed on the
+emulator if it is running. If the .prc/.pdb file on the device is in use (i.e.
+the application is running), the file will not upload successfully.</p>
+<h3>Compiling from the Command Line</h3>
+<p>You may launch PocketC Desktop Edition from the command line to have it
+compile a file without loading the editor. Use PDE.exe /? for details.</p>

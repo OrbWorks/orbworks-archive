@@ -1,0 +1,84 @@
+// mainform.oc
+// Created for mainForm
+
+handler mainForm.onopen() {
+    scrollHeadlines.update(fieldHeadlines);
+}
+
+handler mainOptionsAbout.onselect() {
+    alert("This is an OrbForms Designer Application");
+}
+
+handler buttonResolve.onselect() {
+    Network net;
+    string addr;
+    int err;
+
+    err = net.open();
+    if (err != 0) {
+        alert("Unable to open network, err = " + err);
+        return;
+    }
+    
+    err = net.getHostByName(fieldHostName.text, &addr);
+    if (err != 0) {
+        alert("Unable to resolve, err = " + err);
+        return;
+    }
+    fieldIpAddress.text = addr;
+    net.close();
+}
+
+// news.com has an RSS file at http://rss.com.com/2547-12-0-5.xml
+handler buttonHeadlines.onselect() {
+    Network net;
+    Socket s;
+    string addr;
+    string rss;
+    int err;
+    
+    err = net.open();
+    if (err != 0) {
+        fieldHeadlines.text = "Unable to open network, err = " + err;
+        return;
+    }
+    
+    err = net.getHostByName("rss.com.com", &addr);
+    if (err == 0) {
+        err = s.open(netAfInet, netSockStream, netProtoIpTcp);
+        if (err == 0) {
+            err = s.connect(addr + ":80"); // port 80
+            if (err == 0) {
+                err = s.sends("GET /2547-12-0-5.xml HTTP/1.0\r\n\r\n");
+                if (err == 0) {
+                    err = s.recvs(&rss);
+                    if (err == 0) {
+                        fieldHeadlines.text = strleft(rss, 1024);
+                    } else {
+                        fieldHeadlines.text = "Unable to receive, err = " + err;
+                    }
+                } else {
+                    fieldHeadlines.text = "Unable to send, err = " + err;
+                }
+            } else {
+                fieldHeadlines.text = "Unable to connect, err = " + err;
+            }			
+            s.close();
+        } else {
+          fieldHeadlines.text = "Unable to open socket, err = " + err;
+        }
+    } else {
+        fieldHeadlines.text = "Unable to resolve host, err = " + err;
+    }
+    scrollHeadlines.update(fieldHeadlines);
+    net.close();
+}
+
+handler scrollHeadlines.onmove() {
+    fieldHeadlines.scroll(event.value - event.prev);
+    update(fieldHeadlines);
+}
+
+handler fieldHeadlines.onhchange() {
+    scrollHeadlines.update(this);
+}

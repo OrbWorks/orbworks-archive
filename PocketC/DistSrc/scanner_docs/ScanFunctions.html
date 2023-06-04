@@ -1,0 +1,254 @@
+<html>
+
+<head>
+<title>Scanner Library Routines</title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h1>Built-in Scanner Functions</h1>
+
+<p>The additional functions provided in PocketC for Scanners generally
+correspond to one or more API provided by Symbol. For further details about each
+function, see the explanation provided in the Symbol SDK documentation.</p>
+
+<table border="0" width="100%">
+  <tr>
+    <td width="100%" nowrap valign="top" colspan="2">
+      <h3>Event System</h3>
+    </td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#666666" nowrap valign="top"><font color="#FFFFFF"><b>Function
+      Name</b></font></td>
+    <td width="99%" bgcolor="#666666" valign="top"><font color="#FFFFFF"><b>Description</b></font></td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>event(int time)</i></td>
+    <td width="99%" valign="top">this function in PocketC for Scanners is the
+      same as <i>event()</i> in PocketC, but adds three additional event codes:
+      [20] scanDecodeEvent, [21] scanTriggerEvent, [22] scanBatteryErrorEvent.
+      When the application receives a scanDecodeEvent, a scan has taken place,
+      and its data can be retrieved by calling <i>scanGetData()</i>. When the
+      application received a scanTriggerEvent, the scanner's trigger has been
+      pressed &#150; the application does not need to respond. When the
+      application receives a scanBatteryErrorEvent, it must inform the user of
+      the low-battery condition.</td>
+  </tr>
+  <tr>
+    <td width="100%" nowrap valign="top" colspan="2">
+      <h3><br>
+      Scanner Command Functions</h3>
+    </td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#666666" nowrap valign="top"><font color="#FFFFFF"><b>Function
+      Name</b></font></td>
+    <td width="99%" bgcolor="#666666" valign="top"><font color="#FFFFFF"><b>Description</b></font></td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanOpen()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanOpenDecoder()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanClose()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanCloseDecoder()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanAim(int bAimOn)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanCmdAimOn()</b> if <i>bAimOn</i> is
+      non-zero; calls <b>ScanCmdAimOff() </b>otherwise.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetAim()</i></td>
+    <td width="99%" valign="top">calls <b>ScanGetAimMode()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanLed(int bLedOn)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanCmdLedOn()</b> if <i>bLedOn</i> is
+      non-zero; calls <b>ScanCmdLedOff() </b>otherwise.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetLed()</i></td>
+    <td width="99%" valign="top">calls <b>ScanGetLedState()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanEnable(int
+      bEnabled)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanCmdScanEnable</b><b>()</b> if <i>bEnabled
+      </i>is non-zero; calls <b>ScanCmdScanDisable</b><b>() </b>otherwise.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetEnabled()</i></td>
+    <td width="99%" valign="top">calls <b>ScanGetScanEnabled()</b></td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanDecode(int
+      bStart)</i></td>
+    <td width="99%" valign="top">calls <b>ScanCmdStartDecode()</b> if <i>bStart</i>
+      is non-zero; calls <b>ScanCmdStopDecode()</b> otherwise.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetParams()</i></td>
+    <td width="99%" valign="top">returns a string of all the current parameters.
+      See <b>ScanCmdGetAllParams()</b> in SDK documentation for details.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetVersion(int
+      type)</i></td>
+    <td width="99%" valign="top">returns a string containing the current
+      version. When <i>type</i>=0, calls <b>ScanGetDecoderVersion()</b>; when <i>type</i>=1,
+      calls <b>ScanGetScanManagerVersion()</b>; when <i>type</i>=2, calls <b>ScanGetScanPortDriverVersion()</b>;</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanBeep(int
+      beepType)</i></td>
+    <td width="99%" valign="top">calls <b>ScanCmdBeep()</b>. The beep types are
+      defined in scanner.h, beginning with&nbsp; BEEP_</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanDefaults()</i></td>
+    <td width="99%" valign="top">calls <b>ScanCmdParamDefaults()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanSendParams(int
+      beepType)</i></td>
+    <td width="99%" valign="top">calls <b>ScanCmdSendParams()</b>. The beep
+      types are defined in scanner.h, beginning with BEEP_</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetData()</i></td>
+    <td width="99%" valign="top">calls <b>ScanGetDecodedData()</b>, returning
+      the decoded data. This should be called as a response to the
+      scanDecodeEvent event.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetDataType()</i></td>
+    <td width="99%" valign="top">returns the type of the previously decoded data
+      from the previous call to <i>scanGetData()</i>. The result is undefined if
+      <i>scanGetData()</i> is not called first. The return value is one of the
+      values defined in scanner.h beginning with BCTYPE_</td>
+  </tr>
+  <tr>
+    <td width="100%" nowrap valign="top" colspan="2">
+      <h3><br>
+      Scanner Hardware Functions</h3>
+    </td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#666666" nowrap valign="top"><font color="#FFFFFF"><b>Function
+      Name</b></font></td>
+    <td width="99%" bgcolor="#666666" valign="top"><font color="#FFFFFF"><b>Description</b></font></td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanIsSymbol()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanIsPalmSymbolUnit()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanAimDur(int dur)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetAimDuration()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetAimDur()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetAimDuration()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanBeepAfterDecode(int
+      bBeep)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetBeepAfterGoodDecode()</b>. <i>bBeep</i><i>=
+      </i>1 to enable, <i>bBeep</i><i><b>= </b></i>to disable.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetBeepAfterDecode()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetBeepAfterGoodDecode()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanBiDi(int bBiDi)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetBidirectionalRedundancy()</b>. <i>bBiDi
+      = </i>1 to enable, <i>bBiDi<b> = </b></i>to disable.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetBiDi()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetBidirectionalRedundancy()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanLedOnTime(int
+      time)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetDecodeLedOnTime()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetLedOnTime()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetDecodeLedOnTime()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanLaserOnTime(int
+      time)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetLaserOnTime()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetLaserOnTime()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetLaserOnTime()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanCount(int n)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetLinearCodeTypeSecurityLevel()</b>.
+      1 = SECURITY_LEVEL1, 2 = SECURITY_LEVEL2, etc.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetCount()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetLinearCodeTypeSecurityLevel()</b>.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanAngle(int angle)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetAngle()</b>. Use ANGLE_WIDE or
+      ANGLE_NARROW</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetAngle()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetAngle()</b>. Returns ANGLE_WIDE
+      or ANGLE_NARROW</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanTriggerMode(int
+      mode)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetTriggeringModes()</b>. Use TRIG_LEVEL,
+      TRIG_HOST, or TRIG_PULSE</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" nowrap valign="top"><i>scanGetTriggerMode()</i> </td>
+    <td width="99%" valign="top">calls <b>ScanGetTriggeringModes()</b>. Returns TRIG_LEVEL,
+      TRIG_HOST, or TRIG_PULSE</td>
+  </tr>
+  <tr>
+    <td width="100%" valign="top" colspan="2"><b>Note:</b> The following Symbol
+      APIs are currently not supported: <b>Scan*BeepDuration</b>, <b>Scan*BeepFrequency</b>,
+      <b>Scan*PrefixSuffixValues</b>, <b>Scan*ScanDataTransmissionFormat</b>, <b>Scan*TransmitCodeIdCharacter</b></td>
+  </tr>
+  <tr>
+    <td width="100%" nowrap valign="top" colspan="2">
+      <h3><br>
+      Scanner Bar Code Functions</h3>
+    </td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#666666" nowrap valign="top"><font color="#FFFFFF"><b>Function
+      Name</b></font></td>
+    <td width="99%" bgcolor="#666666" valign="top"><font color="#FFFFFF"><b>Description</b></font></td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" valign="top"><i>scanEnableType(int type,
+      int bEnable)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetBarcodeEnabled()</b>. <i>type</i>
+      is one of values defined in scanner.h beginning with BAR_. <i>bEnable</i>
+      = 1 to enable, <i>bEnable</i> = 0 to disable.</td>
+  </tr>
+  <tr>
+    <td width="1%" bgcolor="#CCCCCC" valign="top"><i>scanOptCode39(int
+      bCheckDigitVerification, int bFullAscii)</i> </td>
+    <td width="99%" valign="top">calls <b>ScanSetCode39CheckDigitVerification()</b>
+      with the value of <i>bCheckDigitVerification</i>, and <b>ScanSetCode39FullAscii()</b>
+      with the value of <i>bFullAscii</i>.</td>
+  </tr>
+</table>
+</body>
+</html>

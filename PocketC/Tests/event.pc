@@ -1,0 +1,13 @@
+// event test
+main() {
+   int e;
+   puts("no wait: ");
+   e = event(0);
+   puts("e = " + e + "\n");
+   puts("5 sec: ");
+   e = event(500);
+   puts("e = " + e + "\n");
+   puts("block: ");
+   e = event(1);
+   puts("e = " + e + "\n");
+}

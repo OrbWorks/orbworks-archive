@@ -1,0 +1,204 @@
+#include "PocketCr_res.h"
+
+FORM ID OutputForm AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 1100
+BEGIN
+	TITLE "Program Output"
+	FIELD ID OutputOutputField AT (0 15 153 121) USABLE LEFTALIGN FONT 0 NONEDITABLE UNDERLINED MULTIPLELINES MAXCHARS 1024 HASSCROLLBAR
+	BUTTON "Done" ID OutputDoneButton AT (1 147 36 12) USABLE FRAME FONT 0
+	BUTTON "Clear" ID OutputClearButton AT (43 147 36 12) USABLE FRAME FONT 0
+	SCROLLBAR ID OutputScrollScrollBar AT (153 15 7 121) USABLE VALUE 0 MIN 0 MAX 0 PAGESIZE 0
+END
+
+
+FORM ID MainForm AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 1000
+BEGIN
+	TITLE "PocketC"
+	LIST "" ID MainProgsList AT (2 31 156 0) USABLE VISIBLEITEMS 10
+	BUTTON "Execute" ID MainExecuteButton AT (1 147 42 12) USABLE FRAME FONT 0
+	BUTTON "Compile..." ID MainCompileButton AT (91 147 44 12) USABLE FRAME FONT 0
+	BUTTON "Output" ID MainOutputButton AT (48 147 38 12) USABLE FRAME FONT 0
+	LABEL "Compiled Programs:" ID MainUnnamed1006Label AT (2 17) USABLE FONT 0
+END
+
+
+FORM ID AboutForm AT (2 78 156 80) USABLE MODAL SAVEBEHIND HELPID 1002 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "About PocketC"
+	BUTTON "OK" ID AboutOKButton AT (59 63 36 12) USABLE FRAME FONT 0
+	LABEL "PocketC version 7.1.4r\r    by Jeremy Dewey" ID AboutUnnamed1202Label AT (34 14) USABLE FONT 0
+	LABEL "�1997-2007 OrbWorks" ID AboutUnnamed1204Label AT (20 36) USABLE FONT 1
+END
+
+
+FORM ID CompileForm AT (2 2 156 156) USABLE MODAL NOSAVEBEHIND HELPID 1001 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "Compile"
+	LIST "" ID CompileMemoList AT (3 27 150 0) USABLE VISIBLEITEMS 9
+	BUTTON "Compile" ID CompileCompileButton AT (4 140 46 12) USABLE FRAME FONT 0
+	BUTTON "Close" ID CompileCancelButton AT (55 140 36 12) USABLE FRAME FONT 0
+	LABEL "Select a memo to compile:" ID CompileUnnamed1304Label AT (3 14) USABLE FONT 0
+	LABEL "Compiling abcdefghijklmnopqrstuvwxyzabcdefghij()..." ID CompileStatusLabel AT (3 137) NONUSABLE FONT 0
+END
+
+
+FORM ID InputForm AT (2 80 156 78) USABLE MODAL SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "PocketC Input"
+	LABEL "                                                                                         " ID InputPromptLabel AT (2 14) USABLE FONT 0
+	FIELD ID InputEntryField AT (3 47 154 12) USABLE LEFTALIGN FONT 0 EDITABLE UNDERLINED SINGLELINE MAXCHARS 80 AUTOSHIFT
+	BUTTON "OK" ID InputOKButton AT (4 63 36 12) USABLE FRAME FONT 0
+	BUTTON "Cancel" ID InputCancelButton AT (45 63 36 12) USABLE FRAME FONT 0
+	BUTTON "Abort" ID InputAbortButton AT (86 63 36 12) USABLE FRAME FONT 0
+	GRAFFITISTATEINDICATOR AT (147 64)
+END
+
+
+FORM ID GraphForm AT (0 0 160 160) USABLE SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 1200
+BEGIN
+	TITLE "Graphics"
+END
+
+
+FORM ID DatabaseForm AT (2 2 156 156) USABLE MODAL SAVEBEHIND HELPID 1003 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "Databases (Files)"
+	LABEL "Select a database to delete:" ID DatabaseUnnamed1701Label AT (4 15) USABLE FONT 0
+	LIST "" ID DatabaseDatabaseList AT (3 27 150 0) USABLE VISIBLEITEMS 9
+	BUTTON "Close" ID DatabaseCancelButton AT (55 140 36 12) USABLE FRAME FONT 0
+	BUTTON "Delete..." ID DatabaseDeleteButton AT (4 140 46 12) USABLE FRAME FONT 0
+END
+
+
+FORM ID FInputForm AT (2 2 160 160) USABLE MODAL SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	FIELD ID FInputFloatField AT (2 1 72 12) USABLE LEFTALIGN FONT 0 EDITABLE UNDERLINED MULTIPLELINES MAXCHARS 256
+	BUTTON "OK" ID FInputOKButton AT (76 2 16 10) USABLE FRAME FONT 0
+END
+
+
+FORM ID EditorOptionsForm  AT ( 2 94 156 64 ) USABLE MODAL SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+MODAL
+BEGIN
+	TITLE "Editor Options"
+	LABEL "Memo Editor" EditorOptionsMemoLabel AT (4 18)
+	LABEL "Doc Editor" EditorOptionsDocLabel AT (4 32)
+	LIST EditorOptionsMemoList AT (60 0 92 134) VISIBLEITEMS 12 NONUSABLE
+	LIST EditorOptionsDocList AT (60 0 92 134) VISIBLEITEMS 12 NONUSABLE
+	POPUPTRIGGER "Program" EditorOptionsMemoTrigger AT (60 18 AUTO AUTO)
+	POPUPTRIGGER "Program" EditorOptionsDocTrigger AT (60 32 AUTO AUTO)
+	POPUPLIST EditorOptionsMemoTrigger EditorOptionsMemoList
+	POPUPLIST EditorOptionsDocTrigger EditorOptionsDocList
+	BUTTON "Done" EditorOptionsDone AT (3 49 AUTO AUTO)
+END
+
+MENU ID MainMenuBar
+BEGIN
+	PULLDOWN "Applet"
+	BEGIN
+		MENUITEM "Edit Source" ID AppletEditSource "E"
+		MENUITEM "Delete..." ID AppletDelete "D"
+		MENUITEM "Backup..." ID AppletBackup "B"
+		MENUITEM "Databases..." ID AppletDatabases "T"
+	END
+	PULLDOWN "Options"
+	BEGIN
+		MENUITEM "Editor Options..." ID OptionsEditorOptions "O"
+		MENUITEM "About PocketC..." ID OptionsAboutPocketC "A"
+	END
+END
+
+MENU ID OutputMenuBar
+BEGIN
+	PULLDOWN "Applet"
+	BEGIN
+		MENUITEM "Stop" ID OAppletStop "S"
+	END
+	PULLDOWN "Edit"
+	BEGIN
+		MENUITEM "Copy" ID EditCopy "C"
+		MENUITEM "Select All" ID EditSelectAll "A"
+	END
+END
+
+MENU ID GraphMenuBar
+BEGIN
+	PULLDOWN "Applet"
+	BEGIN
+		MENUITEM "Stop" ID GAppletStop "S"
+	END
+END
+
+APPLICATIONICONNAME ID 1000 "PocketC"
+
+STRING ID CompileHelpString "This dialog displays all the non-private memos that begin with a C++ style comment\r(i.e. \'�� AppletName\').\r\rSelect a memo from the list and press the \'Compile\' button  to compile it."
+
+STRING ID DatabaseHelpString "This is a list of the applet-created databased currently on your PalmPilot.\r\rIf one of these databases was created by an applet that is no longer installed, you may want to delete it to save space."
+
+STRING ID RegInfoString "Visit OrbWorks at www.orbworks.com\r\rThanks for buying  PocketC!"
+
+ALERT ID VMWarnAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Virtual Machine Warning"
+	MESSAGE "^1"
+	BUTTONS  "Continue" "Abort"
+END
+
+ALERT ID CompilerErrorAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Compiler Error"
+	MESSAGE "^1"
+	BUTTONS  "OK" "Goto..."
+END
+
+ALERT ID VMErrorAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+	TITLE "Virtual Machine Error"
+	MESSAGE "^1"
+	BUTTONS  "OK"
+END
+
+ALERT ID MsgBoxAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+	TITLE "Message"
+	MESSAGE "^1"
+	BUTTONS  "OK"
+END
+
+ALERT ID DeleteAlert HELPID 0 DEFAULTBUTTON 0 CONFIRMATION
+BEGIN
+	TITLE "Confirm Delete"
+	MESSAGE "Are you sure  you want to delete \'^1\'?"
+	BUTTONS  "Yes" "No"
+END
+
+ALERT ID ConfirmAlert HELPID 0 DEFAULTBUTTON 0 CONFIRMATION
+BEGIN
+	TITLE "Confirmation"
+	MESSAGE "^1"
+	BUTTONS  "Yes" "No"
+END
+
+ALERT ID BackupAlert HELPID 0 DEFAULTBUTTON 0 CONFIRMATION
+BEGIN
+	TITLE "Backup At Next HotSync?"
+	MESSAGE "\'^1\'\r[curr=^2]?"
+	BUTTONS  "Yes" "No"
+END
+
+ICONFAMILYEX ID IconSAppIconFamily COMPRESS
+BEGIN
+	BITMAP "IconS1.bmp"  BPP 1  COMPRESS
+	BITMAP "IconS2.bmp"  BPP 2  COMPRESS
+	BITMAP "IconS8.bmp"  BPP 8  COMPRESS TRANSPARENT 255 204 255
+	BITMAP "IconS8h.bmp" BPP 8  COMPRESS TRANSPARENT 255 204 255 DENSITY 144
+END
+
+ICONFAMILYEX ID IconLAppIconFamily
+BEGIN
+	BITMAP "IconL1.bmp"  BPP 1  COMPRESS
+	BITMAP "IconL2.bmp"  BPP 2  COMPRESS
+	BITMAP "IconL8.bmp"  BPP 8  COMPRESS TRANSPARENT 255 204 255
+	BITMAP "IconL8h.bmp" BPP 8  COMPRESS TRANSPARENT 255 204 255 DENSITY 144
+END
+
+VERSION ID 1000 "7.1.4r"

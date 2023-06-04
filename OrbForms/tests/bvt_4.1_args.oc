@@ -1,0 +1,11 @@
+@app MyApp {
+    creator = "oArg"
+    name = "BVT 4.1 (args)"
+    dbname = "bvt_4.1_args.oc"
+}
+UIApp app;
+
+void main() {
+    puts("In Args");
+    alert("launchArgs: " + app.launchArgs);
+}

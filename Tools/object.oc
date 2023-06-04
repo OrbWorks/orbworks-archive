@@ -1,0 +1,29 @@
+interface ISpeak
+{
+    string Speak();
+};
+
+object Animal : ISpeak
+{
+    virtual string Speak();
+};
+string Animal.Speak() { return "?"; }
+
+object Dog : Animal
+{
+    virtual string Speak();
+};
+string Dog.Speak() { return "woof"; }
+
+void main()
+{
+    ISpeak* is;
+    Animal* a;
+    Dog dog;
+    a = &dog;
+    is = &dog;
+    // call through base class pointer to generate a virtual call
+    puts(a->Speak());
+    // call through interface pointer to generate a virtual call
+    puts(is->Speak());
+}

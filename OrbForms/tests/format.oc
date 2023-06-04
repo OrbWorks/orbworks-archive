@@ -1,0 +1,5 @@
+void main() {
+    puts("format: " + format(4.4, 2) + "\n");
+    puts("lformat: " + lformat(4.4, 2) + "\n");
+    puts("lparse: " + format(lparse("4,4"), 2) + "\n");
+}

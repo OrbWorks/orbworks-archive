@@ -1,0 +1,37 @@
+int serdat[14] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+int mydat[7];
+
+main() {
+    unpack(mydat, serdat, "124<1<2<4", 14);
+    if (mydat[0] != 0x1)
+        puts("be1 failed\n");	
+    if (mydat[1] != 0x203)
+        puts("be2 failed\n");	
+    if (mydat[2] != 0x4050607)
+        puts("be4 failed\n");	
+
+    if (mydat[3] != 0x8)
+        puts("le1 failed\n");	
+    if (mydat[4] != 0xa09)
+        puts("le2 failed\n");	
+    if (mydat[5] != 0xe0d0c0b)
+        puts("le4 failed\n");
+    
+    unpack(mydat, serdat, "2<2", 14);
+    if (mydat[0] != 0x102)
+        puts("be2-0 failed\n");	
+    if (mydat[1] != 0x403)
+        puts("le2-1 failed\n");	
+    if (mydat[2] != 0x506)
+        puts("be2-2 failed\n");	
+    if (mydat[3] != 0x807)
+        puts("le2-3 failed\n");	
+    if (mydat[4] != 0x90a)
+        puts("be2-4 failed\n");	
+    if (mydat[5] != 0xc0b)
+        puts("le2-5 failed\n");	
+    if (mydat[6] != 0xd0e)
+        puts("be2-6 failed\n");	
+}
+    
+    

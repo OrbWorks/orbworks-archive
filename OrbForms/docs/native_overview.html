@@ -1,0 +1,30 @@
+<p>Native add-ins provide developers with the ability to extend the
+functionality of OrbC, and to write performance critical functionality in
+native code. A native add-in is a code resource in the form of a .prc file. When an
+application that uses a native add-in is built standalone, the add-in is also
+embedded into the application. This way, a standalone application is completely
+self-contained, even when using native add-ins. A native add-in can also contain additional resources, such as forms or
+bitmaps. These will also be embedded in the application.</p>
+<h3>Using Native Add-ins</h3>
+<p>In order to use the functions and structs implemented in a native library,
+you must include the add-in's declaration file. To do this, add a line to the
+beginning of you primary source file such as this:</p>
+<code>#include &quot;addin.oc&quot;</code>
+<p>This declaration file may be in the project directory, or you must supply a
+relative path from the current project OR from the compiler root. For example,
+to include the OrbSort native library located in the compiler's
+&quot;add-ins&quot; directory:</p>
+<code>#include &quot;add-ins/OrbSort.oc&quot;</code>
+<h3>Using Native Gadgets </h3>
+<p>Using a native gadget is the same as using any other gadget. Simply add the
+gadget declaration file to the project and create a gadget in your form.</p>
+<h3>Locating the Native Add-in's .PRC File</h3>
+<p>When building a standalone application, the compiler will look for the native
+add-in's .prc file so that its contents can be embedded in the application. To
+find this, the compiler searches in this order:</p>
+<ul>
+  <li>The project directory</li>
+  <li>The &quot;add-ins&quot; directory under the OrbForms or PocketC Architect installation
+    directory (usually something like: C:\Program Files\OrbForms\add-ins or 
+  C:\Program Files\PocketC Architect\add-ins)</li>
+</ul>

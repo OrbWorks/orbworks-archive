@@ -1,0 +1,14 @@
+test() {
+int dpi=72;
+int half=1;
+int quar=1;
+int eigt=1;
+int sixt=1;
+
+half = dpi / 2;
+quar = dpi / 4;
+eigt = dpi / 8;
+sixt = dpi / 16;
+}
+
+main() { }

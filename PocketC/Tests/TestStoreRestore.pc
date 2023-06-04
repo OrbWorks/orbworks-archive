@@ -1,0 +1,37 @@
+// kisKross
+include "bob.h"
+library "PToolboxLib"
+// Global variables...
+  int  giEvent;
+// Functions...
+fDo()
+    {
+    text(20,20,"first text......");
+    alert("will now saveg() it...");
+    saveg();
+    text(20,20,"second text");
+    alert("second text just written... now do restoreg()");
+    restoreg();
+    alert("just did a restoreg()... should be first text");
+    text(20,20,"third text....");
+    alert("will now do a restoreg() without intervening storeg()");
+    restoreg();
+    }
+
+main()
+{
+// Initialization...
+SetDepth((int)gets("Enter screen depth: 2, 4 or 8"));
+graph_on();
+
+// Main loop...
+  	do
+    {
+    giEvent = event(1);
+    if (giEvent == 2)  
+          	{
+        fDo();
+           	}
+    }
+        while(1);
+}

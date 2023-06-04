@@ -1,0 +1,5214 @@
+Name:    CCE.prc
+Version: 0x400
+Has UI:  false
+======  Code ======
+    0   Call (12843) "main"
+    5   Halt 
+: "__global_init"
+    9  CWord 0 
+   12 CallBI Draw.init
+   15  CWord 2 
+   18 CallBI Dict.init
+   21  CWord 3 
+   24 CallBI Database._init
+   27  CWord 4 
+   30 CallBI DBRecord._init
+   33  CWord 9 
+   36 CallBI Memo._init
+   39  CWord 11 
+   42  LCall 11 
+   46   RetN 0 
+: "__global_destroy"
+   51  CWord 11 
+   54 CallBI nobject.destroy
+   57  CWord 9 
+   60 CallBI nobject.destroy
+   63  CWord 4 
+   66 CallBI nobject.destroy
+   69  CWord 3 
+   72 CallBI nobject.destroy
+   75  CWord 2 
+   78 CallBI nobject.destroy
+   81  CWord 0 
+   84 CallBI nobject.destroy
+   87   RetN 0 
+: "getsi"
+   92   Link 4 
+   94 LoadFP 0 
+   97 LoadFP 1 
+  100 LoadFP 2 
+  103  CWord 1 
+  106 LoadFP 3 
+  109 CallBI <Invalid #>
+  112    Jmp 118
+  115   CStr (0) ""
+  118 SetRet 
+  119 UnLink 
+  120    Ret 4 
+: "graph_on"
+  125   Link 0 
+  127  CWord 0 
+  130 CallBI <Invalid #>
+  133 UnLink 
+  134   RetN 0 
+: "text"
+  139   Link 3 
+  141  CWord 0 
+  144  LoadI 0x0001
+  147 LoadFP 0 
+  150 LoadFP 1 
+  153 LoadFP 2 
+  156 CallBI <Invalid #>
+  159 UnLink 
+  160   RetN 3 
+: "textattr"
+  165   Link 3 
+  167  CWord 0 
+  170 LoadFP 0 
+  173 CallBI Draw.font
+  176    Pop 
+  177  CWord 0 
+  180 LoadFP 2 
+  183 CallBI Draw.underline
+  186    Pop 
+  187   Move [0x0001] <- [0xc001]
+  192 UnLink 
+  193   RetN 3 
+: "_pccolor"
+  198   Link 1 
+  200    EqI SP <= [0xc000],0x0000
+  206   JmpZ 215
+  209  CWord 1 
+  212    Jmp 239
+  215    EqI SP <= [0xc000],0x0001
+  221   JmpZ 230
+  224  CWord 0 
+  227    Jmp 239
+  230 LoadFP 0 
+  233    Jmp 239
+  236  CWord 0 
+  239 SetRet 
+  240 UnLink 
+  241    Ret 1 
+: "textalign"
+  246   Link 1 
+  248  CWord 0 
+  251 LoadFP 0 
+  254   CtoI 
+  255 CallBI Draw.textCenter
+  258    Pop 
+  259 UnLink 
+  260   RetN 1 
+: "line"
+  265   Link 5 
+  267  CWord 0 
+  270 LoadFP 0 
+  273   Call (198) "_pccolor"
+  278 LoadFP 1 
+  281 LoadFP 2 
+  284 LoadFP 3 
+  287 LoadFP 4 
+  290 CallBI Draw.line
+  293 UnLink 
+  294   RetN 5 
+: "rect"
+  299   Link 6 
+  301  CWord 0 
+  304 LoadFP 0 
+  307   Call (198) "_pccolor"
+  312 LoadFP 1 
+  315 LoadFP 2 
+  318 LoadFP 3 
+  321 LoadFP 4 
+  324 LoadFP 5 
+  327 CallBI Draw.rect
+  330 UnLink 
+  331   RetN 6 
+: "frame"
+  336   Link 6 
+  338  CWord 0 
+  341 LoadFP 0 
+  344   Call (198) "_pccolor"
+  349 LoadFP 1 
+  352 LoadFP 2 
+  355 LoadFP 3 
+  358 LoadFP 4 
+  361 LoadFP 5 
+  364  CWord 1 
+  367 CallBI Draw.frame
+  370 UnLink 
+  371   RetN 6 
+: "frame2"
+  376   Link 7 
+  378  CWord 0 
+  381 LoadFP 0 
+  384   Call (198) "_pccolor"
+  389 LoadFP 1 
+  392 LoadFP 2 
+  395 LoadFP 3 
+  398 LoadFP 4 
+  401 LoadFP 5 
+  404 LoadFP 6 
+  407 CallBI Draw.frame
+  410 UnLink 
+  411   RetN 7 
+: "bitmap"
+  416   Link 3 
+  418 UnLink 
+  419   RetN 3 
+: "getcolordepth"
+  424   Link 0 
+  426 StInit (31) "iss"
+  429 CWdPFP 3 
+  432 CallBI UIApp.getdepth
+  435    Jmp 441
+  438  CWord 0 
+  441 SetRet 
+  442   PopN 3 
+  445 UnLink 
+  446    Ret 0 
+: "setfgi"
+  451   Link 1 
+  453  CWord 0 
+  456 LoadFP 0 
+  459 CallBI Draw.fg
+  462    Jmp 468
+  465  CWord 0 
+  468 SetRet 
+  469 UnLink 
+  470    Ret 1 
+: "setbgi"
+  475   Link 1 
+  477  CWord 0 
+  480 LoadFP 0 
+  483 CallBI Draw.bg
+  486    Jmp 492
+  489  CWord 0 
+  492 SetRet 
+  493 UnLink 
+  494    Ret 1 
+: "settextcolori"
+  499   Link 1 
+  501  CWord 0 
+  504 LoadFP 0 
+  507 CallBI Draw.textColor
+  510    Jmp 516
+  513  CWord 0 
+  516 SetRet 
+  517 UnLink 
+  518    Ret 1 
+: "getuicolor"
+  523   Link 1 
+  525  CWord 0 
+  528 LoadFP 0 
+  531 CallBI Draw.uiColorIndex
+  534    Jmp 540
+  537  CWord 0 
+  540 SetRet 
+  541 UnLink 
+  542    Ret 1 
+: "_isdigit"
+  547   Link 1 
+  549  CChar '0'
+  551   GTEC SP <= [0xc000],SP
+  555 JmpPop 564
+  558  CChar '9'
+  560   LTEC SP <= [0xc000],SP
+  564    Jmp 570
+  567  CWord 0 
+  570 SetRet 
+  571 UnLink 
+  572    Ret 1 
+: "_convertFormat"
+  577   Link 1 
+  579 StInit (40) "isic"
+  582  CWord 2 
+  585 LoadFP 0 
+  588 CallBI Dict.find
+  591 StorFP 5 
+  594    Pop 
+  595   CStr (0) ""
+  598   NEqS SP <= [0xc005],SP
+  602   JmpZ 611
+  605 LoadFP 5 
+  608    Jmp 956
+  611 LoadFP 0 
+  614 CallBI strlen
+  617 StorFP 4 
+  620    Pop 
+  621    LTI SP <= [0xc006],[0xc004]
+  627   JmpZ 934
+  630 CWdPFP 0 
+  633 LoadFP 6 
+  636  GetAt 
+  637   Call (547) "_isdigit"
+  642   JmpZ 665
+  645 CWdPFP 0 
+  648  IncAI SP <= 0xc006
+  652  GetAt 
+  653   CtoS 
+  654   AddS SP <= [0xc005],SP
+  658 StorFP 5 
+  661    Pop 
+  662    Jmp 630
+  665 CWdPFP 0 
+  668  IncAI SP <= 0xc006
+  672  GetAt 
+  673 StorFP 7 
+  676    Pop 
+  677 LoadFP 7 
+  680  SwchC 5 
+  682   Case 'p', 720
+  689   Case 'i', 720
+  696   Case 'c', 798
+  703   Case 'f', 812
+  710   Case 's', 826
+  717    Jmp 913
+  720 CWdPFP 0 
+  723 LoadFP 6 
+  726  GetAt 
+  727  CChar '2'
+  729    EqC 
+  730   JmpZ 752
+  733  CChar 'w'
+  735   CtoS 
+  736   AddS SP <= [0xc005],SP
+  740 StorFP 5 
+  743    Pop 
+  744  IncAI SP <= 0xc006
+  748    Pop 
+  749    Jmp 795
+  752 CWdPFP 0 
+  755 LoadFP 6 
+  758  GetAt 
+  759  CChar '4'
+  761    EqC 
+  762   JmpZ 784
+  765  CChar 'i'
+  767   CtoS 
+  768   AddS SP <= [0xc005],SP
+  772 StorFP 5 
+  775    Pop 
+  776  IncAI SP <= 0xc006
+  780    Pop 
+  781    Jmp 795
+  784  CChar 'i'
+  786   CtoS 
+  787   AddS SP <= [0xc005],SP
+  791 StorFP 5 
+  794    Pop 
+  795    Jmp 913
+  798  CChar 'c'
+  800   CtoS 
+  801   AddS SP <= [0xc005],SP
+  805 StorFP 5 
+  808    Pop 
+  809    Jmp 913
+  812  CChar 'f'
+  814   CtoS 
+  815   AddS SP <= [0xc005],SP
+  819 StorFP 5 
+  822    Pop 
+  823    Jmp 913
+  826 CWdPFP 0 
+  829 LoadFP 6 
+  832  GetAt 
+  833  CChar 'z'
+  835    EqC 
+  836   JmpZ 853
+  839  CChar 's'
+  841   CtoS 
+  842   AddS SP <= [0xc005],SP
+  846 StorFP 5 
+  849    Pop 
+  850    Jmp 910
+  853  CChar 'l'
+  855   CtoS 
+  856   AddS SP <= [0xc005],SP
+  860 StorFP 5 
+  863    Pop 
+  864 CWdPFP 0 
+  867 LoadFP 6 
+  870  GetAt 
+  871   Call (547) "_isdigit"
+  876   JmpZ 899
+  879 CWdPFP 0 
+  882  IncAI SP <= 0xc006
+  886  GetAt 
+  887   CtoS 
+  888   AddS SP <= [0xc005],SP
+  892 StorFP 5 
+  895    Pop 
+  896    Jmp 864
+  899  CChar '.'
+  901   CtoS 
+  902   AddS SP <= [0xc005],SP
+  906 StorFP 5 
+  909    Pop 
+  910    Jmp 913
+  913 CWdPFP 0 
+  916 LoadFP 6 
+  919  GetAt 
+  920  CChar '.'
+  922    EqC 
+  923   JmpZ 931
+  926  IncAI SP <= 0xc006
+  930    Pop 
+  931    Jmp 621
+  934  CWord 2 
+  937 LoadFP 0 
+  940 LoadFP 5 
+  943 CallBI Dict.add
+  946    Pop 
+  947 LoadFP 5 
+  950    Jmp 956
+  953   CStr (0) ""
+  956 SetRet 
+  957   PopN 4 
+  960 UnLink 
+  961    Ret 1 
+: "_closeRec"
+  966   Link 0 
+  968  LoadI 0x0006
+  971   JmpZ 985
+  974  CWord 4 
+  977 CallBI DBRecord.close
+  980 SCWord [0x0006] <- 0
+  985 UnLink 
+  986   RetN 0 
+: "_closeDB"
+  991   Link 0 
+  993   Call (966) "_closeRec"
+  998  LoadI 0x0005
+ 1001   JmpZ 1025
+ 1004  CWord 3 
+ 1007 CallBI Database.close
+ 1010 SCWord [0x0005] <- 0
+ 1015 SCWord [0x0007] <- 0
+ 1020 SCWord [0x0008] <- 0
+ 1025 UnLink 
+ 1026   RetN 0 
+: "_openRec"
+ 1031   Link 0 
+ 1033  LoadI 0x0006
+ 1036   JmpZ 1045
+ 1039  CWord 1 
+ 1042    Jmp 1083
+ 1045  CWord 3 
+ 1048  LoadI 0x0007
+ 1051  CWord 4 
+ 1054  CWord 0 
+ 1057 CallBI Database.getrec
+ 1060   JmpZ 1074
+ 1063 SCWord [0x0006] <- 1
+ 1068  CWord 1 
+ 1071    Jmp 1083
+ 1074  CWord 0 
+ 1077    Jmp 1083
+ 1080  CWord 0 
+ 1083 SetRet 
+ 1084 UnLink 
+ 1085    Ret 0 
+: "_openCreateRec"
+ 1090   Link 0 
+ 1092  LoadI 0x0006
+ 1095   JmpZ 1104
+ 1098  CWord 1 
+ 1101    Jmp 1184
+ 1104  CWord 3 
+ 1107 CallBI get Database.nrecs
+ 1110   LTEI SP <= SP,[0x0007]
+ 1114   JmpZ 1146
+ 1117  CWord 3 
+ 1120  CWord 7 
+ 1123  CWord 4 
+ 1126 CallBI Database.newrec
+ 1129   JmpZ 1143
+ 1132 SCWord [0x0006] <- 1
+ 1137  CWord 1 
+ 1140    Jmp 1184
+ 1143    Jmp 1175
+ 1146  CWord 3 
+ 1149  LoadI 0x0007
+ 1152  CWord 4 
+ 1155  CWord 0 
+ 1158 CallBI Database.getrec
+ 1161   JmpZ 1175
+ 1164 SCWord [0x0006] <- 1
+ 1169  CWord 1 
+ 1172    Jmp 1184
+ 1175  CWord 0 
+ 1178    Jmp 1184
+ 1181  CWord 0 
+ 1184 SetRet 
+ 1185 UnLink 
+ 1186    Ret 0 
+: "dbopen"
+ 1191   Link 1 
+ 1193   Call (991) "_closeDB"
+ 1198  CWord 0 
+ 1201 StoreI 0x0008
+ 1204 StoreI 0x0007
+ 1207    Pop 
+ 1208  CWord 3 
+ 1211 LoadFP 0 
+ 1214  CWord 0 
+ 1217 CallBI Database.open
+ 1220   JmpZ 1234
+ 1223 SCWord [0x0005] <- 1
+ 1228  CWord 1 
+ 1231    Jmp 1243
+ 1234  CWord 0 
+ 1237    Jmp 1243
+ 1240  CWord 0 
+ 1243 SetRet 
+ 1244 UnLink 
+ 1245    Ret 1 
+: "dbcreatex"
+ 1250   Link 3 
+ 1252  CWord 0 
+ 1255 StoreI 0x0008
+ 1258 StoreI 0x0007
+ 1261    Pop 
+ 1262  CWord 3 
+ 1265 LoadFP 0 
+ 1268 LoadFP 2 
+ 1271 LoadFP 1 
+ 1274  CWord 0 
+ 1277 CallBI Database.create
+ 1280   JmpZ 1294
+ 1283 SCWord [0x0005] <- 1
+ 1288  CWord 1 
+ 1291    Jmp 1303
+ 1294  CWord 0 
+ 1297    Jmp 1303
+ 1300  CWord 0 
+ 1303 SetRet 
+ 1304 UnLink 
+ 1305    Ret 3 
+: "dbcreate"
+ 1310   Link 1 
+ 1312 LoadFP 0 
+ 1315   CStr (45) "PktC"
+ 1318   CStr (50) "user"
+ 1321   Call (1250) "dbcreatex"
+ 1326    Jmp 1332
+ 1329  CWord 0 
+ 1332 SetRet 
+ 1333 UnLink 
+ 1334    Ret 1 
+: "dbrec"
+ 1339   Link 1 
+ 1341   Call (966) "_closeRec"
+ 1346   Move [0x0007] <- [0xc000]
+ 1351 SCWord [0x0008] <- 0
+ 1356 UnLink 
+ 1357   RetN 1 
+: "dbnrecs"
+ 1362   Link 0 
+ 1364  LoadI 0x0005
+ 1367   JmpZ 1382
+ 1370  CWord 3 
+ 1373 CallBI get Database.nrecs
+ 1376    Jmp 1391
+ 1379    Jmp 1388
+ 1382  CWord 0 
+ 1385    Jmp 1391
+ 1388  CWord 0 
+ 1391 SetRet 
+ 1392 UnLink 
+ 1393    Ret 0 
+: "dbreadxc"
+ 1398   Link 3 
+ 1400 StInit (1) "i"
+ 1403   Call (1031) "_openRec"
+ 1408   JmpZ 1471
+ 1411  CWord 4 
+ 1414 LoadFP 0 
+ 1417 LoadFP 1 
+ 1420   Call (577) "_convertFormat"
+ 1425 LoadFP 2 
+ 1428 CallBI DBRecord.read
+ 1431 StorFP 6 
+ 1434    Pop 
+ 1435  CWord 4 
+ 1438 CallBI get DBRecord.offset
+ 1441  CWord 4 
+ 1444 CallBI get DBRecord.size
+ 1447    EqI 
+ 1448   JmpZ 1461
+ 1451  SCInt [0x0008] <- -1
+ 1458    Jmp 1471
+ 1461  CWord 4 
+ 1464 CallBI get DBRecord.offset
+ 1467 StoreI 0x0008
+ 1470    Pop 
+ 1471 LoadFP 6 
+ 1474    Jmp 1480
+ 1477  CWord 0 
+ 1480 SetRet 
+ 1481    Pop 
+ 1482 UnLink 
+ 1483    Ret 3 
+: "dbreadx"
+ 1488   Link 2 
+ 1490 LoadFP 0 
+ 1493 LoadFP 1 
+ 1496  CWord 1 
+ 1499   Call (1398) "dbreadxc"
+ 1504    Jmp 1510
+ 1507  CWord 0 
+ 1510 SetRet 
+ 1511 UnLink 
+ 1512    Ret 2 
+: "dbwritexc"
+ 1517   Link 3 
+ 1519 StInit (1) "i"
+ 1522   Call (1090) "_openCreateRec"
+ 1527   JmpZ 1564
+ 1530  CWord 4 
+ 1533 LoadFP 0 
+ 1536 LoadFP 1 
+ 1539   Call (577) "_convertFormat"
+ 1544 LoadFP 2 
+ 1547 CallBI DBRecord.write
+ 1550 StorFP 6 
+ 1553    Pop 
+ 1554  CWord 4 
+ 1557 CallBI get DBRecord.offset
+ 1560 StoreI 0x0008
+ 1563    Pop 
+ 1564 LoadFP 6 
+ 1567    Jmp 1573
+ 1570  CWord 0 
+ 1573 SetRet 
+ 1574    Pop 
+ 1575 UnLink 
+ 1576    Ret 3 
+: "dbwritex"
+ 1581   Link 2 
+ 1583 LoadFP 0 
+ 1586 LoadFP 1 
+ 1589  CWord 1 
+ 1592   Call (1517) "dbwritexc"
+ 1597    Jmp 1603
+ 1600  CWord 0 
+ 1603 SetRet 
+ 1604 UnLink 
+ 1605    Ret 2 
+: "dbclose"
+ 1610   Link 0 
+ 1612   Call (991) "_closeDB"
+ 1617 UnLink 
+ 1618   RetN 0 
+: "Cip"
+ 1623   Link 5 
+ 1625 StInit (1) "i"
+ 1628   CStr (1) "i"
+ 1631 LoadFP 0 
+ 1634 CallBI malloct
+ 1637 StorFP 8 
+ 1640    Pop 
+ 1641    Not SP <= [0xc008]
+ 1645   JmpZ 1654
+ 1648  CWord 0 
+ 1651    Jmp 1678
+ 1654   AddI SP <= [0xc008],0x0001
+ 1660 CWdPFP 1 
+ 1663  CWord 4 
+ 1666 CallBI memcpy
+ 1669 LoadFP 8 
+ 1672    Jmp 1678
+ 1675  CWord 0 
+ 1678 SetRet 
+ 1679    Pop 
+ 1680 UnLink 
+ 1681    Ret 5 
+: "Cc"
+ 1686   Link 1 
+ 1688 StInit (63) "3i"
+ 1691 CallBI <Invalid #>
+ 1694 StorFP 4 
+ 1697    Pop 
+ 1698 CallBI <Invalid #>
+ 1701 StorFP 5 
+ 1704    Pop 
+ 1705 LoadF0 0 
+ 1708  CWord 10 
+ 1711   VOp2 
+ 1712    EqI 
+ 1713 JmpPop 1724
+ 1716 LoadF0 0 
+ 1719  CWord 14 
+ 1722   VOp2 
+ 1723    EqI 
+ 1724   JmpZ 1735
+ 1727 SCWord [0xc006] <- 11
+ 1732    Jmp 1743
+ 1735 LoadF0 4 
+ 1738   VtoI 
+ 1739 StorFP 6 
+ 1742    Pop 
+ 1743 LoadFP 4 
+ 1746 LoadF0 1 
+ 1749   VOp2 
+ 1750    GTI 
+ 1751 JmpPop 1767
+ 1754 LoadFP 4 
+ 1757 LoadF0 1 
+ 1760 LoadF0 3 
+ 1763   VOp2 
+ 1764   AddI 
+ 1765   VOp2 
+ 1766    LTI 
+ 1767 JmpPop 1778
+ 1770 LoadFP 5 
+ 1773 LoadF0 2 
+ 1776   VOp2 
+ 1777    GTI 
+ 1778 JmpPop 1794
+ 1781 LoadFP 5 
+ 1784 LoadF0 2 
+ 1787 LoadFP 6 
+ 1790   VOp2 
+ 1791   AddI 
+ 1792   VOp2 
+ 1793    LTI 
+ 1794    Jmp 1800
+ 1797  CWord 0 
+ 1800 SetRet 
+ 1801   PopN 3 
+ 1804 UnLink 
+ 1805    Ret 1 
+: "Ct"
+ 1810   Link 6 
+ 1812 StInit (1) "i"
+ 1815 LoadFP 4 
+ 1818   ItoC 
+ 1819   Call (246) "textalign"
+ 1824  CWord 0 
+ 1827 LoadFP 0 
+ 1830 LoadFP 1 
+ 1833   AddI SP <= [0xc000],[0xc002]
+ 1839   AddI SP <= [0xc001],[0xc003]
+ 1845  CWord 0 
+ 1848   Call (299) "rect"
+ 1853    EqI SP <= [0xc004],0x0002
+ 1859   JmpZ 1875
+ 1862   AddI SP <= [0xc000],[0xc002]
+ 1868 StorFP 9 
+ 1871    Pop 
+ 1872    Jmp 1911
+ 1875    EqI SP <= [0xc004],0x0001
+ 1881   JmpZ 1901
+ 1884   DivI SP <= [0xc002],0x0002
+ 1890   AddI SP <= [0xc000],SP
+ 1894 StorFP 9 
+ 1897    Pop 
+ 1898    Jmp 1911
+ 1901   AddI SP <= [0xc000],0x0001
+ 1907 StorFP 9 
+ 1910    Pop 
+ 1911 LoadFP 9 
+ 1914 LoadFP 1 
+ 1917 LoadFP 5 
+ 1920   Call (139) "text"
+ 1925  CChar '
+ 1927   Call (246) "textalign"
+ 1932  CWord 0 
+ 1935 SetRet 
+ 1936    Pop 
+ 1937 UnLink 
+ 1938    Ret 6 
+: "Cet"
+ 1943   Link 1 
+ 1945  CWord 0 
+ 1948  CWord 1 
+ 1951  CWord 0 
+ 1954   Call (165) "textattr"
+ 1959 LoadF0 1 
+ 1962   VtoI 
+ 1963 LoadF0 2 
+ 1966   VtoI 
+ 1967 LoadF0 3 
+ 1970   VtoI 
+ 1971 LoadF0 4 
+ 1974   VtoI 
+ 1975 LoadF0 8 
+ 1978   VtoI 
+ 1979 LoadF0 5 
+ 1982   VtoI 
+ 1983   Load 
+ 1984   VtoS 
+ 1985   Call (1810) "Ct"
+ 1990    Pop 
+ 1991  CWord 0 
+ 1994 SetRet 
+ 1995 UnLink 
+ 1996    Ret 1 
+: "Cib"
+ 2001   Link 1 
+ 2003  CWord 3 
+ 2006 LoadF0 1 
+ 2009   VtoI 
+ 2010 LoadF0 2 
+ 2013   VtoI 
+ 2014 LoadF0 1 
+ 2017 LoadF0 3 
+ 2020   VOp2 
+ 2021   AddI 
+ 2022   VtoI 
+ 2023 LoadF0 2 
+ 2026 LoadF0 4 
+ 2029   VOp2 
+ 2030   AddI 
+ 2031   VtoI 
+ 2032 LoadF0 7 
+ 2035   VtoI 
+ 2036   Call (299) "rect"
+ 2041  CWord 0 
+ 2044 SetRet 
+ 2045 UnLink 
+ 2046    Ret 1 
+: "Chb"
+ 2051   Link 1 
+ 2053 StInit (1) "i"
+ 2056 SCWord [0xc004] <- 1
+ 2061 LoadFP 0 
+ 2064   Call (2001) "Cib"
+ 2069    Pop 
+ 2070 LoadFP 0 
+ 2073   Call (1686) "Cc"
+ 2078   VtoB 
+ 2079    Not 
+ 2080 JmpPop 2086
+ 2083 LoadFP 4 
+ 2086   JmpZ 2106
+ 2089 SCWord [0xc004] <- 0
+ 2094 LoadFP 0 
+ 2097   Call (2001) "Cib"
+ 2102    Pop 
+ 2103    Jmp 2139
+ 2106 LoadFP 0 
+ 2109   Call (1686) "Cc"
+ 2114   VtoB 
+ 2115 JmpPop 2122
+ 2118    Not SP <= [0xc004]
+ 2122   JmpZ 2139
+ 2125 SCWord [0xc004] <- 1
+ 2130 LoadFP 0 
+ 2133   Call (2001) "Cib"
+ 2138    Pop 
+ 2139  CWord 1 
+ 2142 CallBI <Invalid #>
+ 2145   NEqI SP <= SP,0x0003
+ 2149  JmpNZ 2070
+ 2152    EqI SP <= [0xc004],0x0001
+ 2158   JmpZ 2202
+ 2161 LoadF0 0 
+ 2164  CWord 3 
+ 2167   VOp2 
+ 2168    EqI 
+ 2169   JmpZ 2193
+ 2172   AddI SP <= [0xc000],0x0008
+ 2178 LoadF0 8 
+ 2181   VtoB 
+ 2182    Not 
+ 2183 StoreV 
+ 2184    Pop 
+ 2185 SCWord [0xc004] <- 1
+ 2190    Jmp 2202
+ 2193 LoadFP 0 
+ 2196   Call (2001) "Cib"
+ 2201    Pop 
+ 2202 LoadFP 4 
+ 2205    Jmp 2211
+ 2208  CWord 0 
+ 2211 SetRet 
+ 2212    Pop 
+ 2213 UnLink 
+ 2214    Ret 1 
+: "Cir"
+ 2219   Link 1 
+ 2221 StInit (60) "ii"
+ 2224 LoadF0 3 
+ 2227 LoadF0 8 
+ 2230   VOp2 
+ 2231   DivI 
+ 2232   VtoI 
+ 2233 StorFP 5 
+ 2236    Pop 
+ 2237 LoadF0 1 
+ 2240 LoadF0 6 
+ 2243 LoadFP 5 
+ 2246   VOp2 
+ 2247  MultI 
+ 2248   VOp2 
+ 2249   AddI 
+ 2250   VtoI 
+ 2251 StorFP 4 
+ 2254    Pop 
+ 2255  CWord 3 
+ 2258 LoadFP 4 
+ 2261 LoadF0 2 
+ 2264   VtoI 
+ 2265   AddI SP <= [0xc004],[0xc005]
+ 2271   SubI SP <= SP,0x0001
+ 2275 LoadF0 2 
+ 2278 LoadF0 4 
+ 2281   VOp2 
+ 2282   AddI 
+ 2283   VtoI 
+ 2284  CWord 0 
+ 2287   Call (299) "rect"
+ 2292  CWord 0 
+ 2295 SetRet 
+ 2296   PopN 2 
+ 2299 UnLink 
+ 2300    Ret 1 
+: "Cdr"
+ 2305   Link 1 
+ 2307 StInit (63) "3i"
+ 2310 LoadF0 3 
+ 2313 LoadF0 8 
+ 2316   VOp2 
+ 2317   DivI 
+ 2318   VtoI 
+ 2319 StorFP 6 
+ 2322    Pop 
+ 2323 CallBI <Invalid #>
+ 2326  LoadI 0x000e
+ 2329   Call (475) "setbgi"
+ 2334    Pop 
+ 2335  LoadI 0x000d
+ 2338   Call (451) "setfgi"
+ 2343    Pop 
+ 2344  LoadI 0x000f
+ 2347   Call (499) "settextcolori"
+ 2352    Pop 
+ 2353  CWord 0 
+ 2356 LoadF0 1 
+ 2359   VtoI 
+ 2360 LoadF0 2 
+ 2363   VtoI 
+ 2364 LoadF0 1 
+ 2367 LoadF0 8 
+ 2370 LoadFP 6 
+ 2373   VOp2 
+ 2374  MultI 
+ 2375   VOp2 
+ 2376   AddI 
+ 2377   VtoI 
+ 2378 LoadF0 2 
+ 2381 LoadF0 4 
+ 2384   VOp2 
+ 2385   AddI 
+ 2386   VtoI 
+ 2387  CWord 0 
+ 2390   Call (299) "rect"
+ 2395  CWord 0 
+ 2398  CWord 1 
+ 2401  CWord 0 
+ 2404   Call (165) "textattr"
+ 2409  CChar ''
+ 2411   Call (246) "textalign"
+ 2416  CWord 0 
+ 2419 StorFP 4 
+ 2422    Pop 
+ 2423 LoadFP 4 
+ 2426 LoadF0 8 
+ 2429   VOp2 
+ 2430    LTI 
+ 2431   JmpZ 2623
+ 2434 LoadF0 1 
+ 2437  MultI SP <= [0xc004],[0xc006]
+ 2443   VOp2 
+ 2444   AddI 
+ 2445   VtoI 
+ 2446 StorFP 5 
+ 2449    Pop 
+ 2450 LoadF0 6 
+ 2453 LoadFP 4 
+ 2456   VOp2 
+ 2457    EqI 
+ 2458   JmpZ 2519
+ 2461 CallBI <Invalid #>
+ 2464  LoadI 0x0010
+ 2467   Call (475) "setbgi"
+ 2472    Pop 
+ 2473  LoadI 0x0011
+ 2476   Call (499) "settextcolori"
+ 2481    Pop 
+ 2482  CWord 0 
+ 2485 LoadFP 5 
+ 2488 LoadF0 2 
+ 2491   VtoI 
+ 2492   AddI SP <= [0xc005],[0xc006]
+ 2498   SubI SP <= SP,0x0001
+ 2502 LoadF0 2 
+ 2505 LoadF0 4 
+ 2508   VOp2 
+ 2509   AddI 
+ 2510   VtoI 
+ 2511  CWord 0 
+ 2514   Call (299) "rect"
+ 2519  CWord 1 
+ 2522 LoadFP 5 
+ 2525 LoadF0 2 
+ 2528   VtoI 
+ 2529   AddI SP <= [0xc005],[0xc006]
+ 2535   SubI SP <= SP,0x0001
+ 2539 LoadF0 2 
+ 2542 LoadF0 4 
+ 2545   VOp2 
+ 2546   AddI 
+ 2547   VtoI 
+ 2548  CWord 0 
+ 2551   Call (336) "frame"
+ 2556   DivI SP <= [0xc006],0x0002
+ 2562   AddI SP <= [0xc005],SP
+ 2566 LoadF0 2 
+ 2569 LoadF0 4 
+ 2572  CWord 2 
+ 2575   VOp2 
+ 2576   DivI 
+ 2577   VOp2 
+ 2578   AddI 
+ 2579  CWord 2 
+ 2582   VOp2 
+ 2583   SubI 
+ 2584   VtoI 
+ 2585 LoadF0 7 
+ 2588 LoadFP 4 
+ 2591   VOp2 
+ 2592   AddI 
+ 2593   VtoI 
+ 2594   Load 
+ 2595   VtoS 
+ 2596   Call (139) "text"
+ 2601 LoadF0 6 
+ 2604 LoadFP 4 
+ 2607   VOp2 
+ 2608    EqI 
+ 2609   JmpZ 2615
+ 2612 CallBI <Invalid #>
+ 2615  IncAI SP <= 0xc004
+ 2619    Pop 
+ 2620    Jmp 2423
+ 2623  CChar '
+ 2625   Call (246) "textalign"
+ 2630    Not SP <= [0x001e]
+ 2634   JmpZ 2646
+ 2637 LoadFP 0 
+ 2640   Call (2219) "Cir"
+ 2645    Pop 
+ 2646 CallBI <Invalid #>
+ 2649  CWord 0 
+ 2652 SetRet 
+ 2653   PopN 3 
+ 2656 UnLink 
+ 2657    Ret 1 
+: "Chr"
+ 2662   Link 1 
+ 2664 StInit (1) "i"
+ 2667 CallBI <Invalid #>
+ 2670 LoadF0 1 
+ 2673   VOp2 
+ 2674   SubI 
+ 2675 LoadF0 3 
+ 2678 LoadF0 8 
+ 2681   VOp2 
+ 2682   DivI 
+ 2683   VOp2 
+ 2684   DivI 
+ 2685   VtoI 
+ 2686 StorFP 4 
+ 2689    Pop 
+ 2690 LoadFP 4 
+ 2693 LoadF0 6 
+ 2696   VOp2 
+ 2697   NEqI 
+ 2698 JmpPop 2709
+ 2701 LoadFP 4 
+ 2704 LoadF0 8 
+ 2707   VOp2 
+ 2708    LTI 
+ 2709 JmpPop 2721
+ 2712 LoadFP 0 
+ 2715   Call (1686) "Cc"
+ 2720   VtoB 
+ 2721   JmpZ 2791
+ 2724    Not SP <= [0x001e]
+ 2728 JmpPop 2741
+ 2731 LoadF0 6 
+ 2734   CInt -1 
+ 2739   VOp2 
+ 2740   NEqI 
+ 2741   JmpZ 2753
+ 2744 LoadFP 0 
+ 2747   Call (2219) "Cir"
+ 2752    Pop 
+ 2753   AddI SP <= [0xc000],0x0006
+ 2759 LoadFP 4 
+ 2762 StoreV 
+ 2763    Pop 
+ 2764  LoadI 0x001e
+ 2767   JmpZ 2782
+ 2770 LoadFP 0 
+ 2773   Call (2305) "Cdr"
+ 2778    Pop 
+ 2779    Jmp 2791
+ 2782 LoadFP 0 
+ 2785   Call (2219) "Cir"
+ 2790    Pop 
+ 2791  CWord 1 
+ 2794 CallBI <Invalid #>
+ 2797   NEqI SP <= SP,0x0003
+ 2801  JmpNZ 2667
+ 2804 LoadF0 6 
+ 2807   CInt -1 
+ 2812   VOp2 
+ 2813   NEqI 
+ 2814    Jmp 2820
+ 2817  CWord 0 
+ 2820 SetRet 
+ 2821    Pop 
+ 2822 UnLink 
+ 2823    Ret 1 
+: "Che"
+ 2828   Link 1 
+ 2830 StInit (31) "iss"
+ 2833 LoadFP 0 
+ 2836   Call (2051) "Chb"
+ 2841   VtoI 
+ 2842 StorFP 4 
+ 2845    Pop 
+ 2846 LoadF0 10 
+ 2849   VtoI 
+ 2850   Load 
+ 2851   VtoS 
+ 2852 CallBI strlen
+ 2855    GTI SP <= SP,0x0000
+ 2859   JmpZ 2875
+ 2862 LoadF0 10 
+ 2865   VtoI 
+ 2866   Load 
+ 2867   VtoS 
+ 2868 StorFP 6 
+ 2871    Pop 
+ 2872    Jmp 2885
+ 2875 LoadF0 5 
+ 2878   VtoI 
+ 2879   Load 
+ 2880   VtoS 
+ 2881 StorFP 6 
+ 2884    Pop 
+ 2885 LoadFP 4 
+ 2888   JmpZ 2953
+ 2891 LoadF0 1 
+ 2894  CWord 1 
+ 2897   VOp2 
+ 2898   SubI 
+ 2899   VtoI 
+ 2900 LoadF0 2 
+ 2903  CWord 1 
+ 2906   VOp2 
+ 2907   SubI 
+ 2908   VtoI 
+ 2909 LoadF0 3 
+ 2912   VtoI 
+ 2913 LoadF0 5 
+ 2916   VtoI 
+ 2917   Load 
+ 2918   VtoS 
+ 2919   Call (92) "getsi"
+ 2924 StorFP 5 
+ 2927    Pop 
+ 2928 LoadFP 5 
+ 2931   StoB 
+ 2932   JmpZ 2944
+ 2935 LoadF0 5 
+ 2938   VtoI 
+ 2939 LoadFP 5 
+ 2942 StoreV 
+ 2943    Pop 
+ 2944 LoadFP 0 
+ 2947   Call (1943) "Cet"
+ 2952    Pop 
+ 2953 LoadFP 4 
+ 2956    Jmp 2962
+ 2959  CWord 0 
+ 2962 SetRet 
+ 2963   PopN 3 
+ 2966 UnLink 
+ 2967    Ret 1 
+: "Cck"
+ 2972   Link 1 
+ 2974 LoadF0 6 
+ 2977   VtoB 
+ 2978   JmpZ 3005
+ 2981 LoadF0 1 
+ 2984   VtoI 
+ 2985 LoadF0 2 
+ 2988  CWord 1 
+ 2991   VOp2 
+ 2992   AddI 
+ 2993   VtoI 
+ 2994   CStr (66) "0c0067ee41c5b85f04e84484087f8"
+ 2997   Call (416) "bitmap"
+ 3002    Jmp 3026
+ 3005 LoadF0 1 
+ 3008   VtoI 
+ 3009 LoadF0 2 
+ 3012  CWord 1 
+ 3015   VOp2 
+ 3016   AddI 
+ 3017   VtoI 
+ 3018   CStr (96) "0c0007f84084084084084084087f8"
+ 3021   Call (416) "bitmap"
+ 3026  CWord 0 
+ 3029 SetRet 
+ 3030 UnLink 
+ 3031    Ret 1 
+: "Chc"
+ 3036   Link 1 
+ 3038 LoadFP 0 
+ 3041   Call (1686) "Cc"
+ 3046   VtoB 
+ 3047   JmpZ 3081
+ 3050   AddI SP <= [0xc000],0x0006
+ 3056 LoadF0 6 
+ 3059   VtoB 
+ 3060    Not 
+ 3061 StoreV 
+ 3062    Pop 
+ 3063 LoadFP 0 
+ 3066   Call (2972) "Cck"
+ 3071    Pop 
+ 3072  CWord 1 
+ 3075    Jmp 3090
+ 3078    Jmp 3087
+ 3081  CWord 0 
+ 3084    Jmp 3090
+ 3087  CWord 0 
+ 3090 SetRet 
+ 3091 UnLink 
+ 3092    Ret 1 
+: "Cilbi"
+ 3097   Link 1 
+ 3099 StInit (60) "ii"
+ 3102 LoadF0 4 
+ 3105  CWord 11 
+ 3108   VOp2 
+ 3109   DivI 
+ 3110   VtoI 
+ 3111 StorFP 5 
+ 3114    Pop 
+ 3115 LoadF0 6 
+ 3118 LoadF0 5 
+ 3121   VOp2 
+ 3122   GTEI 
+ 3123 JmpPop 3139
+ 3126 LoadF0 6 
+ 3129 LoadF0 5 
+ 3132 LoadFP 5 
+ 3135   VOp2 
+ 3136   AddI 
+ 3137   VOp2 
+ 3138    LTI 
+ 3139   JmpZ 3198
+ 3142 LoadF0 2 
+ 3145 LoadF0 6 
+ 3148 LoadF0 5 
+ 3151   VOp2 
+ 3152   SubI 
+ 3153  CWord 11 
+ 3156   VOp2 
+ 3157  MultI 
+ 3158   VOp2 
+ 3159   AddI 
+ 3160   VtoI 
+ 3161 StorFP 4 
+ 3164    Pop 
+ 3165  CWord 3 
+ 3168 LoadF0 1 
+ 3171   VtoI 
+ 3172 LoadFP 4 
+ 3175 LoadF0 1 
+ 3178 LoadF0 3 
+ 3181   VOp2 
+ 3182   AddI 
+ 3183   VtoI 
+ 3184   AddI SP <= [0xc004],0x000b
+ 3190  CWord 0 
+ 3193   Call (299) "rect"
+ 3198  CWord 0 
+ 3201 SetRet 
+ 3202   PopN 2 
+ 3205 UnLink 
+ 3206    Ret 1 
+: "Cdlbi"
+ 3211   Link 1 
+ 3213 StInit (160) "6i"
+ 3216 LoadF0 4 
+ 3219  CWord 11 
+ 3222   VOp2 
+ 3223   DivI 
+ 3224   VtoI 
+ 3225 StorFP 8 
+ 3228    Pop 
+ 3229 LoadF0 0 
+ 3232  CWord 13 
+ 3235   VOp2 
+ 3236    EqI 
+ 3237   JmpZ 3253
+ 3240   AddI SP <= [0xc000],0x0008
+ 3246   Call (1362) "dbnrecs"
+ 3251 StoreV 
+ 3252    Pop 
+ 3253 CallBI <Invalid #>
+ 3256  LoadI 0x001a
+ 3259   Call (475) "setbgi"
+ 3264    Pop 
+ 3265  LoadI 0x0019
+ 3268   Call (451) "setfgi"
+ 3273    Pop 
+ 3274  LoadI 0x001b
+ 3277   Call (499) "settextcolori"
+ 3282    Pop 
+ 3283 LoadF0 5 
+ 3286   VtoI 
+ 3287 StorFP 4 
+ 3290    Pop 
+ 3291 LoadFP 4 
+ 3294 LoadF0 5 
+ 3297 LoadFP 8 
+ 3300   VOp2 
+ 3301   AddI 
+ 3302   VOp2 
+ 3303    LTI 
+ 3304 JmpPop 3315
+ 3307 LoadFP 4 
+ 3310 LoadF0 8 
+ 3313   VOp2 
+ 3314    LTI 
+ 3315   JmpZ 3699
+ 3318 LoadF0 2 
+ 3321 LoadFP 4 
+ 3324 LoadF0 5 
+ 3327   VOp2 
+ 3328   SubI 
+ 3329  CWord 11 
+ 3332   VOp2 
+ 3333  MultI 
+ 3334   VOp2 
+ 3335   AddI 
+ 3336   VtoI 
+ 3337 StorFP 7 
+ 3340    Pop 
+ 3341 LoadF0 6 
+ 3344 LoadFP 4 
+ 3347   VOp2 
+ 3348    EqI 
+ 3349   JmpZ 3373
+ 3352 CallBI <Invalid #>
+ 3355  LoadI 0x001c
+ 3358   Call (475) "setbgi"
+ 3363    Pop 
+ 3364  LoadI 0x001d
+ 3367   Call (499) "settextcolori"
+ 3372    Pop 
+ 3373 LoadF0 0 
+ 3376  CWord 9 
+ 3379   VOp2 
+ 3380    EqI 
+ 3381 JmpPop 3392
+ 3384 LoadF0 0 
+ 3387  CWord 13 
+ 3390   VOp2 
+ 3391    EqI 
+ 3392   JmpZ 3643
+ 3395 LoadF0 1 
+ 3398   VtoI 
+ 3399 StorFP 6 
+ 3402    Pop 
+ 3403  CWord 0 
+ 3406 StorFP 9 
+ 3409    Pop 
+ 3410 LoadFP 9 
+ 3413 LoadF0 12 
+ 3416   VOp2 
+ 3417    LTI 
+ 3418   JmpZ 3603
+ 3421 LoadF0 0 
+ 3424  CWord 9 
+ 3427   VOp2 
+ 3428    EqI 
+ 3429   JmpZ 3498
+ 3432 LoadFP 6 
+ 3435 LoadFP 7 
+ 3438 LoadF0 10 
+ 3441 LoadFP 9 
+ 3444   VOp2 
+ 3445   AddI 
+ 3446   VtoI 
+ 3447   Load 
+ 3448  CWord 1 
+ 3451   VOp2 
+ 3452   SubI 
+ 3453   VtoI 
+ 3454  CWord 11 
+ 3457 LoadF0 11 
+ 3460 LoadFP 9 
+ 3463   VOp2 
+ 3464   AddI 
+ 3465   VtoI 
+ 3466   Load 
+ 3467   VtoI 
+ 3468 LoadF0 7 
+ 3471 LoadF0 12 
+ 3474 LoadFP 4 
+ 3477   VOp2 
+ 3478  MultI 
+ 3479   VOp2 
+ 3480   AddI 
+ 3481 LoadFP 9 
+ 3484   VOp2 
+ 3485   AddI 
+ 3486   VtoI 
+ 3487   Load 
+ 3488   VtoS 
+ 3489   Call (1810) "Ct"
+ 3494    Pop 
+ 3495    Jmp 3575
+ 3498 LoadFP 4 
+ 3501   Call (1339) "dbrec"
+ 3506 LoadF0 7 
+ 3509   VtoI 
+ 3510 LoadF0 13 
+ 3513   VtoI 
+ 3514   Load 
+ 3515   VtoS 
+ 3516   Call (1488) "dbreadx"
+ 3521    Pop 
+ 3522 LoadFP 6 
+ 3525 LoadFP 7 
+ 3528 LoadF0 10 
+ 3531 LoadFP 9 
+ 3534   VOp2 
+ 3535   AddI 
+ 3536   VtoI 
+ 3537   Load 
+ 3538  CWord 1 
+ 3541   VOp2 
+ 3542   SubI 
+ 3543   VtoI 
+ 3544  CWord 11 
+ 3547 LoadF0 11 
+ 3550 LoadFP 9 
+ 3553   VOp2 
+ 3554   AddI 
+ 3555   VtoI 
+ 3556   Load 
+ 3557   VtoI 
+ 3558 LoadF0 7 
+ 3561 LoadFP 9 
+ 3564   VOp2 
+ 3565   AddI 
+ 3566   VtoI 
+ 3567   Load 
+ 3568   VtoS 
+ 3569   Call (1810) "Ct"
+ 3574    Pop 
+ 3575 LoadFP 6 
+ 3578 LoadF0 10 
+ 3581 LoadFP 9 
+ 3584   VOp2 
+ 3585   AddI 
+ 3586   VtoI 
+ 3587   Load 
+ 3588   VOp2 
+ 3589   AddI 
+ 3590   VtoI 
+ 3591 StorFP 6 
+ 3594    Pop 
+ 3595  IncAI SP <= 0xc009
+ 3599    Pop 
+ 3600    Jmp 3410
+ 3603  DecAI SP <= 0xc006
+ 3607    Pop 
+ 3608  CWord 0 
+ 3611 LoadFP 6 
+ 3614 LoadFP 7 
+ 3617 LoadF0 3 
+ 3620 LoadF0 1 
+ 3623   VOp2 
+ 3624   AddI 
+ 3625   VtoI 
+ 3626   AddI SP <= [0xc007],0x000b
+ 3632  CWord 0 
+ 3635   Call (299) "rect"
+ 3640    Jmp 3677
+ 3643 LoadF0 1 
+ 3646   VtoI 
+ 3647 LoadFP 7 
+ 3650 LoadF0 3 
+ 3653   VtoI 
+ 3654  CWord 11 
+ 3657  CWord 0 
+ 3660 LoadF0 7 
+ 3663 LoadFP 4 
+ 3666   VOp2 
+ 3667   AddI 
+ 3668   VtoI 
+ 3669   Load 
+ 3670   VtoS 
+ 3671   Call (1810) "Ct"
+ 3676    Pop 
+ 3677 LoadF0 6 
+ 3680 LoadFP 4 
+ 3683   VOp2 
+ 3684    EqI 
+ 3685   JmpZ 3691
+ 3688 CallBI <Invalid #>
+ 3691  IncAI SP <= 0xc004
+ 3695    Pop 
+ 3696    Jmp 3291
+ 3699 LoadFP 4 
+ 3702 LoadF0 5 
+ 3705   VOp2 
+ 3706   SubI 
+ 3707   VtoI 
+ 3708 StorFP 5 
+ 3711    Pop 
+ 3712    LTI SP <= [0xc005],[0xc008]
+ 3718   JmpZ 3890
+ 3721 LoadF0 2 
+ 3724  MultI SP <= [0xc005],0x000b
+ 3730   VOp2 
+ 3731   AddI 
+ 3732   VtoI 
+ 3733 StorFP 7 
+ 3736    Pop 
+ 3737 LoadF0 0 
+ 3740  CWord 9 
+ 3743   VOp2 
+ 3744    EqI 
+ 3745   JmpZ 3849
+ 3748 LoadF0 1 
+ 3751   VtoI 
+ 3752 StorFP 6 
+ 3755    Pop 
+ 3756  CWord 0 
+ 3759 StorFP 9 
+ 3762    Pop 
+ 3763 LoadFP 9 
+ 3766 LoadF0 12 
+ 3769   VOp2 
+ 3770    LTI 
+ 3771   JmpZ 3846
+ 3774  CWord 0 
+ 3777 LoadFP 6 
+ 3780 LoadFP 7 
+ 3783 LoadFP 6 
+ 3786 LoadF0 10 
+ 3789 LoadFP 9 
+ 3792   VOp2 
+ 3793   AddI 
+ 3794   VtoI 
+ 3795   Load 
+ 3796   VOp2 
+ 3797   AddI 
+ 3798  CWord 1 
+ 3801   VOp2 
+ 3802   SubI 
+ 3803   VtoI 
+ 3804   AddI SP <= [0xc007],0x000b
+ 3810  CWord 0 
+ 3813   Call (299) "rect"
+ 3818 LoadFP 6 
+ 3821 LoadF0 10 
+ 3824 LoadFP 9 
+ 3827   VOp2 
+ 3828   AddI 
+ 3829   VtoI 
+ 3830   Load 
+ 3831   VOp2 
+ 3832   AddI 
+ 3833   VtoI 
+ 3834 StorFP 6 
+ 3837    Pop 
+ 3838  IncAI SP <= 0xc009
+ 3842    Pop 
+ 3843    Jmp 3763
+ 3846    Jmp 3882
+ 3849  CWord 0 
+ 3852 LoadF0 1 
+ 3855   VtoI 
+ 3856 LoadFP 7 
+ 3859 LoadF0 1 
+ 3862 LoadF0 3 
+ 3865   VOp2 
+ 3866   AddI 
+ 3867   VtoI 
+ 3868   AddI SP <= [0xc007],0x000b
+ 3874  CWord 0 
+ 3877   Call (299) "rect"
+ 3882  IncAI SP <= 0xc005
+ 3886    Pop 
+ 3887    Jmp 3712
+ 3890  LoadI 0x001b
+ 3893   Call (451) "setfgi"
+ 3898    Pop 
+ 3899 LoadF0 6 
+ 3902 LoadF0 5 
+ 3905   VOp2 
+ 3906    EqI 
+ 3907   JmpZ 3931
+ 3910 CallBI <Invalid #>
+ 3913  LoadI 0x001c
+ 3916   Call (475) "setbgi"
+ 3921    Pop 
+ 3922  LoadI 0x001d
+ 3925   Call (451) "setfgi"
+ 3930    Pop 
+ 3931 LoadF0 5 
+ 3934  CWord 0 
+ 3937   VOp2 
+ 3938    GTI 
+ 3939   JmpZ 3976
+ 3942 LoadF0 1 
+ 3945 LoadF0 3 
+ 3948   VOp2 
+ 3949   AddI 
+ 3950  CWord 8 
+ 3953   VOp2 
+ 3954   SubI 
+ 3955   VtoI 
+ 3956 LoadF0 2 
+ 3959  CWord 1 
+ 3962   VOp2 
+ 3963   AddI 
+ 3964   VtoI 
+ 3965   CStr (126) "0710387cfe383838"
+ 3968   Call (416) "bitmap"
+ 3973    Jmp 4033
+ 3976  CWord 0 
+ 3979 LoadF0 1 
+ 3982 LoadF0 3 
+ 3985   VOp2 
+ 3986   AddI 
+ 3987  CWord 8 
+ 3990   VOp2 
+ 3991   SubI 
+ 3992   VtoI 
+ 3993 LoadF0 2 
+ 3996  CWord 1 
+ 3999   VOp2 
+ 4000   AddI 
+ 4001   VtoI 
+ 4002 LoadF0 1 
+ 4005 LoadF0 3 
+ 4008   VOp2 
+ 4009   AddI 
+ 4010  CWord 1 
+ 4013   VOp2 
+ 4014   SubI 
+ 4015   VtoI 
+ 4016 LoadF0 2 
+ 4019  CWord 10 
+ 4022   VOp2 
+ 4023   AddI 
+ 4024   VtoI 
+ 4025  CWord 0 
+ 4028   Call (299) "rect"
+ 4033 LoadF0 6 
+ 4036 LoadF0 5 
+ 4039   VOp2 
+ 4040    EqI 
+ 4041   JmpZ 4047
+ 4044 CallBI <Invalid #>
+ 4047 LoadF0 6 
+ 4050 LoadF0 5 
+ 4053 LoadFP 8 
+ 4056   VOp2 
+ 4057   AddI 
+ 4058  CWord 1 
+ 4061   VOp2 
+ 4062   SubI 
+ 4063   VOp2 
+ 4064    EqI 
+ 4065   JmpZ 4086
+ 4068  LoadI 0x001c
+ 4071   Call (475) "setbgi"
+ 4076    Pop 
+ 4077  LoadI 0x001d
+ 4080   Call (451) "setfgi"
+ 4085    Pop 
+ 4086 LoadF0 5 
+ 4089 LoadFP 8 
+ 4092   VOp2 
+ 4093   AddI 
+ 4094 LoadF0 8 
+ 4097   VOp2 
+ 4098    LTI 
+ 4099   JmpZ 4141
+ 4102 LoadF0 1 
+ 4105 LoadF0 3 
+ 4108   VOp2 
+ 4109   AddI 
+ 4110  CWord 8 
+ 4113   VOp2 
+ 4114   SubI 
+ 4115   VtoI 
+ 4116 LoadF0 2 
+ 4119 LoadF0 4 
+ 4122   VOp2 
+ 4123   AddI 
+ 4124  CWord 8 
+ 4127   VOp2 
+ 4128   SubI 
+ 4129   VtoI 
+ 4130   CStr (143) "07383838fe7c3810"
+ 4133   Call (416) "bitmap"
+ 4138    Jmp 4203
+ 4141  CWord 0 
+ 4144 LoadF0 1 
+ 4147 LoadF0 3 
+ 4150   VOp2 
+ 4151   AddI 
+ 4152  CWord 8 
+ 4155   VOp2 
+ 4156   SubI 
+ 4157   VtoI 
+ 4158 LoadF0 2 
+ 4161 LoadF0 4 
+ 4164   VOp2 
+ 4165   AddI 
+ 4166  CWord 8 
+ 4169   VOp2 
+ 4170   SubI 
+ 4171   VtoI 
+ 4172 LoadF0 1 
+ 4175 LoadF0 3 
+ 4178   VOp2 
+ 4179   AddI 
+ 4180  CWord 1 
+ 4183   VOp2 
+ 4184   SubI 
+ 4185   VtoI 
+ 4186 LoadF0 2 
+ 4189 LoadF0 4 
+ 4192   VOp2 
+ 4193   AddI 
+ 4194   VtoI 
+ 4195  CWord 0 
+ 4198   Call (299) "rect"
+ 4203 CallBI <Invalid #>
+ 4206    Not SP <= [0x001e]
+ 4210   JmpZ 4222
+ 4213 LoadFP 0 
+ 4216   Call (3097) "Cilbi"
+ 4221    Pop 
+ 4222  CWord 0 
+ 4225 SetRet 
+ 4226   PopN 6 
+ 4229 UnLink 
+ 4230    Ret 1 
+: "Csi"
+ 4235   Link 3 
+ 4237 StInit (1) "i"
+ 4240 LoadF0 4 
+ 4243  CWord 11 
+ 4246   VOp2 
+ 4247   DivI 
+ 4248 LoadFP 2 
+ 4251   VOp2 
+ 4252  MultI 
+ 4253   VtoI 
+ 4254 StorFP 6 
+ 4257    Pop 
+ 4258    GTI SP <= [0xc002],0x0000
+ 4264 JmpPop 4280
+ 4267 LoadF0 5 
+ 4270 LoadFP 6 
+ 4273   VOp2 
+ 4274   AddI 
+ 4275 LoadF0 8 
+ 4278   VOp2 
+ 4279    LTI 
+ 4280 JmpPop 4300
+ 4283    LTI SP <= [0xc002],0x0000
+ 4289 JmpPop 4300
+ 4292 LoadF0 5 
+ 4295  CWord 0 
+ 4298   VOp2 
+ 4299    GTI 
+ 4300   JmpZ 4410
+ 4303 LoadFP 1 
+ 4306   Call (2051) "Chb"
+ 4311   VtoB 
+ 4312   JmpZ 4410
+ 4315    Not SP <= [0x001e]
+ 4319   JmpZ 4331
+ 4322 LoadFP 0 
+ 4325   Call (3097) "Cilbi"
+ 4330    Pop 
+ 4331   AddI SP <= [0xc000],0x0005
+ 4337 LoadF0 5 
+ 4340 LoadFP 6 
+ 4343   VOp2 
+ 4344   AddI 
+ 4345 StoreV 
+ 4346    Pop 
+ 4347 LoadF0 5 
+ 4350 LoadF0 8 
+ 4353 LoadFP 6 
+ 4356   VOp2 
+ 4357   SubI 
+ 4358   VOp2 
+ 4359    GTI 
+ 4360   JmpZ 4379
+ 4363   AddI SP <= [0xc000],0x0005
+ 4369 LoadF0 8 
+ 4372 LoadFP 6 
+ 4375   VOp2 
+ 4376   SubI 
+ 4377 StoreV 
+ 4378    Pop 
+ 4379 LoadF0 5 
+ 4382  CWord 0 
+ 4385   VOp2 
+ 4386    LTI 
+ 4387   JmpZ 4401
+ 4390   AddI SP <= [0xc000],0x0005
+ 4396  CWord 0 
+ 4399 StoreV 
+ 4400    Pop 
+ 4401 LoadFP 0 
+ 4404   Call (3211) "Cdlbi"
+ 4409    Pop 
+ 4410  CWord 0 
+ 4413 SetRet 
+ 4414    Pop 
+ 4415 UnLink 
+ 4416    Ret 3 
+: "Chl2"
+ 4421   Link 1 
+ 4423 StInit (163) "17i"
+ 4426 SCWord [0xc005] <- 12
+ 4431 LoadF0 1 
+ 4434 LoadF0 3 
+ 4437   VOp2 
+ 4438   AddI 
+ 4439  CWord 10 
+ 4442   VOp2 
+ 4443   SubI 
+ 4444   VtoI 
+ 4445 StorFP 6 
+ 4448    Pop 
+ 4449 LoadF0 2 
+ 4452 LoadF0 4 
+ 4455   VOp2 
+ 4456   AddI 
+ 4457  CWord 10 
+ 4460   VOp2 
+ 4461   SubI 
+ 4462   VtoI 
+ 4463 StorFP 7 
+ 4466    Pop 
+ 4467 SCWord [0xc008] <- 10
+ 4472 SCWord [0xc009] <- 10
+ 4477 SCWord [0xc00c] <- 0
+ 4482 SCWord [0xc00d] <- 12
+ 4487 LoadF0 1 
+ 4490 LoadF0 3 
+ 4493   VOp2 
+ 4494   AddI 
+ 4495  CWord 10 
+ 4498   VOp2 
+ 4499   SubI 
+ 4500   VtoI 
+ 4501 StorFP 14 
+ 4504    Pop 
+ 4505 LoadF0 2 
+ 4508   VtoI 
+ 4509 StorFP 15 
+ 4512    Pop 
+ 4513 SCWord [0xc010] <- 10
+ 4518 SCWord [0xc011] <- 10
+ 4523 SCWord [0xc014] <- 0
+ 4528 CWdPFP 5 
+ 4531   Call (1686) "Cc"
+ 4536   VtoB 
+ 4537   JmpZ 4564
+ 4540 LoadFP 0 
+ 4543 CWdPFP 5 
+ 4546  CWord 1 
+ 4549   Call (4235) "Csi"
+ 4554    Pop 
+ 4555  CWord 0 
+ 4558    Jmp 4755
+ 4561    Jmp 4726
+ 4564 CWdPFP 13 
+ 4567   Call (1686) "Cc"
+ 4572   VtoB 
+ 4573   JmpZ 4602
+ 4576 LoadFP 0 
+ 4579 CWdPFP 13 
+ 4582   CInt -1 
+ 4587   Call (4235) "Csi"
+ 4592    Pop 
+ 4593  CWord 0 
+ 4596    Jmp 4755
+ 4599    Jmp 4726
+ 4602 CallBI <Invalid #>
+ 4605 LoadF0 2 
+ 4608   VOp2 
+ 4609   SubI 
+ 4610  CWord 11 
+ 4613   VOp2 
+ 4614   DivI 
+ 4615 LoadF0 5 
+ 4618   VOp2 
+ 4619   AddI 
+ 4620   VtoI 
+ 4621 StorFP 4 
+ 4624    Pop 
+ 4625 LoadFP 4 
+ 4628 LoadF0 6 
+ 4631   VOp2 
+ 4632   NEqI 
+ 4633 JmpPop 4644
+ 4636 LoadFP 4 
+ 4639 LoadF0 8 
+ 4642   VOp2 
+ 4643    LTI 
+ 4644 JmpPop 4656
+ 4647 LoadFP 0 
+ 4650   Call (1686) "Cc"
+ 4655   VtoB 
+ 4656   JmpZ 4726
+ 4659    Not SP <= [0x001e]
+ 4663 JmpPop 4676
+ 4666 LoadF0 6 
+ 4669   CInt -1 
+ 4674   VOp2 
+ 4675   NEqI 
+ 4676   JmpZ 4688
+ 4679 LoadFP 0 
+ 4682   Call (3097) "Cilbi"
+ 4687    Pop 
+ 4688   AddI SP <= [0xc000],0x0006
+ 4694 LoadFP 4 
+ 4697 StoreV 
+ 4698    Pop 
+ 4699  LoadI 0x001e
+ 4702   JmpZ 4717
+ 4705 LoadFP 0 
+ 4708   Call (3211) "Cdlbi"
+ 4713    Pop 
+ 4714    Jmp 4726
+ 4717 LoadFP 0 
+ 4720   Call (3097) "Cilbi"
+ 4725    Pop 
+ 4726  CWord 1 
+ 4729 CallBI <Invalid #>
+ 4732   NEqI SP <= SP,0x0003
+ 4736  JmpNZ 4528
+ 4739 LoadF0 6 
+ 4742   CInt -1 
+ 4747   VOp2 
+ 4748   NEqI 
+ 4749    Jmp 4755
+ 4752  CWord 0 
+ 4755 SetRet 
+ 4756   PopN 17 
+ 4759 UnLink 
+ 4760    Ret 1 
+: "Chl"
+ 4765   Link 1 
+ 4767  CWord 25 
+ 4770  CWord 13 
+ 4773  CWord 5 
+ 4776 CallBI memcpy
+ 4779 LoadFP 0 
+ 4782   Call (4421) "Chl2"
+ 4787    Pop 
+ 4788  CWord 0 
+ 4791 SetRet 
+ 4792 UnLink 
+ 4793    Ret 1 
+: "Cdrp"
+ 4798   Link 1 
+ 4800 StInit (167) "4i"
+ 4803 SCWord [0xc004] <- 0
+ 4808 SCWord [0xc007] <- 0
+ 4813 LoadF0 1 
+ 4816   VtoI 
+ 4817 StorFP 5 
+ 4820    Pop 
+ 4821 LoadF0 2 
+ 4824   VtoI 
+ 4825 StorFP 6 
+ 4828    Pop 
+ 4829 LoadF0 0 
+ 4832  CWord 8 
+ 4835   VOp2 
+ 4836    EqI 
+ 4837   JmpZ 4851
+ 4840   AddI SP <= [0xc000],0x0002
+ 4846  CWord 14 
+ 4849 StoreV 
+ 4850    Pop 
+ 4851 LoadFP 5 
+ 4854 LoadF0 3 
+ 4857   VOp2 
+ 4858   AddI 
+ 4859  CWord 158 
+ 4862   VOp2 
+ 4863    GTI 
+ 4864   JmpZ 4883
+ 4867   AddI SP <= [0xc000],0x0001
+ 4873  CWord 158 
+ 4876 LoadF0 3 
+ 4879   VOp2 
+ 4880   SubI 
+ 4881 StoreV 
+ 4882    Pop 
+ 4883 LoadFP 6 
+ 4886 LoadF0 4 
+ 4889   VOp2 
+ 4890   AddI 
+ 4891  CWord 158 
+ 4894   VOp2 
+ 4895    GTI 
+ 4896   JmpZ 4915
+ 4899   AddI SP <= [0xc000],0x0002
+ 4905  CWord 158 
+ 4908 LoadF0 4 
+ 4911   VOp2 
+ 4912   SubI 
+ 4913 StoreV 
+ 4914    Pop 
+ 4915 LoadF0 0 
+ 4918  CWord 8 
+ 4921   VOp2 
+ 4922    EqI 
+ 4923   JmpZ 4986
+ 4926  CWord 0 
+ 4929 LoadF0 1 
+ 4932  CWord 2 
+ 4935   VOp2 
+ 4936   SubI 
+ 4937   VtoI 
+ 4938 LoadF0 2 
+ 4941  CWord 1 
+ 4944   VOp2 
+ 4945   AddI 
+ 4946   VtoI 
+ 4947 LoadF0 1 
+ 4950 LoadF0 3 
+ 4953   VOp2 
+ 4954   AddI 
+ 4955  CWord 3 
+ 4958   VOp2 
+ 4959   AddI 
+ 4960   VtoI 
+ 4961 LoadF0 2 
+ 4964 LoadF0 4 
+ 4967   VOp2 
+ 4968   AddI 
+ 4969  CWord 3 
+ 4972   VOp2 
+ 4973   AddI 
+ 4974   VtoI 
+ 4975  CWord 0 
+ 4978   Call (299) "rect"
+ 4983    Jmp 5043
+ 4986  CWord 0 
+ 4989 LoadF0 1 
+ 4992  CWord 2 
+ 4995   VOp2 
+ 4996   SubI 
+ 4997   VtoI 
+ 4998 LoadF0 2 
+ 5001  CWord 2 
+ 5004   VOp2 
+ 5005   SubI 
+ 5006   VtoI 
+ 5007 LoadF0 1 
+ 5010 LoadF0 3 
+ 5013   VOp2 
+ 5014   AddI 
+ 5015  CWord 3 
+ 5018   VOp2 
+ 5019   AddI 
+ 5020   VtoI 
+ 5021 LoadF0 2 
+ 5024 LoadF0 4 
+ 5027   VOp2 
+ 5028   AddI 
+ 5029  CWord 3 
+ 5032   VOp2 
+ 5033   AddI 
+ 5034   VtoI 
+ 5035  CWord 0 
+ 5038   Call (299) "rect"
+ 5043  CWord 1 
+ 5046 LoadF0 1 
+ 5049   VtoI 
+ 5050 LoadF0 2 
+ 5053   VtoI 
+ 5054 LoadF0 1 
+ 5057 LoadF0 3 
+ 5060   VOp2 
+ 5061   AddI 
+ 5062   VtoI 
+ 5063 LoadF0 2 
+ 5066 LoadF0 4 
+ 5069   VOp2 
+ 5070   AddI 
+ 5071   VtoI 
+ 5072  CWord 1 
+ 5075   Call (336) "frame"
+ 5080  CWord 1 
+ 5083 LoadF0 1 
+ 5086  CWord 1 
+ 5089   VOp2 
+ 5090   AddI 
+ 5091   VtoI 
+ 5092 LoadF0 2 
+ 5095 LoadF0 4 
+ 5098   VOp2 
+ 5099   AddI 
+ 5100  CWord 1 
+ 5103   VOp2 
+ 5104   AddI 
+ 5105   VtoI 
+ 5106 LoadF0 1 
+ 5109 LoadF0 3 
+ 5112   VOp2 
+ 5113   AddI 
+ 5114  CWord 2 
+ 5117   VOp2 
+ 5118   SubI 
+ 5119   VtoI 
+ 5120 LoadF0 2 
+ 5123 LoadF0 4 
+ 5126   VOp2 
+ 5127   AddI 
+ 5128  CWord 1 
+ 5131   VOp2 
+ 5132   AddI 
+ 5133   VtoI 
+ 5134   Call (265) "line"
+ 5139  CWord 1 
+ 5142 LoadF0 1 
+ 5145 LoadF0 3 
+ 5148   VOp2 
+ 5149   AddI 
+ 5150  CWord 1 
+ 5153   VOp2 
+ 5154   AddI 
+ 5155   VtoI 
+ 5156 LoadF0 2 
+ 5159  CWord 1 
+ 5162   VOp2 
+ 5163   AddI 
+ 5164   VtoI 
+ 5165 LoadF0 1 
+ 5168 LoadF0 3 
+ 5171   VOp2 
+ 5172   AddI 
+ 5173  CWord 1 
+ 5176   VOp2 
+ 5177   AddI 
+ 5178   VtoI 
+ 5179 LoadF0 2 
+ 5182 LoadF0 4 
+ 5185   VOp2 
+ 5186   AddI 
+ 5187  CWord 2 
+ 5190   VOp2 
+ 5191   SubI 
+ 5192   VtoI 
+ 5193   Call (265) "line"
+ 5198   AddI SP <= [0xc000],0x0005
+ 5204  CWord 0 
+ 5207 StoreV 
+ 5208    Pop 
+ 5209 LoadFP 0 
+ 5212   Call (3211) "Cdlbi"
+ 5217    Pop 
+ 5218 LoadF0 0 
+ 5221  CWord 10 
+ 5224   VOp2 
+ 5225    EqI 
+ 5226   JmpZ 5242
+ 5229 SCWord [0xc004] <- 1
+ 5234 LoadFP 0 
+ 5237  CWord 11 
+ 5240 StoreV 
+ 5241    Pop 
+ 5242  CWord 1 
+ 5245   JmpZ 5307
+ 5248  CWord 1 
+ 5251 CallBI <Invalid #>
+ 5254    EqI SP <= SP,0x0002
+ 5258   JmpZ 5304
+ 5261 LoadFP 0 
+ 5264   Call (1686) "Cc"
+ 5269   VtoB 
+ 5270   JmpZ 5296
+ 5273 LoadFP 0 
+ 5276   Call (4421) "Chl2"
+ 5281   VtoB 
+ 5282   JmpZ 5293
+ 5285 SCWord [0xc007] <- 1
+ 5290    Jmp 5307
+ 5293    Jmp 5304
+ 5296 SCWord [0xc007] <- 0
+ 5301    Jmp 5307
+ 5304    Jmp 5242
+ 5307 LoadFP 4 
+ 5310   JmpZ 5321
+ 5313 LoadFP 0 
+ 5316  CWord 10 
+ 5319 StoreV 
+ 5320    Pop 
+ 5321   AddI SP <= [0xc000],0x0001
+ 5327 LoadFP 5 
+ 5330 StoreV 
+ 5331    Pop 
+ 5332   AddI SP <= [0xc000],0x0002
+ 5338 LoadFP 6 
+ 5341 StoreV 
+ 5342    Pop 
+ 5343 LoadFP 7 
+ 5346    Jmp 5352
+ 5349  CWord 0 
+ 5352 SetRet 
+ 5353   PopN 4 
+ 5356 UnLink 
+ 5357    Ret 1 
+: "Cdrt"
+ 5362   Link 1 
+ 5364 CallBI <Invalid #>
+ 5367  LoadI 0x0013
+ 5370   Call (475) "setbgi"
+ 5375    Pop 
+ 5376  LoadI 0x000f
+ 5379   Call (499) "settextcolori"
+ 5384    Pop 
+ 5385  CWord 0 
+ 5388 LoadF0 1 
+ 5391  CWord 11 
+ 5394   VOp2 
+ 5395   AddI 
+ 5396   VtoI 
+ 5397 LoadF0 2 
+ 5400   VtoI 
+ 5401 LoadF0 1 
+ 5404 LoadF0 3 
+ 5407   VOp2 
+ 5408   AddI 
+ 5409   VtoI 
+ 5410 LoadF0 2 
+ 5413  CWord 11 
+ 5416   VOp2 
+ 5417   AddI 
+ 5418   VtoI 
+ 5419  CWord 0 
+ 5422   Call (299) "rect"
+ 5427  CWord 0 
+ 5430  CWord 1 
+ 5433  CWord 0 
+ 5436   Call (165) "textattr"
+ 5441  CChar '
+ 5443   Call (246) "textalign"
+ 5448 LoadF0 1 
+ 5451  CWord 11 
+ 5454   VOp2 
+ 5455   AddI 
+ 5456   VtoI 
+ 5457 LoadF0 2 
+ 5460   VtoI 
+ 5461 LoadF0 7 
+ 5464 LoadF0 6 
+ 5467   VOp2 
+ 5468   AddI 
+ 5469   VtoI 
+ 5470   Load 
+ 5471   VtoS 
+ 5472   Call (139) "text"
+ 5477 CallBI <Invalid #>
+ 5480  CWord 0 
+ 5483 SetRet 
+ 5484 UnLink 
+ 5485    Ret 1 
+: "Chd"
+ 5490   Link 1 
+ 5492 StInit (164) "7i"
+ 5495 SCWord [0xc004] <- 0
+ 5500 CallBI <Invalid #>
+ 5503    Pop 
+ 5504  CWord 0 
+ 5507 StorFP 5 
+ 5510    Pop 
+ 5511    LTI SP <= [0xc005],0x0005
+ 5517   JmpZ 5544
+ 5520   AddI SP <= 0xc006,[0xc005]
+ 5526   AddI SP <= [0xc000],[0xc005]
+ 5532   Load 
+ 5533   VtoI 
+ 5534  Store 
+ 5535    Pop 
+ 5536  IncAI SP <= 0xc005
+ 5540    Pop 
+ 5541    Jmp 5511
+ 5544 SCWord [0xc00a] <- 11
+ 5549 CWdPFP 6 
+ 5552   Call (1686) "Cc"
+ 5557   VtoB 
+ 5558   JmpZ 5586
+ 5561 CWdPFP 6 
+ 5564   Call (2051) "Chb"
+ 5569   VtoB 
+ 5570   JmpZ 5586
+ 5573 LoadFP 0 
+ 5576   Call (4798) "Cdrp"
+ 5581   VtoI 
+ 5582 StorFP 4 
+ 5585    Pop 
+ 5586 CallBI <Invalid #>
+ 5589 LoadFP 4 
+ 5592   JmpZ 5604
+ 5595 LoadFP 0 
+ 5598   Call (5362) "Cdrt"
+ 5603    Pop 
+ 5604 LoadFP 4 
+ 5607    Jmp 5613
+ 5610  CWord 0 
+ 5613 SetRet 
+ 5614   PopN 7 
+ 5617 UnLink 
+ 5618    Ret 1 
+: "Csettopic"
+ 5623   Link 2 
+ 5625 LoadF0 10 
+ 5628   VtoI 
+ 5629 LoadFP 1 
+ 5632 StoreV 
+ 5633    Pop 
+ 5634  CWord 0 
+ 5637 SetRet 
+ 5638 UnLink 
+ 5639    Ret 2 
+: "Cdm"
+ 5644   Link 1 
+ 5646 StInit (60) "ii"
+ 5649 CallBI <Invalid #>
+ 5652  LoadI 0x0015
+ 5655   Call (475) "setbgi"
+ 5660    Pop 
+ 5661  LoadI 0x0014
+ 5664   Call (451) "setfgi"
+ 5669    Pop 
+ 5670  LoadI 0x0016
+ 5673   Call (499) "settextcolori"
+ 5678    Pop 
+ 5679  CWord 0 
+ 5682  CWord 0 
+ 5685  CWord 0 
+ 5688  CWord 160 
+ 5691  CWord 15 
+ 5694  CWord 0 
+ 5697   Call (299) "rect"
+ 5702  CWord 1 
+ 5705  CWord 1 
+ 5708  CWord 1 
+ 5711  CWord 158 
+ 5714  CWord 13 
+ 5717  CWord 1 
+ 5720   Call (336) "frame"
+ 5725  CWord 1 
+ 5728  CWord 2 
+ 5731  CWord 14 
+ 5734  CWord 156 
+ 5737  CWord 14 
+ 5740   Call (265) "line"
+ 5745  CWord 1 
+ 5748  CWord 159 
+ 5751  CWord 2 
+ 5754  CWord 159 
+ 5757  CWord 11 
+ 5760   Call (265) "line"
+ 5765  CWord 0 
+ 5768 StorFP 4 
+ 5771    Pop 
+ 5772 LoadFP 4 
+ 5775 LoadF0 3 
+ 5778   VOp2 
+ 5779    LTI 
+ 5780   JmpZ 5837
+ 5783 LoadF0 2 
+ 5786 LoadFP 4 
+ 5789   VOp2 
+ 5790   AddI 
+ 5791   VtoI 
+ 5792   Load 
+ 5793   VtoI 
+ 5794 StorFP 5 
+ 5797    Pop 
+ 5798   AddI SP <= [0xc005],0x0001
+ 5804   Load 
+ 5805  CWord 3 
+ 5808   VOp2 
+ 5809   AddI 
+ 5810   VtoI 
+ 5811  CWord 1 
+ 5814   AddI SP <= [0xc005],0x000a
+ 5820   Load 
+ 5821   VtoI 
+ 5822   Load 
+ 5823   VtoS 
+ 5824   Call (139) "text"
+ 5829  IncAI SP <= 0xc004
+ 5833    Pop 
+ 5834    Jmp 5772
+ 5837 CallBI <Invalid #>
+ 5840  CWord 0 
+ 5843 SetRet 
+ 5844   PopN 2 
+ 5847 UnLink 
+ 5848    Ret 1 
+: "Cmevent"
+ 5853   Link 1 
+ 5855 StInit (170) "15i"
+ 5858 SCWord [0xc006] <- 1
+ 5863 SCWord [0xc007] <- 0
+ 5868 SCWord [0xc005] <- 0
+ 5873 SCWord [0xc00a] <- 0
+ 5878 SCWord [0xc00c] <- 12
+ 5883 SCWord [0xc00e] <- 0
+ 5888 SCWord [0xc00f] <- 0
+ 5893 SCWord [0xc010] <- 160
+ 5898 SCWord [0xc011] <- 12
+ 5903 CallBI <Invalid #>
+ 5906    Pop 
+ 5907  CWord 1 
+ 5910  CWord 1 
+ 5913  CWord 0 
+ 5916   Call (165) "textattr"
+ 5921 LoadFP 0 
+ 5924   Call (5644) "Cdm"
+ 5929    Pop 
+ 5930 LoadFP 6 
+ 5933   JmpZ 6340
+ 5936  CWord 1 
+ 5939 CallBI <Invalid #>
+ 5942 StorFP 5 
+ 5945    Pop 
+ 5946    EqI SP <= [0xc005],0x0002
+ 5952   JmpZ 6323
+ 5955  CWord 0 
+ 5958 StorFP 4 
+ 5961    Pop 
+ 5962 LoadFP 4 
+ 5965 LoadF0 3 
+ 5968   VOp2 
+ 5969    LTI 
+ 5970   JmpZ 6320
+ 5973 LoadF0 2 
+ 5976 LoadFP 4 
+ 5979   VOp2 
+ 5980   AddI 
+ 5981   VtoI 
+ 5982   Load 
+ 5983   VtoI 
+ 5984 StorFP 18 
+ 5987    Pop 
+ 5988   AddI SP <= [0xc012],0x0006
+ 5994   CInt -1 
+ 5999 StoreV 
+ 6000    Pop 
+ 6001   AddI SP <= [0xc012],0x0001
+ 6007   Load 
+ 6008   VtoI 
+ 6009 StorFP 9 
+ 6012    Pop 
+ 6013   AddI SP <= [0xc012],0x000b
+ 6019   Load 
+ 6020   VtoI 
+ 6021 StorFP 11 
+ 6024    Pop 
+ 6025 CWdPFP 8 
+ 6028   Call (1686) "Cc"
+ 6033   VtoB 
+ 6034   JmpZ 6294
+ 6037  LoadI 0x001e
+ 6040   JmpZ 6148
+ 6043 CallBI <Invalid #>
+ 6046  LoadI 0x0014
+ 6049   Call (451) "setfgi"
+ 6054    Pop 
+ 6055  LoadI 0x0017
+ 6058   Call (475) "setbgi"
+ 6063    Pop 
+ 6064  LoadI 0x0018
+ 6067   Call (499) "settextcolori"
+ 6072    Pop 
+ 6073  CWord 0 
+ 6076 LoadFP 9 
+ 6079  CWord 1 
+ 6082   AddI SP <= [0xc009],[0xc00b]
+ 6088  CWord 13 
+ 6091  CWord 0 
+ 6094   Call (299) "rect"
+ 6099   AddI SP <= [0xc012],0x0001
+ 6105   Load 
+ 6106  CWord 3 
+ 6109   VOp2 
+ 6110   AddI 
+ 6111   VtoI 
+ 6112  CWord 1 
+ 6115   AddI SP <= [0xc012],0x000a
+ 6121   Load 
+ 6122   VtoI 
+ 6123   Load 
+ 6124   VtoS 
+ 6125   Call (139) "text"
+ 6130 CallBI <Invalid #>
+ 6133  CWord 25 
+ 6136  CWord 20 
+ 6139  CWord 5 
+ 6142 CallBI memcpy
+ 6145    Jmp 6174
+ 6148  CWord 3 
+ 6151 LoadFP 9 
+ 6154  CWord 1 
+ 6157   AddI SP <= [0xc009],[0xc00b]
+ 6163  CWord 13 
+ 6166  CWord 0 
+ 6169   Call (299) "rect"
+ 6174 LoadFP 18 
+ 6177   Call (4798) "Cdrp"
+ 6182   VtoI 
+ 6183 StorFP 7 
+ 6186    Pop 
+ 6187    Not SP <= [0xc007]
+ 6191 StorFP 6 
+ 6194    Pop 
+ 6195 LoadF0 3 
+ 6198   VtoI 
+ 6199 StorFP 4 
+ 6202    Pop 
+ 6203    Not SP <= [0xc007]
+ 6207   JmpZ 6257
+ 6210 CWdPFP 13 
+ 6213   Call (1686) "Cc"
+ 6218   VtoB 
+ 6219    Not 
+ 6220   JmpZ 6231
+ 6223 SCWord [0xc006] <- 0
+ 6228    Jmp 6254
+ 6231 CallBI <Invalid #>
+ 6234 CallBI <Invalid #>
+ 6237    Pop 
+ 6238 LoadFP 0 
+ 6241   Call (5644) "Cdm"
+ 6246    Pop 
+ 6247  SCInt [0xc004] <- -1
+ 6254    Jmp 6291
+ 6257 LoadF0 1 
+ 6260   VtoI 
+ 6261   AddI SP <= [0xc012],0x0007
+ 6267   Load 
+ 6268   AddI SP <= [0xc012],0x0006
+ 6274   Load 
+ 6275   VOp2 
+ 6276   AddI 
+ 6277   VtoI 
+ 6278   Load 
+ 6279 StoreV 
+ 6280    Pop 
+ 6281 SCWord [0xc007] <- 1
+ 6286 SCWord [0xc006] <- 0
+ 6291    Jmp 6312
+ 6294 CWdPFP 13 
+ 6297   Call (1686) "Cc"
+ 6302   VtoB 
+ 6303    Not 
+ 6304   JmpZ 6312
+ 6307 SCWord [0xc006] <- 0
+ 6312  IncAI SP <= 0xc004
+ 6316    Pop 
+ 6317    Jmp 5962
+ 6320    Jmp 6337
+ 6323    EqI SP <= [0xc005],0x000b
+ 6329   JmpZ 6337
+ 6332 SCWord [0xc006] <- 0
+ 6337    Jmp 5930
+ 6340 CallBI <Invalid #>
+ 6343  CWord 0 
+ 6346  CWord 1 
+ 6349  CWord 0 
+ 6352   Call (165) "textattr"
+ 6357 LoadFP 7 
+ 6360    Jmp 6366
+ 6363  CWord 0 
+ 6366 SetRet 
+ 6367   PopN 15 
+ 6370 UnLink 
+ 6371    Ret 1 
+: "Cevent"
+ 6376   Link 2 
+ 6378   LTEI SP <= [0xc000],0x0000
+ 6384   JmpZ 6393
+ 6387  CWord 0 
+ 6390    Jmp 6667
+ 6393    EqI SP <= [0xc001],0x0002
+ 6399   JmpZ 6626
+ 6402 LoadFP 0 
+ 6405   Call (1686) "Cc"
+ 6410   VtoB 
+ 6411   JmpZ 6623
+ 6414 LoadF0 0 
+ 6417  CWord 0 
+ 6420   VOp2 
+ 6421    GTI 
+ 6422 JmpPop 6433
+ 6425 LoadF0 0 
+ 6428  CWord 4 
+ 6431   VOp2 
+ 6432    LTI 
+ 6433 JmpPop 6444
+ 6436 LoadF0 0 
+ 6439  CWord 15 
+ 6442   VOp2 
+ 6443    EqI 
+ 6444   JmpZ 6462
+ 6447 LoadFP 0 
+ 6450   Call (2051) "Chb"
+ 6455   VtoI 
+ 6456    Jmp 6667
+ 6459    Jmp 6620
+ 6462 LoadF0 0 
+ 6465  CWord 12 
+ 6468   VOp2 
+ 6469    EqI 
+ 6470 JmpPop 6481
+ 6473 LoadF0 0 
+ 6476  CWord 9 
+ 6479   VOp2 
+ 6480    EqI 
+ 6481 JmpPop 6492
+ 6484 LoadF0 0 
+ 6487  CWord 13 
+ 6490   VOp2 
+ 6491    EqI 
+ 6492   JmpZ 6510
+ 6495 LoadFP 0 
+ 6498   Call (4765) "Chl"
+ 6503   VtoI 
+ 6504    Jmp 6667
+ 6507    Jmp 6620
+ 6510 LoadF0 0 
+ 6513  CWord 10 
+ 6516   VOp2 
+ 6517    EqI 
+ 6518   JmpZ 6536
+ 6521 LoadFP 0 
+ 6524   Call (5490) "Chd"
+ 6529   VtoI 
+ 6530    Jmp 6667
+ 6533    Jmp 6620
+ 6536 LoadF0 0 
+ 6539  CWord 5 
+ 6542   VOp2 
+ 6543    EqI 
+ 6544   JmpZ 6562
+ 6547 LoadFP 0 
+ 6550   Call (3036) "Chc"
+ 6555   VtoI 
+ 6556    Jmp 6667
+ 6559    Jmp 6620
+ 6562 LoadF0 0 
+ 6565  CWord 4 
+ 6568   VOp2 
+ 6569    EqI 
+ 6570   JmpZ 6588
+ 6573 LoadFP 0 
+ 6576   Call (2828) "Che"
+ 6581   VtoI 
+ 6582    Jmp 6667
+ 6585    Jmp 6620
+ 6588 LoadF0 0 
+ 6591  CWord 7 
+ 6594   VOp2 
+ 6595    EqI 
+ 6596   JmpZ 6614
+ 6599 LoadFP 0 
+ 6602   Call (2662) "Chr"
+ 6607   VtoI 
+ 6608    Jmp 6667
+ 6611    Jmp 6620
+ 6614  CWord 0 
+ 6617    Jmp 6667
+ 6620    Jmp 6402
+ 6623    Jmp 6658
+ 6626    EqI SP <= [0xc001],0x000b
+ 6632   JmpZ 6658
+ 6635 LoadF0 0 
+ 6638  CWord 6 
+ 6641   VOp2 
+ 6642    EqI 
+ 6643   JmpZ 6658
+ 6646 LoadFP 0 
+ 6649   Call (5853) "Cmevent"
+ 6654   VtoI 
+ 6655    Jmp 6667
+ 6658  CWord 0 
+ 6661    Jmp 6667
+ 6664  CWord 0 
+ 6667 SetRet 
+ 6668 UnLink 
+ 6669    Ret 2 
+: "Cdb"
+ 6674   Link 1 
+ 6676 StInit (60) "ii"
+ 6679 LoadF0 0 
+ 6682  CWord 0 
+ 6685   VOp2 
+ 6686    GTI 
+ 6687   JmpZ 6701
+ 6690 LoadF0 6 
+ 6693   VtoI 
+ 6694 StorFP 4 
+ 6697    Pop 
+ 6698    Jmp 6706
+ 6701 SCWord [0xc004] <- 2
+ 6706 CallBI <Invalid #>
+ 6709  LoadI 0x000f
+ 6712   Call (499) "settextcolori"
+ 6717    Pop 
+ 6718 LoadF0 0 
+ 6721  CWord 3 
+ 6724   VOp2 
+ 6725    EqI 
+ 6726   JmpZ 6741
+ 6729 LoadF0 8 
+ 6732   VtoB 
+ 6733   JmpZ 6741
+ 6736 SCWord [0xc005] <- 1
+ 6741 LoadFP 5 
+ 6744   JmpZ 6768
+ 6747  LoadI 0x0010
+ 6750   Call (475) "setbgi"
+ 6755    Pop 
+ 6756  LoadI 0x0011
+ 6759   Call (499) "settextcolori"
+ 6764    Pop 
+ 6765    Jmp 6786
+ 6768  LoadI 0x000d
+ 6771   Call (451) "setfgi"
+ 6776    Pop 
+ 6777  LoadI 0x000e
+ 6780   Call (475) "setbgi"
+ 6785    Pop 
+ 6786 LoadF0 0 
+ 6789  CWord 2 
+ 6792   VOp2 
+ 6793    EqI 
+ 6794   JmpZ 6806
+ 6797  LoadI 0x0013
+ 6800   Call (475) "setbgi"
+ 6805    Pop 
+ 6806  CWord 0 
+ 6809 LoadF0 1 
+ 6812   VtoI 
+ 6813 LoadF0 2 
+ 6816   VtoI 
+ 6817 LoadF0 1 
+ 6820 LoadF0 3 
+ 6823   VOp2 
+ 6824   AddI 
+ 6825   VtoI 
+ 6826 LoadF0 2 
+ 6829 LoadF0 4 
+ 6832   VOp2 
+ 6833   AddI 
+ 6834   VtoI 
+ 6835 LoadF0 7 
+ 6838   VtoI 
+ 6839   Call (299) "rect"
+ 6844 LoadFP 4 
+ 6847 LoadF0 1 
+ 6850   VtoI 
+ 6851 LoadF0 2 
+ 6854   VtoI 
+ 6855 LoadF0 1 
+ 6858 LoadF0 3 
+ 6861   VOp2 
+ 6862   AddI 
+ 6863   VtoI 
+ 6864 LoadF0 2 
+ 6867 LoadF0 4 
+ 6870   VOp2 
+ 6871   AddI 
+ 6872   VtoI 
+ 6873 LoadF0 7 
+ 6876   VtoI 
+ 6877   Call (336) "frame"
+ 6882 LoadF0 0 
+ 6885  CWord 2 
+ 6888   VOp2 
+ 6889    EqI 
+ 6890   JmpZ 6915
+ 6893 LoadF0 1 
+ 6896   VtoI 
+ 6897 LoadF0 2 
+ 6900   VtoI 
+ 6901 LoadF0 5 
+ 6904   VtoI 
+ 6905   Load 
+ 6906   VtoS 
+ 6907   Call (416) "bitmap"
+ 6912    Jmp 6987
+ 6915  CWord 0 
+ 6918  CWord 1 
+ 6921  CWord 0 
+ 6924   Call (165) "textattr"
+ 6929  CChar ''
+ 6931   Call (246) "textalign"
+ 6936 LoadF0 1 
+ 6939 LoadF0 3 
+ 6942  CWord 2 
+ 6945   VOp2 
+ 6946   DivI 
+ 6947   VOp2 
+ 6948   AddI 
+ 6949   VtoI 
+ 6950 LoadF0 2 
+ 6953 LoadF0 4 
+ 6956  CWord 2 
+ 6959   VOp2 
+ 6960   DivI 
+ 6961   VOp2 
+ 6962   AddI 
+ 6963  CWord 2 
+ 6966   VOp2 
+ 6967   SubI 
+ 6968   VtoI 
+ 6969 LoadF0 5 
+ 6972   VtoI 
+ 6973   Load 
+ 6974   VtoS 
+ 6975   Call (139) "text"
+ 6980  CChar '
+ 6982   Call (246) "textalign"
+ 6987 CallBI <Invalid #>
+ 6990    Not SP <= [0x001e]
+ 6994 JmpPop 7000
+ 6997 LoadFP 5 
+ 7000   JmpZ 7012
+ 7003 LoadFP 0 
+ 7006   Call (2001) "Cib"
+ 7011    Pop 
+ 7012  CWord 0 
+ 7015 SetRet 
+ 7016   PopN 2 
+ 7019 UnLink 
+ 7020    Ret 1 
+: "Cde"
+ 7025   Link 1 
+ 7027 CallBI <Invalid #>
+ 7030  LoadI 0x0013
+ 7033   Call (475) "setbgi"
+ 7038    Pop 
+ 7039  LoadI 0x000d
+ 7042   Call (451) "setfgi"
+ 7047    Pop 
+ 7048  LoadI 0x000f
+ 7051   Call (499) "settextcolori"
+ 7056    Pop 
+ 7057  CWord 0 
+ 7060 LoadF0 1 
+ 7063   VtoI 
+ 7064 LoadF0 2 
+ 7067   VtoI 
+ 7068 LoadF0 1 
+ 7071 LoadF0 3 
+ 7074   VOp2 
+ 7075   AddI 
+ 7076   VtoI 
+ 7077 LoadF0 2 
+ 7080 LoadF0 4 
+ 7083   VOp2 
+ 7084   AddI 
+ 7085   VtoI 
+ 7086  CWord 0 
+ 7089   Call (299) "rect"
+ 7094 LoadF0 7 
+ 7097  CWord 2 
+ 7100   VOp2 
+ 7101    EqI 
+ 7102   JmpZ 7146
+ 7105 LoadF0 6 
+ 7108   VtoI 
+ 7109 LoadF0 1 
+ 7112   VtoI 
+ 7113 LoadF0 2 
+ 7116   VtoI 
+ 7117 LoadF0 1 
+ 7120 LoadF0 3 
+ 7123   VOp2 
+ 7124   AddI 
+ 7125   VtoI 
+ 7126 LoadF0 2 
+ 7129 LoadF0 4 
+ 7132   VOp2 
+ 7133   AddI 
+ 7134   VtoI 
+ 7135  CWord 0 
+ 7138   Call (336) "frame"
+ 7143    Jmp 7197
+ 7146 LoadF0 7 
+ 7149  CWord 1 
+ 7152   VOp2 
+ 7153    EqI 
+ 7154   JmpZ 7197
+ 7157 LoadF0 6 
+ 7160   VtoI 
+ 7161 LoadF0 1 
+ 7164   VtoI 
+ 7165 LoadF0 2 
+ 7168 LoadF0 4 
+ 7171   VOp2 
+ 7172   AddI 
+ 7173   VtoI 
+ 7174 LoadF0 1 
+ 7177 LoadF0 3 
+ 7180   VOp2 
+ 7181   AddI 
+ 7182   VtoI 
+ 7183 LoadF0 2 
+ 7186 LoadF0 4 
+ 7189   VOp2 
+ 7190   AddI 
+ 7191   VtoI 
+ 7192   Call (265) "line"
+ 7197 LoadFP 0 
+ 7200   Call (1943) "Cet"
+ 7205    Pop 
+ 7206 CallBI <Invalid #>
+ 7209  CWord 0 
+ 7212 SetRet 
+ 7213 UnLink 
+ 7214    Ret 1 
+: "Cdl"
+ 7219   Link 1 
+ 7221 CallBI <Invalid #>
+ 7224  LoadI 0x000e
+ 7227   Call (475) "setbgi"
+ 7232    Pop 
+ 7233  LoadI 0x000d
+ 7236   Call (451) "setfgi"
+ 7241    Pop 
+ 7242  LoadI 0x000f
+ 7245   Call (499) "settextcolori"
+ 7250    Pop 
+ 7251  CWord 1 
+ 7254 LoadF0 1 
+ 7257   VtoI 
+ 7258 LoadF0 2 
+ 7261   VtoI 
+ 7262 LoadF0 1 
+ 7265 LoadF0 3 
+ 7268   VOp2 
+ 7269   AddI 
+ 7270   VtoI 
+ 7271 LoadF0 2 
+ 7274 LoadF0 4 
+ 7277   VOp2 
+ 7278   AddI 
+ 7279   VtoI 
+ 7280  CWord 0 
+ 7283   Call (336) "frame"
+ 7288  CWord 25 
+ 7291  CWord 13 
+ 7294  CWord 5 
+ 7297 CallBI memcpy
+ 7300 LoadFP 0 
+ 7303   Call (3211) "Cdlbi"
+ 7308    Pop 
+ 7309 CallBI <Invalid #>
+ 7312  CWord 0 
+ 7315 SetRet 
+ 7316 UnLink 
+ 7317    Ret 1 
+: "Cdt"
+ 7322   Link 1 
+ 7324 StInit (60) "ii"
+ 7327 LoadF0 1 
+ 7330   VtoI 
+ 7331 StorFP 4 
+ 7334    Pop 
+ 7335 CallBI <Invalid #>
+ 7338  LoadI 0x000d
+ 7341   Call (451) "setfgi"
+ 7346    Pop 
+ 7347  CWord 1 
+ 7350 LoadF0 1 
+ 7353   VtoI 
+ 7354 LoadF0 2 
+ 7357   VtoI 
+ 7358 LoadF0 1 
+ 7361 LoadF0 3 
+ 7364   VOp2 
+ 7365   AddI 
+ 7366   VtoI 
+ 7367 LoadF0 2 
+ 7370 LoadF0 4 
+ 7373   VOp2 
+ 7374   AddI 
+ 7375   VtoI 
+ 7376  CWord 0 
+ 7379   Call (336) "frame"
+ 7384  CWord 0 
+ 7387 StorFP 5 
+ 7390    Pop 
+ 7391 LoadFP 5 
+ 7394 LoadF0 12 
+ 7397  CWord 1 
+ 7400   VOp2 
+ 7401   SubI 
+ 7402   VOp2 
+ 7403    LTI 
+ 7404   JmpZ 7473
+ 7407 LoadFP 4 
+ 7410 LoadF0 10 
+ 7413 LoadFP 5 
+ 7416   VOp2 
+ 7417   AddI 
+ 7418   VtoI 
+ 7419   Load 
+ 7420   VOp2 
+ 7421   AddI 
+ 7422   VtoI 
+ 7423 StorFP 4 
+ 7426    Pop 
+ 7427  CWord 2 
+ 7430   SubI SP <= [0xc004],0x0001
+ 7436 LoadF0 2 
+ 7439   VtoI 
+ 7440   SubI SP <= [0xc004],0x0001
+ 7446 LoadF0 2 
+ 7449 LoadF0 4 
+ 7452   VOp2 
+ 7453   AddI 
+ 7454  CWord 1 
+ 7457   VOp2 
+ 7458   SubI 
+ 7459   VtoI 
+ 7460   Call (265) "line"
+ 7465  IncAI SP <= 0xc005
+ 7469    Pop 
+ 7470    Jmp 7391
+ 7473 CallBI <Invalid #>
+ 7476  CWord 25 
+ 7479  CWord 13 
+ 7482  CWord 5 
+ 7485 CallBI memcpy
+ 7488 LoadFP 0 
+ 7491   Call (3211) "Cdlbi"
+ 7496    Pop 
+ 7497  CWord 0 
+ 7500 SetRet 
+ 7501   PopN 2 
+ 7504 UnLink 
+ 7505    Ret 1 
+: "Cdd"
+ 7510   Link 1 
+ 7512 CallBI <Invalid #>
+ 7515  LoadI 0x0013
+ 7518   Call (475) "setbgi"
+ 7523    Pop 
+ 7524  LoadI 0x000f
+ 7527   Call (451) "setfgi"
+ 7532    Pop 
+ 7533  LoadI 0x000f
+ 7536   Call (499) "settextcolori"
+ 7541    Pop 
+ 7542 LoadF0 1 
+ 7545   VtoI 
+ 7546 LoadF0 2 
+ 7549   VtoI 
+ 7550   CStr (174) "0800000000ff7e3c18"
+ 7553   Call (416) "bitmap"
+ 7558 LoadFP 0 
+ 7561   Call (5362) "Cdrt"
+ 7566    Pop 
+ 7567 CallBI <Invalid #>
+ 7570  CWord 0 
+ 7573 SetRet 
+ 7574 UnLink 
+ 7575    Ret 1 
+: "Cdc"
+ 7580   Link 1 
+ 7582 CallBI <Invalid #>
+ 7585  LoadI 0x0013
+ 7588   Call (475) "setbgi"
+ 7593    Pop 
+ 7594  LoadI 0x000f
+ 7597   Call (451) "setfgi"
+ 7602    Pop 
+ 7603  LoadI 0x000f
+ 7606   Call (499) "settextcolori"
+ 7611    Pop 
+ 7612 LoadFP 0 
+ 7615   Call (2972) "Cck"
+ 7620    Pop 
+ 7621  CWord 0 
+ 7624 LoadF0 1 
+ 7627  CWord 12 
+ 7630   VOp2 
+ 7631   AddI 
+ 7632   VtoI 
+ 7633 LoadF0 2 
+ 7636   VtoI 
+ 7637 LoadF0 1 
+ 7640 LoadF0 3 
+ 7643   VOp2 
+ 7644   AddI 
+ 7645   VtoI 
+ 7646 LoadF0 2 
+ 7649 LoadF0 4 
+ 7652   VOp2 
+ 7653   AddI 
+ 7654   VtoI 
+ 7655  CWord 0 
+ 7658   Call (299) "rect"
+ 7663  CWord 0 
+ 7666  CWord 1 
+ 7669  CWord 0 
+ 7672   Call (165) "textattr"
+ 7677  CChar '
+ 7679   Call (246) "textalign"
+ 7684 LoadF0 1 
+ 7687  CWord 12 
+ 7690   VOp2 
+ 7691   AddI 
+ 7692   VtoI 
+ 7693 LoadF0 2 
+ 7696   VtoI 
+ 7697 LoadF0 5 
+ 7700   VtoI 
+ 7701   Load 
+ 7702   VtoS 
+ 7703   Call (139) "text"
+ 7708 CallBI <Invalid #>
+ 7711  CWord 0 
+ 7714 SetRet 
+ 7715 UnLink 
+ 7716    Ret 1 
+: "Cdf"
+ 7721   Link 1 
+ 7723 CallBI <Invalid #>
+ 7726  LoadI 0x0013
+ 7729   Call (475) "setbgi"
+ 7734    Pop 
+ 7735  LoadI 0x0012
+ 7738   Call (451) "setfgi"
+ 7743    Pop 
+ 7744  CWord 0 
+ 7747 LoadF0 1 
+ 7750   VtoI 
+ 7751 LoadF0 2 
+ 7754   VtoI 
+ 7755 LoadF0 1 
+ 7758 LoadF0 3 
+ 7761   VOp2 
+ 7762   AddI 
+ 7763   VtoI 
+ 7764 LoadF0 2 
+ 7767 LoadF0 4 
+ 7770   VOp2 
+ 7771   AddI 
+ 7772   VtoI 
+ 7773  CWord 0 
+ 7776   Call (299) "rect"
+ 7781  CWord 1 
+ 7784 LoadF0 1 
+ 7787  CWord 2 
+ 7790   VOp2 
+ 7791   AddI 
+ 7792   VtoI 
+ 7793 LoadF0 2 
+ 7796  CWord 2 
+ 7799   VOp2 
+ 7800   AddI 
+ 7801   VtoI 
+ 7802 LoadF0 1 
+ 7805 LoadF0 3 
+ 7808   VOp2 
+ 7809   AddI 
+ 7810  CWord 2 
+ 7813   VOp2 
+ 7814   SubI 
+ 7815   VtoI 
+ 7816 LoadF0 2 
+ 7819 LoadF0 4 
+ 7822   VOp2 
+ 7823   AddI 
+ 7824  CWord 2 
+ 7827   VOp2 
+ 7828   SubI 
+ 7829   VtoI 
+ 7830  CWord 3 
+ 7833  CWord 2 
+ 7836   Call (376) "frame2"
+ 7841  CWord 1 
+ 7844 LoadF0 1 
+ 7847  CWord 2 
+ 7850   VOp2 
+ 7851   AddI 
+ 7852   VtoI 
+ 7853 LoadF0 2 
+ 7856  CWord 2 
+ 7859   VOp2 
+ 7860   AddI 
+ 7861   VtoI 
+ 7862 LoadF0 1 
+ 7865 LoadF0 3 
+ 7868   VOp2 
+ 7869   AddI 
+ 7870   VtoI 
+ 7871 LoadF0 2 
+ 7874  CWord 14 
+ 7877   VOp2 
+ 7878   AddI 
+ 7879   VtoI 
+ 7880  CWord 0 
+ 7883   Call (299) "rect"
+ 7888  LoadI 0x0012
+ 7891   Call (475) "setbgi"
+ 7896    Pop 
+ 7897  LoadI 0x0013
+ 7900   Call (499) "settextcolori"
+ 7905    Pop 
+ 7906  CWord 1 
+ 7909  CWord 1 
+ 7912  CWord 0 
+ 7915   Call (165) "textattr"
+ 7920  CChar ''
+ 7922   Call (246) "textalign"
+ 7927 LoadF0 1 
+ 7930 LoadF0 3 
+ 7933  CWord 2 
+ 7936   VOp2 
+ 7937   DivI 
+ 7938   VOp2 
+ 7939   AddI 
+ 7940   VtoI 
+ 7941 LoadF0 2 
+ 7944  CWord 2 
+ 7947   VOp2 
+ 7948   AddI 
+ 7949   VtoI 
+ 7950 LoadF0 5 
+ 7953   VtoI 
+ 7954   Load 
+ 7955   VtoS 
+ 7956   Call (139) "text"
+ 7961  CWord 0 
+ 7964  CWord 1 
+ 7967  CWord 0 
+ 7970   Call (165) "textattr"
+ 7975  CChar '
+ 7977   Call (246) "textalign"
+ 7982 CallBI <Invalid #>
+ 7985  CWord 0 
+ 7988 SetRet 
+ 7989 UnLink 
+ 7990    Ret 1 
+: "Cdraw"
+ 7995   Link 1 
+ 7997 StInit (1) "i"
+ 8000 LoadF0 0 
+ 8003   VtoI 
+ 8004 StorFP 4 
+ 8007    Pop 
+ 8008    LTI SP <= [0xc004],0x0000
+ 8014   JmpZ 8025
+ 8017   NegI SP <= [0xc004]
+ 8021 StorFP 4 
+ 8024    Pop 
+ 8025    GTI SP <= [0xc004],0x0064
+ 8031   JmpZ 8040
+ 8034  CWord 0 
+ 8037    Jmp 8231
+ 8040 LoadFP 4 
+ 8043  SwchI 12 
+ 8045   Case 1, 8132
+ 8052   Case 2, 8132
+ 8059   Case 3, 8132
+ 8066   Case 9, 8144
+ 8073   Case 13, 8144
+ 8080   Case 10, 8156
+ 8087   Case 5, 8168
+ 8094   Case 4, 8180
+ 8101   Case 15, 8180
+ 8108   Case 7, 8192
+ 8115   Case 12, 8204
+ 8122   Case 14, 8216
+ 8129    Jmp 8228
+ 8132 LoadFP 0 
+ 8135   Call (6674) "Cdb"
+ 8140    Pop 
+ 8141    Jmp 8228
+ 8144 LoadFP 0 
+ 8147   Call (7322) "Cdt"
+ 8152    Pop 
+ 8153    Jmp 8228
+ 8156 LoadFP 0 
+ 8159   Call (7510) "Cdd"
+ 8164    Pop 
+ 8165    Jmp 8228
+ 8168 LoadFP 0 
+ 8171   Call (7580) "Cdc"
+ 8176    Pop 
+ 8177    Jmp 8228
+ 8180 LoadFP 0 
+ 8183   Call (7025) "Cde"
+ 8188    Pop 
+ 8189    Jmp 8228
+ 8192 LoadFP 0 
+ 8195   Call (2305) "Cdr"
+ 8200    Pop 
+ 8201    Jmp 8228
+ 8204 LoadFP 0 
+ 8207   Call (7219) "Cdl"
+ 8212    Pop 
+ 8213    Jmp 8228
+ 8216 LoadFP 0 
+ 8219   Call (7721) "Cdf"
+ 8224    Pop 
+ 8225    Jmp 8228
+ 8228  CWord 0 
+ 8231 SetRet 
+ 8232    Pop 
+ 8233 UnLink 
+ 8234    Ret 1 
+: "Cactivate"
+ 8239   Link 1 
+ 8241 LoadF0 0 
+ 8244  CWord 0 
+ 8247   VOp2 
+ 8248    GTI 
+ 8249   JmpZ 8258
+ 8252  CWord 0 
+ 8255    Jmp 8291
+ 8258 LoadFP 0 
+ 8261 LoadF0 0 
+ 8264   VOp1 
+ 8265   NegI 
+ 8266 StoreV 
+ 8267    Pop 
+ 8268 LoadF0 0 
+ 8271  CWord 1 
+ 8274   VOp2 
+ 8275    EqI 
+ 8276   JmpZ 8288
+ 8279 LoadFP 0 
+ 8282   Call (7995) "Cdraw"
+ 8287    Pop 
+ 8288  CWord 0 
+ 8291 SetRet 
+ 8292 UnLink 
+ 8293    Ret 1 
+: "Cdeactivate"
+ 8298   Link 1 
+ 8300 LoadF0 0 
+ 8303  CWord 0 
+ 8306   VOp2 
+ 8307    LTI 
+ 8308   JmpZ 8317
+ 8311  CWord 0 
+ 8314    Jmp 8352
+ 8317 LoadFP 0 
+ 8320 LoadF0 0 
+ 8323   VOp1 
+ 8324   NegI 
+ 8325 StoreV 
+ 8326    Pop 
+ 8327 LoadF0 0 
+ 8330   CInt -1 
+ 8335   VOp2 
+ 8336    EqI 
+ 8337   JmpZ 8349
+ 8340 LoadFP 0 
+ 8343   Call (7995) "Cdraw"
+ 8348    Pop 
+ 8349  CWord 0 
+ 8352 SetRet 
+ 8353 UnLink 
+ 8354    Ret 1 
+: "Csetstate"
+ 8359   Link 2 
+ 8361 LoadF0 0 
+ 8364  CWord 3 
+ 8367   VOp2 
+ 8368    EqI 
+ 8369   JmpZ 8392
+ 8372   AddI SP <= [0xc000],0x0008
+ 8378 LoadFP 1 
+ 8381 StoreV 
+ 8382    Pop 
+ 8383  CWord 1 
+ 8386    Jmp 8432
+ 8389    Jmp 8429
+ 8392 LoadF0 0 
+ 8395  CWord 5 
+ 8398   VOp2 
+ 8399    EqI 
+ 8400   JmpZ 8423
+ 8403   AddI SP <= [0xc000],0x0006
+ 8409 LoadFP 1 
+ 8412 StoreV 
+ 8413    Pop 
+ 8414  CWord 1 
+ 8417    Jmp 8432
+ 8420    Jmp 8429
+ 8423  CWord 0 
+ 8426    Jmp 8432
+ 8429  CWord 0 
+ 8432 SetRet 
+ 8433 UnLink 
+ 8434    Ret 2 
+: "Cgetstate"
+ 8439   Link 1 
+ 8441 LoadF0 0 
+ 8444  CWord 3 
+ 8447   VOp2 
+ 8448    EqI 
+ 8449   JmpZ 8461
+ 8452 LoadF0 8 
+ 8455    Jmp 8490
+ 8458    Jmp 8487
+ 8461 LoadF0 0 
+ 8464  CWord 5 
+ 8467   VOp2 
+ 8468    EqI 
+ 8469   JmpZ 8481
+ 8472 LoadF0 6 
+ 8475    Jmp 8490
+ 8478    Jmp 8487
+ 8481  CWord 0 
+ 8484    Jmp 8490
+ 8487  CWord 0 
+ 8490 SetRet 
+ 8491 UnLink 
+ 8492    Ret 1 
+: "Csetcursel"
+ 8497   Link 2 
+ 8499 LoadF0 0 
+ 8502  CWord 6 
+ 8505   VOp2 
+ 8506    GTI 
+ 8507 JmpPop 8518
+ 8510 LoadF0 0 
+ 8513  CWord 14 
+ 8516   VOp2 
+ 8517    LTI 
+ 8518   JmpZ 8541
+ 8521   AddI SP <= [0xc000],0x0006
+ 8527 LoadFP 1 
+ 8530 StoreV 
+ 8531    Pop 
+ 8532  CWord 1 
+ 8535    Jmp 8550
+ 8538    Jmp 8547
+ 8541  CWord 0 
+ 8544    Jmp 8550
+ 8547  CWord 0 
+ 8550 SetRet 
+ 8551 UnLink 
+ 8552    Ret 2 
+: "Cgetcursel"
+ 8557   Link 1 
+ 8559 LoadF0 0 
+ 8562  CWord 6 
+ 8565   VOp2 
+ 8566    GTI 
+ 8567 JmpPop 8578
+ 8570 LoadF0 0 
+ 8573  CWord 14 
+ 8576   VOp2 
+ 8577    LTI 
+ 8578   JmpZ 8590
+ 8581 LoadF0 6 
+ 8584    Jmp 8599
+ 8587    Jmp 8596
+ 8590  CWord 0 
+ 8593    Jmp 8599
+ 8596  CWord 0 
+ 8599 SetRet 
+ 8600 UnLink 
+ 8601    Ret 1 
+: "Cpopupevent"
+ 8606   Link 1 
+ 8608 StInit (1) "i"
+ 8611 CallBI <Invalid #>
+ 8614    Pop 
+ 8615   AddI SP <= [0xc000],0x0006
+ 8621   CInt -1 
+ 8626 StoreV 
+ 8627    Pop 
+ 8628  CWord 25 
+ 8631  CWord 13 
+ 8634  CWord 5 
+ 8637 CallBI memcpy
+ 8640 LoadFP 0 
+ 8643   Call (4798) "Cdrp"
+ 8648   VtoI 
+ 8649 StorFP 4 
+ 8652    Pop 
+ 8653 CallBI <Invalid #>
+ 8656 LoadFP 4 
+ 8659    Jmp 8665
+ 8662  CWord 0 
+ 8665 SetRet 
+ 8666    Pop 
+ 8667 UnLink 
+ 8668    Ret 1 
+: "Csetsize"
+ 8673   Link 2 
+ 8675 StInit (60) "ii"
+ 8678 LoadF0 0 
+ 8681  CWord 9 
+ 8684   VOp2 
+ 8685    EqI 
+ 8686   JmpZ 8700
+ 8689 LoadF0 12 
+ 8692   VtoI 
+ 8693 StorFP 5 
+ 8696    Pop 
+ 8697    Jmp 8705
+ 8700 SCWord [0xc005] <- 1
+ 8705   CStr (9) "s"
+ 8708  MultI SP <= [0xc001],[0xc005]
+ 8714 CallBI malloct
+ 8717 StorFP 6 
+ 8720    Pop 
+ 8721    EqI SP <= [0xc006],0x0000
+ 8727   JmpZ 8736
+ 8730  CWord 0 
+ 8733    Jmp 8815
+ 8736 LoadFP 1 
+ 8739 LoadF0 9 
+ 8742   VOp2 
+ 8743    LTI 
+ 8744   JmpZ 8758
+ 8747   AddI SP <= [0xc000],0x0009
+ 8753 LoadFP 1 
+ 8756 StoreV 
+ 8757    Pop 
+ 8758 LoadFP 6 
+ 8761 LoadF0 7 
+ 8764   VtoI 
+ 8765 LoadF0 9 
+ 8768 LoadFP 5 
+ 8771   VOp2 
+ 8772  MultI 
+ 8773   VtoI 
+ 8774 CallBI memcpy
+ 8777   AddI SP <= [0xc000],0x0009
+ 8783 LoadFP 1 
+ 8786 StoreV 
+ 8787    Pop 
+ 8788 LoadF0 7 
+ 8791   VtoI 
+ 8792 CallBI free
+ 8795   AddI SP <= [0xc000],0x0007
+ 8801 LoadFP 6 
+ 8804 StoreV 
+ 8805    Pop 
+ 8806  CWord 1 
+ 8809    Jmp 8815
+ 8812  CWord 0 
+ 8815 SetRet 
+ 8816   PopN 2 
+ 8819 UnLink 
+ 8820    Ret 2 
+: "Cadditem"
+ 8825   Link 2 
+ 8827 StInit (1) "i"
+ 8830 LoadF0 0 
+ 8833  CWord 9 
+ 8836   VOp2 
+ 8837    EqI 
+ 8838   JmpZ 8852
+ 8841 LoadF0 12 
+ 8844   VtoI 
+ 8845 StorFP 5 
+ 8848    Pop 
+ 8849    Jmp 8857
+ 8852 SCWord [0xc005] <- 1
+ 8857   AddI SP <= [0xc000],0x0008
+ 8863 LoadF0 8 
+ 8866  CWord 1 
+ 8869   VOp2 
+ 8870   AddI 
+ 8871 StoreV 
+ 8872    Pop 
+ 8873 LoadF0 9 
+ 8876 LoadF0 8 
+ 8879   VOp2 
+ 8880    LTI 
+ 8881   JmpZ 8907
+ 8884 LoadFP 0 
+ 8887 LoadF0 8 
+ 8890   VtoI 
+ 8891   Call (8673) "Csetsize"
+ 8896   VtoB 
+ 8897    Not 
+ 8898   JmpZ 8907
+ 8901  CWord 0 
+ 8904    Jmp 8985
+ 8907 LoadF0 0 
+ 8910  CWord 8 
+ 8913   VOp2 
+ 8914    EqI 
+ 8915   JmpZ 8934
+ 8918   AddI SP <= [0xc000],0x0004
+ 8924 LoadF0 8 
+ 8927  CWord 11 
+ 8930   VOp2 
+ 8931  MultI 
+ 8932 StoreV 
+ 8933    Pop 
+ 8934 LoadF0 7 
+ 8937 LoadF0 8 
+ 8940 LoadFP 5 
+ 8943   VOp2 
+ 8944  MultI 
+ 8945   VOp2 
+ 8946   AddI 
+ 8947 LoadFP 5 
+ 8950   VOp2 
+ 8951   SubI 
+ 8952   VtoI 
+ 8953 LoadFP 1 
+ 8956 StoreV 
+ 8957    Pop 
+ 8958 LoadFP 0 
+ 8961 LoadF0 8 
+ 8964  CWord 1 
+ 8967   VOp2 
+ 8968   SubI 
+ 8969   VtoI 
+ 8970   Call (8497) "Csetcursel"
+ 8975    Pop 
+ 8976  CWord 1 
+ 8979    Jmp 8985
+ 8982  CWord 0 
+ 8985 SetRet 
+ 8986    Pop 
+ 8987 UnLink 
+ 8988    Ret 2 
+: "Cmenu"
+ 8993   Link 3 
+ 8995 StInit (60) "ii"
+ 8998  CWord 12 
+ 9001 LoadFP 0 
+ 9004  CWord 1 
+ 9007 LoadFP 1 
+ 9010  CWord 0 
+ 9013   Call (1623) "Cip"
+ 9018   VtoI 
+ 9019 StorFP 6 
+ 9022    Pop 
+ 9023   CStr (9) "s"
+ 9026  CWord 1 
+ 9029 CallBI malloct
+ 9032 StorFP 7 
+ 9035    Pop 
+ 9036 LoadFP 6 
+ 9039  CWord 8 
+ 9042 StoreV 
+ 9043    Pop 
+ 9044   AddI SP <= [0xc006],0x0004
+ 9050  CWord 0 
+ 9053 StoreV 
+ 9054    Pop 
+ 9055   AddI SP <= [0xc006],0x0005
+ 9061  CWord 0 
+ 9064 StoreV 
+ 9065    Pop 
+ 9066   AddI SP <= [0xc006],0x0006
+ 9072   CInt -1 
+ 9077 StoreV 
+ 9078    Pop 
+ 9079   AddI SP <= [0xc006],0x0007
+ 9085  CWord 0 
+ 9088 StoreV 
+ 9089    Pop 
+ 9090   AddI SP <= [0xc006],0x0008
+ 9096  CWord 0 
+ 9099 StoreV 
+ 9100    Pop 
+ 9101   AddI SP <= [0xc006],0x0009
+ 9107  CWord 0 
+ 9110 StoreV 
+ 9111    Pop 
+ 9112   AddI SP <= [0xc006],0x000a
+ 9118 LoadFP 7 
+ 9121 StoreV 
+ 9122    Pop 
+ 9123   AddI SP <= [0xc006],0x000b
+ 9129 LoadFP 2 
+ 9132 StoreV 
+ 9133    Pop 
+ 9134   AddI SP <= [0xc006],0x000a
+ 9140   Load 
+ 9141   VtoI 
+ 9142   CStr (0) ""
+ 9145 StoreV 
+ 9146    Pop 
+ 9147 LoadFP 6 
+ 9150    Jmp 9156
+ 9153  CWord 0 
+ 9156 SetRet 
+ 9157   PopN 2 
+ 9160 UnLink 
+ 9161    Ret 3 
+: "Cmenubar"
+ 9166   Link 0 
+ 9168 StInit (63) "3i"
+ 9171   CStr (1) "i"
+ 9174  CWord 4 
+ 9177 CallBI malloct
+ 9180 StorFP 3 
+ 9183    Pop 
+ 9184   CStr (9) "s"
+ 9187  CWord 1 
+ 9190 CallBI malloct
+ 9193 StorFP 4 
+ 9196    Pop 
+ 9197   CStr (1) "i"
+ 9200  CWord 1 
+ 9203 CallBI malloct
+ 9206 StorFP 5 
+ 9209    Pop 
+ 9210 LoadFP 3 
+ 9213  CWord 6 
+ 9216 StoreV 
+ 9217    Pop 
+ 9218   AddI SP <= [0xc003],0x0001
+ 9224 LoadFP 4 
+ 9227 StoreV 
+ 9228    Pop 
+ 9229   AddI SP <= [0xc003],0x0002
+ 9235 LoadFP 5 
+ 9238 StoreV 
+ 9239    Pop 
+ 9240   AddI SP <= [0xc003],0x0003
+ 9246  CWord 0 
+ 9249 StoreV 
+ 9250    Pop 
+ 9251  CWord 1 
+ 9254 CallBI <Invalid #>
+ 9257 LoadFP 3 
+ 9260    Jmp 9266
+ 9263  CWord 0 
+ 9266 SetRet 
+ 9267   PopN 3 
+ 9270 UnLink 
+ 9271    Ret 0 
+: "Caddmenu"
+ 9276   Link 2 
+ 9278 StInit (1) "i"
+ 9281   CStr (1) "i"
+ 9284 LoadF0 3 
+ 9287  CWord 1 
+ 9290   VOp2 
+ 9291   AddI 
+ 9292   VtoI 
+ 9293 CallBI malloct
+ 9296 StorFP 5 
+ 9299    Pop 
+ 9300    EqI SP <= [0xc005],0x0000
+ 9306   JmpZ 9315
+ 9309  CWord 0 
+ 9312    Jmp 9391
+ 9315 LoadFP 5 
+ 9318 LoadF0 2 
+ 9321   VtoI 
+ 9322 LoadF0 3 
+ 9325   VtoI 
+ 9326 CallBI memcpy
+ 9329 LoadF0 2 
+ 9332   VtoI 
+ 9333 CallBI free
+ 9336   AddI SP <= [0xc000],0x0002
+ 9342 LoadFP 5 
+ 9345 StoreV 
+ 9346    Pop 
+ 9347   AddI SP <= [0xc000],0x0003
+ 9353 LoadF0 3 
+ 9356  CWord 1 
+ 9359   VOp2 
+ 9360   AddI 
+ 9361 StoreV 
+ 9362    Pop 
+ 9363 LoadF0 2 
+ 9366 LoadF0 3 
+ 9369   VOp2 
+ 9370   AddI 
+ 9371  CWord 1 
+ 9374   VOp2 
+ 9375   SubI 
+ 9376   VtoI 
+ 9377 LoadFP 1 
+ 9380 StoreV 
+ 9381    Pop 
+ 9382  CWord 1 
+ 9385    Jmp 9391
+ 9388  CWord 0 
+ 9391 SetRet 
+ 9392    Pop 
+ 9393 UnLink 
+ 9394    Ret 2 
+: "Cinit"
+ 9399   Link 0 
+ 9401  CWord 0 
+ 9404   Call (523) "getuicolor"
+ 9409 StoreI 0x000d
+ 9412    Pop 
+ 9413  CWord 1 
+ 9416   Call (523) "getuicolor"
+ 9421 StoreI 0x000e
+ 9424    Pop 
+ 9425  CWord 2 
+ 9428   Call (523) "getuicolor"
+ 9433 StoreI 0x000f
+ 9436    Pop 
+ 9437  CWord 3 
+ 9440   Call (523) "getuicolor"
+ 9445 StoreI 0x0010
+ 9448    Pop 
+ 9449  CWord 4 
+ 9452   Call (523) "getuicolor"
+ 9457 StoreI 0x0011
+ 9460    Pop 
+ 9461  CWord 21 
+ 9464   Call (523) "getuicolor"
+ 9469 StoreI 0x0012
+ 9472    Pop 
+ 9473  CWord 22 
+ 9476   Call (523) "getuicolor"
+ 9481 StoreI 0x0013
+ 9484    Pop 
+ 9485  CWord 5 
+ 9488   Call (523) "getuicolor"
+ 9493 StoreI 0x0014
+ 9496    Pop 
+ 9497  CWord 6 
+ 9500   Call (523) "getuicolor"
+ 9505 StoreI 0x0015
+ 9508    Pop 
+ 9509  CWord 7 
+ 9512   Call (523) "getuicolor"
+ 9517 StoreI 0x0016
+ 9520    Pop 
+ 9521  CWord 8 
+ 9524   Call (523) "getuicolor"
+ 9529 StoreI 0x0017
+ 9532    Pop 
+ 9533  CWord 9 
+ 9536   Call (523) "getuicolor"
+ 9541 StoreI 0x0018
+ 9544    Pop 
+ 9545   Call (424) "getcolordepth"
+ 9550   GTEI SP <= SP,0x0008
+ 9554   JmpZ 9562
+ 9557 SCWord [0x001e] <- 1
+ 9562  CWord 0 
+ 9565 SetRet 
+ 9566 UnLink 
+ 9567    Ret 0 
+: "Cedit"
+ 9572   Link 6 
+ 9574 StInit (63) "3i"
+ 9577  CWord 11 
+ 9580 LoadFP 0 
+ 9583 LoadFP 1 
+ 9586 LoadFP 2 
+ 9589  CWord 11 
+ 9592   Call (1623) "Cip"
+ 9597   VtoI 
+ 9598 StorFP 9 
+ 9601    Pop 
+ 9602   AddI SP <= [0xc009],0x0005
+ 9608   CStr (9) "s"
+ 9611  CWord 1 
+ 9614 CallBI malloct
+ 9617 StoreV 
+ 9618    Pop 
+ 9619   AddI SP <= [0xc009],0x000a
+ 9625   CStr (9) "s"
+ 9628  CWord 1 
+ 9631 CallBI malloct
+ 9634 StoreV 
+ 9635    Pop 
+ 9636 LoadFP 9 
+ 9639  CWord 4 
+ 9642 StoreV 
+ 9643    Pop 
+ 9644   AddI SP <= [0xc009],0x0006
+ 9650 LoadFP 3 
+ 9653 StoreV 
+ 9654    Pop 
+ 9655   AddI SP <= [0xc009],0x0007
+ 9661 LoadFP 4 
+ 9664 StoreV 
+ 9665    Pop 
+ 9666   AddI SP <= [0xc009],0x0008
+ 9672 LoadFP 5 
+ 9675 StoreV 
+ 9676    Pop 
+ 9677   AddI SP <= [0xc009],0x000a
+ 9683   Load 
+ 9684   VtoI 
+ 9685   CStr (0) ""
+ 9688 StoreV 
+ 9689    Pop 
+ 9690 LoadFP 9 
+ 9693    Jmp 9699
+ 9696  CWord 0 
+ 9699 SetRet 
+ 9700   PopN 3 
+ 9703 UnLink 
+ 9704    Ret 6 
+: "Clabel"
+ 9709   Link 6 
+ 9711 StInit (1) "i"
+ 9714 LoadFP 0 
+ 9717 LoadFP 1 
+ 9720 LoadFP 2 
+ 9723 LoadFP 3 
+ 9726 LoadFP 4 
+ 9729 LoadFP 5 
+ 9732   Call (9572) "Cedit"
+ 9737   VtoI 
+ 9738 StorFP 9 
+ 9741    Pop 
+ 9742 LoadFP 9 
+ 9745  CWord 15 
+ 9748 StoreV 
+ 9749    Pop 
+ 9750 LoadFP 9 
+ 9753    Jmp 9759
+ 9756  CWord 0 
+ 9759 SetRet 
+ 9760    Pop 
+ 9761 UnLink 
+ 9762    Ret 6 
+: "Clistbox"
+ 9767   Link 4 
+ 9769 StInit (1) "i"
+ 9772  CWord 10 
+ 9775 LoadFP 0 
+ 9778 LoadFP 1 
+ 9781 LoadFP 2 
+ 9784 LoadFP 3 
+ 9787   Call (1623) "Cip"
+ 9792   VtoI 
+ 9793 StorFP 7 
+ 9796    Pop 
+ 9797 LoadFP 7 
+ 9800  CWord 12 
+ 9803 StoreV 
+ 9804    Pop 
+ 9805   AddI SP <= [0xc007],0x0004
+ 9811  MultI SP <= [0xc003],0x000b
+ 9817 StoreV 
+ 9818    Pop 
+ 9819   AddI SP <= [0xc007],0x0005
+ 9825  CWord 0 
+ 9828 StoreV 
+ 9829    Pop 
+ 9830   AddI SP <= [0xc007],0x0006
+ 9836   CInt -1 
+ 9841 StoreV 
+ 9842    Pop 
+ 9843   AddI SP <= [0xc007],0x0007
+ 9849  CWord 0 
+ 9852 StoreV 
+ 9853    Pop 
+ 9854   AddI SP <= [0xc007],0x0008
+ 9860  CWord 0 
+ 9863 StoreV 
+ 9864    Pop 
+ 9865   AddI SP <= [0xc007],0x0009
+ 9871  CWord 0 
+ 9874 StoreV 
+ 9875    Pop 
+ 9876 LoadFP 7 
+ 9879    Jmp 9885
+ 9882  CWord 0 
+ 9885 SetRet 
+ 9886    Pop 
+ 9887 UnLink 
+ 9888    Ret 4 
+: "Cdropdown"
+ 9893   Link 4 
+ 9895 StInit (1) "i"
+ 9898 LoadFP 0 
+ 9901 LoadFP 1 
+ 9904 LoadFP 2 
+ 9907 LoadFP 3 
+ 9910   Call (9767) "Clistbox"
+ 9915   VtoI 
+ 9916 StorFP 7 
+ 9919    Pop 
+ 9920 LoadFP 7 
+ 9923  CWord 10 
+ 9926 StoreV 
+ 9927    Pop 
+ 9928   AddI SP <= [0xc007],0x0006
+ 9934  CWord 0 
+ 9937 StoreV 
+ 9938    Pop 
+ 9939 LoadFP 7 
+ 9942    Jmp 9948
+ 9945  CWord 0 
+ 9948 SetRet 
+ 9949    Pop 
+ 9950 UnLink 
+ 9951    Ret 4 
+: "Cbutton"
+ 9956   Link 6 
+ 9958 StInit (60) "ii"
+ 9961  CWord 8 
+ 9964 LoadFP 0 
+ 9967 LoadFP 1 
+ 9970 LoadFP 2 
+ 9973 LoadFP 3 
+ 9976   Call (1623) "Cip"
+ 9981   VtoI 
+ 9982 StorFP 9 
+ 9985    Pop 
+ 9986   CStr (9) "s"
+ 9989  CWord 1 
+ 9992 CallBI malloct
+ 9995 StorFP 10 
+ 9998    Pop 
+ 9999 LoadFP 9 
+10002  CWord 1 
+10005 StoreV 
+10006    Pop 
+10007   AddI SP <= [0xc009],0x0005
+10013 LoadFP 10 
+10016 StoreV 
+10017    Pop 
+10018   AddI SP <= [0xc009],0x0006
+10024 LoadFP 4 
+10027 StoreV 
+10028    Pop 
+10029   AddI SP <= [0xc009],0x0007
+10035 LoadFP 5 
+10038 StoreV 
+10039    Pop 
+10040    LTI SP <= [0xc003],0x000c
+10046   JmpZ 10060
+10049   AddI SP <= [0xc009],0x0004
+10055  CWord 12 
+10058 StoreV 
+10059    Pop 
+10060 LoadFP 9 
+10063    Jmp 10069
+10066  CWord 0 
+10069 SetRet 
+10070   PopN 2 
+10073 UnLink 
+10074    Ret 6 
+: "Cimage"
+10079   Link 4 
+10081 StInit (1) "i"
+10084 LoadFP 0 
+10087 LoadFP 1 
+10090 LoadFP 2 
+10093 LoadFP 3 
+10096  CWord 0 
+10099  CWord 0 
+10102   Call (9956) "Cbutton"
+10107   VtoI 
+10108 StorFP 7 
+10111    Pop 
+10112 LoadFP 7 
+10115  CWord 2 
+10118 StoreV 
+10119    Pop 
+10120   AddI SP <= [0xc007],0x0005
+10126   Load 
+10127   VtoI 
+10128   CStr (158) "0"
+10131 StoreV 
+10132    Pop 
+10133 LoadFP 7 
+10136    Jmp 10142
+10139  CWord 0 
+10142 SetRet 
+10143    Pop 
+10144 UnLink 
+10145    Ret 4 
+: "Cradio"
+10150   Link 4 
+10152 StInit (1) "i"
+10155  CWord 10 
+10158 LoadFP 0 
+10161 LoadFP 1 
+10164 LoadFP 2 
+10167 LoadFP 3 
+10170   Call (1623) "Cip"
+10175   VtoI 
+10176 StorFP 7 
+10179    Pop 
+10180    LTI SP <= [0xc003],0x000c
+10186   JmpZ 10200
+10189   AddI SP <= [0xc007],0x0004
+10195  CWord 12 
+10198 StoreV 
+10199    Pop 
+10200 LoadFP 7 
+10203  CWord 7 
+10206 StoreV 
+10207    Pop 
+10208   AddI SP <= [0xc007],0x0005
+10214  CWord 0 
+10217 StoreV 
+10218    Pop 
+10219   AddI SP <= [0xc007],0x0006
+10225  CWord 0 
+10228 StoreV 
+10229    Pop 
+10230   AddI SP <= [0xc007],0x0007
+10236  CWord 0 
+10239 StoreV 
+10240    Pop 
+10241   AddI SP <= [0xc007],0x0008
+10247  CWord 0 
+10250 StoreV 
+10251    Pop 
+10252   AddI SP <= [0xc007],0x0009
+10258  CWord 0 
+10261 StoreV 
+10262    Pop 
+10263 LoadFP 7 
+10266    Jmp 10272
+10269  CWord 0 
+10272 SetRet 
+10273    Pop 
+10274 UnLink 
+10275    Ret 4 
+: "Cswitch"
+10280   Link 6 
+10282 StInit (60) "ii"
+10285  CWord 9 
+10288 LoadFP 0 
+10291 LoadFP 1 
+10294 LoadFP 2 
+10297 LoadFP 3 
+10300   Call (1623) "Cip"
+10305   VtoI 
+10306 StorFP 9 
+10309    Pop 
+10310   CStr (9) "s"
+10313  CWord 1 
+10316 CallBI malloct
+10319 StorFP 10 
+10322    Pop 
+10323    LTI SP <= [0xc003],0x000c
+10329   JmpZ 10343
+10332   AddI SP <= [0xc009],0x0004
+10338  CWord 12 
+10341 StoreV 
+10342    Pop 
+10343 LoadFP 9 
+10346  CWord 3 
+10349 StoreV 
+10350    Pop 
+10351   AddI SP <= [0xc009],0x0005
+10357 LoadFP 10 
+10360 StoreV 
+10361    Pop 
+10362   AddI SP <= [0xc009],0x0006
+10368 LoadFP 4 
+10371 StoreV 
+10372    Pop 
+10373   AddI SP <= [0xc009],0x0007
+10379 LoadFP 5 
+10382 StoreV 
+10383    Pop 
+10384   AddI SP <= [0xc009],0x0008
+10390  CWord 0 
+10393 StoreV 
+10394    Pop 
+10395 LoadFP 9 
+10398    Jmp 10404
+10401  CWord 0 
+10404 SetRet 
+10405   PopN 2 
+10408 UnLink 
+10409    Ret 6 
+: "Ccheckbox"
+10414   Link 3 
+10416 StInit (60) "ii"
+10419  CWord 7 
+10422 LoadFP 0 
+10425 LoadFP 1 
+10428 LoadFP 2 
+10431  CWord 12 
+10434   Call (1623) "Cip"
+10439   VtoI 
+10440 StorFP 6 
+10443    Pop 
+10444   CStr (9) "s"
+10447  CWord 1 
+10450 CallBI malloct
+10453 StorFP 7 
+10456    Pop 
+10457 LoadFP 6 
+10460  CWord 5 
+10463 StoreV 
+10464    Pop 
+10465   AddI SP <= [0xc006],0x0005
+10471 LoadFP 7 
+10474 StoreV 
+10475    Pop 
+10476   AddI SP <= [0xc006],0x0006
+10482  CWord 0 
+10485 StoreV 
+10486    Pop 
+10487 LoadFP 6 
+10490    Jmp 10496
+10493  CWord 0 
+10496 SetRet 
+10497   PopN 2 
+10500 UnLink 
+10501    Ret 3 
+: "Csetrow"
+10506   Link 4 
+10508 LoadFP 1 
+10511 LoadF0 12 
+10514  CWord 1 
+10517   VOp2 
+10518   SubI 
+10519   VOp2 
+10520   LTEI 
+10521   JmpZ 10552
+10524 LoadF0 10 
+10527 LoadFP 1 
+10530   VOp2 
+10531   AddI 
+10532   VtoI 
+10533 LoadFP 2 
+10536 StoreV 
+10537    Pop 
+10538 LoadF0 11 
+10541 LoadFP 1 
+10544   VOp2 
+10545   AddI 
+10546   VtoI 
+10547 LoadFP 3 
+10550 StoreV 
+10551    Pop 
+10552  CWord 0 
+10555 SetRet 
+10556 UnLink 
+10557    Ret 4 
+: "CtableDB"
+10562   Link 7 
+10564 StInit (171) "5i"
+10567  CWord 14 
+10570 LoadFP 0 
+10573 LoadFP 1 
+10576 LoadFP 2 
+10579 LoadFP 3 
+10582   Call (1623) "Cip"
+10587   VtoI 
+10588 StorFP 11 
+10591    Pop 
+10592   CStr (1) "i"
+10595 LoadFP 4 
+10598 CallBI malloct
+10601 StorFP 12 
+10604    Pop 
+10605   CStr (9) "s"
+10608  CWord 1 
+10611 CallBI malloct
+10614 StorFP 13 
+10617    Pop 
+10618   CStr (1) "i"
+10621 LoadFP 4 
+10624 CallBI malloct
+10627 StorFP 14 
+10630    Pop 
+10631 LoadFP 11 
+10634  CWord 13 
+10637 StoreV 
+10638    Pop 
+10639   AddI SP <= [0xc00b],0x0004
+10645  MultI SP <= [0xc003],0x000b
+10651 StoreV 
+10652    Pop 
+10653   AddI SP <= [0xc00b],0x0005
+10659  CWord 0 
+10662 StoreV 
+10663    Pop 
+10664   AddI SP <= [0xc00b],0x0006
+10670   CInt -1 
+10675 StoreV 
+10676    Pop 
+10677   AddI SP <= [0xc00b],0x0007
+10683 LoadFP 5 
+10686 StoreV 
+10687    Pop 
+10688   AddI SP <= [0xc00b],0x0008
+10694   Call (1362) "dbnrecs"
+10699 StoreV 
+10700    Pop 
+10701   AddI SP <= [0xc00b],0x0009
+10707  CWord 0 
+10710 StoreV 
+10711    Pop 
+10712   AddI SP <= [0xc00b],0x000a
+10718 LoadFP 12 
+10721 StoreV 
+10722    Pop 
+10723   AddI SP <= [0xc00b],0x000b
+10729 LoadFP 14 
+10732 StoreV 
+10733    Pop 
+10734   AddI SP <= [0xc00b],0x000c
+10740 LoadFP 4 
+10743 StoreV 
+10744    Pop 
+10745   AddI SP <= [0xc00b],0x000d
+10751 LoadFP 13 
+10754 StoreV 
+10755    Pop 
+10756   AddI SP <= [0xc00b],0x000d
+10762   Load 
+10763   VtoI 
+10764 LoadFP 6 
+10767 StoreV 
+10768    Pop 
+10769  CWord 0 
+10772 StorFP 10 
+10775    Pop 
+10776    LTI SP <= [0xc00a],[0xc004]
+10782   JmpZ 10832
+10785   AddI SP <= [0xc00b],0x000a
+10791   Load 
+10792 LoadFP 10 
+10795   VOp2 
+10796   AddI 
+10797   VtoI 
+10798   DivI SP <= [0xc002],[0xc004]
+10804 StoreV 
+10805    Pop 
+10806   AddI SP <= [0xc00b],0x000b
+10812   Load 
+10813 LoadFP 10 
+10816   VOp2 
+10817   AddI 
+10818   VtoI 
+10819  CWord 0 
+10822 StoreV 
+10823    Pop 
+10824  IncAI SP <= 0xc00a
+10828    Pop 
+10829    Jmp 10776
+10832 LoadFP 11 
+10835    Jmp 10841
+10838  CWord 0 
+10841 SetRet 
+10842   PopN 5 
+10845 UnLink 
+10846    Ret 7 
+: "Cframe"
+10851   Link 4 
+10853 StInit (60) "ii"
+10856  CWord 6 
+10859 LoadFP 0 
+10862 LoadFP 1 
+10865 LoadFP 2 
+10868 LoadFP 3 
+10871   Call (1623) "Cip"
+10876   VtoI 
+10877 StorFP 7 
+10880    Pop 
+10881   CStr (9) "s"
+10884  CWord 1 
+10887 CallBI malloct
+10890 StorFP 8 
+10893    Pop 
+10894 LoadFP 7 
+10897  CWord 14 
+10900 StoreV 
+10901    Pop 
+10902   AddI SP <= [0xc007],0x0005
+10908 LoadFP 8 
+10911 StoreV 
+10912    Pop 
+10913 LoadFP 7 
+10916    Jmp 10922
+10919  CWord 0 
+10922 SetRet 
+10923   PopN 2 
+10926 UnLink 
+10927    Ret 4 
+: "Csetcontent"
+10932   Link 2 
+10934 LoadF0 0 
+10937  CWord 9 
+10940   VOp2 
+10941    EqI 
+10942   JmpZ 10967
+10945 LoadF0 7 
+10948 LoadF0 6 
+10951 LoadF0 12 
+10954   VOp2 
+10955  MultI 
+10956   VOp2 
+10957   AddI 
+10958   VtoI 
+10959 LoadFP 1 
+10962 StoreV 
+10963    Pop 
+10964    Jmp 11038
+10967 LoadF0 0 
+10970  CWord 6 
+10973   VOp2 
+10974    GTI 
+10975 JmpPop 10986
+10978 LoadF0 0 
+10981  CWord 14 
+10984   VOp2 
+10985    LTI 
+10986   JmpZ 11006
+10989 LoadF0 7 
+10992 LoadF0 6 
+10995   VOp2 
+10996   AddI 
+10997   VtoI 
+10998 LoadFP 1 
+11001 StoreV 
+11002    Pop 
+11003    Jmp 11038
+11006 LoadF0 0 
+11009  CWord 6 
+11012   VOp2 
+11013    EqI 
+11014   JmpZ 11029
+11017 LoadF0 1 
+11020   VtoI 
+11021 LoadFP 1 
+11024 StoreV 
+11025    Pop 
+11026    Jmp 11038
+11029 LoadF0 5 
+11032   VtoI 
+11033 LoadFP 1 
+11036 StoreV 
+11037    Pop 
+11038  CWord 0 
+11041 SetRet 
+11042 UnLink 
+11043    Ret 2 
+: "Cgetcontent"
+11048   Link 1 
+11050 LoadF0 0 
+11053  CWord 9 
+11056   VOp2 
+11057    EqI 
+11058   JmpZ 11082
+11061 LoadF0 7 
+11064 LoadF0 6 
+11067 LoadF0 12 
+11070   VOp2 
+11071  MultI 
+11072   VOp2 
+11073   AddI 
+11074   VtoI 
+11075   Load 
+11076    Jmp 11153
+11079    Jmp 11150
+11082 LoadF0 0 
+11085  CWord 6 
+11088   VOp2 
+11089    GTI 
+11090 JmpPop 11101
+11093 LoadF0 0 
+11096  CWord 14 
+11099   VOp2 
+11100    LTI 
+11101   JmpZ 11120
+11104 LoadF0 7 
+11107 LoadF0 6 
+11110   VOp2 
+11111   AddI 
+11112   VtoI 
+11113   Load 
+11114    Jmp 11153
+11117    Jmp 11150
+11120 LoadF0 0 
+11123  CWord 6 
+11126   VOp2 
+11127    EqI 
+11128   JmpZ 11142
+11131 LoadF0 1 
+11134   VtoI 
+11135   Load 
+11136    Jmp 11153
+11139    Jmp 11150
+11142 LoadF0 5 
+11145   VtoI 
+11146   Load 
+11147    Jmp 11153
+11150  CWord 0 
+11153 SetRet 
+11154 UnLink 
+11155    Ret 1 
+: "initcontrols"
+11160   Link 0 
+11162 StInit (60) "ii"
+11165  CWord 1 
+11168  CWord 147 
+11171  CWord 35 
+11174  CWord 0 
+11177  CWord 1 
+11180  CWord 4 
+11183   Call (9956) "Cbutton"
+11188   VtoI 
+11189 StoreI 0x0026
+11192    Pop 
+11193  LoadI 0x0026
+11196   CStr (349) "Info"
+11199   Call (10932) "Csetcontent"
+11204    Pop 
+11205  CWord 40 
+11208  CWord 147 
+11211  CWord 35 
+11214  CWord 0 
+11217  CWord 1 
+11220  CWord 4 
+11223   Call (9956) "Cbutton"
+11228   VtoI 
+11229 StoreI 0x0027
+11232    Pop 
+11233  LoadI 0x0027
+11236   CStr (354) "Quit"
+11239   Call (10932) "Csetcontent"
+11244    Pop 
+11245  CWord 140 
+11248  CWord 18 
+11251  CWord 12 
+11254  CWord 12 
+11257   Call (10079) "Cimage"
+11262   VtoI 
+11263 StoreI 0x0028
+11266    Pop 
+11267  LoadI 0x0028
+11270   CStr (359) "0c1f83fc7fee67e67ffffffdfbef770e3fc1f8"
+11273   Call (10932) "Csetcontent"
+11278    Pop 
+11279  CWord 1 
+11282  CWord 18 
+11285  CWord 90 
+11288  CWord 3 
+11291   Call (9767) "Clistbox"
+11296   VtoI 
+11297 StoreI 0x001f
+11300    Pop 
+11301  CWord 1 
+11304 StorFP 3 
+11307    Pop 
+11308   LTEI SP <= [0xc003],0x000a
+11314   JmpZ 11342
+11317  LoadI 0x001f
+11320   CStr (398) "Line number  "
+11323 LoadFP 3 
+11326   ItoS 
+11327   AddS 
+11328   Call (8825) "Cadditem"
+11333    Pop 
+11334  IncAI SP <= 0xc003
+11338    Pop 
+11339    Jmp 11308
+11342  LoadI 0x001f
+11345  CWord 1 
+11348   Call (8497) "Csetcursel"
+11353    Pop 
+11354  CWord 95 
+11357  CWord 36 
+11360  CWord 60 
+11363  CWord 5 
+11366   Call (9893) "Cdropdown"
+11371   VtoI 
+11372 StoreI 0x0029
+11375    Pop 
+11376  CWord 1 
+11379 StorFP 3 
+11382    Pop 
+11383   LTEI SP <= [0xc003],0x000a
+11389   JmpZ 11417
+11392  LoadI 0x0029
+11395   CStr (412) "Dropline "
+11398 LoadFP 3 
+11401   ItoS 
+11402   AddS 
+11403   Call (8825) "Cadditem"
+11408    Pop 
+11409  IncAI SP <= 0xc003
+11413    Pop 
+11414    Jmp 11383
+11417  CWord 14 
+11420  CWord 23 
+11423  CWord 70 
+11426  CWord 5 
+11429   Call (9893) "Cdropdown"
+11434   VtoI 
+11435 StoreI 0x002a
+11438    Pop 
+11439  CWord 1 
+11442 StorFP 3 
+11445    Pop 
+11446   LTEI SP <= [0xc003],0x0008
+11452   JmpZ 11480
+11455  LoadI 0x002a
+11458   CStr (422) "Popline "
+11461 LoadFP 3 
+11464   ItoS 
+11465   AddS 
+11466   Call (8825) "Cadditem"
+11471    Pop 
+11472  IncAI SP <= 0xc003
+11476    Pop 
+11477    Jmp 11446
+11480  CWord 95 
+11483  CWord 18 
+11486  CWord 20 
+11489  CWord 12 
+11492  CWord 1 
+11495  CWord 0 
+11498   Call (10280) "Cswitch"
+11503   VtoI 
+11504 StoreI 0x002b
+11507    Pop 
+11508  LoadI 0x002b
+11511   CStr (431) "Off"
+11514   Call (10932) "Csetcontent"
+11519    Pop 
+11520  CWord 95 
+11523  CWord 113 
+11526  CWord 40 
+11529   Call (10414) "Ccheckbox"
+11534   VtoI 
+11535 StoreI 0x002c
+11538    Pop 
+11539  LoadI 0x002c
+11542   CStr (435) "active"
+11545   Call (10932) "Csetcontent"
+11550    Pop 
+11551  LoadI 0x002c
+11554  CWord 1 
+11557   Call (8359) "Csetstate"
+11562    Pop 
+11563  CWord 1 
+11566  CWord 114 
+11569  CWord 65 
+11572  CWord 2 
+11575  CWord 2 
+11578  CWord 2 
+11581   Call (9572) "Cedit"
+11586   VtoI 
+11587 StoreI 0x0020
+11590    Pop 
+11591  LoadI 0x0020
+11594   CStr (442) "Enter text:"
+11597   Call (5623) "Csettopic"
+11602    Pop 
+11603  LoadI 0x0020
+11606   CStr (454) "edit me"
+11609   Call (10932) "Csetcontent"
+11614    Pop 
+11615  CWord 1 
+11618  CWord 129 
+11621  CWord 65 
+11624  CWord 0 
+11627  CWord 2 
+11630  CWord 1 
+11633   Call (9709) "Clabel"
+11638   VtoI 
+11639 StoreI 0x0021
+11642    Pop 
+11643  LoadI 0x0021
+11646   CStr (462) "click here!"
+11649   Call (10932) "Csetcontent"
+11654    Pop 
+11655  CWord 95 
+11658  CWord 128 
+11661  CWord 60 
+11664  CWord 0 
+11667   Call (10150) "Cradio"
+11672   VtoI 
+11673 StoreI 0x002d
+11676    Pop 
+11677  CWord 1 
+11680 StorFP 3 
+11683    Pop 
+11684   LTEI SP <= [0xc003],0x0003
+11690   JmpZ 11718
+11693  LoadI 0x002d
+11696   CStr (474) "Do"
+11699 LoadFP 3 
+11702   ItoS 
+11703   AddS 
+11704   Call (8825) "Cadditem"
+11709    Pop 
+11710  IncAI SP <= 0xc003
+11714    Pop 
+11715    Jmp 11684
+11718  CWord 5 
+11721  CWord 60 
+11724  CWord 40 
+11727   Call (8993) "Cmenu"
+11732   VtoI 
+11733 StoreI 0x0023
+11736    Pop 
+11737  LoadI 0x0023
+11740   CStr (477) "Applet"
+11743   Call (5623) "Csettopic"
+11748    Pop 
+11749  CWord 1 
+11752 StorFP 3 
+11755    Pop 
+11756   LTEI SP <= [0xc003],0x0005
+11762   JmpZ 11790
+11765  LoadI 0x0023
+11768   CStr (484) "Item"
+11771 LoadFP 3 
+11774   ItoS 
+11775   AddS 
+11776   Call (8825) "Cadditem"
+11781    Pop 
+11782  IncAI SP <= 0xc003
+11786    Pop 
+11787    Jmp 11756
+11790  CWord 45 
+11793  CWord 60 
+11796  CWord 45 
+11799   Call (8993) "Cmenu"
+11804   VtoI 
+11805 StoreI 0x0024
+11808    Pop 
+11809  LoadI 0x0024
+11812   CStr (489) "Options"
+11815   Call (5623) "Csettopic"
+11820    Pop 
+11821  CWord 1 
+11824 StorFP 3 
+11827    Pop 
+11828   LTEI SP <= [0xc003],0x0007
+11834   JmpZ 11862
+11837  LoadI 0x0024
+11840   CStr (497) "Item "
+11843 LoadFP 3 
+11846   ItoS 
+11847   AddS 
+11848   Call (8825) "Cadditem"
+11853    Pop 
+11854  IncAI SP <= 0xc003
+11858    Pop 
+11859    Jmp 11828
+11862  LoadI 0x0024
+11865  CWord 1 
+11868   Call (8497) "Csetcursel"
+11873    Pop 
+11874  LoadI 0x0024
+11877   CStr (503) "TestX"
+11880   Call (10932) "Csetcontent"
+11885    Pop 
+11886   Call (9166) "Cmenubar"
+11891   VtoI 
+11892 StoreI 0x0025
+11895    Pop 
+11896  LoadI 0x0025
+11899  LoadI 0x0023
+11902   Call (9276) "Caddmenu"
+11907    Pop 
+11908  LoadI 0x0025
+11911  LoadI 0x0024
+11914   Call (9276) "Caddmenu"
+11919    Pop 
+11920  CWord 0 
+11923 SetRet 
+11924   PopN 2 
+11927 UnLink 
+11928    Ret 0 
+: "drawscreen"
+11933   Link 0 
+11935 CallBI <Invalid #>
+11938   CStr (509) "CControl Test"
+11941 CallBI <Invalid #>
+11944  LoadI 0x0026
+11947   Call (7995) "Cdraw"
+11952    Pop 
+11953  LoadI 0x0027
+11956   Call (7995) "Cdraw"
+11961    Pop 
+11962  LoadI 0x001f
+11965   Call (7995) "Cdraw"
+11970    Pop 
+11971  LoadI 0x0028
+11974   Call (7995) "Cdraw"
+11979    Pop 
+11980  LoadI 0x0029
+11983   Call (7995) "Cdraw"
+11988    Pop 
+11989  LoadI 0x002b
+11992   Call (7995) "Cdraw"
+11997    Pop 
+11998  LoadI 0x002c
+12001   Call (7995) "Cdraw"
+12006    Pop 
+12007  LoadI 0x0020
+12010   Call (7995) "Cdraw"
+12015    Pop 
+12016  LoadI 0x0021
+12019   Call (7995) "Cdraw"
+12024    Pop 
+12025  LoadI 0x002d
+12028   Call (7995) "Cdraw"
+12033    Pop 
+12034  LoadI 0x0022
+12037   Call (7995) "Cdraw"
+12042    Pop 
+12043  CWord 0 
+12046 SetRet 
+12047 UnLink 
+12048    Ret 0 
+: "dialog"
+12053   Link 0 
+12055 StInit (167) "4i"
+12058  CWord 10 
+12061  CWord 40 
+12064  CWord 140 
+12067  CWord 70 
+12070   Call (10851) "Cframe"
+12075   VtoI 
+12076 StorFP 3 
+12079    Pop 
+12080 LoadFP 3 
+12083   CStr (523) "Some Dialog"
+12086   Call (10932) "Csetcontent"
+12091    Pop 
+12092  CWord 20 
+12095  CWord 60 
+12098  CWord 70 
+12101  CWord 2 
+12104  CWord 1 
+12107  CWord 0 
+12110   Call (9572) "Cedit"
+12115   VtoI 
+12116 StorFP 4 
+12119    Pop 
+12120 LoadFP 4 
+12123   CStr (535) "dialog field"
+12126   Call (10932) "Csetcontent"
+12131    Pop 
+12132  CWord 65 
+12135  CWord 90 
+12138  CWord 30 
+12141  CWord 12 
+12144  CWord 1 
+12147  CWord 4 
+12150   Call (9956) "Cbutton"
+12155   VtoI 
+12156 StorFP 5 
+12159    Pop 
+12160 LoadFP 5 
+12163   CStr (548) "Ok"
+12166   Call (10932) "Csetcontent"
+12171    Pop 
+12172 LoadFP 3 
+12175   Call (7995) "Cdraw"
+12180    Pop 
+12181 LoadFP 4 
+12184   Call (7995) "Cdraw"
+12189    Pop 
+12190 LoadFP 5 
+12193   Call (7995) "Cdraw"
+12198    Pop 
+12199  CWord 1 
+12202   JmpZ 12252
+12205  CWord 1 
+12208 CallBI <Invalid #>
+12211 StorFP 6 
+12214    Pop 
+12215 LoadFP 4 
+12218 LoadFP 6 
+12221   Call (6376) "Cevent"
+12226   JmpZ 12232
+12229    Jmp 12249
+12232 LoadFP 5 
+12235 LoadFP 6 
+12238   Call (6376) "Cevent"
+12243   JmpZ 12249
+12246    Jmp 12252
+12249    Jmp 12199
+12252  CWord 0 
+12255 SetRet 
+12256   PopN 4 
+12259 UnLink 
+12260    Ret 0 
+: "createDB"
+12265   Link 0 
+12267 StInit (63) "3i"
+12270   CStr (9) "s"
+12273  CWord 3 
+12276 CallBI malloct
+12279 StorFP 5 
+12282    Pop 
+12283   CStr (551) "CTestDB"
+12286   Call (1310) "dbcreate"
+12291    Not 
+12292   JmpZ 12307
+12295   CStr (559) "\nUnable to create CTestDB."
+12298 CallBI alert
+12301  CWord 0 
+12304    Jmp 12411
+12307  CWord 0 
+12310 StorFP 3 
+12313    Pop 
+12314    LTI SP <= [0xc003],0x000a
+12320   JmpZ 12408
+12323  CWord 0 
+12326 StorFP 4 
+12329    Pop 
+12330    LTI SP <= [0xc004],0x0003
+12336   JmpZ 12378
+12339   AddI SP <= [0xc005],[0xc004]
+12345   CStr (586) "DB "
+12348   AddI SP <= [0xc003],0x0001
+12354   ItoS 
+12355   AddS 
+12356   CStr (590) "/"
+12359   AddS 
+12360   AddI SP <= [0xc004],0x0001
+12366   ItoS 
+12367   AddS 
+12368 StoreV 
+12369    Pop 
+12370  IncAI SP <= 0xc004
+12374    Pop 
+12375    Jmp 12330
+12378   CInt -1 
+12383   Call (1339) "dbrec"
+12388 LoadFP 5 
+12391   CStr (592) "szszsz"
+12394   Call (1581) "dbwritex"
+12399    Pop 
+12400  IncAI SP <= 0xc003
+12404    Pop 
+12405    Jmp 12314
+12408  CWord 0 
+12411 SetRet 
+12412   PopN 3 
+12415 UnLink 
+12416    Ret 0 
+: "initDB"
+12421   Link 0 
+12423   CStr (9) "s"
+12426  CWord 3 
+12429 CallBI malloct
+12432 StoreI 0x002e
+12435    Pop 
+12436   CStr (551) "CTestDB"
+12439   Call (1191) "dbopen"
+12444    Not 
+12445   JmpZ 12454
+12448   Call (12265) "createDB"
+12453    Pop 
+12454  CWord 1 
+12457  CWord 55 
+12460  CWord 158 
+12463  CWord 5 
+12466  CWord 3 
+12469  LoadI 0x002e
+12472   CStr (592) "szszsz"
+12475   Call (10562) "CtableDB"
+12480   VtoI 
+12481 StoreI 0x0022
+12484    Pop 
+12485  LoadI 0x0022
+12488  CWord 0 
+12491  CWord 45 
+12494  CWord 0 
+12497   Call (10506) "Csetrow"
+12502    Pop 
+12503  LoadI 0x0022
+12506  CWord 1 
+12509  CWord 55 
+12512  CWord 2 
+12515   Call (10506) "Csetrow"
+12520    Pop 
+12521  LoadI 0x0022
+12524  CWord 2 
+12527  CWord 48 
+12530  CWord 1 
+12533   Call (10506) "Csetrow"
+12538    Pop 
+12539  CWord 0 
+12542 SetRet 
+12543 UnLink 
+12544    Ret 0 
+: "onbutton1"
+12549   Link 0 
+12551   CStr (599) "Listbox:"
+12554  LoadI 0x001f
+12557   Call (11048) "Cgetcontent"
+12562   VOp2 
+12563   AddI 
+12564   CStr (608) "\nSwitch:"
+12567   VOp2 
+12568   AddI 
+12569  LoadI 0x002b
+12572   Call (8439) "Cgetstate"
+12577   VOp2 
+12578   AddI 
+12579   CStr (617) "\nRadio:"
+12582   VOp2 
+12583   AddI 
+12584  LoadI 0x002d
+12587   Call (8557) "Cgetcursel"
+12592   VOp2 
+12593   AddI 
+12594   VtoS 
+12595 CallBI alert
+12598  CWord 0 
+12601 SetRet 
+12602 UnLink 
+12603    Ret 0 
+: "onlabel1"
+12608   Link 0 
+12610   Call (12053) "dialog"
+12615    Pop 
+12616   Call (11933) "drawscreen"
+12621    Pop 
+12622  CWord 0 
+12625 SetRet 
+12626 UnLink 
+12627    Ret 0 
+: "onimage1"
+12632   Link 0 
+12634  LoadI 0x002a
+12637   Call (8606) "Cpopupevent"
+12642   JmpZ 12662
+12645   CStr (625) "Popup:\n"
+12648  LoadI 0x002a
+12651   Call (11048) "Cgetcontent"
+12656   VOp2 
+12657   AddI 
+12658   VtoS 
+12659 CallBI alert
+12662  CWord 0 
+12665 SetRet 
+12666 UnLink 
+12667    Ret 0 
+: "onswitch1"
+12672   Link 0 
+12674  LoadI 0x002b
+12677   Call (8439) "Cgetstate"
+12682   VtoB 
+12683   JmpZ 12723
+12686 SCWord [0x0034] <- 1
+12691 SCWord [0x0033] <- 0
+12696  LoadI 0x0028
+12699  LoadI 0x002f
+12702   Call (10932) "Csetcontent"
+12707    Pop 
+12708  LoadI 0x002b
+12711   CStr (633) "On"
+12714   Call (10932) "Csetcontent"
+12719    Pop 
+12720    Jmp 12752
+12723 SCWord [0x0034] <- 0
+12728  LoadI 0x0028
+12731   CStr (359) "0c1f83fc7fee67e67ffffffdfbef770e3fc1f8"
+12734   Call (10932) "Csetcontent"
+12739    Pop 
+12740  LoadI 0x002b
+12743   CStr (431) "Off"
+12746   Call (10932) "Csetcontent"
+12751    Pop 
+12752  LoadI 0x0028
+12755   Call (7995) "Cdraw"
+12760    Pop 
+12761  LoadI 0x002b
+12764   Call (7995) "Cdraw"
+12769    Pop 
+12770  CWord 0 
+12773 SetRet 
+12774 UnLink 
+12775    Ret 0 
+: "oncheckbox1"
+12780   Link 0 
+12782  LoadI 0x002c
+12785   Call (8439) "Cgetstate"
+12790   VtoB 
+12791   JmpZ 12806
+12794  LoadI 0x0027
+12797   Call (8239) "Cactivate"
+12802    Pop 
+12803    Jmp 12815
+12806  LoadI 0x0027
+12809   Call (8298) "Cdeactivate"
+12814    Pop 
+12815  CWord 0 
+12818 SetRet 
+12819 UnLink 
+12820    Ret 0 
+: "onmenu"
+12825   Link 1 
+12827 LoadFP 0 
+12830 CallBI alert
+12833  CWord 0 
+12836 SetRet 
+12837 UnLink 
+12838    Ret 1 
+: "main"
+12843   Link 0 
+12845 StInit (60) "ii"
+12848   Call (125) "graph_on"
+12853   CStr (636) "Please wait...."
+12856 CallBI <Invalid #>
+12859   Call (9399) "Cinit"
+12864    Pop 
+12865   Call (12421) "initDB"
+12870    Pop 
+12871   Call (11160) "initcontrols"
+12876    Pop 
+12877   Call (11933) "drawscreen"
+12882    Pop 
+12883  CWord 1 
+12886   JmpZ 13214
+12889  CWord 10 
+12892 CallBI <Invalid #>
+12895 StorFP 3 
+12898    Pop 
+12899  LoadI 0x0034
+12902   JmpZ 12944
+12905  LoadI 0x0028
+12908   AddI SP <= 0x002f,[0x0033]
+12914   Load 
+12915   Call (10932) "Csetcontent"
+12920    Pop 
+12921  LoadI 0x0028
+12924   Call (7995) "Cdraw"
+12929    Pop 
+12930   AddI SP <= [0x0033],0x0001
+12936   ModI SP <= SP,0x0004
+12940 StoreI 0x0033
+12943    Pop 
+12944    EqI SP <= [0xc003],0x0017
+12950   JmpZ 12962
+12953   Call (11933) "drawscreen"
+12958    Pop 
+12959    Jmp 13211
+12962  LoadI 0x0026
+12965 LoadFP 3 
+12968   Call (6376) "Cevent"
+12973   JmpZ 12985
+12976   Call (12549) "onbutton1"
+12981    Pop 
+12982    Jmp 13211
+12985  LoadI 0x0027
+12988 LoadFP 3 
+12991   Call (6376) "Cevent"
+12996   JmpZ 13005
+12999    Jmp 13214
+13002    Jmp 13211
+13005  LoadI 0x001f
+13008 LoadFP 3 
+13011   Call (6376) "Cevent"
+13016   JmpZ 13022
+13019    Jmp 13211
+13022  LoadI 0x0029
+13025 LoadFP 3 
+13028   Call (6376) "Cevent"
+13033   JmpZ 13039
+13036    Jmp 13211
+13039  LoadI 0x0028
+13042 LoadFP 3 
+13045   Call (6376) "Cevent"
+13050   JmpZ 13062
+13053   Call (12632) "onimage1"
+13058    Pop 
+13059    Jmp 13211
+13062  LoadI 0x002b
+13065 LoadFP 3 
+13068   Call (6376) "Cevent"
+13073   JmpZ 13085
+13076   Call (12672) "onswitch1"
+13081    Pop 
+13082    Jmp 13211
+13085  LoadI 0x002c
+13088 LoadFP 3 
+13091   Call (6376) "Cevent"
+13096   JmpZ 13108
+13099   Call (12780) "oncheckbox1"
+13104    Pop 
+13105    Jmp 13211
+13108  LoadI 0x0020
+13111 LoadFP 3 
+13114   Call (6376) "Cevent"
+13119   JmpZ 13125
+13122    Jmp 13211
+13125  LoadI 0x0021
+13128 LoadFP 3 
+13131   Call (6376) "Cevent"
+13136   JmpZ 13148
+13139   Call (12608) "onlabel1"
+13144    Pop 
+13145    Jmp 13211
+13148  LoadI 0x0025
+13151 LoadFP 3 
+13154   Call (6376) "Cevent"
+13159   JmpZ 13180
+13162  LoadI 0x0025
+13165   Call (11048) "Cgetcontent"
+13170   VtoS 
+13171   Call (12825) "onmenu"
+13176    Pop 
+13177    Jmp 13211
+13180  LoadI 0x002d
+13183 LoadFP 3 
+13186   Call (6376) "Cevent"
+13191   JmpZ 13197
+13194    Jmp 13211
+13197  LoadI 0x0022
+13200 LoadFP 3 
+13203   Call (6376) "Cevent"
+13208   JmpZ 13211
+13211    Jmp 12883
+13214   Call (1610) "dbclose"
+13219   PopN 2 
+13222 UnLink 
+13223   RetN 0 
+

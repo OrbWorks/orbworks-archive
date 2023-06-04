@@ -1,0 +1,3 @@
+// PocketC math compatibility functions
+
+bool mathlib() { return true; } // in OrbC runtime, math functions report errors without MathLib

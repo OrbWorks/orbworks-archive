@@ -1,0 +1,53 @@
+// Resize
+@cid "Resz";
+@ver "1.0";
+@name "Resize";
+@dbname "Resize";
+@licon1 "D:/Development/PocketC/DistSrc/_PDE/large1.bmp";
+@licon2 "D:/Development/PocketC/DistSrc/_PDE/large2.bmp";
+@licon8 "D:/Development/PocketC/DistSrc/_PDE/large8.bmp";
+@sicon1 "D:/Development/PocketC/DistSrc/_PDE/small1.bmp";
+@sicon2 "D:/Development/PocketC/DistSrc/_PDE/small2.bmp";
+@sicon8 "D:/Development/PocketC/DistSrc/_PDE/small8.bmp";
+
+#include "buttonsLight.h"
+
+pointer exitButton, tlButton, trButton, blButton, brButton;
+
+onRedraw() {
+    refreshAll();
+}
+
+onResize() {
+    trButton[left] = penx() - 34;
+    blButton[top] = peny() - 13;
+    brButton[top] = peny() - 13;
+    brButton[left] = penx() - 34;
+    exitButton[top] = peny() / 2 + 8;
+    exitButton[left] = penx() / 2 - 20;
+}
+
+int done;
+onExit() {
+    done = true;
+}
+
+main() {
+    int e;
+    buttonInit();
+    graph_on();
+    title("Resize");
+    // add buttons based on 160x160 layout
+    exitButton = addButton("Center", onExit, 60, 88, 40, 11);
+    tlButton = addButton("TL", onExit, 2, 17, 32, 11);
+    trButton = addButton("TR", onExit, 126, 17, 32, 11);
+    blButton = addButton("BL", onExit, 2, 148, 32, 11);
+    brButton = addButton("BR", onExit, 126, 148, 32, 11);
+    while (!done) {
+        e = event(1);
+        if (e == 2) bLevent();
+        else if (e == 23) onRedraw();
+        else if (e == 24) onResize();
+    }
+    graph_off();
+}

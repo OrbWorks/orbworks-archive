@@ -1,0 +1,151 @@
+<p>Porting an application from PocketC to PocketC Architect is generally simple, 
+and can be done in several phases. You can get your application running by only 
+performing the first porting phase. To take full advantage of the new features 
+and improved performance of the OrbC runtime, you may need to do a full 
+conversion, as described below.</p>
+<h3>Phase 1: Compiling a Legacy PocketC Application</h3>
+<p>The first and easiest step is simply getting your application to compile. The 
+PocketC Architect requires you to specify a few properties of the application in 
+an @app block. The only required @app properties are creator, name, and dbname. 
+For example:</p>
+<pre>@app {
+  creator = "MyAp"; // same as PocketC's @cid
+  name = "App Name"; // display name, same as PocketC's @name
+  dbname = "AppName-MyAp"; // name of .prc database, same as PocketC's @dbname
+}</pre>
+<p>Second, you must include the PocketC compatibility headers. The OrbC runtime 
+has a richer, object-oriented API, and doesn't support the PocketC APIs by 
+default. In order to use the PocketC APIs, you must include the appropriate 
+header files which implement the APIs you intend to use. The easiest way to 
+start is to just include &quot;pc_most.oc&quot;, which contains all of the PocketC APIs 
+except those that require native add-ins. This is sufficient for most 
+applications.</p>
+<pre>#include &quot;pc_most.oc&quot;</pre>
+<p>The following table lists all the compatibility headers:</p>
+<table border="0" width="100%" id="table1" cellpadding="2">
+  <tr>
+    <td bgcolor="#E0E0E0">pc_most.oc</td>
+    <td>Includes all headers except those that would require a native add-in to 
+    be installed. Most applications should just use this header.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_all.oc</td>
+    <td>Includes all headers.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_io.oc</td>
+    <td>Implements the Basic I/O functions (e.g. puts, gets, clear).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_events.oc</td>
+    <td>Implements the event functions (e.g. pcevent, key, wait).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_string.oc</td>
+    <td>Implements the string functions (e.g. strlwr, strtok).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_math.oc</td>
+    <td>Implements the mathlib function.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_graphics.oc</td>
+    <td>Implements the graphics functionns (e.g. graph_on, rect, bucreate).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_sound.oc</td>
+    <td>Implements getvol.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_date.oc</td>
+    <td>Implements the time and date functions (e.g. time, date).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_database.oc</td>
+    <td>Implements the database functions (e.g. dbopen, dbcreate).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_memo.oc</td>
+    <td>Implements the memo functions (e.g. mmnew).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_serial.oc</td>
+    <td>Implements the serial port functions (e.g. seropenx). OrbSerial native 
+    add-in is required if this header is included. This header is not included 
+    by pc_most.oc.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_system.oc</td>
+    <td>Implements the system functions (e.g. clipget, getsysval).</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_memory.oc</td>
+    <td>Implements the memory functions.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_network.oc</td>
+    <td>Implements the network functions (e.g. netopen, sockopen). OrbNetwork 
+    native add-in is required if this header is included. This header is not 
+    included by pc_most.oc.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0">pc_vfs.oc</td>
+    <td>Implements the VFS functions (e.g. fileread, filewrite). OrbVFS native 
+    add-in is required if this header is included. This header is not included 
+    by pc_most.oc.</td>
+  </tr>
+  </table>
+<p>Once the correct headers are included, there are three primary changes that 
+must be made because of conflicts between the OrbC runtime and PocketC.</p>
+<ul>
+  <li>All calls to event() must be replaced with calls to pcevent(). The OrbC 
+  runtime uses a global event struct named &quot;event&quot; which conflicts with the old 
+  function name.</li>
+  <li>All calls to malloct() must have their parameters reversed. The type must 
+  be the first parameter, and the count must be the second.</li>
+  <li>Any use of CControls must be replaced by the version of CControls which 
+  ships with PocketC Architect. This version contains the two changes mentioned 
+  above as well as several fixes for bugs that just happened to work on PocketC even 
+  though the code was incorrect.</li>
+</ul>
+<h3>Phase 2: Convert to the New UI, Eventing, and Drawing Model</h3>
+<p>Using the new UI and eventing model makes programming new application much 
+easier, and provides many benefits for existing applications. The most important 
+benefit is that the new UI model uses native forms and controls, making 
+applications much faster and more responsive to users. Another notable benefit 
+is that forms and controls using the new UI model can automatically resize on 
+devices with wide/tall screens without writing any code.</p>
+<p>The new UI model, eventing model, and drawing model are not compatible with 
+the old models. If you convert one of your forms from e.g. CControls, you must 
+convert all of your forms, use only the new eventing model (no more pcevent(), key(), 
+or similar 
+calls), and use only the Draw methods (Draw.rect() instead of the rect() 
+function). The reverse is also true, you cannot use the new eventing model if 
+you are using the old graphics APIs (such as graph_on).</p>
+<p>This phase is optional and straightforward, but may take considerable time. 
+There are three basic steps involved:</p>
+<ul>
+  <li>Recreate the forms using the OrbC resource syntax, removing the old code 
+  that would generate the forms.</li>
+  <li>Create an onopen handler for your form's initialization code.</li>
+  <li>Remove the old event loop, and replace it with form and control event 
+  handlers.</li>
+</ul>
+<h3>Phase 3: Convert to the Object-Oriented APIs</h3>
+<p>Finally, you can convert from the old PocketC APIs to the new object-oriented 
+APIs. In many cases, the old APIs implemented in the PocketC compatibility 
+headers are just thin wrappers around the new APIs. There are two primary 
+advantages to using the new APIs:</p>
+<ul>
+  <li>Improved performance - by not calling through wrappers (some of which are 
+  more complicated than others, like the database APIs), you can gain 
+  significant performance improvements. Some of the new APIs are much faster 
+  than the original PocketC counterparts. For example, PocketC database APIs 
+  always closed and re-opened databases between calls for safety, where the OrbC 
+  runtime does not need to.</li>
+  <li>Advanced functionality - many of the new APIs are richer than the old 
+  APIs. For example, the new database APIs allow multiple records and databases 
+  to be accessed simultaneously. See <a href="tAPINotes.html">API Conversion 
+	Notes</a> for more information.</li>
+</ul>
+

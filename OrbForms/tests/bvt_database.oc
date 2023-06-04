@@ -1,0 +1,254 @@
+@app { creator="oBVT" name="bvt_database.oc" dbname="bvt_database.oc" }
+
+#include "tests.h"
+
+struct Data {
+    int d;
+    int w;
+    char c;
+    float f;
+    string s;
+};
+
+@doc "Data object";
+object DataObject {
+    int d;
+    @doc "do.w is cool";
+    int w;
+    char c;
+    float f;
+    string s;
+};
+
+void memoDB() {
+    Database db;
+    DBRecord rec;
+    int i;
+    string text;
+    
+    if (db.opentc("DATA", "memo", true)) {
+        for (;i<db.nrecs;i++) {
+            if (db.getrec(i, rec, true)) {
+                rec.read(&text, typeof(text), 1);
+                puts((char)0x95 + " " + strleft(text, 6) + " ");
+                rec.close();
+            }
+        }
+        puts("\n");
+        /* for (i=0;i<16;i++) {
+            puts(i + ": " + db.getcatname(i) + "\n");
+        } */
+        db.setcatname(3, "OrbForms");
+        test(db.getcatname(3) == "OrbForms", "s/getcatname");
+        db.close();
+    } else {
+        test(false, "Unable to open memo db");
+    }
+}
+
+void test_enum() {
+    DatabaseMgr dm;
+    string name;
+    
+    puts("Enum apps\n");
+    name = dm.dbenum(true, "appl", "");
+    while (name) {
+        puts(name + "\n");
+        name = dm.dbenum(false, "appl", "");
+    }
+}
+
+void test_record() {
+    Database db;
+    DBRecord rec;
+    int irec = 0xffffffff, i, uid;
+    Data d = { 0x12345678, 0x9abc, 0xde, 3.141592, "mystring" };
+    DataObject dobj = { 0x12345678, 0x9abc, 0xde, 3.141592, "mystring" };
+    
+    if (db.open("OrbForms_testDB", true)) {
+        db.deldb();
+    }
+    if (db.create("OrbForms_testDB", "tTyp", "tCid", false)) {
+        putsl("dbid: " + hex(db.dbid));
+        putsl("card: " + db.card);
+        puts("create: " + db.getdate(dbDateCreated).date() + 
+            "\nmodify: " + db.getdate(dbDateModified).date() +
+            "\nbackup: " + db.getdate(dbDateBackup).date() + "\n");
+        db.newrec(&irec, rec);
+        test(rec.write(&d, typeof(d), 1) == 5, "rec.write() == 5");
+        test(rec.category == 0, "rec.category == 0");
+        test((rec.category = 1) == 1, "rec.category == 1");
+        test(rec.category == 1, "rec.category == 1");
+        rec.close();
+        puts("dbref = " + hex(db.dbref) + "\n");
+        
+        irec = -1;
+        db.newrec(&irec, rec);
+        test(irec == rec.id, "irec == rec.id");
+        rec.write(&dobj, "oiwcfs", 1);
+        dobj.w = 5;
+        //rec.write(&d, "iwcfs", 1);
+        test(rec.size == 20, "rec.size");
+        rec.offset = 2;
+        rec.read(&i, "i", 1);
+        test(i == 0x56789abc, "rec.read()");
+        rec.erase();
+        rec.write(&i, typeof(i), 1);
+        test(rec.size == 4, "erase, rec.size == 4");
+        test(rec.id == 1, "rec.id == 1");
+        uid = rec.uniqueid;
+        test(rec.uniqueid, "rec.uniqueid = " + uid);
+        rec.close();
+        
+        test(db.findrec(uid) == 1, "db.findrec");
+        
+        test(db.nrecs == 2, "db.nrecs == 2");
+        test(db.backup == false, "db.backup == false");
+        test((db.backup = true) == true, "db.backup = true");
+        test(db.backup == true, "db.backup == true");
+        test((db.backup = false) == false, "db.backup = false");
+
+        test(db.locked == false, "db.locked == false");
+        test((db.locked = true) == true, "db.locked = true");
+        test(db.locked == true, "db.locked == true");
+        test((db.locked = false) == false, "db.locked = false");
+
+        puts("version = " + db.version + "\n");
+        test((db.version = 124) == 124, "db.version = 124");
+        test(db.version == 124, "db.version == 124");
+        puts("size = " + db.size + "\n");
+        test(db.type == "tTyp", "db.type == tTyp");
+        test(db.creator == "tCid", "db.creator == tCid");
+        test(db.res == false, "db.res == false");
+        test(db.name == "OrbForms_testDB", "db.name");
+        test((db.name = "Renamed_testDB") == "Renamed_testDB", "db.name");
+        test(db.name == "Renamed_testDB", "db.name");
+        db.name = "OrbForms_testDB";
+        test(db.name == "OrbForms_testDB", "db.name");
+        test(db.inrom == false, "db.inrom");
+        db.close();
+    } else {
+        test(false, "Unable to create OrbForms_testDB");
+    }
+}
+
+void test_resource() {
+    Database db;
+    DBRecord rec;
+    int i;
+    string type;
+    int id;
+    Data d = { 0x12345678, 0x9abc, 0xde, 3.141592, "mystring" };
+    DBRecordStream dbstream;
+    
+    if (db.open("OrbForms_testDB", true)) {
+        db.deldb();
+    }
+    if (db.create("OrbForms_testDB", "tTyp", "tCid", true)) {
+        db.newres("text", 12, rec);
+        test(rec.write(&d, typeof(d), 1) == 5, "rec.write() == 5");
+        rec.close();
+        
+        test(db.newres("APPL", 1234, rec), "db.newrec");
+        //rec.write(&d, "iwcfs", 1);
+        dbstream.rec = rec;
+        test(dbstream.write(&d, "iwcfl8.", 1) == true, "stream.write");
+        test(rec.size == 19, "rec.size"); // 20 if using iwcfs
+        rec.offset = 2;
+        //rec.read(&i, "i", 1);
+        test(dbstream.readInt(&i) == true, "stream.readInt");
+        test(i == 0x56789abc, "rec.read()");
+        rec.erase();
+        rec.write(&i, typeof(i), 1);
+        test(rec.size == 4, "erase, rec.size == 4");
+        rec.close();
+        
+        test(db.getres("text", 12, rec), "db.getres");
+        d.s = "yourstring";
+        test(rec.read(&d, typeof(d), 1) == 5, "rec.read() == 5");
+        test(d.s == "mystring", "d.s == 'mystring'");
+        rec.close();
+        
+        test(db.nrecs == 2, "nrecs == 2");
+        
+        db.removeres("text", 12);
+        test(db.getres("text", 12, rec) == false, "db.getres after removeres");
+        db.getresinfo(0, &type, &id);
+        puts("type: " + type + ", id: " + id + "\n");
+        test(type == "APPL", "getresinfo type");
+        test(id == 1234, "getresinfo id");
+        
+        test(db.backup == false, "db.backup == false");
+        test((db.backup = true) == true, "db.backup = true");
+        test(db.backup == true, "db.backup == true");
+        test((db.backup = false) == false, "db.backup = false");
+        test(db.locked == false, "db.locked == false");
+        test((db.locked = true) == true, "db.locked = true");
+        test(db.locked == true, "db.locked == true");
+        test((db.locked = false) == false, "db.locked = false");
+        puts("size = " + db.size + "\n");
+        test(db.type == "tTyp", "db.type == tTyp");
+        test(db.res == true, "db.res == true");
+        test(db.creator == "tCid", "db.creator == tCid");
+        test(db.name == "OrbForms_testDB", "db.name");
+        test(db.inrom == false, "db.inrom");
+        
+        db.locked = true;
+        db.close();
+    } else {
+        test(false, "Unable to create OrbForms_testDB");
+    }
+    if (db.open("Memo Pad", true)) {
+        test(db.inrom == true, "db.inrom");
+        db.close();
+    } else {
+        test(false, "Unable to open MemoPad");
+    }
+}
+
+struct MemoAppInfo {
+    int renamed;
+    string catname[16];
+    char buff[18];
+};
+
+void test_appinfo() {
+    Database db;
+    DBRecord rec;
+    MemoAppInfo info;
+    int ai, i;
+    
+    test(db.opentc("DATA", "memo", false), "opentc()");
+    ai = db.getappinfo();
+    test(ai != -1, "db.getappinfo()");
+    test(db.getrec(ai, rec, false), "db.getrec()");
+    test(rec.read(&info, "w16l16.16ccc", 1) == 35, "rec.read()");
+    puts("change mask: " + info.renamed + "\n");
+    for (i=0;i<16;i++) {
+        puts(i + ": " + info.catname[i] + "\n");
+    }
+    info.catname[4] = "Megan";
+    info.renamed |= 0x10;
+    rec.offset = 0;
+    test(rec.write(&info, "w16l16.16ccc", 1) == 35, "rec.write()");
+    //test(rec.size == 
+    rec.close();
+    test(db.setappinfo(ai), "db.setappinfo");
+    db.close();
+}
+
+void main() {
+    Database* pdb, pdb2;
+    test_record();
+    test_resource();
+    test_appinfo();
+    memoDB();
+    test_enum();
+    
+    // test NativeObject cleanup
+    pdb = new Database;
+    pdb2 = new Database;
+    *pdb2 = *pdb;
+    
+    final();
+}

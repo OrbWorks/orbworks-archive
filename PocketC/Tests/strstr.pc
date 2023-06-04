@@ -1,0 +1,7 @@
+main() {
+    string n, h;
+    int i;
+    h = "123";
+    i = strstr(h, "1", 0);
+    puts(i);
+}

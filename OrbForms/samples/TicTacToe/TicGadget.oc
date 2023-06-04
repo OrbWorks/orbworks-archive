@@ -1,0 +1,183 @@
+// TicGadget
+// A gadget which handles drawing a tic-tac-toe board
+//
+
+struct TicGadget {
+    // A UIGadget must always be the first member of a gadget
+    UIGadget gadget;
+    
+    // default event handlers
+    void onopen();
+    void ondraw();
+    void onclose();
+    void onpendown();
+    void onpenmove();
+    void onpenup();
+    
+    // custom events
+    handler onusermove;
+    
+    // actions from app
+    void newGame();
+    
+    // internal methods
+    void drawPiece(int piece, int spot);
+    void eraseSpot(int spot);
+    void drawBoard();
+    void eraseBoard();
+    int getSpot(int x, int y);
+    
+    // public data
+    // the app needs access to the board to implement AI
+    int board[9];
+
+    // internal data
+    Draw draw;
+    int wSpot, hSpot, pieceR;
+    int penSpot;
+    bool isValid;
+    bool enabled;
+};
+
+enum { PieceNone, PieceX, PieceO };
+
+void TicGadget.onopen() {
+    // when the gadget is first opened, we want to attach
+    // our Draw object, pre-calculate some metrics based
+    // on gadget size, and enable the gadget
+    draw.attachGadget(gadget);
+    wSpot = gadget.w / 3;
+    hSpot = gadget.h / 3;
+    
+    if (hSpot > wSpot)
+        pieceR = wSpot / 2 - 4;
+    else
+        pieceR = hSpot / 2 - 4;
+    
+    enabled = true;
+}
+
+void TicGadget.ondraw() {
+    drawBoard();
+}
+
+void TicGadget.onpendown() {
+    if (!enabled)
+        return;
+        
+    penSpot = getSpot(event.x, event.y);
+    
+    if (board[penSpot] == PieceNone)
+        isValid = true;
+    else
+        isValid = false;
+    
+    if (isValid) {
+        draw.begin();
+        drawPiece(PieceX, penSpot);
+        draw.end();
+    }
+}
+
+void TicGadget.onpenmove() {
+    if (!enabled)
+        return;
+
+    if (isValid) {
+        if (penSpot == getSpot(event.x, event.y)) {
+            draw.begin();
+            drawPiece(PieceX, penSpot);
+            draw.end();
+        } else {
+            eraseSpot(penSpot);
+        }
+    }
+}
+
+void TicGadget.onpenup() {
+    if (!enabled)
+        return;
+
+    if (isValid) {
+        if (penSpot == getSpot(event.x, event.y)) {
+            draw.begin();
+            drawPiece(PieceX, penSpot);
+            draw.end();
+            board[penSpot] = PieceX;
+            onusermove();
+        } else {
+            eraseSpot(penSpot);
+        }
+    }
+}
+
+int TicGadget.getSpot(int x, int y) {
+    int col = x / wSpot;
+    int row = y / hSpot;
+    return col + row * 3;
+}
+
+void TicGadget.drawPiece(int piece, int spot) {
+    // since this is usually called multiple times from
+    // drawBoard(), draw.begin() must have been called
+    // before this method
+    int col = spot % 3;
+    int row = spot / 3;
+    int x1 = wSpot * col + 4;
+    int y1 = hSpot * row + 4;
+    int x2 = wSpot * (col + 1) - 4;
+    int y2 = hSpot * (row + 1) - 4;
+    
+    if (piece == PieceO) {
+        draw.frame(clrFG, x1 + 1, y1 + 1, x2, y2, pieceR, 1);
+    } else if (piece == PieceX) {
+        draw.line(clrFG, x1, y1, x2, y2);
+        draw.line(clrFG, x1, y2, x2, y1);
+    }	
+}
+
+void TicGadget.eraseSpot(int spot) {
+    int col = spot % 3;
+    int row = spot / 3;
+    draw.begin();
+    draw.rect(clrBG, wSpot * col + 3, hSpot * row + 3,
+        wSpot * (col + 1) - 3, hSpot * (row + 1) - 3, 0);
+    draw.end();
+}
+
+void TicGadget.drawBoard() {
+    int w = gadget.w;
+    int h = gadget.h;
+    int i;
+    
+    draw.begin();
+    draw.frame(clrDot, 1, 1, w-1, h-1, 0, 1);
+    draw.line(clrFG,w/3,0,w/3,h-1);
+    draw.line(clrFG,w/3*2,0,w/3*2,h-1);
+    draw.line(clrFG,0,h/3,w-1,h/3);
+    draw.line(clrFG,0,h/3*2,w-1,h/3*2);
+    
+    for (i=0;i<9;i++) {
+        drawPiece(board[i], i);
+    }
+    
+    draw.end();
+}
+
+void TicGadget.eraseBoard() {
+    draw.begin();
+    draw.rect(clrBG, 1, 1, gadget.w-1, gadget.h-1, 0);
+    draw.end();
+}
+
+void TicGadget.newGame() {
+    // this can only be called when the gadget is visible, since
+    // it draws the gadget
+    int i;
+    eraseBoard();
+    for (i=0;i<9;i++) {
+        board[i] = PieceNone;
+    }
+    drawBoard();
+    enabled = true;
+}

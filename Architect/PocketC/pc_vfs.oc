@@ -1,0 +1,158 @@
+// PocketC VFS compatibility functions
+
+#include "pc_format.oc"
+#include "add-ins/OrbVFS.oc"
+
+bool enumvols(int first, pointer pvolid) {
+    Volume* pVolume = new Volume;
+    VolumeMgr vmgr;
+    if (vmgr.enumerate(first, *pVolume)) {
+        *pvolid = (int)pVolume;
+        return true;
+    } else {
+        delete pVolume;
+        return false;
+    }
+}
+
+void volclose(int volid) {
+    delete ((Volume*)volid);
+}
+
+int volopenfile(int volid, string path, int mode, pointer fileid) {
+    File* pFile = new File;
+    int ret = ((Volume*)volid)->open(path, mode, *pFile);
+    if (ret == 0) {
+        *fileid = (int)pFile;
+        return 0;
+    } else {
+        delete pFile;
+        return ret;
+    }
+}
+
+int volopendir(int volid, string path, pointer dirid) {
+    Directory* pDir = new Directory;
+    int ret = ((Volume*)volid)->openDir(path, *pDir);
+    if (ret == 0) {
+        *dirid = (int)pDir;
+        return 0;
+    } else {
+        delete pDir;
+        return ret;
+    }
+}
+
+int volcreatefile(int volid, string path) {
+    return ((Volume*)volid)->create(path);
+}
+
+int volcreatedir(int volid, string path) {
+    return ((Volume*)volid)->createDir(path);
+}
+
+int voldelete(int volid, string path) {
+    return ((Volume*)volid)->del(path);
+}
+
+int volrename(int volid, string path, string newname) {
+    return ((Volume*)volid)->rename(path, newname);
+}
+
+int volexport(int volid, string name, string path) {
+    return ((Volume*)volid)->export(name, path);
+}
+
+int volimport(int volid, string path, pointer pname) {
+    return ((Volume*)volid)->import(path, (string*)pname);
+}
+
+string volgetdefaultdir(int volid, string type) {
+    return ((Volume*)volid)->getDefaultDir(type);
+}
+
+string vollabel(int volid) {
+    return ((Volume*)volid)->label;
+}
+
+void dirclose(int id) {
+    ((Directory*)id)->close();
+    delete (Directory*)id;
+}
+
+void dirsetdate(int id, int which, int date) {
+    Date d;
+    d.secs = date | 0x80000000;
+    ((Directory*)id)->setDate(which, d);
+}
+
+int dirgetdate(int id, int which) {
+    Date d;
+    d = ((Directory*)id)->getDate(which);
+    return d.secs & 0x7fffffff;
+}
+
+int dirgetattribs(int id) {
+    return ((Directory*)id)->attribs;
+}
+
+void dirsetattribs(int id, int attribs) {
+    ((Directory*)id)->attribs = attribs;
+}
+
+bool direnum(int id, int first, pointer pname, pointer pattribs) {
+    return ((Directory*)id)->enumerate(first, (string*)pname, (int*)pattribs);
+}
+
+void fileclose(int id) {
+    ((File*)id)->close();
+    delete (File*)id;
+}
+
+void filesetdate(int id, int which, int date) {
+    Date d;
+    d.secs = date | 0x80000000;
+    ((File*)id)->setDate(which, d);
+}
+
+int filegetdate(int id, int which) {
+    Date d;
+    d = ((File*)id)->getDate(which);
+    return d.secs & 0x7fffffff;
+}
+
+int fileread(int id, pointer data, string format, int count) {
+    return ((File*)id)->read(data, _convertFormat(format), count);
+}
+
+int filewrite(int id, pointer data, string format, int count) {
+    return ((File*)id)->write(data, _convertFormat(format), count);
+}
+
+void fileseek(int id, int offset) {
+    ((File*)id)->offset = offset;
+}
+
+int filetell(int id) {
+    return ((File*)id)->offset;
+}
+
+bool fileeof(int id) {
+    return ((File*)id)->eof;
+}
+
+int filesize(int id) {
+    return ((File*)id)->size;
+}
+
+void fileresize(int id, int size) {
+    ((File*)id)->size = size;
+}
+
+int filegetattribs(int id) {
+    return ((File*)id)->attribs;
+}
+
+void filesetattribs(int id, int attribs) {
+    ((File*)id)->attribs = attribs;
+}

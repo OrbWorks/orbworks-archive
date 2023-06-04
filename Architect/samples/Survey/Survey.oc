@@ -1,0 +1,98 @@
+// application code
+
+// The saved state of your application is represented
+// by the members of the AppPrefs structure
+enum { PAGE_PERSONAL, PAGE_WORK };
+
+struct AppPrefs {
+    int iRecord; // the current record
+    int iPage; // the current page
+};
+
+enum { SEX_MALE, SEX_FEMALE };
+enum { STATUS_SINGLE, STATUS_MARRIED, STATUS_DIVORCED };
+
+// The database of survey data is represented by the Entry
+// structure, which includes personal and work components
+struct PersonalData {
+    string name;
+    int age;
+    int sex;
+    int status;
+};
+
+struct WorkData {
+    string employer;
+    string position;
+    int years;
+    int distance;
+};
+
+struct Entry {
+    PersonalData per;
+    WorkData work;
+};
+
+// The global data representing our current state
+// and a copy of the current record
+AppPrefs appPrefs;
+Entry entry;
+
+// The RecordManager handles the database interactions on behalf
+// of the application - reading and writing records and managing
+// the "Record X of X" and record navigation buttons
+object RecordManager {
+    // public interface
+    void setControls(UILabel, UIButton, UIButton);
+    void next();
+    void prev();
+    void add();
+    void init();
+        
+    // private methods
+    void updateDisplay();
+    bool readRecord();
+    void writeRecord();
+    void addRecord();
+    
+    UIButton btnPrev, btnNext;
+    UILabel label;
+    int nRecords;
+};
+
+// the global record manager instance
+RecordManager recMgr;
+
+handler app.onstart() {
+    Preferences prefs;
+    // load the preferences
+    prefs.get("Srvy", false, &appPrefs, typeof(appPrefs), 1);
+    
+    // initialize the record manager
+    recMgr.init();
+    
+    // load the previously viewed form
+    switch (appPrefs.iPage) {
+        default:
+        case PAGE_PERSONAL:
+            personalForm.load();
+            break;
+        case PAGE_WORK:
+            workForm.load();
+            break;
+    }
+}
+
+handler app.onstop() {
+    Preferences prefs;
+
+    // save the record currently being edited
+    recMgr.writeRecord();
+    
+    // save the preferences
+    prefs.set("Srvy", false, &appPrefs, typeof(appPrefs), 1);
+}
+
+void doAbout() {
+    alert("Survey\nAn OrbForms Designer sample");
+}

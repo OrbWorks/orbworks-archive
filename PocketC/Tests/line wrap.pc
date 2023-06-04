@@ -1,0 +1,18 @@
+#include "textwrap.h"
+
+main() {
+    int x = 140;
+    int y = 160;
+    int t;
+    graph_on();
+    t = ticks();	
+    while (x-20 && y-20) {
+        frame(1, 20, 20, x, y, 0);
+        textwrap(20, 20, x, y, "Jeremy Dewey\n\nSkills: C++, ASM, PocketC, HTML, XML\nCourses: Autonomous robotics, discreet mathematics, British Lit\n\nReferences upon request"); // long line of text");
+        //sleep(100);
+        rect(0, 19, 19, x+1, y+1, 0);
+        x--; y--;
+    }
+    t = ticks() - t;
+    puts("no max +1: " + t + "\n");
+}

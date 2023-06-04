@@ -1,0 +1,48 @@
+//Memo Printer
+ 
+main()
+{
+int i,j,k,len;
+string name, chunk;
+char data[256];
+ 
+clear();
+do
+{
+while(1)
+{
+name=gets("Enter memo name:");
+if(!mmfind(name))
+{
+mmclose();
+alert("That memo could not be found");
+}
+else
+{
+mmclose();
+break;
+}
+}
+}while(!confirm("Print memo:\n " +name+" ?"));
+ 
+puts("Transmitting...");
+ 
+mmfind(name);
+ 
+seropen(9600,"8N1X",100);
+ 
+// the problem appears to be occuring in this while() block
+while(!mmeof())
+{
+chunk=mmgetl();
+len=strlen(chunk);
+strtoc(chunk,&data);
+sersenda(&data,len); // here?
+while(!serdata());
+}
+ 
+mmclose();
+ 
+puts("\nDone.");
+serclose();
+}

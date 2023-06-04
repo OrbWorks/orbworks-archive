@@ -1,0 +1,6 @@
+// Bloggle.oc
+// application code
+
+handler app.onstart() {
+    mainForm.load();
+}

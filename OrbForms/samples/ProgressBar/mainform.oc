@@ -1,0 +1,19 @@
+// MainForm.oc
+// Created for MainForm
+
+handler mainForm.onopen() {
+    gadProgress.setrange(0, 20);
+}
+
+handler btnGo.onselect() {
+    int i;
+    // hide the Go button while progressing
+    btnGo.visible = false;
+    // step through the whole progress bar
+    for (i=0;i<=20;i++) {
+        gadProgress.setvalue(i);
+        gadProgress.redraw();
+        sleep(100);
+    }
+    btnGo.visible = true;
+}

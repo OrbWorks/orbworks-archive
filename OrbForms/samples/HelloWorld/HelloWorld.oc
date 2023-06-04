@@ -1,0 +1,6 @@
+// HelloWorld.oc
+// Created for the main application
+
+handler HelloWorld.onstart() {
+    MainForm.load();
+}

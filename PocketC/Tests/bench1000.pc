@@ -1,0 +1,12 @@
+// Bench1000 PDE
+int x,y,t;
+main() {
+x=1000;
+y=0;
+t=ticks();
+while (x>0) {x=x-1; y=y+2;}
+t=ticks()-t;
+puts("Ticks: " + t + "\n");
+waitp();
+prand();
+}

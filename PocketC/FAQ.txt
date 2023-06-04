@@ -1,0 +1,22 @@
+How do I distribute my app?
+There are three options:
+1. You can distribute your app as an applet file (.pdb)
+This means that a user will run your app by launching PocketC (either the compiler or the free runtime), selecting your app from the list, and pressing the Execute button.
+2. You can distribute your app as an applet file with a launch app (.pdb + .prc)
+Use BuildPRC to build a application stub. This stub will sit in the application launcher. When selected, it will launch PocketC with the applet you've created.
+3. You can distribute your app as a application (.prc)
+With PocketC Desktop Edition, you can distribute your file as a single .prc file. It will appear to the user as if this is a native application, except that they will need to have PocketC installed. If PocketC is not installed, the application will let the user know that they need to install it.
+
+How do I get an app from my device to my computer?
+
+What is BuildPRC?
+
+What is the difference between the .prc files created by PDE and BuildPRC?
+
+I don't have a credit card, how do I buy PocketC?
+
+How can I run an applet on my desktop?
+
+Where can I find the PalmOS Emulator?
+
+BuildPRC isn't working (screwed up the applet name)?

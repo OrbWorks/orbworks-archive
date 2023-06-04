@@ -1,0 +1,19 @@
+// CRC gen
+main() {
+  string name;
+  int crc, len, i;
+  char c;
+  
+  name = gets("Enter Applet Name:");
+  if (!name) return;
+  
+  crc = 3141592654;
+  len = strlen(name);
+  for (i=0;i<len;i++) {
+    c = substr(name, i, 1);
+    crc = crc * c;
+    while (crc < 0) crc = crc - 1000000000;
+    crc = crc % 1000000000;
+  }
+  puts("CRC: " + crc + ", " + hex(crc) + "\n");
+}

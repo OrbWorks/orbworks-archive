@@ -1,0 +1,61 @@
+// PocketC serial compatibility functions
+
+#include "add-ins/OrbSerial.oc"
+
+Serial _serial;
+int _serialTimeout;
+
+int seropenx(int port, int baud) {
+    if (_serial.open(port, baud)) return 0;
+    return -1;
+}
+
+void sersettings(string flags, int timeout) {
+    int parity = 0;
+    if (strlen(flags) == 4) {
+        flags = strlower(flags);
+        if (flags[1] == 'e') parity = 2;
+        if (flags[1] == 'o') parity = 1;
+        _serial.settings(flags[0]-'0', flags[2]-'0', parity, flags[3], timeout);
+    }
+    _serialTimeout = timeout;
+}
+
+void serclose() {
+    _serial.close();
+}
+
+int sersend(char byte) {
+    if (_serial.sendb(byte)) return 0;
+    return -1;
+}
+
+int serrecv() {
+    char byte;
+    if (_serial.recvb(&byte)) return byte;
+    return 256;
+}
+
+int serwait(int nBytes, int timeout) {
+    if (_serial.recvwait(nBytes, timeout))
+        return 1;
+    return 0;
+}
+
+int serbuffsize(int size) {
+    return _serial.setbuffer(size);
+}
+
+int sersenda(pointer pdata, int size) {
+    if (_serial.send(pdata, "c", size)) return 0;
+    return -1;
+}
+
+int serrecva(pointer pdata, int size) {
+    if (_serial.recv(pdata, "c", size, _serialTimeout)) return 0;
+    return -1;
+}
+
+int serdata() {
+    return _serial.recvcheck();
+}

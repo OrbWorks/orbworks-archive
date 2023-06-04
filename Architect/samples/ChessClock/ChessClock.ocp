@@ -1,0 +1,242 @@
+// PocketC Architect sample
+// ChessClock - implements a chess clock, and demonstrates separation of the
+// application into resources and code.
+//
+// This project file builds the code.
+
+// app definition
+@app UIApp app {
+  name = "Chess Clock"
+  dbname = "Chess Clock"
+  file = "ChessClock.prc"
+  creator = "ChCk"
+  version = "1.1"
+
+  icon {
+    smallres = "ChessClockRes,tAIB,1001"
+    largeres = "ChessClockRes,tAIB,1000"
+  }
+
+  bitmap Bitmap bmpPawn {
+    id = 110
+    imageres = "ChessClockRes,Tbmp,110"
+  }
+
+  resstring UIString strVersion {
+    id = 134, text = "Version 1.1\n- Pause game when exiting\n- Resume previous game\n- Fixed save game bug\n- Hi-res images\n- Improved precision\n- End game sound\n- PageUp/Down pauses\nVersion 1.0\n- Initial Release"
+  }
+}
+
+@form UIForm mainForm {
+  id = 100
+  text = "Chess Clock"
+  x = 0, y = 0, w = 160, h = 160
+  menuid = 101
+    
+  menubar UIMenuBar barMain {
+    id = 101
+    menu UIMenu menuMainOptions {
+      text = "Options"
+      menuitem UIMenuItem mainOptionsAbout {
+        id = 102, sysid = 0, text = "About", shortcut = "A"
+      }
+      menuitem UIMenuItem mainOptionsVersion {
+        id = 112, sysid = 0, text = "Version History"
+      }
+    }
+  }
+  
+  checkbox UICheckbox checkboxEndSound {
+    id = 136
+    x = 0, y = 130, w = 58, h = 12
+    text = "End Sound"
+  }
+   
+  label UILabel labelName {
+    id = 115
+    x = 0, y = 20
+    text = "Game name:"
+  }
+    
+  label UILabel labelWhite {
+    id = 117
+    x = 32, y = 52
+    text = "White:"
+  }
+    
+  field UIField fieldWhite {
+    id = 118
+    x = 64, y = 52, w = 25, h = 12
+    maxchars = 5, autoshift = true, numeric = true
+  }
+    
+  label UILabel labelLength {
+    id = 127
+    x = 0, y = 36
+    text = "Game Length (minutes):"
+  }
+    
+  label UILabel labelBlack {
+    id = 119
+    x = 32, y = 68
+    text = "Black:"
+  }
+    
+  field UIField fieldBlack {
+    id = 120
+    x = 64, y = 68, w = 25, h = 12
+    maxchars = 5, autoshift = true, numeric = true
+  }
+    
+  label UILabel labelTurn {
+    id = 121
+    x = 0, y = 84
+    text = "Seconds per turn:"
+  }
+    
+  field UIField fieldAdd {
+    id = 122
+    x = 32, y = 100, w = 16, h = 12
+    maxchars = 3, autoshift = true, numeric = true
+  }
+    
+  popup UIPopup popupGames {
+    id = 125
+    x = 56, y = 20, w = 75, h = 12
+    text = "Select a game"
+  }
+    
+  list UIList listGames {
+    id = 126
+    x = 56, y = 20, w = 80, h = 55
+    triggerid = 125
+  }
+    
+  button UIButton buttonStart {
+    id = 106
+    x = 1, y = 147, w = 54, h = 12
+    text = "Start Game"
+  }
+    
+  button UIButton buttonSave {
+    id = 123
+    x = 87, y = 147, w = 34, h = 12
+    text = "Save"
+  }
+    
+  button UIButton buttonDelete {
+    id = 124
+    x = 125, y = 147, w = 34, h = 12
+    text = "Delete"
+  }
+    
+  popup UIPopup popupAddType {
+    id = 116
+    x = 52, y = 99, w = 73, h = 12
+    text = "Added before"
+  }
+    
+  checkbox UICheckbox checkboxTurnSound {
+    id = 135
+    x = 0, y = 116, w = 64, h = 12
+    text = "Turn Sound"
+  }
+    
+  list UIList listAddType {
+    id = 133
+    x = 52, y = 99, w = 60, h = 33
+    triggerid = 116
+  }
+}
+  
+@form UIForm gameForm {
+  id = 103
+  text = "Game in Progress"
+  x = 2, y = 2, w = 156, h = 156
+  modal = true
+    
+  label UILabel labelWhiteTime {
+    id = 105
+    x = 6, y = 36
+    fontid = 6, text = "00.00.00"
+  }
+
+  label UILabel labelBlackTime {
+    id = 104
+    x = 86, y = 36
+    fontid = 6, text = "00.00.00"
+  }
+
+  label UILabel label107 {
+    id = 107
+    x = 6, y = 20
+    fontid = 1, text = "White"
+  }
+
+  label UILabel label108 {
+    id = 108
+    x = 86, y = 20
+    fontid = 1, text = "Black"
+  }
+
+  button UIButton buttonTurn {
+    id = 109
+    x = 3, y = 125, w = 99, h = 28
+    text = "Turn", fontid = 7
+  }
+
+  label UILabel labelDelay {
+    id = 111
+    x = 54, y = 110
+    text = "Delay: 000"
+  }
+
+  button UIButton buttonCancel {
+    id = 113
+    x = 105, y = 125, w = 48, h = 12
+    text = "Cancel"
+  }
+
+  button UIButton buttonPause {
+    id = 114
+    x = 105, y = 141, w = 48, h = 12
+    text = "Begin"
+  }
+}
+
+@form UIForm nameForm {
+  id = 128
+  text = "Game Name"
+  x = 2, y = 100, w = 156, h = 58
+  modal = true
+   
+  label UILabel label129 {
+    id = 129
+    x = 6, y = 22
+    text = "Name:"
+  }
+
+  field UIField fieldName {
+    id = 130
+    x = 40, y = 22, w = 110, h = 12
+    maxchars = 36, autoshift = true
+  }
+
+   button UIButton buttonNameSave {
+    id = 131
+    x = 5, y = 40, w = 32, h = 12
+    text = "Save"
+  }
+
+  button UIButton buttonNameCancel {
+    id = 132
+    x = 42, y = 40, w = 32, h = 12
+    text = "Cancel"
+  }
+}
+
+// source files
+#include "ChessClock.oc"
+#include "mainform.oc"
+#include "gameForm.oc"
+#include "nameForm.oc"

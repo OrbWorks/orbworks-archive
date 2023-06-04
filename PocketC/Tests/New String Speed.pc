@@ -1,0 +1,91 @@
+// New String Speed
+#define TESTSTART t = ticks(); for (i=0;i<1000;i++) {
+#define TESTEND } t = ticks() - t;
+
+main() {
+    int t, i, j, fort;
+    string s = "hello", ss = "bob", sss = "elephant";
+    s = s + "!"; // make sure s is not a const.
+    ss = ss + "@";
+    sss = sss + "@";
+    
+    TESTSTART
+        ;
+    TESTEND
+    puts("<none>:\t" + t + "\n");
+    fort = t;
+
+    TESTSTART
+        5;
+    TESTEND
+    puts("int:\t\t" + (t-fort) + "\n");
+
+    TESTSTART
+        "";
+    TESTEND
+    puts("empty:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        "const";
+    TESTEND
+    puts("const:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s;
+    TESTEND
+    puts("s:\t\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s = "a" + "const";
+    TESTEND
+    puts("s=c+c:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s = ss + "const";
+    TESTEND
+    puts("s=s+c:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s = ss + sss;
+    TESTEND
+    puts("s=s+s:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s = "const";
+    TESTEND
+    puts("s=c:\t\t" + (t-fort) + "\n");
+    
+    s = "1" + "2";
+    TESTSTART
+        s == "const";
+    TESTEND
+    puts("s==c:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        s == ss;
+    TESTEND
+    puts("s==s:\t" + (t-fort) + "\n");
+
+    s = "a";
+    TESTSTART
+        s == "b";
+    TESTEND
+    puts("s(c)==c:\t" + (t-fort) + "\n");
+    // s(c) means that s is reference to a constant
+    
+    TESTSTART
+        s = 5;
+    TESTEND
+    puts("s=5:\t" + (t-fort) + "\n");
+
+    TESTSTART
+        j = "1";
+    TESTEND
+    puts("i=c:\t" + (t-fort) + "\n");
+
+    s = "1" + "1";
+    TESTSTART
+        j = s;
+    TESTEND
+    puts("i=s:\t" + (t-fort) + "\n");
+}

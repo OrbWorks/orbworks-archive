@@ -1,0 +1,50 @@
+<p>Native gadgets are an easy way to create rich, responsive user
+interfaces. The following documentation explains the rules for creating them,
+but reading the sample code will be extremely useful. The SampleAddIn
+(samples\Add-ins\SampleAddIn) implements a native gadget called the TargetGadget.
+The NativeGadget sample uses this gadget.</p>
+<h3>Native Gadget IDs</h3>
+<p>Gadgets are implemented as structs in OrbC, so the methods of a gadget
+have the struct pointer as the first parameter. Similar to native structs, a
+gadget implemented natively has a first field in OrbC memory which is its
+id. Unlike a native struct, this id is based on the resource id of the Palm OS
+control.</p>
+<h3>Associated Data</h3>
+<p>Each instance of a native gadget can have native data associated
+with it. This data should be allocated in the onopen handler and set using the
+OrbC native interface function <code>gadget_set_data</code>. For other
+method calls, this data can be retrieved by popping the struct pointer,
+dereferencing it to retrieve the id, and calling <code>gadget_get_data</code>.
+The data should be freed in the onclose handler, and the data pointer should be
+set to null.</p>
+<h3>Drawing and Bounds</h3>
+<p>When drawing in a gadget, the native code must honor the gadget's bounds
+which are relative to the containing form. When a gadget's handler is called,
+the active drawing window will be the form containing the gadget. In order to
+draw in the gadget, you must add it's x and y coordinates to the points you plan to
+draw (see the sample for an example). Optionally, you may want to set a clipping
+rectangle to the location and size of the gadget to prevent accidentally
+drawing on the form.</p>
+<h3>Retrieving Event Data</h3>
+<p>When the gadget's native handler is called, you may need to retrieve the
+event data (such as event.x in OrbC code). To do this, call the Event struct's property method (find the index in orbc.sys). See the sample code
+for an example.</p>
+<h3>Calling Custom Event Handlers</h3>
+<p>Custom event handlers are stored as code pointers in the gadget struct. The
+handler is stored as an int which is 0 if the custom event is not handled by the
+instance, or the address of the method if it is handled. If implemented, the
+handler should be called by pushing the pointer to the gadget onto the stack
+and using <code>vm_call</code> to call the method.</p>
+<p>The location of the event handler's address is determined by the location of
+the handler declaration. For example, if the gadget's first member is a UIGadget
+(which is must be), and the second member is &quot;<code>handler customEvent</code>&quot;,
+then the offset of the handler is 1. For example:</p>
+<pre>struct NativeGadget {
+  // the UIGadget is required to be the first field.
+  // it contains one member, which is the resource id
+  // of the gadget.
+  UIGadget gadget; // location 0
+  void someMethod(); // takes no space in the struct
+  handler onCustomEvent; // location 1
+  int state; // location 2;
+};</pre>

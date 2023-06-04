@@ -1,0 +1,50 @@
+// PocketC string compatibility functions
+
+string strupr(string s) {
+    return strupper(s);
+}
+
+string strlwr(string s) {
+    return strlower(s);
+}
+
+void strtoc(string str, pointer ptr) {
+    strstoc(str, (char*)ptr);
+}
+
+string ctostr(pointer ptr) {
+    return strctos((char*)ptr);
+}
+
+int strtok(string source, pointer res, string delims, int first) {
+    int i, j;
+    int slen = strlen(source);
+    int dlen = strlen(delims);
+    int count = 1;
+    string tok;
+    
+    if (res == null) {
+        for (i=first;i<slen;i++) {
+            for (j=0;j<dlen;j++) {
+                if (source[i] == delims[j]) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+    if (first > slen)
+        return -1;
+    for (i=first;i<slen;i++) {
+        for (j=0;j<dlen;j++) {
+            if (source[i] == delims[j]) {
+                *res = tok;
+                return i+1;
+            }
+        }
+        tok += source[i];
+    }
+    *res = tok;
+    return slen + 1;
+}

@@ -1,0 +1,13 @@
+MathLib is not required for the use of PocketC. However, many floating point
+functions are not available if MathLib does not reside on your PalmPilot. See
+the library routines documentation to see which functions require MathLib.
+
+MathLib is a free shared library that can be used by any OS 2.0 Pilot program
+that needs IEEE 754 double precision math functions. It's distributed under the
+terms of the GNU General Public License, and is freely available with full
+source code and documentation at the MathLib Information web page. It's not a
+part of the PocketC program, and you're not paying anything for its use; a copy
+is simply included in this archive for your convenience.
+
+For more information on MathLib, see the MathLib webpage at
+http://www.probe.net/~rhuebner/mathlib.html

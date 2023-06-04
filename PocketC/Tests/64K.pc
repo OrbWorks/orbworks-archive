@@ -1,0 +1,92 @@
+// 64K test
+#define code256 -x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;-x;
+
+int x;
+
+// 4K function
+funcA() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 8K function
+funcB() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 12K function
+funcC() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 16K function
+funcD() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 20K function
+funcE() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 24K function
+funcF() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 28 function
+funcG() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+// 32K function
+funcH() {
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+code256 code256 code256 code256
+}
+
+testLocal() {
+  int x;
+  x = 6;
+  if (x == 6) {
+    puts("good L\n");
+  }
+}
+
+testGlobal() {
+  x = 6;
+  if (x == 6) {
+    puts("good G\n");
+  }
+}
+
+main() {
+  int x=8;
+  while (x > 0) {
+    puts(x-- + "\n");
+  }
+  testGlobal();
+  testLocal();
+}

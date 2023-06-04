@@ -1,0 +1,139 @@
+// PocketC Architect sample
+// SimpleCalc - implements a simple calculator
+
+// app definition
+@app UIApp SimpleCalc {
+  name = "Simple Calc"
+  dbname = "SimpleCalc"
+  creator = "OFs2"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form UIForm mainForm {
+    id = 100
+    text = "Simple Calc"
+    x = 0, y = 0, w = 160, h = 160
+    menuid = 118
+
+    menubar UIMenuBar mbarMain {
+      id = 118
+      menu UIMenu menuOptions {
+        text = "Options"
+        menuitem UIMenuItem miOptionsAbout {
+          id = 119, sysid = 0, text = "About...", shortcut = "A"
+        }
+      }
+    }
+
+    field UIField fldResult {
+      id = 101
+      x = 27, y = 18, w = 106, h = 20
+      fontid = 6, leftanchor = false, maxchars = 36
+      underline = false, editable = false, autoshift = true, numeric = true
+    }
+
+    button UIButton key7 {
+      id = 102
+      x = 27, y = 40, w = 25, h = 25
+      text = "7"
+    }
+
+    button UIButton key8 {
+      id = 103
+      x = 54, y = 40, w = 25, h = 25
+      text = "8"
+    }
+
+    button UIButton key9 {
+      id = 104
+      x = 81, y = 40, w = 25, h = 25
+      text = "9"
+    }
+
+    button UIButton keyDiv {
+      id = 105
+      x = 108, y = 40, w = 25, h = 25
+      text = "/"
+    }
+
+    button UIButton key4 {
+      id = 106
+      x = 27, y = 67, w = 25, h = 25
+      text = "4"
+    }
+
+    button UIButton key5 {
+      id = 107
+      x = 54, y = 67, w = 25, h = 25
+      text = "5"
+    }
+
+    button UIButton key6 {
+      id = 108
+      x = 81, y = 67, w = 25, h = 25
+      text = "6"
+    }
+
+    button UIButton keyMult {
+      id = 109
+      x = 108, y = 67, w = 25, h = 25
+      text = "x"
+    }
+
+    button UIButton key1 {
+      id = 110
+      x = 27, y = 94, w = 25, h = 25
+      text = "1"
+    }
+
+    button UIButton key2 {
+      id = 111
+      x = 54, y = 94, w = 25, h = 25
+      text = "2"
+    }
+
+    button UIButton key3 {
+      id = 112
+      x = 81, y = 94, w = 25, h = 25
+      text = "3"
+    }
+
+    button UIButton keySub {
+      id = 113
+      x = 108, y = 94, w = 25, h = 25
+      text = "-"
+    }
+
+    button UIButton key0 {
+      id = 114
+      x = 27, y = 121, w = 25, h = 25
+      text = "0"
+    }
+
+    button UIButton keyClear {
+      id = 115
+      x = 54, y = 121, w = 25, h = 25
+      text = "C"
+    }
+
+    button UIButton keyEq {
+      id = 116
+      x = 81, y = 121, w = 25, h = 25
+      text = "="
+    }
+
+    button UIButton keyAdd {
+      id = 117
+      x = 108, y = 121, w = 25, h = 25
+      text = "+"
+    }
+  }
+}
+
+// source files
+#include "SimpleCalc.oc"
+#include "mainform.oc"

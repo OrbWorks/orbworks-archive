@@ -1,0 +1,180 @@
+// Flip book
+#include "buttonsLight.h"
+#include "FlipBook2.pc"
+#library "PToolboxLib"
+
+drawFrame(int fr, int c) {
+  int l, p, nl, np, il, ip;
+  
+  SetFore(c);
+  
+  nl = page_lines[fr];
+  il = page_iline[fr];
+  for (l=0;l<nl;l++) {
+    np = line_pix[il];
+    ip = line_ipix[il]+1;
+    // draw a line
+    for (p=1;p<np;p++) {
+      line(1, pix_x[ip-1], pix_y[ip-1], pix_x[ip], pix_y[ip]);
+      ip++;
+    }
+    il++;
+  }
+  SetFore(3);
+}
+
+play() {
+  int f, t;
+  
+  set_status("Playing...");
+  for (f=0;f<nPages+1;f++) {
+    t = ticks();
+    rect(0, 1, 40, 159, 130, 0);
+    drawFrame(f, 3);
+    do
+      sleep(100);
+    while (ticks() < t + 30);
+  }
+  sleep(1000);
+  clear_status();
+  
+  redraw_edit();
+}
+
+myExit() {
+  exitflag = 1;
+}
+
+clr() {
+  page_lines[0] = 0;
+  page_iline[0] = 0;
+  nPages = nPix = nLines = 0;
+  redraw_edit();
+}
+
+myAtExit() {
+  saveBook("currentBook");
+  SetDepth(1);
+}
+
+@doc "Handler for creating a new frame";
+newFrame() {
+  rect(0, 1, 40, 159, 130, 0);
+  drawFrame(nPages, 1);
+  nPages++;
+  page_lines[nPages] = 0;
+  page_iline[nPages] = nLines;
+}
+
+abs(int i) {
+  if (i < 0)
+    return -i;
+  return i;
+}
+
+fabs(float f) {
+  if (f < 0)
+    return -f;
+  return f;
+}
+
+getLine() {
+  int x, y, ox, oy, lx, ly;
+  float t1, t2, at;
+  int len;
+  int nOpt, doOpt;
+  
+  ox = x = penx();
+  oy = y = peny();
+
+  page_lines[nPages]++; // one more line in this frame
+  line_ipix[nLines] = nPix;
+  pix_x[nPix] = x;
+  pix_y[nPix] = y;
+  line_pix[nLines] = 1;
+  nPix++;
+  while (event(1)==4) {
+    lx = x; ly = y;
+    x = penx(); y = peny();
+    line(1, lx, ly, x, y);
+    
+    if (!doOpt) { // we don't have enough pixels yet
+      pix_x[nPix] = x;
+      pix_y[nPix] = y;
+      line_pix[nLines]++;
+      nPix++;
+      doOpt = 1;
+    } else {
+      len = abs(lx-ox) + abs(ly-oy); // approx len
+      if (ox == lx)
+        t1 = 1.5708;
+      else
+        t1 = atan(((float)ly-oy)/(lx-ox));
+      if (ox == x)
+        t2 = 1.5708;
+      else
+        t2 = atan(((float)y-oy)/(x-ox));
+      
+      at = at + (t1-t2)*len;
+      if (fabs(at) < 1) { // make it one line. the '1' is arbitrary
+        pix_x[nPix-1] = x;
+        pix_y[nPix-1] = y;
+        nOpt++;
+      } else {
+        pix_x[nPix] = x;
+        pix_y[nPix] = y;
+        line_pix[nLines]++;
+        nPix++;
+        ox = lx; oy = ly;
+        at = 0;
+      }
+    }
+
+    set_status("P: " + line_pix[nLines] + " O: " + nOpt + " T: "+ nPix);
+  }
+  nLines++;
+}
+
+redraw_edit() {
+  refreshAll();
+  textalign(0);
+  frame(1, 1, 40, 159, 130, 0);
+  rect(0, 1, 40, 159, 130, 0);
+  if (nPages > 0)
+    drawFrame(nPages-1, 1);
+  drawFrame(nPages, 3);
+}
+
+main() {
+  int e, px, py;
+  prand(5);
+  SetDepth(2);
+  graph_on();
+  title("Flip book");
+  frame(1, 1, 40, 159, 130, 0);
+  loadBook("currentBook");
+  atexit(myAtExit);
+  
+  buttonInit();
+  addButton("New", newFrame, 1, 18, 26, 29);
+  addButton("Play", play, 30, 18, 54, 29);
+  addButton("Clear", clr, 108, 18, 131, 29);
+  addButton("Exit", myExit, 135, 18, 159, 29);
+  redraw_edit();
+  
+  textalign(0);  
+  while (1) {
+    if (exitflag)
+      break;
+    e=event(1);
+    px = penx();
+    py = peny();
+    if (e==2) {
+      if (py > 40 && py < 130)
+        getLine();
+      else
+        bLevent();
+    }
+  }
+  saveBook("currentBook");
+}

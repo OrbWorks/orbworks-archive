@@ -1,0 +1,16 @@
+struct S {
+    string name;
+    int i;
+};
+
+S ss[3];
+S ss2[3];
+float f[3];
+float f2[3];
+
+void main() {
+    int i;
+    for (i=0;i<3;i++)
+        //ss[i] = ss2[i];
+        f[i] = f2[i];
+}

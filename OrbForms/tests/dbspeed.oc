@@ -1,0 +1,17 @@
+void main() {
+    Database db;
+    DBRecord rec;
+    char data[64];
+    int i, id, t;
+    
+    db.create("speed test", "type", "Ocid", false);
+    t = ticks();
+    for (i=0; i<1300; i++) {
+        db.newrec(&id, rec);
+        rec.write(data, "c", 64);
+        rec.close();
+    }
+    t = ticks() - t;
+    db.deldb();
+    puts(t + " ticks\n");
+}

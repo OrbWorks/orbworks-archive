@@ -1,0 +1,84 @@
+// PocketC memo compatibility functions
+
+Memo _memo;
+bool _isMemoOpen = false;
+void _closeMemo() {
+    if (_isMemoOpen) {
+        _memo.close();
+        _isMemoOpen = false;
+    }
+}
+
+bool mmnew() {
+    _closeMemo();
+    if (_memo.create()) {
+        _isMemoOpen = true;
+        return true;
+    }
+    return false;
+}
+
+bool mmfind(string name) {
+    _closeMemo();
+    if (_memo.find(name)) {
+        _isMemoOpen = true;
+        return true;
+    }
+    return false;
+}
+
+int mmfindx(string name) {
+    _closeMemo();
+    if (_memo.find(name)) {
+        _isMemoOpen = true;
+        return _memo.index;
+    }
+    return -1;
+}
+
+bool mmopen(int index) {
+    _closeMemo();
+    if (_memo.open(index)) {
+        _isMemoOpen = true;
+        return true;
+    }
+    return false;
+}
+
+void mmputs(string str) {
+    if (_isMemoOpen)
+        _memo.puts(str);
+}
+
+string mmgetl() {
+    if (_isMemoOpen)
+        return _memo.line();
+    else
+        return "";
+}
+
+bool mmeof() {
+    if (_isMemoOpen)
+        return _memo.end();
+    else
+        return true;
+}
+
+void mmrewind() {
+    if (_isMemoOpen)
+        _memo.rewind();
+}
+
+void mmclose() {
+    _closeMemo();
+}
+
+void mmdelete() {
+    if (_isMemoOpen)
+        _memo.remove();
+    _isMemoOpen = false;
+}
+
+int mmcount() {
+    return _memo.nrecs;
+}

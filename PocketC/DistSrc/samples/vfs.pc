@@ -1,0 +1,34 @@
+// vfs sample
+#include "../UtilCode/vfserror.h"
+
+enumdir(int vol, string path) {
+    int dir, f, attr, d;
+    int first = true;
+    string name, out;
+    
+    puts("  " + path + ":\n");
+    if (0 == volopendir(vol, path, &dir)) {
+        while (direnum(dir, first, &name, &attr)) {
+            first = false;
+            out = "    " + name + ": " + hex(attr);
+            if ((attr & vfsAttrDirectory) == 0) {
+                volopenfile(vol, path + name, vfsModeRead, &f);
+                out = out + " : " + filesize(f) + " : " + datex(filegetdate(f, 2), 2);
+                fileclose(f);
+            }
+            puts(out + "\n");
+        }
+        puts("  [end]\n");
+    }
+}
+
+main() {
+    int vol;
+    int first = true;
+    while (enumvols(first, &vol)) {
+        puts("vol: " + vollabel(vol) + "\n");
+        enumdir(vol, "/");
+        first = false;
+    }
+    puts("[end]\n");
+}

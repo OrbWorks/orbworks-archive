@@ -1,0 +1,1194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Library Routines</title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h1>Built-in Functions</h1>
+
+<ul>
+<li><a href="#BasicIO">Basic I/O</a>
+<li><a href="#EventSystem">Event System</a>
+<li><a href="#String">String</a>
+<li><a href="#Math">Math</a>
+<li><a href="#Graphics">Graphics</a>
+<li><a href="#ColorTables">Color Tables</a>
+<li><a href="#Sound">Sound</a>
+<li><a href="#TimeDate">Time/Date</a>
+<li><a href="#DatabaseIO">Database I/O</a>
+<li><a href="#MemoPadIO">Memo Pad I/O</a>
+<li><a href="#SerialIO">Serial I/O</a>
+<li><a href="#System">System</a>
+<li><a href="#MemoryManagment">Memory Management</a>
+<li><a href="#Networking">Networking</a>
+<li><a href="#VFS">VFS</a>
+</ul>
+
+<h3><a name="BasicIO">Basic I/O</a></h3>
+
+<ul>
+  <li><i>puts(string text)</i> - append a string to the output form. Does not add a
+    newline. (To add a newline, add a &quot;\n&quot; to the end of your string). </li>
+  <li><i>gets(string prompt)</i> - presents an input dialog with the given string as a
+    prompt. Returns a string if the user pressed OK, or an empty string if the user presses
+    Cancel. The dialog can contain 2 lines of text, use the '\r' character to wrap to the
+    second line.</li>
+  <li><i>getsd(string prompt, string defaultValue)</i> - presents an input dialog with
+    the given string as a prompt and a default value in the input field. Returns a string if
+    the user pressed OK, or an empty string if the user presses Cancel. The dialog can contain
+    2 lines of text, use the '\r' character to wrap to the second line.</li>
+  <li><i>getsi(int x, int y, int w, string defaultValue)</i> - presents an input dialog
+    at the x, y coordinates specified, with
+    the given string as a default value. The input dialog will have an edit
+    field of width <i>w</i> (though the dialog will be larger). A string is
+    returned when the user presses OK (there is no cancel option).</li>
+  <li><i>getsm(int x, int y, int w, int lines, string defaultValue)</i> - exactly
+    like <i>getsi()</i>, but the edit field created is <i>lines</i> lines tall.</li>
+  <li><i>alert(string msg)</i> - displays an alert dialog with the given text.</li>
+  <li><i>alertc(string title, string message, string buttons, int type)</i> - 
+  displays an alert dialog with the specified title, message, and buttons. <i>
+  buttons</i> is the name of a button, or a string containing several buttons 
+  names separated by a colon (e.g. &quot;OK:Cancel&quot;). Returns the 0-based index of 
+  the button pressed. <i>type</i> is one of the following: [0] info, [1] 
+  question, [2] warning, [3] error.</li>
+  <li><i>promptc(string title, string message, string buttons, int type, pointer 
+  pentry)</i> - displays a prompt dialog with the specified title, message, and 
+  buttons. <i>buttons</i> is the name of a button, or a string containing 
+  several buttons names separated by a colon (e.g. &quot;OK:Cancel&quot;). The entered 
+  string is placed in the string pointed to by pentry. Returns the 0-based index 
+  of the button pressed. <i>type</i> is one of the following: [0] info, [1] 
+  question, [2] warning, [3] error.</li>
+  <li><i>confirm(string msg)</i> - pops up an alert dialog with the given text and Yes/No
+    buttons. Returns 1 for Yes, 0 for No. </li>
+  <li><i>clear()</i> - clears the output form. </li>
+</ul>
+
+<h3><a name="EventSystem">Event System</a></h3>
+
+<ul>
+  <li><i>event(int time)</i> - check for events in the event queue. If time is zero,
+    event returns immediately. If time is one, the function waits indefinitely
+    for an event to occur. If time is &gt;1, time represents the timeout period
+    in 1/100s of a second, e.g. event(50) waits for up to one half second. Events are as follows: [0]
+    none, [1] key (character), [2] pen down, [3] pen up, [4] pen move, [5] page
+    up key (or 5-way up), [6] page down key (or 5-way down), [7-10] hard key1-4, [11] menu button, [12]
+    launch/home button, [13] find button, [14] calc button, [15] HotSync button,
+    [16] 5-way left, [17] 5-way right, [18] 5-way select, [23] redraw, [24] 
+  resize.
+    In order to receive messages from the hard
+    keys or silkscreen buttons (7-15), you must call the corresponding hook function (see below). 
+  In order to receive the resize event, you must call enableresize() before 
+  opening the graphics form.</li>
+  <li><i>key()</i> - retrieve the character written during the last event() </li>
+  <li><i>penx()</i> - retrieve the x value of the pen event processed by the last call to
+    wait, waitp, or event. Also retrieves the new form width for resize event.</li>
+  <li><i>peny()</i> - retrieve the y value of the previous pen event. Also 
+  retrieves the new form height for resize event.</li>
+  <li><i>npenx()</i> - retrieve the x value of the previous pen event in native
+    coordinates. </li>
+  <li><i>npeny()</i> - retrieve the y value of the previous pen event in native
+    coordinates. </li>
+  <li><i>pstate()</i> - returns 1 if the pen in down, 0 otherwise. </li>
+  <li><i>bstate()</i> - returns the state of the hard buttons. Returns [0] neither, [1] page
+    up, [-1] page down. </li>
+  <li><i>wait()</i> - wait for a pen or character event. Returns the character written to
+    the graffiti area or -1 for pen event. Use <em>penx()</em> and <em>peny() </em>to retrieve
+    the location of a pen event, or <em>key() </em>to retrieve the character.</li>
+  <li><i>waitp()</i> - wait for a pen event. Use <em>penx()</em> and <em>peny() </em>to
+    retrieve the location of a pen event.</li>
+  <li><i>getc()</i> - wait for and return a character written to the graffiti area.</li>
+  <li><em>hookhard(int bHook)</em> - if <em>bHook</em> is nonzero, hard keys (address button,
+    etc.) are not processed by the OS. Instead, they are intercepted by the <em>event()</em>
+    function. If <em>bHook</em> is zero, hard key presses are no longer intercepted.</li>
+  <li><em>hookmenu(int bHook)</em> - if <em>bHook</em> is nonzero, the menu silkscreen button is
+    not processed by the OS. Instead, it is intercepted by the <em>event()</em> function. If <em>bHook</em>
+    is zero, menu button presses are no longer intercepted.</li>
+  <li><em>hooksilk(int bHook)</em> - if <em>bHook</em> is nonzero, all silkscreen buttons
+    are not processed by the OS. Instead, it is intercepted by the <em>event()</em> function. If <em>bHook</em>
+    is zero, silkscreen button presses are no longer intercepted.</li>
+  <li><em>hooksync(int bHook)</em> - if <em>bHook</em> is nonzero, the HotSync
+    cradle button is
+    not processed by the OS. Instead, it is intercepted by the <em>event()</em> function. If <em>bHook</em>
+    is zero, the button events are no longer intercepted.</li>
+</ul>
+
+<h3><a name="String">String</a></h3>
+
+<ul>
+  <li><i>strlen(string)</i> - returns the length of a string. </li>
+  <li><i>substr(string, int first, int len)</i> - returns a string which consists of len
+    characters from the original string starting at first character. (e.g. <code>substr(&#8220;Hello&#8221;,
+    1, 3)</code> returns &#8220;ell&#8221;) </li>
+  <li><i>strleft(string, int len)</i> - returns the len leftmost characters from the
+    string. </li>
+  <li><i>strright(string, int len)</i> - returns the len rightmost characters from the
+    string. </li>
+  <li><i>strupr(string)</i> - returns the original string in all uppercase. </li>
+  <li><i>strlwr(string)</i> - returns the original string in all lowercase. </li>
+  <li><i>strstr(string str, string sub, int first)</i> - searches str for a substring sub
+    starting at the character first. Returns the starting position of sub within str or -1 on
+    failure. </li>
+  <li><i>hex(int n)</i> - returns the hexadecimal representation of <i>n</i> </li>
+  <li><i>format(float f, int prec)</i> - returns the string representation of <i>f</i> with <i>prec</i>
+    decimal places.</li>
+  <li><em>strtoc(string str, pointer ptr)</em> - fill the array of chars pointed to by <em>ptr</em>
+    with the characters from the string <em>str</em>. <em>ptr</em> must either point to an
+    array of characters long enough to hold the string plus the terminating 0, or it must be a
+    pointer alloced with <em>malloc()</em>. If the pointer was allocated by <em>malloc()</em>,
+    you must be sure that all the memory is of type char by calling <em>settype()</em>.</li>
+  <li><em>ctostr(pointer ptr)</em> - takes the char array pointed to by <em>ptr</em>, and
+    returns a string composed of its characters. The memory pointed to by <em>ptr</em> must be
+    of type char and must end with a 0.</li>
+  <li><i>strtok(string source, pointer result,&nbsp; string delims, int first)</i>
+    - breaks a string into tokens which are delimited by a character from the <i>delims</i>
+    string. The resulting string is stored in the location referenced by the
+    pointer <i>res</i>. Returns the location to use for <i>first</i> for the
+    next call, or -1 if the end was already reached. If <i>result</i> is 0 or
+    null, returns the number of tokens in the string. Example: string result;
+    int first; first = strtok(&quot;1:2#3&quot;, &amp;result, &quot;#:&quot;,
+    0); while (first != -1) { puts(result); first = strtok(&quot;1:2#3&quot;,
+    &amp;result, &quot;#:&quot;, first); } This would print &quot;1&quot;
+    &quot;2&quot; and &quot;3&quot;</li>
+</ul>
+
+<h3><a name="Math">Math</a></h3>
+
+<ul>
+  <li><i>cos, sin, tan, acos, asin, atan, cosh, sinh, tanh, acosh, asinh, atanh (float)</i>
+    - returns the expected trigonometric value, using radians. These functions require <b>MathLib</b>
+    to be present. </li>
+  <li><i>pow(float x, float y)</i> - returns x^y. This function requires <b>MathLib</b>
+    to be present. </li>
+  <li><i>atan2(float y, float x)</i> - returns the arctangent of y/x. This function
+    requires <b>MathLib</b> to be present. </li>
+  <li><i>sqrt(float x)</i> - returns square root of x. This function requires <b>MathLib</b>
+    to be present. </li>
+  <li><i>log(float x)</i> - returns natural log of x. This function requires <b>MathLib</b> to
+    be present. </li>
+  <li><i>log10(float x)</i> - returns log base 10 of x. This function requires <b>MathLib</b>
+    to be present. </li>
+  <li><i>exp(float x)</i> - returns e^x. This function requires <b>MathLib</b> to be present. </li>
+  <li><i>rand()</i> - returns a random float between 0 and 1. </li>
+  <li><i>random(int n)</i> - returns a random int between 0 and n-1. </li>
+  <li><i>mathlib()</i> - returns 1 if MathLib is present, 0 otherwise. </li>
+</ul>
+<p>
+
+<b>Note:</b> Functions that require <b>MathLib</b> will return integer 0 if the library is
+not present. </p>
+
+<h3><a name="Graphics">Graphics</a></h3>
+
+<ul>
+  <li><b>General APIs</b>
+    <ul>
+      <li><i>graph_on()</i> - switches to the graphics form.</li>
+      <li><i>graph_off()</i> - switches from the graphics form to the output form. The
+    appearance of the graphics form is not preserved.</li>
+      <li><i>enableresize()</i> - enables resizing and resize events. This 
+      function must be called before the first call to graph_on().</li>
+      <li><i>title(string title)</i> - set the graphic form title to <i>title</i>.</li>
+      <li><i>clearg()</i> - clear the graphics form.</li>
+  <li><em>saveg()</em> - save the graphics form internally. Returns 0 on failure, 1 otherwise.</li>
+  <li><em>restoreg()</em> - restore the graphics form previously saved by a call to saveg().
+    This can only be called once for each time saveg() is called.</li>
+  <li><i>pushdraw()</i> - push the current drawing state (pen colors,
+    native/standard drawing mode, etc.). This function should be called before
+    calling any other drawing function. This does nothing on OS &lt; 3.5.</li>
+  <li><i>popdraw()</i> - pop the previous drawing state. This function should be
+    called after completing a set of drawing operations (matching the previous
+    call to pushdraw()). This does nothing on OS &lt; 3.5</li>
+  <li><i>drawnative(int bNative)</i> - sets the current drawing mode to native
+    coordinates if <i>bNative</i> is true, standard (160x160) otherwise, which
+    determines how coordinates are interpreted. You must
+    return to standard drawing mode before allowing any UI to be drawn (e.g.
+    calling alert() or confirm()). When drawing natively, first call pushdraw(),
+    then this function, complete your drawing, then popdraw() to reset the drawing
+    state. Because this mode affect OS UI (such as the find dialog box), you 
+  should only enable native drawing mode when drawing, and disable as soon as 
+  possible.</li>
+  <li><i>getscreenattrib(int attrib)</i> - get a screen attribute. Available
+    attributes are width[0], height[1], density[5].</li>
+    </ul>
+ </li>
+  <li><b>Text Operations</b>
+    <ul>
+      <li><i>text(int x, int y, string str)</i> - display a string str at locations (x,y).</li>
+      <li><i>textattr(int font, int color, int underline)</i> - set the current text drawing
+    attributes. font is a number 0-6. Available fonts are normal[0], bold[1], large[2],
+    symbol[3], symbol11[4], symbol7[5], LED[6], Large Bold[7] (OS 3.0 only). color is a number
+    0-2. Available colors are background[0], foreground[1], inverted[2]. underline is a number 0-2.
+    Underline modes are none[0], solid[1], dotted[2].</li>
+      <li><em>textalign(char alignmentYX)</em> - sets the alignment that <em>text()</em>
+    uses. The parameter is a number between 0 and 22, where the first decimal digit describes
+    the vertical alignment, and the second describes the horizontal. left[0], center[1],
+    right[2].</li>
+      <li><i>textwidth(string str)</i> - returns the width in pixels of <i>str</i>
+    with the current font settings.</li>
+    </ul>
+  </li>
+  <li><b>Drawing Primitives</b>
+    <ul>
+      <li><i>pixel(int col, int x, int y)</i> - draws a pixel at (x, y) in color col.
+    background[0], foreground[1], XOR[3].</li>
+      <li><i>line(int col, int x1, int y1, int x2, int y2)</i> - draws a line from (x1, y1)
+    to (x2, y2) in color col. background[0], foreground[1], dotted[2], XOR[3].</li>
+      <li><i>rect(int col, int x1, int y1, int x2, int y2, int radius)</i> - draws a
+    rectangle from (x1, y1) to (x2, y2) in color col with corners of radius<i> radius</i>. A
+    radius of 0 has square edges. background[0], foreground[1], XOR[3]. (This function doesn't support
+    dotted)</li>
+      <li><i>frame(int col, int x1, int y1, int x2, int y2, int radius)</i> - same as rect() but
+    not filled. background[0], foreground[1], dotted[2], XOR[3].</li>
+      <li><i>frame2(int col, int x1, int y1, int x2, int y2, int radius, int width)</i> - same as
+    frame() but allows specification of width (1-3 <em>only</em>).</li>
+      <li><i>bitmap(int x, int y, string bits)</i> - draw a bitmap at (x,y). The bits string is a
+    list of hexadecimal digits in the following form: &quot;wwxxxxxxxx...&quot; where 'ww' is
+    the width of the bitmap (i.e. '0a' is a 10-pixel wide bitmap), and 'xxx...' are the bits
+    of the bitmap, each character representing 4 pixels. So, &quot;0affc804804ffc&quot; is a
+    10x4 bitmap of a rectangle ('ffc' is a solid line, '804' represents a left and right
+    edge.) <b>Note:</b> there are several <a href="http://www.orbworks.com/palmres.html"> PocketC utilities</a> available that will
+    generate these strings for you.<pre>Example:
+A 10x4 rectangle &quot;0affc804804ffc&quot;
+8 4 2 1&nbsp; 8 4 2 1&nbsp; 8 4 2 1
+X X X X&nbsp; X X X X&nbsp; X X 0 0 = ffc
+X 0 0 0&nbsp; 0 0 0 0&nbsp; 0 X 0 0 = 804
+X 0 0 0&nbsp; 0 0 0 0&nbsp; 0 X 0 0 = 804
+X X X X&nbsp; X X X X&nbsp; X X 0 0 = ffc</pre>
+      </li>
+    </ul>
+  </li>
+  <li><b>Color</b>
+    - only available on OS 3.5+
+    <ul>
+      <li><i>getcolordepth()</i> - get the current color depth in bits per
+        pixel.</li>
+      <li><i>setcolordepth()</i> - set the current color depth. Returns 1 if
+        successful, 0 otherwise. This function will only succeed on OS 3.5+.</li>
+      <li><i>setfgi(int index)</i> - set the current foreground color to the
+        given index (see color table below). Returns the previous index. This
+        function does nothing on OS &lt; 3.5.</li>
+      <li><i>setfg(int r, int g, int b)</i> -&nbsp;set the current foreground
+        color to (r,g,b). The nearest color available at the current color
+        depth is used. This function does nothing on OS &lt; 3.5.&nbsp;</li>
+      <li><i>setbgi(int index)</i> - set the current background color to the
+        given index (see color table below). Returns the previous index. This
+        function does nothing on OS &lt; 3.5.</li>
+      <li><i>setbg(int r, int g, int b)</i> -&nbsp;set the current background
+        color to (r,g,b). The nearest color available at the current color
+        depth is used. This function does nothing on OS &lt; 3.5.</li>
+      <li><i>settextcolori(int index)</i> - set the current text color to the
+        given index (see color table below). Returns the previous index. This
+        function does nothing on OS &lt; 3.5.</li>
+      <li><i>settextcolor(int r, int g, int b)</i> -&nbsp;set the current text
+        color to (r,g,b). The nearest color available at the current color
+        depth is used. This function does nothing on OS &lt; 3.5.</li>
+      <li><i>rgbtoi(int r, int g, int b)</i> - return the index of the color nearest (r,g,b)
+        at the current color depth. Returns 0 on OS &lt; 3.5.</li>
+      <li><i>getuicolor(int item)</i> - return the system color for a given UI
+        item. Returns 0 on OS &lt; 3.5. Available items are ObjectFrame[0], ObjectFill[1], ObjectFG[2],
+        ObjectSelFill[3], ObjectSelFG[4], MenuFrame[5], MenuFill[6], MenuFG[7],
+        MenuSelFill[8], MenuSelFG[9], FieldBG[10], FieldText[11],
+        FieldTextLines[12], FieldCaret[13], FieldTextHighlightBG[14],
+        FieldTextHighlightFG[15], FieldFepRawText[16], FieldFepRawBG[17],
+        FieldFepConvText[18], FieldFepConvBG[19],
+        FieldFepUnderline[20], FormFrame[21], FormFill[22], DialogFrame[23],
+        DialogFill[24], AlertFrame[25], AlertFill[26],
+        OK[27], Caution[28], Warning[29]</li>
+      <li><i>choosecolori(string title, pointer pIndex)</i> - displays a color
+        selection dialog where <i>pIndex</i> is a pointer to an int that
+        contains the initially selected color index and is set to the selected
+        color index. Returns 0 if the user selects cancel, 1 otherwise. Returns
+        0 on OS &lt; 3.5.</li>
+    </ul>
+    <li><b>Offscreen Buffers</b>
+    <ul>
+      <li><i>bucreate(int width, int height)</i> - create an offscreen buffer of
+        the specified width and height (in standard coordinates). Returns the buffer id on
+        success, 0 on failure.</li>
+      <li><i>budelete(int id)</i> - delete the given buffer.</li>
+      <li><i>buset(int id)</i> - set the current drawing buffer where <i>id</i>
+        is a previously created buffer or 0 to specify the screen. All the text,
+        primitive, and bitmap operations will be drawn into the selected buffer.</li>
+      <li><i>bucopy(int sid, int did, int x, int y, int mode)</i> - copy all of
+        buffer <i>sid</i> to buffer <i>did</i> (or 0 for screen) at (x,y), using
+        the specified drawing mode. Available drawing modes are paint[0],
+        erase[1], mask[2], invert[3], overlay[4], paintInverse[5], swap[6].</li>
+      <li><i>bucopyrect(int sid, int xs, int ys, int w, int h, int did, int xd,
+        int yd, int mode)</i> - copy the rectangle at (xs,ys) with the given
+        width and height from buffer <i>sid</i> to buffer <i>did</i> (or 0 for
+        screen) at (xd,yd), using the specified drawing mode. Available drawing
+        modes are paint[0], erase[1], mask[2], invert[3], overlay[4],
+        paintInverse[5], swap[6].</li>
+    </ul>
+  <li><b>Resource Bitmaps</b>
+    <ul>
+      <li><i>resopen(string dbname)</i> - open the given resource database.
+        Returns the database id on success or 0 on failure.</li>
+      <li><i>resclose(int id)</i> - close the given resource database.</li>
+      <li><i>bitmapr(int bmpid, int x, int y)</i> - draw the bitmap with resource id <i>bmpid</i>
+        at (x,y). The current app .prc database (if compiled as a .prc file with
+        PocketC Dekstop Edition) is searched, along with any resource databases
+        currently opened with resopen().</li>
+      <li><i>bitmaprm(int bmpid, int x, int y, int mode)</i> - draw the bitmap with resource id <i>bmpid</i>
+        at (x,y), using the specified <i>mode</i>. The current app .prc database (if compiled as a .prc file with
+        PocketC Dekstop Edition) is searched, along with any resource databases
+        currently opened with resopen(). Available drawing modes are paint[0], 
+      erase[1], mask[2], invert[3], overlay[4], paintInverse[5], swap[6].</li>
+    </ul>
+  </li>
+</ul>
+
+<h3><a name="ColorTables">Color Tables</a></h3>
+<ul>
+        <li><b>8-bit Color Table:</b>
+        <table>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td width="24" bgColor="#ffffff">&nbsp;</td>
+              <td width="24" bgColor="#ffccff">&nbsp;</td>
+              <td width="24" bgColor="#ff99ff">&nbsp;</td>
+              <td width="24" bgColor="#ff66ff">&nbsp;</td>
+              <td width="24" bgColor="#ff33ff">&nbsp;</td>
+              <td width="24" bgColor="#ff00ff">&nbsp;</td>
+              <td width="24" bgColor="#ffffcc">&nbsp;</td>
+              <td width="24" bgColor="#ffcccc">&nbsp;</td>
+              <td width="24" bgColor="#ff99cc">&nbsp;</td>
+              <td width="24" bgColor="#ff66cc">&nbsp;</td>
+              <td width="24" bgColor="#ff33cc">&nbsp;</td>
+              <td width="24" bgColor="#ff00cc">&nbsp;</td>
+              <td width="24" bgColor="#ffff99">&nbsp;</td>
+              <td width="24" bgColor="#ffcc99">&nbsp;</td>
+              <td width="24" bgColor="#ff9999">&nbsp;</td>
+              <td width="24" bgColor="#ff6699">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>16</th>
+              <td width="24" bgColor="#ff3399">&nbsp;</td>
+              <td width="24" bgColor="#ff0099">&nbsp;</td>
+              <td width="24" bgColor="#ccffff">&nbsp;</td>
+              <td width="24" bgColor="#ccccff">&nbsp;</td>
+              <td width="24" bgColor="#cc99ff">&nbsp;</td>
+              <td width="24" bgColor="#cc66ff">&nbsp;</td>
+              <td width="24" bgColor="#cc33ff">&nbsp;</td>
+              <td width="24" bgColor="#cc00ff">&nbsp;</td>
+              <td width="24" bgColor="#ccffcc">&nbsp;</td>
+              <td width="24" bgColor="#cccccc">&nbsp;</td>
+              <td width="24" bgColor="#cc99cc">&nbsp;</td>
+              <td width="24" bgColor="#cc66cc">&nbsp;</td>
+              <td width="24" bgColor="#cc33cc">&nbsp;</td>
+              <td width="24" bgColor="#cc00cc">&nbsp;</td>
+              <td width="24" bgColor="#ccff99">&nbsp;</td>
+              <td width="24" bgColor="#cccc99">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>32</th>
+              <td width="24" bgColor="#cc9999">&nbsp;</td>
+              <td width="24" bgColor="#cc6699">&nbsp;</td>
+              <td width="24" bgColor="#cc3399">&nbsp;</td>
+              <td width="24" bgColor="#cc0099">&nbsp;</td>
+              <td width="24" bgColor="#99ffff">&nbsp;</td>
+              <td width="24" bgColor="#99ccff">&nbsp;</td>
+              <td width="24" bgColor="#9999ff">&nbsp;</td>
+              <td width="24" bgColor="#9966ff">&nbsp;</td>
+              <td width="24" bgColor="#9933ff">&nbsp;</td>
+              <td width="24" bgColor="#9900ff">&nbsp;</td>
+              <td width="24" bgColor="#99ffcc">&nbsp;</td>
+              <td width="24" bgColor="#99cccc">&nbsp;</td>
+              <td width="24" bgColor="#9999cc">&nbsp;</td>
+              <td width="24" bgColor="#9966cc">&nbsp;</td>
+              <td width="24" bgColor="#9933cc">&nbsp;</td>
+              <td width="24" bgColor="#9900cc">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>48</th>
+              <td width="24" bgColor="#99ff99">&nbsp;</td>
+              <td width="24" bgColor="#99cc99">&nbsp;</td>
+              <td width="24" bgColor="#999999">&nbsp;</td>
+              <td width="24" bgColor="#996699">&nbsp;</td>
+              <td width="24" bgColor="#993399">&nbsp;</td>
+              <td width="24" bgColor="#990099">&nbsp;</td>
+              <td width="24" bgColor="#66ffff">&nbsp;</td>
+              <td width="24" bgColor="#66ccff">&nbsp;</td>
+              <td width="24" bgColor="#6699ff">&nbsp;</td>
+              <td width="24" bgColor="#6666ff">&nbsp;</td>
+              <td width="24" bgColor="#6633ff">&nbsp;</td>
+              <td width="24" bgColor="#6600ff">&nbsp;</td>
+              <td width="24" bgColor="#66ffcc">&nbsp;</td>
+              <td width="24" bgColor="#66cccc">&nbsp;</td>
+              <td width="24" bgColor="#6699cc">&nbsp;</td>
+              <td width="24" bgColor="#6666cc">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>64</th>
+              <td width="24" bgColor="#6633cc">&nbsp;</td>
+              <td width="24" bgColor="#6600cc">&nbsp;</td>
+              <td width="24" bgColor="#66ff99">&nbsp;</td>
+              <td width="24" bgColor="#66cc99">&nbsp;</td>
+              <td width="24" bgColor="#669999">&nbsp;</td>
+              <td width="24" bgColor="#666699">&nbsp;</td>
+              <td width="24" bgColor="#663399">&nbsp;</td>
+              <td width="24" bgColor="#660099">&nbsp;</td>
+              <td width="24" bgColor="#33ffff">&nbsp;</td>
+              <td width="24" bgColor="#33ccff">&nbsp;</td>
+              <td width="24" bgColor="#3399ff">&nbsp;</td>
+              <td width="24" bgColor="#3366ff">&nbsp;</td>
+              <td width="24" bgColor="#3333ff">&nbsp;</td>
+              <td width="24" bgColor="#3300ff">&nbsp;</td>
+              <td width="24" bgColor="#33ffcc">&nbsp;</td>
+              <td width="24" bgColor="#33cccc">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>80</th>
+              <td width="24" bgColor="#3399cc">&nbsp;</td>
+              <td width="24" bgColor="#3366cc">&nbsp;</td>
+              <td width="24" bgColor="#3333cc">&nbsp;</td>
+              <td width="24" bgColor="#3300cc">&nbsp;</td>
+              <td width="24" bgColor="#33ff99">&nbsp;</td>
+              <td width="24" bgColor="#33cc99">&nbsp;</td>
+              <td width="24" bgColor="#339999">&nbsp;</td>
+              <td width="24" bgColor="#336699">&nbsp;</td>
+              <td width="24" bgColor="#333399">&nbsp;</td>
+              <td width="24" bgColor="#330099">&nbsp;</td>
+              <td width="24" bgColor="#00ffff">&nbsp;</td>
+              <td width="24" bgColor="#00ccff">&nbsp;</td>
+              <td width="24" bgColor="#0099ff">&nbsp;</td>
+              <td width="24" bgColor="#0066ff">&nbsp;</td>
+              <td width="24" bgColor="#0033ff">&nbsp;</td>
+              <td width="24" bgColor="#0000ff">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>96</th>
+              <td width="24" bgColor="#00ffcc">&nbsp;</td>
+              <td width="24" bgColor="#00cccc">&nbsp;</td>
+              <td width="24" bgColor="#0099cc">&nbsp;</td>
+              <td width="24" bgColor="#0066cc">&nbsp;</td>
+              <td width="24" bgColor="#0033cc">&nbsp;</td>
+              <td width="24" bgColor="#0000cc">&nbsp;</td>
+              <td width="24" bgColor="#00ff99">&nbsp;</td>
+              <td width="24" bgColor="#00cc99">&nbsp;</td>
+              <td width="24" bgColor="#009999">&nbsp;</td>
+              <td width="24" bgColor="#006699">&nbsp;</td>
+              <td width="24" bgColor="#003399">&nbsp;</td>
+              <td width="24" bgColor="#000099">&nbsp;</td>
+              <td width="24" bgColor="#ffff66">&nbsp;</td>
+              <td width="24" bgColor="#ffcc66">&nbsp;</td>
+              <td width="24" bgColor="#ff9966">&nbsp;</td>
+              <td width="24" bgColor="#ff6666">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>112</th>
+              <td width="24" bgColor="#ff3366">&nbsp;</td>
+              <td width="24" bgColor="#ff0066">&nbsp;</td>
+              <td width="24" bgColor="#ffff33">&nbsp;</td>
+              <td width="24" bgColor="#ffcc33">&nbsp;</td>
+              <td width="24" bgColor="#ff9933">&nbsp;</td>
+              <td width="24" bgColor="#ff6633">&nbsp;</td>
+              <td width="24" bgColor="#ff3333">&nbsp;</td>
+              <td width="24" bgColor="#ff0033">&nbsp;</td>
+              <td width="24" bgColor="#ffff00">&nbsp;</td>
+              <td width="24" bgColor="#ffcc00">&nbsp;</td>
+              <td width="24" bgColor="#ff9900">&nbsp;</td>
+              <td width="24" bgColor="#ff6600">&nbsp;</td>
+              <td width="24" bgColor="#ff3300">&nbsp;</td>
+              <td width="24" bgColor="#ff0000">&nbsp;</td>
+              <td width="24" bgColor="#ccff66">&nbsp;</td>
+              <td width="24" bgColor="#cccc66">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>128</th>
+              <td width="24" bgColor="#cc9966">&nbsp;</td>
+              <td width="24" bgColor="#cc6666">&nbsp;</td>
+              <td width="24" bgColor="#cc3366">&nbsp;</td>
+              <td width="24" bgColor="#cc0066">&nbsp;</td>
+              <td width="24" bgColor="#ccff33">&nbsp;</td>
+              <td width="24" bgColor="#cccc33">&nbsp;</td>
+              <td width="24" bgColor="#cc9933">&nbsp;</td>
+              <td width="24" bgColor="#cc6633">&nbsp;</td>
+              <td width="24" bgColor="#cc3333">&nbsp;</td>
+              <td width="24" bgColor="#cc0033">&nbsp;</td>
+              <td width="24" bgColor="#ccff00">&nbsp;</td>
+              <td width="24" bgColor="#cccc00">&nbsp;</td>
+              <td width="24" bgColor="#cc9900">&nbsp;</td>
+              <td width="24" bgColor="#cc6600">&nbsp;</td>
+              <td width="24" bgColor="#cc3300">&nbsp;</td>
+              <td width="24" bgColor="#cc0000">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>144</th>
+              <td width="24" bgColor="#99ff66">&nbsp;</td>
+              <td width="24" bgColor="#99cc66">&nbsp;</td>
+              <td width="24" bgColor="#999966">&nbsp;</td>
+              <td width="24" bgColor="#996666">&nbsp;</td>
+              <td width="24" bgColor="#993366">&nbsp;</td>
+              <td width="24" bgColor="#990066">&nbsp;</td>
+              <td width="24" bgColor="#99ff33">&nbsp;</td>
+              <td width="24" bgColor="#99cc33">&nbsp;</td>
+              <td width="24" bgColor="#999933">&nbsp;</td>
+              <td width="24" bgColor="#996633">&nbsp;</td>
+              <td width="24" bgColor="#993333">&nbsp;</td>
+              <td width="24" bgColor="#990033">&nbsp;</td>
+              <td width="24" bgColor="#99ff00">&nbsp;</td>
+              <td width="24" bgColor="#99cc00">&nbsp;</td>
+              <td width="24" bgColor="#999900">&nbsp;</td>
+              <td width="24" bgColor="#996600">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>160</th>
+              <td width="24" bgColor="#993300">&nbsp;</td>
+              <td width="24" bgColor="#990000">&nbsp;</td>
+              <td width="24" bgColor="#66ff66">&nbsp;</td>
+              <td width="24" bgColor="#66cc66">&nbsp;</td>
+              <td width="24" bgColor="#669966">&nbsp;</td>
+              <td width="24" bgColor="#666666">&nbsp;</td>
+              <td width="24" bgColor="#663366">&nbsp;</td>
+              <td width="24" bgColor="#660066">&nbsp;</td>
+              <td width="24" bgColor="#66ff33">&nbsp;</td>
+              <td width="24" bgColor="#66cc33">&nbsp;</td>
+              <td width="24" bgColor="#669933">&nbsp;</td>
+              <td width="24" bgColor="#666633">&nbsp;</td>
+              <td width="24" bgColor="#663333">&nbsp;</td>
+              <td width="24" bgColor="#660033">&nbsp;</td>
+              <td width="24" bgColor="#66ff00">&nbsp;</td>
+              <td width="24" bgColor="#66cc00">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>176</th>
+              <td width="24" bgColor="#669900">&nbsp;</td>
+              <td width="24" bgColor="#666600">&nbsp;</td>
+              <td width="24" bgColor="#663300">&nbsp;</td>
+              <td width="24" bgColor="#660000">&nbsp;</td>
+              <td width="24" bgColor="#33ff66">&nbsp;</td>
+              <td width="24" bgColor="#33cc66">&nbsp;</td>
+              <td width="24" bgColor="#339966">&nbsp;</td>
+              <td width="24" bgColor="#336666">&nbsp;</td>
+              <td width="24" bgColor="#333366">&nbsp;</td>
+              <td width="24" bgColor="#330066">&nbsp;</td>
+              <td width="24" bgColor="#33ff33">&nbsp;</td>
+              <td width="24" bgColor="#33cc33">&nbsp;</td>
+              <td width="24" bgColor="#339933">&nbsp;</td>
+              <td width="24" bgColor="#336633">&nbsp;</td>
+              <td width="24" bgColor="#333333">&nbsp;</td>
+              <td width="24" bgColor="#330033">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>192</th>
+              <td width="24" bgColor="#33ff00">&nbsp;</td>
+              <td width="24" bgColor="#33cc00">&nbsp;</td>
+              <td width="24" bgColor="#339900">&nbsp;</td>
+              <td width="24" bgColor="#336600">&nbsp;</td>
+              <td width="24" bgColor="#333300">&nbsp;</td>
+              <td width="24" bgColor="#330000">&nbsp;</td>
+              <td width="24" bgColor="#00ff66">&nbsp;</td>
+              <td width="24" bgColor="#00cc66">&nbsp;</td>
+              <td width="24" bgColor="#009966">&nbsp;</td>
+              <td width="24" bgColor="#006666">&nbsp;</td>
+              <td width="24" bgColor="#003366">&nbsp;</td>
+              <td width="24" bgColor="#000066">&nbsp;</td>
+              <td width="24" bgColor="#00ff33">&nbsp;</td>
+              <td width="24" bgColor="#00cc33">&nbsp;</td>
+              <td width="24" bgColor="#009933">&nbsp;</td>
+              <td width="24" bgColor="#006633">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>208</th>
+              <td width="24" bgColor="#003333">&nbsp;</td>
+              <td width="24" bgColor="#000033">&nbsp;</td>
+              <td width="24" bgColor="#00ff00">&nbsp;</td>
+              <td width="24" bgColor="#00cc00">&nbsp;</td>
+              <td width="24" bgColor="#009900">&nbsp;</td>
+              <td width="24" bgColor="#006600">&nbsp;</td>
+              <td width="24" bgColor="#003300">&nbsp;</td>
+              <td width="24" bgColor="#111111">&nbsp;</td>
+              <td width="24" bgColor="#222222">&nbsp;</td>
+              <td width="24" bgColor="#444444">&nbsp;</td>
+              <td width="24" bgColor="#555555">&nbsp;</td>
+              <td width="24" bgColor="#777777">&nbsp;</td>
+              <td width="24" bgColor="#888888">&nbsp;</td>
+              <td width="24" bgColor="#aaaaaa">&nbsp;</td>
+              <td width="24" bgColor="#bbbbbb">&nbsp;</td>
+              <td width="24" bgColor="#dddddd">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>224</th>
+              <td width="24" bgColor="#eeeeee">&nbsp;</td>
+              <td width="24" bgColor="#c0c0c0">&nbsp;</td>
+              <td width="24" bgColor="#800000">&nbsp;</td>
+              <td width="24" bgColor="#800080">&nbsp;</td>
+              <td width="24" bgColor="#008000">&nbsp;</td>
+              <td width="24" bgColor="#008080">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+            </tr>
+            <tr>
+              <th>240</th>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+        </li>
+        <li><b>4-bit Color Table:</b>
+        <table>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td width="24" bgColor="#ffffff">&nbsp;</td>
+              <td width="24" bgColor="#eeeeee">&nbsp;</td>
+              <td width="24" bgColor="#dddddd">&nbsp;</td>
+              <td width="24" bgColor="#cccccc">&nbsp;</td>
+              <td width="24" bgColor="#bbbbbb">&nbsp;</td>
+              <td width="24" bgColor="#aaaaaa">&nbsp;</td>
+              <td width="24" bgColor="#999999">&nbsp;</td>
+              <td width="24" bgColor="#888888">&nbsp;</td>
+              <td width="24" bgColor="#777777">&nbsp;</td>
+              <td width="24" bgColor="#666666">&nbsp;</td>
+              <td width="24" bgColor="#555555">&nbsp;</td>
+              <td width="24" bgColor="#444444">&nbsp;</td>
+              <td width="24" bgColor="#333333">&nbsp;</td>
+              <td width="24" bgColor="#222222">&nbsp;</td>
+              <td width="24" bgColor="#111111">&nbsp;</td>
+              <td width="24" bgColor="#000000">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+        </li>
+        <li><b>2-bit Color Table:</b>
+        <table>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td width="24" bgColor="#ffffff">&nbsp;</td>
+              <td width="24" bgColor="#c0c0c0">&nbsp;</td>
+              <td width="24" bgColor="#808080">&nbsp;</td>
+              <td width="24" bgColor="#000">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+        </li>
+        <li><b>1-bit Color Table:</b>
+        <table>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td width="24" bgColor="#ffffff">&nbsp;</td>
+              <td width="24" bgColor="#000">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+</ul>
+<h3><a name="Sound">Sound</a></h3>
+
+<ul>
+  <li><i>beep(int type)</i> - generates a system sound, where type is between 1 and 7.
+    Available sounds are info[1], warning[2], error[3], startup[4], alarm[5], confirmation[6],
+    and click[7]. Note: not all sounds are unique in current versions of PalmOS. </li>
+  <li><i>tone(int freq, int dur)</i> - generates a tone of frequency freq (in Hz), and
+    duration dur (in milliseconds). </li>
+  <li><i>tonea(int freq, int dur, int vol)</i> - asynchronously generates a tone
+    of frequency freq (in Hz), duration dur (in milliseconds), at volume vol.
+    Calling this function with a 0 for any parameter will silence any currently
+    playing sound. This function does nothing on OS &lt; 3.0. </li>
+  <li><i>getvol(int type)</i> - gets the current system volume setting for the
+    given sound type. Available types are system[0], game[1], alarm[2]. This
+    function returns maximum volume on OS &lt; 3.0.</li>
+</ul>
+
+<h3><a name="TimeDate">Time/Date</a></h3>
+
+<ul>
+  <li><i>ticks()</i> - the number of clock ticks since last reset. On all
+    current devices there are 100 ticks per second. You can call <i>getsysval</i>
+    to determine this value. </li>
+  <li><i>seconds()</i> - the number of seconds since Jan 1, 1904 minus 2^31.</li>
+  <li><i>secondsx(int date, int time)</i> - the number of seconds since Jan 1, 1904 minus 2^31 
+  for the specified date and time. The date and time are integer values like 
+  those returned by time() and date() (e.g. yyyymmdd).</li>
+  <li><i>time(int mode)</i> - returns the current time in the given <i>mode</i>. [mode 0] integer value (hour*100+minute) [mode 1] string value
+    (as determined by system preferences) [mode 2] integer value (hour*10000+minute*100+sec).</li>
+  <li><i>timex(int secs, int mode)</i> - same as time(), but uses the time 
+  specified by <i>secs</i> which is the number of seconds since Jan 1, 1904 
+  minus 2^31.</li>
+  <li><i>date(int mode)</i> - returns the current date in the given <i>mode</i>. [mode 0] integer value (year*10000+month*100+day) [mode 1] short
+    string value [mode 2] long string value (as determined by system preferences).</li>
+  <li><i>datex(int secs, int mode)</i> - same as date(), but uses the time 
+  specified by <i>secs</i> which is the number of seconds since Jan 1, 1904 
+  minus 2^31.</li>
+  <li><i>selecttime(int secs, string title)</i> - displays the time selection 
+  dialog with the given <i>title</i> and initial time specified by <i>secs</i> 
+  which is the number of seconds since Jan 1, 1904 minus 2^31. Returns the 
+  selected time, or 0 if cancelled.</li>
+  <li><i>selectdate(int secs, int selectBy, string title)</i> - displays the 
+  date selection dialog with the given <i>title</i> and initial date specified 
+  by <i>secs</i> which is the number of seconds since Jan 1, 1904 minus 2^31. 
+  Returns the selected date, or 0 if cancelled. <i>selectBy</i> may be day[0], 
+  week[1], month[2].</li>
+</ul>
+
+<h3><a name="DatabaseIO">Database I/O</a></h3>
+
+<p>All the database functions work on databases with any creator id/type, but use of
+resource databases may cause unexpected results. When creating a new database, the
+database will have creator id 'PktC' and type 'user'. An attempt to overwrite a database
+with a given name but different creator/type will fail. Only one database can be open at a
+time. 
+
+<ul>
+  <li><i>dbopen(string name)</i> - opens the database named <em>name</em>, returns 0 on
+    failure. The current record is set to 0.</li>
+  <li><i>dbcreate(string name)</i> - creates and opens a database named <em>name</em>, returns
+    0 on failure. If another database of the same name and creator ID/type 'PktC' / 'user' exists, it
+    will first be erased. The current record is set to 0.</li>
+  <li><i>dbcreatex(string name, string creator, string type)</i> - creates and and opens a database named <em>name<i>
+    </i></em>with creator ID <i>creator</i> and type <i>type</i>, returns
+    0 on failure. If another database of the same name and creator ID/type exists, it
+    will first be erased. The current record is set to 0.</li>
+  <li><i>dbrename(string name)</i> - rename the currently open database. <i>name</i>
+    must be 31 characters or less.</li>
+  <li><i><em>dbrec(int recnum) - </em></i>sets the current record to <em>rec</em> and the
+    current position to 0. If the record is greater than the current number of records, future
+    reads will fail. However, the next write will create a new record at the end of the
+    database and set the current record to it.</li>
+  <li><em>dbnrecs()</em> - returns the number of records in the current database.</li>
+  <li><em>dbsize()</em> - returns the size of the current record in bytes.</li>
+  <li><i>dbwrite(data)</i> - write the value <em>data</em> at the <strong>end</strong> of the
+    current record. <em>data</em> can be of any type, use casting to ensure that data is the
+    correct type. Use caution when writing in the middle of a database with null-terminated
+    strings, as they are of unknown length.</li>
+  <li><i>dbread(char type)</i> - read a value from the current position in the database. A
+    value must be read as the same type that it was written. Available types are 'c' char, 'i'
+    int, 'f' float, 's' string.</li>
+  <li><em>dbreadx(pointer ptr, string format)</em> - Using the current database, read data of
+    the the given <em>format</em> into the data pointed to by <em>ptr</em>. <em>format</em> is
+    the same as <em>dbwritex()</em>. Returns the number of values read.</li>
+  <li><em>dbreadxc(pointer ptr, string format, int count)</em> - Same as <i>dbreadx</i>,
+    but repeats the specified <i>format</i> <i>count</i> times. Returns the
+    number of values written.</li>
+  <li><em>dbwritex(pointer ptr, string format)</em> - Using the current database, write data
+    pointed to by <em>ptr</em> and described by <em>format</em> at the current position in the
+    current record. <em>format</em> contains a list of data types, one per value following <em>ptr</em>.
+    Data types are 'c' - a single byte, 'i2' - a 2-byte word, 'i4' - 4-byte double word, 'f' -
+    a 4-byte float, 'sz' - a null-terminated string, 's#' - a string of length #.
+    To specify more than 1 of a type, prefix it with a count number - '12i2'
+    means 12 2-byte words. When a count number would be is next to a size
+    number, separate them with a '.' - '12i2.8f' means 12 2-byte words followed
+    by 8 floats. Returns the
+    number of values written.</li>
+  <li><em>dbwritexc(pointer ptr, string format, int count)</em> - Same as <i>dbwritex</i>,
+    but repeats the specified <i>format</i> <i>count</i> times. Returns the
+    number of values written.</li>
+  <li><i>dbpos()</i> - get the current location in the database. -1 indicates the end has been
+    reached. </li>
+  <li><i>dbseek(int loc)</i> - set the current location. If this value is greater than the
+    length of the database, the next call to dbread() will set the position to -1. </li>
+  <li><i>dbbackup(int flag)</i> - flag [0] clear backup bit, [1] set backup bit, [2] query
+    backup bit. </li>
+  <li><i>dbclose()</i> - close the current database. </li>
+  <li><i>dbdelete()</i> - delete and close the current database.</li>
+  <li><em>dberase()</em> - erases the content of the current record (but does not remove the
+    record).</li>
+  <li><em>dbdelrec(int recnum)</em> - deletes the specified record from the current database.
+    This removes the contents of the record and sets its 'delete' bit, which will cause the
+    record to be removed on the next HotSync. Returns 0 on error.</li>
+  <li><em>dbarcrec(int recnum)</em> - archives the specified record from the current database.
+    This maintains the contents of the record and sets its 'delete' bit, which will cause the
+    record to be removed and archived on the next HotSync. Returns 0 on error.</li>
+  <li><em>dbremrec(int recnum)</em> - removes the specified record from the current database.
+    This removes all traces of the record. Returns 0 on error.</li>
+  <li><i>dbmoverec(int from, int to)</i> - remove the record at index <i>from</i>
+    and insert it at index <i>to</i>. </li>
+  <li><em>dbenum(int first, string type, string creator)</em> - enumerates the databases
+    installed on the device, by type and/or creator. Returns 0 if no more databases are
+    available. The type and creator are each 4 character strings, or the empty string for a
+    wildcard. To get the first database, you must set first=1. To get the subsequent matching
+    databases you must set first=0. </li>
+  <li><i>dbgetcat()</i> - returns the category ID for the current record. </li>
+  <li><i>dbsetcat(int catID)</i> - sets the category ID for the current record
+    (must be a number between 0 and 15). </li>
+  <li><i>dbmovecat(int from, int to, int dirty)</i> - Move all records from
+    category<i> from</i> to category <i>to</i>. If <i>dirty</i> is true, the
+    records which have move will be marked as dirty. </li>
+  <li><i>dbcatname(int catID)</i> - returns the name of the category given its
+    category ID. </li>
+  <li><i>dbsetcatname(int catID, string name)</i> - sets the name of the category given its
+    category ID. </li>
+  <li><i>dbinfo(string name, pointer pstrType, pointer pstrCreator)</i> -
+    retrieve the type and creator ID of&nbsp; the database named <i>name</i>. <i>pstrType</i>
+    and <i>pstrCreator</i> must be pointers to strings. Returns 1 on success, 0
+    on failure. </li>
+  <li><i>dbtotalsize(string name)</i> - retrieves the total size of all records
+    in the database named <i>name</i>. Returns 0 on failure. </li>
+  <li><i>dbgetappinfo()</i> - converts the current database's app info block to
+    a record, and sets the current record to this temporary record. If
+    successful, returns the temporary record id. On failure, sets the current
+    record to -1. Before closing the database, you must remove this temporary
+    record or convert it back to an app info block. </li>
+  <li><i>dbsetappinfo()</i> - removes the current record and sets the app info
+    block to its contents. Sets the current record to -1. Returns 1 on success. </li>
+</ul>
+
+<h3><a name="MemoPadIO">Memo Pad I/O</a></h3>
+
+<ul>
+  <li><i>mmnew()</i> - create a new, empty memo, returns 0 on failure. </li>
+  <li><i>mmfind(string name)</i> - opens the memo with name as its first line, returns 0 on
+    failure. </li>
+  <li><i>mmfindx(string name)</i> - opens the memo with name as its first line,
+    and returns the record id of the memo, or -1 for failure. </li>
+  <li><i>mmopen(int id)</i> - opens the memo with the given id, returns 0 on failure. This
+    function is not recommended, but is included for completeness. </li>
+  <li><i>mmputs(string)</i> - appends the given string to the end of the memo. </li>
+  <li><i>mmgetl()</i> - retrieves a string from the current position in the memo. Does not
+    include the newline.</li>
+  <li><i>mmeof()</i> - returns 1 if at the end of the memo, 0 otherwise. </li>
+  <li><i>mmrewind()</i> - rewind the current memo to the beginning. </li>
+  <li><i>mmclose()</i> - close the current memo. </li>
+  <li><i>mmdelete()</i> - delete and close the current memo.</li>
+  <li><em>mmcount()</em> - returns the number of records in the memo pad database.</li>
+</ul>
+
+<h3><a name="SerialIO">Serial I/O</a></h3>
+
+<ul>
+  <li><i>seropen(int baud, string flags, int timeout)</i> - open the serial port. Tested
+    baud rates are 300-57600, higher rates are theoretically possible. flags is a 4-char
+    string in the form &quot;8N1C&quot; [bits/char (6,7,8) parity (N,E,O) stop bits (1,2) flow
+    control (X-software, C-CTS, R-RTS, H-CTS/RTS, N-None)]. timeout is the number of clock ticks (1/100 sec) to
+    wait between bytes for data. Returns 0 for success. seropenx is preferable
+    if your device has OS 3.3 or higher. </li>
+  <li><i>seropenx(int port, int baud)</i> - open the serial/IR port using the
+    new serial manager. Returns 0 for success. Requires OS 3.3 or higher.
+    Available port numbers are 0x8000 - cradle port, 0x8001 - raw IR port (works 
+  on devices not based on OMAP processor), 
+  0x6972636D - IrComm (works on most newer devices), 0x7266636D - RfComm (bluetooth).</li>
+  <li><i>sersettings(string flags, int timeout)</i> - set the flags and timeout
+    as described in seropen. Use this function only when opening the serial port
+    with seropenx. </li>
+  <li><i>serclose()</i> - close serial port. </li>
+  <li><i>sersend(char byte)</i> - send a byte, return 0 on success. </li>
+  <li><i>serrecv()</i> - receive a byte, returns an integer 0-255 on success, &gt; 255 on
+    failure. </li>
+  <li><i>serdata()</i> - return the number of bytes waiting in the receive
+    buffer.</li>
+  <li><i>serwait(int nBytes, int timeout)</i> - wait until <i>nBytes</i> bytes
+    are available in the receive buffer. <i>timeout </i>is the number of ticks
+    (1 tick typically equals 1/100 second) allowed between consecutive bytes.
+    Returns 0 for timeout, -1 for line error, 1 for success.</li>
+  <li><em>serbuffsize(int size)</em> - allocates a serial buffer of the given size (+32 bytes
+    for PalmOS overhead). This function should only be called if you seem to be having serial
+    overrun problems. Returns 1 on success, 0 on failure.</li>
+  <li><i>sersenda(pointer pData, int size)</i> - send <i>size</i> bytes of data
+    from an array. The memory pointed to by <i>pData</i> must be ints or chars,
+    and each element my be one byte.</li>
+  <li><i>serrecva(pointer pData, int size)</i> - receive <i>size</i> bytes of
+    data into an array. The memory pointed to by <i>pData</i> must be ints or
+    chars, and each element will be filled with one byte.</li>
+  <li><i>unpack(pointer pInts, pointer pSerData, string dataSizes, int count)</i> -
+    unpack an array of <i>count</i> bytes into 1- 2- and 4-byte ints. <i>pSerData</i> is a
+    memory block/array of bytes (either ints or chars); <i>pInts</i> is a memory
+    block/array of ints which will be filled with unpacked ints; <i>dataSizes </i>is a string describing the data. Each number (1,2,4) in
+    <i>dataSizes </i>represents an int. If a number is preceeded by '&lt;', then the bytes are
+    assumed to be in little-endian order; big-endian is assumed otherwise. The <i>dataSizes</i>
+    string is repeatedly processed until <i>count</i> bytes are unpacked.
+    Example:
+    from <i>serrecva</i><i>()</i>, you get 8 bytes which should be interpreted
+    as a big-endian 16-bit it, a little-endian 16-bit int, and a 32-bit big-endian
+    int. The code might be:</li>
+</ul>
+
+<blockquote>
+  <pre>int data[3], sbuff[8];
+...
+serrecva(sbuff, 8);
+unpack(data, sbuff, &quot;2&lt;24&quot;, 8);</pre>
+</blockquote>
+
+<h3><a name="System">System</a></h3>
+
+<ul>
+  <li><i>sleep(int ms)</i> - sleeps for ms milliseconds. </li>
+  <li><i>deepsleep(int sec)</i> - turns the device off for <i>sec</i> seconds.
+    This is only accurate to within 30 seconds, your mileage may vary. </li>
+  <li><i>resetaot()</i> - resets the auto off timer. </li>
+  <li><i>getsysval(int index)</i> - gets a system value. Currently supported values: [0]
+    Username, [1] OS Version, [2] OS Version string, [3] Serial number, [4]
+    ticks per second.</li>
+  <li><em>launch(string creatorID)</em> - closes PocketC and launches the application with the
+    given creator ID. Returns 0 on failure, does not return on success. Ex:
+    launch(&quot;memo&quot;); // Opens memo pad. Ex: launch(&quot;lnch&quot;); // Opens the
+    application launcher if running OS 3.0</li>
+  <li><em>clipget()</em> - returns the current clipboard contents (if text).</li>
+  <li><em>clipset(string text)</em> - sets the text clipboard contents.</li>
+  <li><i>exit()</i> - exits immediately. On OS 3.0+, exits to application
+    launcher. On OS 2.x, exits to PocketC.</li>
+  <li><i>atexit(pointer func)</i> - The function whose address is passed to this
+    function is called immediately when the user attempts to switch apps (but
+    not when the user presses the Done button or the Applet|Stop menu item).
+    Such a function must run very quickly and may not affect the display or use
+    the event system (through event(), puts(), alert(), graphics functions,
+    etc.). <b>Warning:</b> it is not generally safe to make assumptions about
+    where your applet was suspended when <i>func</i> began to execute.</li>
+  <li><i>version()</i> - returns the installed PocketC version. For version
+    4.0.3, this returns 403.</li>
+</ul>
+
+<h3><a name="MemoryManagment">Memory Management</a></h3>
+
+<p>A few notes that will help understand the following section: In a normal computer,
+memory is divided into bytes and words. PocketC divides its memory into elements called
+&quot;values&quot;. Each value stores a basic PocketC type (int, char, float, string,
+pointer). Also, each element of memory knows its own type (thus the need for the <em>settype()</em>
+function). 
+
+<ul>
+  <li><em>malloc(int size)</em> - allocates a block of <em>size</em> values of type <em>int</em>,
+    but of undefined value. Returns a pointer to the block or 0 on failure. The types of the
+    elements in the returned block can be changed from <em>int</em> to any other type using
+    the <em>settype()</em> function. This function is deprecated, <i>malloct()</i>
+    should be used instead.</li>
+  <li><i>malloct(int nBlocks, string blockTypes)</i> - allocates <i>nBlocks</i>
+    blocks of memory whose types are described by <i>blockTypes</i>. <i>blockTypes</i>
+    is a string of characters representing data types ( 'i'-int, 'p'-pointer,
+    'c'-char, 'f'-float, 's'-string). The memory block is initialized to 0 for
+    numeric types and &quot;&quot; for strings. e.g. <i>malloct</i>(3, &quot;piis&quot;)
+    will allocate 12 values -- the first will be a pointer, the second/third an
+    int, the fourth a string, the fifth another pointer, the sixth/seventh ints...
+    A type can be preceded by a count number to repeat the type - 'p2is' is the
+    same as 'piis', '8f' is the same as 'ffffffff'.</li>
+  <li><em>free(pointer ptr)</em> - releases the memory of the block pointed to by <em>ptr</em>
+    which was previously allocated by <em>malloc()</em>. When an applet exits, all blocks that
+    are still allocated will automatically be freed to prevent memory leaks.</li>
+  <li><em>settype(pointer ptr, int size, char type)</em> - sets the type of the <em>size</em>
+    contiguous values starting at <em>ptr</em> to the type specified by <em>type</em> ('i' for
+    int or pointer, 'f' for float, 'c' for char, 's' for string). Use this function only on
+    memory allocated by <em>malloc()</em>. Returns 0 on error.</li>
+  <li><em>typeof(pointer ptr)</em> - returns the type of the value pointed to by <em>ptr</em>,
+    ('i' for int or pointer, 'c' for char, 'f' for float, 's' for string, 'o' for other).</li>
+  <li><em>memcpy(pointer dest, pointer src, int size)</em> - copies the data from the block of
+    size <em>size</em> pointed to by <em>src</em> to the block pointed to by <em>dest</em>.
+    The types of the destination values is not preserved. (i.e. if <em>dest</em> points to a
+    string, and <em>src</em> points to an int, the memory pointed to by <em>dest</em> will be
+    changed to an int)..</li>
+</ul>
+<h3><a name="Networking">Networking</a></h3>
+<p>PocketC's networking support is based on BSD-style sockets. This 
+documentation assumes you understand the functionality and is not intended to 
+teach you to use BSD-style sockets. Currently only TCP 
+sockets are supported. Almost all of the networking functions
+returns 0 on success and an error code 
+on failure. To interpret the error code, you can call the neterror() function 
+provided in neterror.h (in PocketC's UtilCode directory) which will convert the 
+error code to a string.</p>
+<p>All the functions that take and return addresses use a string representation.
+An address string is a dotted IP address with optional port, such as:
+<code>&quot;129.22.104.22:80&quot;</code> An empty string is interpreted as the
+local address. Thus, when calling sockbind(), only a port needs to be specified:
+<code>&quot;:1234&quot;</code>. All socket methods (and the DNS methods) have a
+timeout associated with them. This timeout value is globally set using netsettimeout().
+</p>
+<ul>
+  <li><b>General APIs</b><ul>
+      <li><i>netopen()</i> - opens the networking stack and connects it to the network according to system settings. 
+      This function must be called before any other networking function. Return 0 on success.</li>
+      <li><i>netclose()</i> - closes the networking stack.</li>
+      <li><i>netlocaladdr()</i> - gets the local address string of the device 
+      when connected, otherwise an empty string. This function always returns 
+      the empty string when run on the emulator.</li>
+      <li><i>nethostbyname(string name, pointer paddr)</i> - Looks up the given
+      <i>name</i> using DNS, putting the resulting address in the string pointed 
+      to by <i>paddr</i>. Returns 0 on success.</li>
+      <li><i>nethostbyaddr(string addr, pointer pname)</i> - Looks up the given
+      <i>addr</i> using DNS, putting the resulting name in the string pointed 
+      to by <i>pname</i>. Returns 0 on success.</li>
+      <li><i>netgettimeout()</i> - gets the maximum wait time for network 
+      operations, defined in ticks. -1 implies infinite.</li>
+      <li><i>netsettimeout(int timeout)</i> - sets the maximum wait time for 
+      network operations, defined in ticks. -1 implies infinite.</li>
+    </ul>
+  </li>
+  <li><b>Sockets</b><ul>
+      <li><i>sockopen(pointer pid)</i> - opens a TCP socket, returning the new 
+      socket id in the int pointed to by <i>pid</i>. Returns 0 on success.</li>
+      <li><i>sockclose(int id)</i> - closes the given socket. You must call this 
+      function when you are finished using a socket. Returns 0 on success.</li>
+      <li><i>sockaccept(int id, pointer pnewid)</i> - accepts a new socket, and 
+      returns the new socket id in the int pointed to by <i>pnewid</i>. Returns 0 
+      on success.</li>
+      <li><i>sockbind(int id, string localAddr)</i> - binds the given socket to 
+      a local address. Generally only a port needs to be specified, such as
+      <code>&quot;:1234&quot;</code>. Returns 0 on success.</li>
+      <li><i>sockconnect(int id, string addr)</i> - connects a socket to the the 
+      remote address <i>addr</i>. Returns 0 on success.</li>
+      <li><i>socklisten(int id, int backlog)</i> - starts listening on the given 
+      socket, with the specified <i>backlog</i>. Currently the Palm OS only 
+      supports 1 for the <i>backlog</i> parameter. Returns 0 on success.</li>
+      <li><i>socksend(int id, pointer data, string format, int count)</i> - 
+      sends the data pointed to by <i>data</i> and described by <i>format</i> (with 
+      the format repeated <i>count</i> times). <i>format</i> is the same as 
+      described by dbwritex(). Returns 0 on success.</li>
+      <li><i>sockrecv(int id, pointer data, string format, int count)</i> - 
+      receives data into the memory pointed to by <i>data</i> and described by <i>format</i> (with 
+      the format repeated <i>count</i> times). <i>format</i> is the same as 
+      described by dbwritex(). Returns 0 on success.</li>
+      <li><i>sockshutdown(int id, int dir)</i> - shuts down the socket for the 
+      given direction <i>dir</i>. Available directions are input[0], output[1], 
+      and both[2].</li>
+      <li><i>socklocaladdr(int id)</i> - returns the local address of a 
+      connected socket.</li>
+      <li><i>sockremoteaddr(int id)</i> - returns the remote address of a 
+      connected socket.</li>
+    </ul>
+  </li>
+</ul>
+<h3><a name="VFS">VFS</a></h3>
+<p>The Palm OS support for Virtual File Systems (VFS) allows an application to 
+read and write files to removable storage, such as a compact flash card or 
+memory stick. Almost all of the VFS functions returns 0 on success and an error 
+code on failure. To interpret the error code, you can call the vfserror() 
+function 
+provided in vfserror.h (in PocketC's UtilCode directory) which will convert the 
+error code to a string. This file also contains #defines for many useful VFS 
+constants. Some methods do not work as documented on the emulator (attributes 
+and dates will be incorrect).</p>
+<p>To access a file, you must
+first retrieve the volume on which it resides using enumvols(). This function will enumerate
+all volumes on the device - if the device does not support VFS, no volumes will be returned.
+Once you have retrieved the volume id, you can use it to create and open files and directories.
+To get a list of all the files in a directory, first open the directory with volopendir(),
+then enumerate through the files and directories using direnum(). The get the files in the
+root directory, call direnm(dirid, "/"). Unlike traditional operating systems, the Palm OS VFS support does not support a concept of
+"current directory". Instead, all paths are fully specified for a given volume.</p>
+<ul>
+  <li><b>Volumes</b>
+    <ul>
+      <li><i>enumvols(int first, pointer pvolid)</i> - enumerates all the 
+      volumes on the device, returning the volume id in the int pointed to by <i>
+      pvolid</i>. Set <i>first</i> to true to enumerate the first volume, set it 
+      to false for all subsequent calls. Returns 0 if there are no more volumes. You must close a volume when you have finished using it 
+      by calling volclose().</li>
+      <li><i>volclose(int volid)</i> - closes the given volume.</li>
+      <li><i>volopenfile(int volid, string path, int mode, pointer fileid)</i> - 
+      opens a file at the given <i>path</i>, using the specified <i>mode</i>, 
+      returning the new id of the file in the int pointed to by <i>pfileid</i>. 
+      Returns 0 on success. <i>mode</i> is a combination of the following flags: 
+      vfsModeRead[2], vfsModeWrite[5], vfsModeReadWrite[7], vfsModeCreate[8], 
+      vfsModeTruncate[16]. You must close the file when you have finished using 
+      it by calling fileclose().</li>
+      <li><i>volopendir(int volid, string path, pointer pdirid)</i> - opens a 
+      directory at the given <i>path</i>, returning the new id of the directory in 
+      the int pointed to by <i>pfileid</i>. Returns 0 on success. You must close 
+      the directory when you have finished using it by calling dirclose().</li>
+      <li><i>volcreatefile(int volid, string path)</i> - creates a new empty 
+      file at the given <i>path</i>. Returns 0 on success.</li>
+      <li><i>volcreatedir(int volid, string path)</i> - creates a new empty 
+      directory at the given <i>path</i>. Returns 0 on success.</li>
+      <li><i>voldelete(int volid, string path)</i> - deletes a file or empty 
+      directory at the given <i>path</i>. Returns 0 on success.</li>
+      <li><i>volrename(int volid, string path, string newname)</i> - renames a 
+      file or directory specified by <i>path</i>. <i>newname</i> is the new name 
+      of the file or directory without the path. Returns 0 on success.</li>
+      <li><i>volexport(int volid, string name, string path)</i> - exports the 
+      database <i>name</i> from internal storage to a file at <i>path</i>. 
+      Returns 0 on success.</li>
+      <li><i>volimport(int volid, string path, pointer pname)</i> - imports the 
+      .pdb/.prc file at <i>path</i>. The name of the database is returned in the 
+      string pointed to by <i>pname</i>. Returns 0 on success.</li>
+      <li><i>volgetdefaultdir(int volid, string type)</i> - retrieves the 
+      default directory for a file with the given mime <i>type</i>.</li>
+      <li><i>vollabel(int volid)</i> - retrieves the label of the given volume.</li>
+    </ul>
+  </li>
+  <li><b>Directories</b>
+    <ul>
+      <li><i>dirclose(int id)</i> - closes the given directory.</li>
+      <li><i>dirsetdate(int id, int which, int date)</i> - sets the <i>date</i> 
+      (number of seconds since Jan 1, 1904 minus 2^31) 
+      for the given directory. Returns 0 on success. <i>which</i> must be one of 
+      vfsDateCreated[1], vfsDateModified[2], vfsDateAccessed[3].</li>
+      <li><i>dirgetdate(int id, int which)</i> - gets the date (number of 
+      seconds since Jan 1, 1904 minus 2^31) for the given 
+      directory. Returns 0 on success. <i>which</i> must be one of 
+      vfsDateCreated[1], vfsDateModified[2], vfsDateAccessed[3].</li>
+      <li><i>dirgetattribs(int id)</i> - gets the attributes for the directory. 
+      Returns a set of flags which may include: vfsAttrReadOnly[1], vfsAttrHidden[2],
+      vfsAttrSystem[4], vfsAttrVolumeLabel[8], vfsAttrDirectory[16], vfsAttrArchive[32],
+      vfsAttrLink[64].
+</li>
+      <li><i>dirsetattribs(int id, int attribs)</i> - sets the attributes for 
+      the directory. <i>attributes</i> is a set of flags (see dirgetattribs()).</li>
+      <li><i>direnum(int id, int first, pointer pname, pointer pattribs)</i> - 
+      enumerates the directories and files in the given directory. Pass true in
+      <i>first</i> when calling for the first time, false to continue the 
+      enumeration. Returns the name of the file/directory in the string pointed 
+      to by <i>pname</i>, and the attributes (see dirgetattributes()) in the int 
+      pointed to by <i>pattribs</i>. Returns 0 if no more files/directories can 
+      be found, 1 otherwise.</li>
+    </ul>
+  </li>
+  <li><b>Files</b>
+    <ul>
+      <li><i>fileclose(int id)</i> - closes the given file.</li>
+      <li><i>fileread(int id, pointer data, string format, int count)</i> - 
+      reads data from the file into the memory pointed to by <i>data</i> and described by <i>format</i> (with 
+      the format repeated <i>count</i> times). <i>format</i> is the same as 
+      described by dbwritex(). Returns 0 on success.</li>
+      <li><i>filewrite(int id, pointer data, string format, int count)</i> - 
+      writes the data pointed to by <i>data</i> and described by <i>format</i> (with 
+      the format repeated <i>count</i> times). <i>format</i> is the same as 
+      described by dbwritex(). Returns 0 on success.</li>
+      <li><i>filesetdate(int id, int which, int date)</i> - sets the <i>date</i> 
+      (number of seconds since Jan 1, 1904 minus 2^31) 
+      for the given file. Returns 0 on success. <i>which</i> must be one of 
+      vfsDateCreated[1], vfsDateModified[2], vfsDateAccessed[3].</li>
+      <li><i>filegetdate(int id, int which)</i> - gets the date (number of 
+      seconds since Jan 1, 1904 minus 2^31) for the given 
+      file. Returns 0 on success. <i>which</i> must be one of 
+      vfsDateCreated[1], vfsDateModified[2], vfsDateAccessed[3].</li>
+      <li><i>fileseek(int id, int offset)</i> - sets the current file offset.</li>
+      <li><i>filetell(int id)</i> - retrieves the current file offset.</li>
+      <li><i>fileeof(int id)</i> - returns true if the end of the file has been 
+      reached.</li>
+      <li><i>filesize(int id)</i> - gets the current size of the file.</li>
+      <li><i>fileresize(int id, int size)</i> - resizes the file to the given <i>
+      size</i>.</li>
+      <li><i>filegetattribs(int id)</i> - gets the attributes for the file. 
+      Returns a set of flags which may include: vfsAttrReadOnly[1], 
+      vfsAttrHidden[2], vfsAttrSystem[4], vfsAttrVolumeLabel[8], 
+      vfsAttrDirectory[16], vfsAttrArchive[32], vfsAttrLink[64].</li>
+      <li><i>filesetattribs(int id, int attribs)</i> - sets the attributes for 
+      the directory. <i>attributes</i> is a set of flags (see filegetattribs()).</li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

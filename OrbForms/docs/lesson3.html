@@ -1,0 +1,256 @@
+<p>In this lesson you will walk through creating a survey application, which
+will demonstrate using more than one form, using the Preferences object, and
+reading and writing application data to a database. </p>
+<p>While going through this lesson, it would be best to have the sample
+application open for reference. </p>
+<h3>Survey Application Requirements </h3>
+<p>The application will need to do the following things: </p>
+<ul>
+  <li>Create a database of people, one record per person</li>
+  <li>Store basic personal and work information about each person</li>
+  <li>Allow new records to be added</li>
+  <li>Allow existing records to be edited</li>
+  <li>Restore the previous state each time the application is executed</li>
+</ul>
+<p>To meet these requirements, we create a new &quot;basic&quot; application
+using the new project wizard. We create two forms, one for personal information,
+and a second for work information. We also create a record manager object
+to simplify storing and retrieving records. Finally, we add code to save data
+from each form, and load the data into the form. </p>
+<h3>Data Structures </h3>
+<p>Only a few data structures are needed for this application. First, we need
+the application preferences, which will be used to store the current state of
+the application. The state of our application is really just two variables - the
+current page that is being view (either personal or work), and the current
+record being edited. We will use the AppPrefs struct created by the project
+wizard, and redefine it as follows. We also want to define an enum to make our
+source code easier to read. </p>
+<pre>enum { PAGE_PERSONAL, PAGE_WORK };
+
+struct AppPrefs {
+  int iRecord; // the current record
+  int iPage; // the current page
+};</pre>
+<p>We also want to have a data structure to represent the data in each database
+entry. We will split it up into two structures - one for each page, and define a
+few more enums for easy coding: </p>
+<pre>enum { SEX_MALE, SEX_FEMALE };
+enum { STATUS_SINGLE, STATUS_MARRIED, STATUS_DIVORCED };
+
+struct PersonalData {
+  string name;
+  int age;
+  int sex;
+  int status;
+};
+
+struct WorkData {
+  string employer;
+  string position;
+  int years;
+  int distance;
+};
+
+struct Entry {
+  PersonalData per;
+  WorkData work;
+};</pre>
+<p>We create a single global preferences variable, and a single global Entry to
+represent the current record. When we read from and write to the database, we
+will use this variable. </p>
+<pre>AppPrefs appPrefs;
+Entry entry;</pre>
+
+<h3>Information Collection Forms</h3>
+<p>We need two forms, one for personal information and one for work
+information. Open the sample project to see what these should look like. Each
+form has a field, push button, or popup and list for each piece of information that we want to
+collect. Each form also has an identical set of buttons and a label at
+the bottom for navigating the database. We will create a record manager to take
+care of the database operations and updating the display of those form controls.
+On the top of each form is a popup showing which form is currently open, and
+allows the user to switch between the forms.</p>
+<h3>Record Manager</h3>
+<p><b>Reading and Writing</b></p>
+<p>We have created a record manager to read from and write to records in the
+database. There are three core methods in the RecordManager - readRecord,
+writeRecord, and addRecord. Each of these methods are similar, so we will focus
+on the readRecord method:</p>
+<pre>bool RecordManager.readRecord() {
+  // read the current record from the database
+  Database db;
+  DBRecord rec;
+  bool bRet = false;
+  
+  // open the database
+  if (db.open(&quot;SurveyData&quot;, false)) {
+    if (db.getrec(appPrefs.iRecord, rec, true)) {
+      rec.read(&amp;entry, typeof(entry), 1);
+      rec.close();
+      nRecords = db.nrecs;
+      bRet = true;
+    }
+    db.close();
+  }
+  return bRet;
+}</pre>
+<p>We need three local variables to read a record from the database - a Database
+object which will allow us to interact with the database, a DBRecord object
+which allows us to read and write the record within the database, and a bool
+return variable which we will use to store whether or not we succeeded. If the
+function fails we return false, which is important in the init method because we
+will create a new database if we were unable to find one. </p>
+<p>The first step is to attempt to open the database, using the Database.open
+method. If that succeeds, we try to get the current record - appPrefs.iRecord is
+the record that is currently being viewed. The Database.getrec method attaches
+rec, our DBRecord variable, to the requested database record. </p>
+<p>Once we get the record we want, we need to read it into our global entry
+variable. DBRecord.read takes three parameters - a pointer to the data structure
+we want to read into, a type string provided by the typeof operator, and the
+number of data structures to read. Since we are only storing one database entry
+per record, we can only specify 1 for the last parameter. </p>
+<p>Finally we close the record and then the database. It is important that they
+be closed in the correct order! </p>
+<p><b>Switching Records</b> </p>
+<p>The record manager also provides methods for switching between records via
+the next, prev, and add methods. These methods are very simple, doing four
+things: </p>
+<ol>
+  <li>call the writeRecord method mentioned earlier to save the current entry</li>
+  <li>update the record number in appPrefs.iRecord</li>
+  <li>call the readRecord to load the newly selected record</li>
+  <li>update the display</li>
+</ol>
+<p>RecordManager.next, for example, looks like this:</p>
+<pre>void RecordManager.next() {
+  // go to the next record
+  writeRecord();
+  appPrefs.iRecord++;
+  readRecord();
+  updateDisplay();
+}</pre>
+<p>Updating the display is the interesting part. To allow the record manager to
+update the info at the bottom of both the personal form and the work form
+(whichever is currently active), we actually store a reference to the controls
+that need updated. When one of the forms opens, it calls
+RecordManager.setControls, passing the label object and the two button objects
+as parameters.
+In the updateDisplay method (called by next, prev, and add), we set the label's
+text to state the current record and the total number of records. We also hide
+the next and previous buttons if they can't be used (you can't press the
+previous button if you are already at the first record).</p>
+<pre>void RecordManager.updateDisplay() {
+  // show/hide the buttons when not applicable
+  btnPrev.visible = appPrefs.iRecord &gt; 0;
+  btnNext.visible = appPrefs.iRecord &lt; nRecords - 1;
+  label.text = &quot;Record &quot; + (appPrefs.iRecord + 1) + &quot; of &quot; + nRecords;
+}</pre>
+<h3>Form Implementation </h3>
+<p>Each form represents a portion of the data in a record. In order to display
+and edit the data, we must create functions to fill the controls with the data
+in the current record, and to save the data from the controls back into the
+record. We will walk through the savePersonalData function now. </p>
+<p>There are three
+types of controls on the form: two fields, two pushbuttons, and a popup/list.
+Getting data from each control is a little different. The contents of a field is
+retrieved using the text property, and can be assigned directly into our
+varaible. A pushbutton can either be checked (appearing to be pressed) or not.
+Since only one pushbutton in a group can be checked, we can set the sex entry to
+0 if the male pushbutton is checked, and 1 otherwise since the female button
+would be checked if male was not. The popup/list selection is retrieved from the
+list object - even when the list is not popped up you can query for its selected
+item. The index of the selected item matches the values in the STATUS_ enums, so
+we assign the selitems property directly to the status field. </p>
+<pre>void savePersonalData() {
+  // save the data from the form into the current record
+  entry.per.name = fldPersonalName.text;
+  entry.per.age = fldPersonalAge.text;
+  if (pushMale.checked) {
+    entry.per.sex = 0;
+  } else {
+    entry.per.sex = 1;
+  }
+  entry.per.status = listPersonalStatus.selitem;
+}</pre>
+<p>The basis of an OrbForms application are the event handlers. The primary
+handlers of the forms are the onopen and onclose handlers. The onclose handler simply
+calls savePersonalData to save any controls that may have been modified. The
+more interesting code resides in the onopen handler. Since the contents of lists
+must be set at runtime, this is the location where we do it. Setting the items
+in the list is straight forward, as illustrated below (just pass in an array of
+strings). One thing that is less obvious is that setting the selected item in
+the list does not change the text of the popop control - this must be done
+manually. </p>
+<p>Once the lists and popups are setup, we load the data from the current record
+and then call into the record manager to tell it which controls it should be
+updating. </p>
+<pre>handler personalForm.onopen() {
+  string pages[2] = { &quot;Personal&quot;, &quot;Work&quot; };
+  string status[3] = { &quot;Single&quot;, &quot;Married&quot;, &quot;Divorced&quot; };
+
+  // setup the form popup
+  listPersonalPages.setitems(2, pages);
+  listPersonalPages.selitem = 0;
+  popPersonalPage.text = &quot;Personal&quot;;
+
+  // setup the status popup
+  listPersonalStatus.setitems(3, status);
+  
+  loadPersonalData();
+  
+  // setup the record manager to modify the controls
+  // on this form
+  recMgr.setControls(lblPersonalRecord, btnPersonalPrevious, btnPersonalNext);
+}</pre>
+<p>All of the other work that we have done makes it extremely easy to implement
+the handlers for the next and previous buttons. All that needs to be done is to
+save the data in the current form, call the appropriate record manager method,
+and load the new data: </p>
+<pre>handler btnPersonalNext.onselect() {
+  savePersonalData();
+  recMgr.next();
+  loadPersonalData();
+}</pre>
+<p>In order to switch forms when the user selects a page from the upper-right
+popup, we implement a handler for the popup's onlistselect event. There are
+actually two ways that popups can be implemented. Either you can create a
+handler for the onselect event in which you call the list's popup method - this
+is best if the contents of the list are not known ahead of time - or you can
+create a handler for the onlistselect event. If you create an onlistselect
+handler, the OS will take care of displaying the list for you. </p>
+<pre>handler popPersonalPage.onlistselect() {
+  if (event.value == 1) {
+    workForm.load();
+    appPrefs.iPage = PAGE_WORK;
+  }
+}</pre>
+<h3>Application Handlers </h3>
+<p>The application handlers are the place where we want to load and store the
+preferences - which record is currently selected and which page is being viewed.
+The method for reading preferences is similar to the Database.read function. The
+last three parameters are the same - a pointer to memory to load the preference into, a
+type string, and a count. The first parameter specifies the creator id of the
+application - when you create your project with the basic project wizard, the
+creator id is put there for you. The second parameter specifies if this is a
+saved preference. A saved preference is one that is backed up to your desktop
+when you sync, a non-saved preference is lost when the device is reset.</p>
+<pre>handler app.onstart() {
+  Preferences prefs;
+  // load the preferences
+  prefs.get(&quot;Srvy&quot;, false, &amp;appPrefs, typeof(appPrefs), 1);</pre>
+<p>We choose which form to first load based on the stored preferences. From onstart:</p>
+<pre>  // load the previously viewed form
+  switch (appPrefs.iPage) {
+    default:
+    case PAGE_PERSONAL:
+      personalForm.load();
+      break;
+    case PAGE_WORK:
+      workForm.load();
+      break;
+  }</pre>
+<h3>Conclusion </h3>
+<p>We have demonstrated a fairly complete application that, although a bit
+contrived, would form a good basis for a real survey application or database
+application. Through this application we have also had the chance to look at
+some key elements of the runtime - databases, and preferences. </p>

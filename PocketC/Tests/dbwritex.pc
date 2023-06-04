@@ -1,0 +1,7 @@
+//dbwritex.c
+main() {
+string junk = "this is a test";
+dbcreate("hello");
+dbwritex(&junk,"s5");
+dbclose();
+}

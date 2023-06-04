@@ -1,0 +1,813 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+enum VarType {
+    vtInt=0, vtChar, vtFloat, vtString, vtVoid, vtAddr, vtStackIndex, vtNone
+};
+
+struct FuncInfo {
+    char name[32];
+    // VarType ret; return value not currently used
+    char nArgs;
+    char lib;
+    long loc;
+    VarType argType[10];
+    long end;
+    bool marked;
+};
+
+FuncInfo funcTable[] = {
+    // Basic I/O routines
+    {"alert", 1, 0, 0, vtString}, //, vtVoid, vtVoid, vtVoid, vtVoid, vtVoid, vtVoid, vtVoid, vtVoid, vtVoid}
+    {"puts", 1, 0, 0, vtString},
+    {"gets", 1, 0, 0, vtString},
+    {"clear", 0, 0, 0},
+
+    // String routines
+    {"strlen", 1, 0, 0, vtString},
+    {"substr", 3, 0, 0, vtString, vtInt, vtInt},
+    {"strleft", 2, 0, 0, vtString, vtInt},
+    {"strright", 2, 0, 0, vtString, vtInt},
+    {"strupr", 1, 0, 0, vtString},
+    {"strlwr", 1, 0, 0, vtString},
+    
+    // Math routines
+    {"cos", 1, 0, 0, vtFloat},
+    {"sin", 1, 0, 0, vtFloat},
+    {"tan", 1, 0, 0, vtFloat},
+    {"acos", 1, 0, 0, vtFloat},
+    {"asin", 1, 0, 0, vtFloat},
+    {"atan", 1, 0, 0, vtFloat},
+    {"cosh", 1, 0, 0, vtFloat},
+    {"sinh", 1, 0, 0, vtFloat},
+    {"tanh", 1, 0, 0, vtFloat},
+    {"acosh", 1, 0, 0, vtFloat},
+    {"asinh", 1, 0, 0, vtFloat},
+    {"atanh", 1, 0, 0, vtFloat},
+    {"exp", 1, 0, 0, vtFloat},
+    {"log", 1, 0, 0, vtFloat},
+    {"log10", 1, 0, 0, vtFloat},
+    {"sqrt", 1, 0, 0, vtFloat},
+    {"pow", 2, 0, 0, vtFloat, vtFloat},
+    {"atan2", 2, 0, 0, vtFloat, vtFloat},
+    {"rand", 0, 0, 0},
+    {"random", 1, 0, 0, vtInt},
+    
+    // Sound routines
+    {"beep", 1, 0, 0, vtInt},
+    {"tone", 2, 0, 0, vtInt, vtInt},
+    
+    // Graphics routines
+    {"graph_on", 0, 0, 0},
+    {"graph_off", 0, 0, 0},
+    {"clearg", 0, 0, 0},
+    {"text", 3, 0, 0, vtInt, vtInt, vtString},
+    {"line", 5, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt},
+    {"rect", 6, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt},
+    {"title", 1, 0, 0, vtString},
+    {"textattr", 3, 0, 0, vtInt, vtInt, vtInt},
+    
+    // Advanced I/O routines
+    {"wait", 0, 0, 0},
+    {"waitp", 0, 0, 0},
+    {"getc", 0, 0, 0},
+    {"penx", 0, 0, 0},
+    {"peny", 0, 0, 0},
+    
+    // Late additions
+    {"hex", 1, 0, 0, vtInt},
+    {"frame", 6, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt},
+
+    // Time/Date routines
+    {"time", 1, 0, 0, vtInt},
+    {"date", 1, 0, 0, vtInt},
+    {"seconds", 0, 0, 0},
+    {"ticks", 0, 0, 0},
+    
+    // More late additions
+    {"confirm", 1, 0, 0, vtString},
+    {"mathlib", 0, 0, 0},
+    {"frame2", 7, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt},
+    
+    // Database I/O
+    {"dbopen", 1, 0, 0, vtString},
+    {"dbcreate", 1, 0, 0, vtString},
+    {"dbclose", 0, 0, 0},
+    {"dbwrite", 1, 0, 0, vtVoid},
+    {"dbread", 1, 0, 0, vtChar},
+    {"dbpos", 0, 0, 0},
+    {"dbseek", 1, 0, 0, vtInt},
+    {"dbbackup", 1, 0, 0, vtInt},
+    {"dbdelete", 0, 0, 0},
+    
+    // New event routines
+    {"event", 1, 0, 0, vtInt},
+    {"key", 0, 0, 0},
+    {"pstate", 0, 0, 0},
+    {"bstate", 0, 0, 0},
+    
+    // MemoDB I/O
+    {"mmnew", 0, 0, 0},
+    {"mmfind", 1, 0, 0, vtString},
+    {"mmopen", 1, 0, 0, vtInt},
+    {"mmclose", 0, 0, 0},
+    {"mmputs", 1, 0, 0, vtString},
+    {"mmgetl", 0, 0, 0},
+    {"mmeof", 0, 0, 0},
+    {"mmrewind", 0, 0, 0},
+    {"mmdelete", 0, 0, 0},
+    
+    {"strstr", 3, 0, 0, vtString, vtString, vtInt},
+    {"bitmap", 3, 0, 0, vtInt, vtInt, vtString},
+    {"sleep", 1, 0, 0, vtInt},
+    {"resetaot", 0, 0, 0},
+    {"getsysval", 1, 0, 0, vtInt},
+    {"format", 2, 0, 0, vtFloat, vtInt},
+    
+    // Serial I/O
+    {"seropen", 3, 0, 0, vtInt, vtString, vtInt},
+    {"serclose", 0, 0, 0},
+    {"sersend", 1, 0, 0, vtChar},
+    {"serrecv", 0, 0, 0},
+    {"serdata", 0, 0, 0},
+
+    {"textalign", 1, 0, 0, vtChar},
+    {"launch", 1, 0, 0, vtString},
+    {"saveg", 0, 0, 0},
+    {"restoreg", 0, 0, 0},
+    
+    {"serbuffsize", 1, 0, 0, vtInt},
+    
+    {"malloc", 1, 0, 0, vtInt},
+    {"free", 1, 0, 0, vtInt},
+    {"settype", 3, 0, 0, vtInt, vtInt, vtChar},
+    {"typeof", 1, 0, 0, vtInt},
+    
+    {"clipget", 0, 0, 0},
+    {"clipset", 1, 0, 0, vtString},
+    {"mmcount", 0, 0, 0},
+    
+    // New database API
+    {"dbenum", 3, 0, 0, vtInt, vtString, vtString},
+    {"dbrec", 1, 0, 0, vtInt},
+    {"dbnrecs", 0, 0, 0},
+    {"dbreadx", 2, 0, 0, vtInt, vtString},
+    {"dbwritex", 2, 0, 0, vtInt, vtString},
+    {"dbsize", 0, 0, 0},
+    {"dbdelrec", 1, 0, 0, vtInt},
+    {"dbremrec", 1, 0, 0, vtInt},
+    {"dbarcrec", 1, 0, 0, vtInt},
+    {"dberase", 0, 0, 0, vtInt},
+    
+    {"memcpy", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"hookhard", 1, 0, 0, vtInt},
+    {"hookmenu", 1, 0, 0, vtInt},
+    {"exit", 0, 0, 0},
+    {"strtoc", 2, 0, 0, vtString, vtInt},
+    {"ctostr", 1, 0, 0, vtInt},
+    {"getsd", 2, 0, 0, vtString, vtString},
+    {"atexit", 1, 0, 0, vtInt},
+    {"textwidth", 1, 0, 0, vtString},
+    {"version", 0, 0, 0},
+    {"getsi", 4, 0, 0, vtInt, vtInt, vtInt, vtString},
+    {"sersenda", 2, 0, 0, vtInt, vtInt},
+    {"serrecva", 2, 0, 0, vtInt, vtInt},
+    {"unpack", 4, 0, 0, vtInt, vtInt, vtString, vtInt},
+    {"malloct", 2, 0, 0, vtInt, vtString},
+    {"getsm", 5, 0, 0, vtInt, vtInt, vtInt, vtInt, vtString},
+    {"deepsleep", 1, 0, 0, vtInt},
+    {"dbgetcat", 0, 0, 0},
+    {"dbsetcat", 1, 0, 0, vtInt},
+    {"dbcatname", 1, 0, 0, vtInt},
+    {"dbcreatex", 3, 0, 0, vtString, vtString, vtString},
+    {"dbmoverec", 2, 0, 0, vtInt, vtInt },
+    {"dbinfo", 3, 0, 0, vtString, vtInt, vtInt },
+    {"dbtotalsize", 1, 0, 0, vtString },
+    {"hooksilk", 1, 0, 0, vtInt},
+    {"hooksync", 1, 0, 0, vtInt},
+    {"serwait", 2, 0, 0, vtInt, vtInt},
+    {"dbrename", 1, 0, 0, vtString},
+    {"dbsetcatname", 2, 0, 0, vtInt, vtString},
+    {"dbwritexc", 3, 0, 0, vtInt, vtString, vtInt},
+    {"dbgetappinfo", 0, 0, 0},
+    {"dbsetappinfo", 0, 0, 0},
+    {"dbreadxc", 3, 0, 0, vtInt, vtString, vtInt},
+    {"dbmovecat", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"mmfindx", 1, 0, 0, vtString},
+    {"strtok", 4, 0, 0, vtString, vtInt, vtString, vtInt},
+    {"seropenx", 2, 0, 0, vtInt, vtInt},
+    {"sersettings", 2, 0, 0, vtString, vtInt},
+
+    {"npenx", 0, 0, 0},
+    {"npeny", 0, 0, 0},
+    {"setfgi", 1, 0, 0, vtInt},
+    {"setbgi", 1, 0, 0, vtInt},
+    {"settextcolori", 1, 0, 0, vtInt},
+    {"setfg", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"setbg", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"settextcolor", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"rgbtoi", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"getcolordepth", 0, 0, 0},
+    {"setcolordepth", 1, 0, 0, vtInt},
+    {"getuicolor", 1, 0, 0, vtInt},
+    {"pixel", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"pushdraw", 0, 0, 0},
+    {"popdraw", 0, 0, 0},
+    {"choosecolori", 2, 0, 0, vtString, vtInt},
+    {"drawnative", 1, 0, 0, vtInt},
+    {"getscreenattrib", 1, 0, 0, vtInt},
+    {"getvol", 1, 0, 0, vtInt},
+    {"tonea", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"bucreate", 2, 0, 0, vtInt, vtInt},
+    {"budelete", 1, 0, 0, vtInt},
+    {"buset", 1, 0, 0, vtInt},
+    {"bucopyrect", 9, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt, vtInt},
+    {"bucopy", 5, 0, 0, vtInt, vtInt, vtInt, vtInt, vtInt},
+    {"resopen", 1, 0, 0, vtString},
+    {"resclose", 1, 0, 0, vtInt},
+    {"bitmapr", 3, 0, 0, vtInt, vtInt, vtInt},
+    {"bitmaprm", 4, 0, 0, vtInt, vtInt, vtInt, vtInt},
+    {"timex", 2, 0, 0, vtInt, vtInt},
+    {"datex", 2, 0, 0, vtInt, vtInt},
+    {"selectdate", 3, 0, 0, vtInt, vtInt, vtString},
+    {"selecttime", 2, 0, 0, vtInt, vtString},
+    {"alertc", 4, 0, 0, vtString, vtString, vtString, vtInt},
+    {"promptc", 5, 0, 0, vtString, vtString, vtString, vtInt, vtInt},
+    {"secondsx", 2, 0, 0, vtInt, vtInt},
+    {"enableresize", 0, 0, 0},
+
+    {"scanIsSymbol", 0, 0, 0},
+    {"scanOpen", 0, 0, 0},
+    {"scanClose", 0, 0, 0},
+    {"scanAim", 1, 0, 0, vtInt},
+    {"scanGetAim", 0, 0, 0},
+    {"scanLed", 1, 0, 0, vtInt},
+    {"scanGetLed", 0, 0, 0},
+    {"scanEnable", 1, 0, 0, vtInt},
+    {"scanGetEnabled", 0, 0, 0},
+    {"scanDecode", 1, 0, 0, vtInt},
+    {"scanGetParams", 0, 0, 0},
+    {"scanGetVer", 1, 0, 0, vtInt},
+    {"scanBeep", 1, 0, 0, vtInt},
+    {"scanDefaults", 0, 0, 0},
+    {"scanSendParams", 0, 0, 0},
+    {"scanGetData", 0, 0, 0},
+
+    // barcode specific functions
+    {"scanEnableType", 2, 0, 0, vtInt, vtInt},
+    {"scanOptCode39", 2, 0, 0, vtInt, vtInt},
+    
+    // scanner hardware functions
+    {"scanGetAimDur", 0, 0, 0},
+    {"scanAimDur", 1, 0, 0, vtInt},
+    {"scanGetBeepAfterDecode", 0, 0, 0},
+    {"scanBeepAfterDecode", 1, 0, 0, vtInt},
+    {"scanGetBiDi", 0, 0, 0},
+    {"scanBiDi", 1, 0, 0, vtInt},
+    {"scanGetLedOnTime", 0, 0, 0},
+    {"scanLedOnTime", 1, 0, 0, vtInt},
+    {"scanGetLaserOnTime", 0, 0, 0},
+    {"scanLaserOnTime", 1, 0, 0, vtInt},
+    {"scanGetAngle", 0, 0, 0},
+    {"scanAngle", 1, 0, 0, vtInt},
+    {"scanGetCount", 0, 0, 0},
+    {"scanCount", 1, 0, 0, vtInt},
+    {"scanGetTriggerMode", 0, 0, 0},
+    {"scanTriggerMode", 1, 0, 0, vtInt},
+};
+
+unsigned short nBIFuncs = sizeof(funcTable)/sizeof(FuncInfo);
+
+char* funcProto[] = {
+    "alert(string message)",
+    "pops up an alert dialog with the given text.",
+    "puts(string text)",
+    "append a string to the output form. Does not add a newline. (To add a newline, add a '\\n' to the end of your string).",
+    "gets(string prompt)",
+    "presents an input dialog with the given string as a prompt. Returns a string if the user pressed OK, or an empty string if the user presses Cancel. The dialog can contain 2 lines of text, use the '\\r' character to wrap to the second line.",
+    "clear()",
+    "clears the output form.",
+    "strlen(string str)",
+    "returns the length of a string.",
+    "substr(string str, int first, int len)",
+    "returns a string which consists of len characters from the original string starting at first character. (e.g. substr(\"Hello\", 1, 3) returns \"ell\").",
+    "strleft(string str, int len)",
+    "returns the len leftmost characters from the string.",
+    "strright(string str, int len)",
+    "returns the len rightmost characters from the string.",
+    "strupr(string str)",
+    "returns the original string in all uppercase.",
+    "strlwr(string str)",
+    "returns the original string in all lowercase.",
+    
+    // Math routines
+    "cos(float f)",
+    "calculate the cosine of the given angle in radians. This function requires Mathlib to be present.",
+    "sin(float f)",
+    "calculate the sine of the given angle in radians. This function requires Mathlib to be present.",
+    "tan(float f)",
+    "calculate the tangent of the given angle in radians. This function requires Mathlib to be present.",
+    "acos(float f)",
+    "calculate the arccosine of the given angle in radians. This function requires Mathlib to be present.",
+    "asin(float f)",
+    "calculate the arcsine of the given angle in radians. This function requires Mathlib to be present.",
+    "atan(float f)",
+    "calculate the arctangent of the given angle in radians. This function requires Mathlib to be present.",
+    "cosh(float f)",
+    "calculate the hyperbolic cosine of the given angle in radians. This function requires Mathlib to be present.",
+    "sinh(float f)",
+    "calculate the hyperbolic sine of the given angle in radians. This function requires Mathlib to be present.",
+    "tanh(float f)",
+    "calculate the hyperbolic tangent of the given angle in radians. This function requires Mathlib to be present.",
+    "acosh(float f)",
+    "calculate the hyperbolic arccosine of the given angle in radians. This function requires Mathlib to be present.",
+    "asinh(float f)",
+    "calculate the hyperbolic arcsine of the given angle in radians. This function requires Mathlib to be present.",
+    "atanh(float f)",
+    "calculate the hyperbolic arctangent of the given angle in radians. This function requires Mathlib to be present.",
+    "exp(float x)",
+    "returns e^x. This function requires MathLib to be present.",
+    "log(float f)",
+    "returns natural log of x. This function requires MathLib to be present.",
+    "log10(float f)",
+    "returns log base 10 of x. This function requires MathLib to be present.",
+    "sqrt(float f)",
+    "returns square root of x. This function requires MathLib to be present.",
+    "pow(float x, float y)",
+    "returns x^y. This function requires MathLib to be present.",
+    "atan2(float y, float x)",
+    "returns the arctangent of y/x. This function requires MathLib to be present.",
+    "rand()",
+    "returns a random float between 0 and 1.",
+    "random(int n)",
+    "returns a random int between 0 and n-1.",
+    
+    // Sound routines
+    "beep(int type)",
+    "generates a system sound, where type is between 1 and 7. Available sounds are info[1], warning[2], error[3], startup[4], alarm[5], confirmation[6], and click[7].",
+    "tone(int freq, int dur)",
+    "generates a tone of frequency freq (in Hz), and duration dur (in milliseconds).",
+    
+    // Graphics routines
+    "graph_on()",
+    "switches to the graphics form.",
+    "graph_off()",
+    "switches from the graphics form to the output form. The appearance of the graphics form is not preserved.",
+    "clearg()",
+    "clear the graphics form.",
+    "text(int x, int y, string text)",
+    "display a string text at locations (x,y).",
+    "line(int color, int x1, int y1, int x2, int y2)",
+    "draws a line from (x1, y1) to (x2, y2) in color col. background[0], foreground[1], dotted[2], XOR[3].",
+    "rect(int col, int x1, int y1, int x2, int y2, int radius)",
+    "draws a rectangle from (x1, y1) to (x2, y2) in color col with corners of radius radius. A radius of 0 has square edges. background[0], foreground[1], XOR[3].",
+    "title(string title)",
+    "set the graphic form title to title.",
+    "textattr(int font, int color, int underline)",
+    "set the current text drawing attributes. Available fonts are normal[0], bold[1], large[2], symbol[3], symbol11[4], symbol7[5], LED[6], Large Bold[7] (OS 3.0+ only). Available colors are background[0], textcolor[1], inverted[2]. Underline modes are none[0], solid[1], dotted[2].",
+    
+    // Advanced I/O routines
+    "wait()",
+    "wait for a pen or character event. Returns the character written to the graffiti area or -1 for pen event. Use penx() and peny() to retrieve the location of a pen event, or key() to retrieve the character.",
+    "waitp()",
+    "wait for a pen event. Use penx() and peny() to retrieve the location of a pen event.",
+    "getc()",
+    "wait for and return a character written to the graffiti area.",
+    "penx()",
+    "retrieve the x value of the pen event processed by the last call to wait, waitp, or event.",
+    "peny()",
+    "retrieve the y value of the previous pen event.",
+    
+    // Late additions
+    "hex(int n)",
+    "returns the hexadecimal representation of n",
+    "frame(int color, int x1, int y1, int x2, int y2, int radius)",
+    "draws an empty frame from (x1, y1) to (x2, y2) in color col with corners of radius radius. A radius of 0 has square edges. background[0], foreground[1], XOR[3].",
+
+    // Time/Date routines
+    "time(int mode)",
+    "returns the current time. [mode 0] integer value (hour*100+minute) [mode 1] string value (as determined by system preferences) [mode 2] integer value (hour*10000+minute*100+sec).",
+    "date(int mode)",
+    "returns the current date. [mode 0] integer value (year*10000+month*100+day) [mode 1] short string value [mode 2] long string value (as determined by system preferences).",
+    "seconds()",
+    "the number of seconds since Jan 1, 1904 minus 2^31.",
+    "ticks()",
+    "the number of clock ticks since last reset. On all current devices there are 100 ticks per second. You can call getsysval to determine this value.",
+    
+    // More late additions
+    "confirm(string prompt)",
+    "pops up an alert dialog with the given text and Yes/No buttons. Returns 1 for Yes, 0 for No.",
+    "mathlib()",
+    "returns 1 if MathLib is present, 0 otherwise.",
+    "frame2(int color, int x1, int y1, int x2, int y2, int radius, int width)",
+    "draws an empty frame from (x1, y1) to (x2, y2) in color col with corners of radius radius. A radius of 0 has square edges. background[0], foreground[1], XOR[3]. width must be 1-3.",
+    
+    // Database I/O
+    "dbopen(string dbname)",
+    "opens the database named name, returns 0 on failure. The current record is set to 0.",
+    "dbcreate(string dbname)",
+    "creates and opens a database named name, returns 0 on failure. The current record is set to 0.",
+    "dbclose()",
+    "close the current database.",
+    "dbwrite(data)",
+    "write the value data at the end of the current record. data can be of any type, use casting to ensure that data is the correct type.",
+    "dbread(char type)",
+    "read a value from the current position in the database. Types are 'c' char, 'i' int, 'f' float, 's' string.",
+    "dbpos()",
+    "get the current location in the database. -1 indicates the end has been reached.",
+    "dbseek(int loc)",
+    "set the current location.",
+    "dbbackup(int flag)",
+    "flag [0] clear backup bit, [1] set backup bit, [2] query backup bit.",
+    "dbdelete()",
+    "delete and close the current database.",
+    
+    // New event routines
+    "event(int time)",
+    "check for events in the event queue.",
+    "key()",
+    "retrieve the character written during the last event().",
+    "pstate()",
+    "returns 1 if the pen in down, 0 otherwise.",
+    "bstate()",
+    "returns the state of the hard buttons. Returns [0] neither, [1] page up, [-1] page down.",
+    
+    // MemoDB I/O
+    "mmnew()",
+    "create a new, empty memo, returns 0 on failure.",
+    "mmfind(string name)",
+    "opens the memo with name as its first line, returns 0 on failure.",
+    "mmopen(int id)",
+    "opens the memo with the given id, returns 0 on failure.",
+    "mmclose()",
+    "close the current memo.",
+    "mmputs(string str)",
+    "appends the given string to the end of the memo.",
+    "mmgetl()",
+    "retrieves a string from the current position in the memo. Does not include the newline.",
+    "mmeof()",
+    "returns 1 if at the end of the memo, 0 otherwise.",
+    "mmrewind()",
+    "rewind the current memo to the beginning.",
+    "mmdelete()",
+    "delete and close the current memo.",
+    
+    "strstr(string str, string sub, int first)",
+    "searches str for substring sub starting at the first. Returns the index of sub within str or -1 on failure.",
+    "bitmap(int x, int y, string bits)",
+    "draw a bitmap at (x,y).",
+    "sleep(int ms)",
+    "sleeps for ms milliseconds.",
+    "resetaot()",
+    "resets the auto off timer.",
+    "getsysval(int index)",
+    "gets a system value. [0] Username, [1] OS Version, [2] OS Version string, [3] Serial number, [4] ticks/second.",
+    "format(float f, int prec)",
+    "returns the string representation of f with prec decimal places.",
+    
+    // Serial I/O
+    "seropen(int baud, string settings, int timeout)",
+    "open the serial port. flags is a 4-char string in the form \"8N1C\"",
+    "serclose()",
+    "close serial port.",
+    "sersend(char byte)",
+    "send a byte, return 0 on success.",
+    "serrecv()",
+    "receive a byte, returns an integer 0-255 on success, > 255 on failure.",
+    "serdata()",
+    "return the number of bytes waiting in the receive buffer.",
+
+    "textalign(char alignXY)",
+    "sets the alignment that text() uses.",
+    "launch(string creatorID)",
+    "launches the application with the given creator ID.",
+    "saveg()",
+    "save the graphics form internally. Returns 0 on failure.",
+    "restoreg()",
+    "restore the graphics form previously saved by a call to saveg().",
+    
+    "serbuffsize(int size+32)",
+    "allocates a serial buffer of the given size (+32 bytes for PalmOS overhead).",
+    
+    "malloc(int size)",
+    "deprecated. use malloct() instead.",
+    "free(pointer)",
+    "releases a memory block previously allocated by malloct().",
+    "settype(pointer, int size, char type)",
+    "deprecated. use malloct() instead.",
+    "typeof(pointer p)",
+    "returns the type of the value pointed to by ptr ('i','c','f','s')",
+    
+    "clipget()",
+    "returns the current clipboard contents (if text).",
+    "clipset(string str)",
+    "sets the text clipboard contents.",
+    "mmcount()",
+    "returns the number of records in the memo pad database.",
+    
+    // New database API
+    "dbenum(int first, string type, string creatorID)",
+    "enumerates the databases installed on the device, by type and/or creator.",
+    "dbrec(int recnum)",
+    "sets the current record to rec and the current position to 0.",
+    "dbnrecs()",
+    "returns the number of records in the current database.",
+    "dbreadx(pointer data, string format)",
+    "read data of the the given format into the data pointed to by ptr.",
+    "dbwritex(pointer data, string format)",
+    "write data pointed to by ptr and described by format at the current position in the current record.",
+    "dbsize()",
+    "returns the size of the current record in bytes.",
+    "dbdelrec(int recnum)",
+    "deletes the specified record from the current database.",
+    "dbremrec(int recnum)",
+    "removes the specified record from the current database.",
+    "dbarcrec(int recnum)",
+    "archives the specified record from the current database.",
+    "dberase()",
+    "erases the content of the current record (but does not remove the record).",
+    
+    "memcpy(pointer dest, pointer src, int size)",
+    "copies the data from the block of size size pointed to by src to the block pointed to by dest.",
+    "hookhard(int bHook)",
+    "sets whether or not the hard key events are processed by the system or hooked by PocketC",
+    "hookmenu(int bHook)",
+    "sets whether or not the menu event is processed by the system or hooked by PocketC",
+    "exit()", // fake
+    "exits immediately.",
+    "strtoc(string, pointer ptr)",
+    "fill the array of chars pointed to by ptr with the characters from the string str.",
+    "ctostr(pointer ptr)",
+    "takes the char array pointed to by ptr, and returns a string composed of its characters.",
+    "getsd(string prompt, string default)",
+    "presents an input dialog with the given prompt and default input value. Returns a string if the user pressed OK, or an empty string if canceled. The dialog can contain 2 lines of text, use the '\r' character to wrap to the second line.",
+    "atexit(pointer func)",
+    "schedule the given function to be when the user switches applications",
+    "textwidth(string str)",
+    "returns the width in pixels of str with the current font settings.",
+    "version()",
+    "returns the installed PocketC version. For version 5.0.3, this returns 503.",
+    "getsi(int x, int y, int w, string default)",
+    "presents an input dialog at the x, y coordinates specified, with the given string as a default value. The input dialog will have an edit field of width w (though the dialog will be larger).",
+
+    "sersenda(pointer pData, int count)",
+    "count bytes of data from an array. The memory pointed to by pData must be ints or chars, and each element my be one byte",
+    "serrecva(pointer pData, int count)",
+    "receive count bytes of data into an array. The memory pointed to by pData must be ints or chars, and each element will be filled with one byte.",
+    "unpack(pointer pInt, pointer pSerData, string dataSizes, int count)",
+    "unpack an array of count bytes into 1- 2- and 4-byte ints.",
+    "malloct(int nBlocks, string blockTypes)",
+    "allocates nBlocks blocks of memory whose types are described by blockTypes.",
+    "getsm(int x, int y, int w, int lines, string default)",
+    "presents a multi-line input dialog at the x, y coordinates specified, with the given string as a default value. The input dialog will have an edit field of width w (though the dialog will be larger).",
+    "deepsleep(int seconds)",
+    "turns the device off for sec seconds. This is only accurate to within 30 seconds, your mileage may vary. ",
+    "dbgetcat()",
+    "returns the category ID for the current record.",
+    "dbsetcat(int catNum)",
+    "sets the category ID for the current record (must be a number between 0 and 15).",
+    "dbcatname(int catNum)",
+    "returns the name of the category given its category ID.",
+    "dbcreatex(string name, string creator, string type)",
+    "creates and and opens a database named name with creator ID creator and type type, returns 0 on failure.",
+    "dbmoverec(int from, int to)",
+    "remove the record at index from and insert it at index to.",
+    "dbinfo(string name, pointer pstrType, point pstrCreatorID)",
+    "retrieve the type and creator ID of  the database named name.",
+    "dbtotalsize(string name)",
+    "retrieves the total size of all records in the database named name. Returns 0 on failure.",
+    "hooksilk(int bHook)",
+    "sets whether or not all the silkscreen button events are processed by the system or hooked by PocketC",
+    "hooksync(int bHook)",
+    "sets whether or not the HotSync button is processed by the system or hooked by PocketC",
+    "serwait(int nBytes, int timeout)",
+    "wait until nBytes bytes are available in the receive buffer.",
+    "dbrename(string name)",
+    "rename the currently open database. name must be 31 characters or less.",
+    "dbsetcatname(int catNum, string name)",
+    "sets the name of the category given its category ID.",
+    "dbwritexc(pointer data, string format, int count)",
+    "write data pointed to by ptr and described by format at the current position in the current record.",
+    "dbgetappinfo()",
+    "converts the current database's app info block to a record, and sets the current record to this temporary record.",
+    "dbsetappinfo()",
+    "removes the current record and sets the app info block to its contents. Sets the current record to -1.",
+    "dbreadxc(pointer data, string format, int count)",
+    "read data of the the given format into the data pointed to by ptr.",
+    "dbmovecat(int from, int to, int dirty)",
+    "move all records from category from to category to. If dirty is true, the records which have move will be marked as dirty.",
+    "mmfindx(string name)",
+    "opens the memo with name as its first line, and returns the record id of the memo, or -1 for failure.",
+    "strtok(string source, pointer token, string delims, int first)",
+    "breaks a string into tokens which are delimited by a character from the delims string.",
+    "seropenx(int port, int baud)",
+    "open the serial/IR port using the new serial manager. Returns 0 for success. Requires OS 3.3 or higher.",
+    "sersettings(string flags, int timeout)",
+    "set the flags and timeout as described in seropen. Use only with seropenx.",
+
+    "npenx()",
+    "retrieve the x value of the previous pen event in native coordinates.",
+    "npeny()",
+    "retrieve the y value of the previous pen event in native coordinates.",
+    "setfgi(int index)",
+    "set the foreground color. OS 3.5+",
+    "setbgi(int index)",
+    "set the background color. OS 3.5+",
+    "settextcolori(int index)",
+    "set the text color. OS 3.5+",
+    "setfg(int r, int g, int b)",
+    "set the foreground color. OS 3.5+",
+    "setbg(int r, int g, int b)",
+    "set the background color. OS 3.5+",
+    "settextcolor(int r, int g, int b)",
+    "set the text color. OS 3.5+",
+    "rgbtoi(int r, int g, int b)",
+    "retrieve the nearest color index based on the current color depth. OS 3.5+",
+    "getcolordepth()",
+    "retrieve the current color depth in bits per pixel. OS 3.5+",
+    "setcolordepth(int bpp)",
+    "set the current color depth in bits per pixel. OS 3.5+",
+    "getuicolor(int item)",
+    "retrieve the system color for the given UI item type. OS 3.5+",
+    "pixel(int col, int x, int y)",
+    "draw a pixel at (x,y) in color col. background[0], foreground[1], XOR[3].",
+    "pushdraw()",
+    "push the current drawing state. OS 3.5+",
+    "popdraw()",
+    "pop the previous drawing state. OS 3.5+",
+    "choosecolori(string title, point pIndex)",
+    "display a color selection dialog. pIndex is an int pointer that provides the initial selection, and returns user selection. Returns 0 on cancel. OS 3.5+",
+    "drawnative(int bNative)",
+    "sets (or clears) native drawing mode, determing whether coordinates are treated as native pixels or standard (160x160) coordinates.",
+    "getscreenattrib(int attrib)",
+    "retrieve screen attribute. width[0], height[1], density[5]",
+    "getvol(int type)",
+    "retrieve the volume preference for a sound type. system[0], game[1], alarm[2].",
+    "tonea(int freq, int dur, int vol)",
+    "generates a tone of frequency freq (in Hz), duration dur (in milliseconds), and volume vol. 0 for any parameter silences the output. OS 3.0+",
+    "bucreate(int w, int h)",
+    "create an offscreen buffer of the given size, returning its id or 0 for failure.",
+    "budelete(int id)",
+    "delete an offscreen buffer",
+    "buset(int id)",
+    "set the current drawing buffer for all text, primitive, and bitmap operations. 0 is screen.",
+    "bucopyrect(int sid, int xs, int ys, int w, int h, int did, int xd, int yd, int mode)",
+    "copy the rectangle at (xs,xy) of size (w,h) from buffer sid to buffer did (0 is screen) at (x,y). paint[0], erase[1], mask[2], invert[3], overlay[4], paintInverse[5], swap[6].",
+    "bucopy(int sid, int did, int x, int y, int mode)",
+    "copy all of buffer sid to buffer did (0 is screen) at (x,y). paint[0], erase[1], mask[2], invert[3], overlay[4], paintInverse[5], swap[6].",
+    "resopen(string dbname)",
+    "open the given resource database, return its id or 0 for failure.",
+    "resclose(int id)",
+    "close the given resource database",
+    "bitmapr(int bmpid, int x, int y)",
+    "draw the bitmap with resource id bmpid at (x,y). The current .prc file is searched, along with each db opened by resopen().",
+    "bitmaprm(int bmpid, int x, int y, int mode)",
+    "draw the bitmap with resource id bmpid at (x,y) using the specified mode. The current .prc file is searched, along with each db opened by resopen(). Available modes are paint[0], erase[1], mask[2], invert[3], overlay[4], paintInverse[5], swap[6]",
+    "timex(int secs, int mode)",
+    "formats the time specified in secs. [mode 0] integer value (hour * 100 + minute) [mode 1] string value (as determined by system preferences) [mode 2] integer value (hour * 10000 + minute * 100 + sec).",
+    "datex(int secs, int mode)",
+    "formats the date specified in secs. [mode 0] integer value (year * 10000 + month * 100 + day) [mode 1] short string value [mode 2] long string value (as determined by system preferences).",
+    "selectdate(int secs, int selectBy, string title)",
+    "displays the date selection dialog with the given title and initial date. Returns the selected date or zero if cancelled. selectBy: day[0], week[1], month[2]",
+    "selecttime(int secs, string title)",
+    "displays the time selection dialog with the given title and initial time. Returns the selected time or zero if cancelled.",
+    "alertc(string title, string message, string buttons, int type)",
+    "displays a custom alert dialog with the specified title, message, and buttons (e.g. \"OK:Cancel\"). Returns button pressed. type: info[0], question[1], warning[2], error[3].",
+    "promptc(string title, string message, string buttons, int type, pointer pentry)",
+    "displays a custom input prompt with the specified title, text, and buttons (e.g. \"OK:Cancel\"). The entered string is placed in the string pointed to by pentry. Returns button pressed. type: info[0], question[1], warning[2], error[3].",
+    "secondsx(int date, int time)",
+    "retrieves the number of seconds since Jan 1, 1904 minus 2^31 for the specified date and time. Date and time are in the numeric format yyyymmdd and hhmmss (e.g. date = year * 10000 + month * 100 + day)",
+    "enableresize()",
+    "called before the first call to graph_on() to enable resizing",
+
+    "scanIsSymbol()",
+    "TODO",
+    "scanOpen()",
+    "TODO",
+    "scanClose()",
+    "TODO",
+    "scanAim(int bAimOn)",
+    "TODO",
+    "scanGetAim()",
+    "TODO",
+    "scanLed(int bLedOn)",
+    "TODO",
+    "scanGetLed()",
+    "TODO",
+    "scanEnable(int bEnable)",
+    "TODO",
+    "scanGetEnabled()",
+    "TODO",
+    "scanDecode(int bStartDecode)",
+    "TODO",
+    "scanGetParams()",
+    "TODO",
+    "scanGetVer(int iVersionType)",
+    "TODO",
+    "scanBeep(int iBeepType)",
+    "TODO",
+    "scanDefaults()",
+    "TODO",
+    "scanSendParams()",
+    "TODO",
+    "scanGetData()",
+    "TODO",
+    
+    "scanEnableType(int iBarcodeType, int bEnable)",
+    "TODO",
+    "scanOptCode39(int bCheckDigitVerification, int bFullAscii)",
+    "TODO",
+    
+    "scanGetAimDur()",
+    "TODO",
+    "scanAimDur(int dur)",
+    "TODO",
+    "scanGetBeepAfterDecode()",
+    "TODO",
+    "scanBeepAfterDecode(int bBeep)",
+    "TODO",
+    "scanGetBiDi()",
+    "TODO",
+    "scanBiDi(int bBiDi)",
+    "TODO",
+    "scanGetLedOnTime()",
+    "TODO",
+    "scanLedOnTime(int time)",
+    "TODO",
+    "scanGetLaserOnTime()",
+    "TODO",
+    "scanLaserOnTime(int time)",
+    "TODO",
+    "scanGetAngle()",
+    "TODO",
+    "scanAngle(int angle)",
+    "TODO",
+    "scanGetCount()",
+    "TODO",
+    "scanCount(int n)",
+    "TODO",
+    "scanGetTriggerMode()",
+    "TODO",
+    "scanTriggerMode(int mode)",
+    "TODO",
+};
+
+#define test(c, str) { if (!(c)) fatal(str); }
+
+void fatal(char* err) {
+    printf("ERROR: %s\n", err);
+    exit(-1);
+}
+
+int findFunc(char* name) {
+    for (int i=0;i<nBIFuncs;i++)
+        if (strcmp(name, funcTable[i].name)==0)
+            return i;
+    return -1;
+}
+
+void main(int argc, char* argv[]) {
+    char* name = "funcs.dat";
+    FILE* f;
+    bool bScan = false;
+    int nScanF, nScanL;
+
+    int arg = 1;
+    while (arg < argc) {
+        if (strcmp(argv[arg], "-scan")==0)
+            bScan = true;
+        else
+            name = argv[arg];
+        arg++;
+    }
+
+    nScanF = findFunc("scanIsSymbol");
+    nScanL = findFunc("scanTriggerMode");
+    test(nScanF > 0, "Unable to find 'scanIsSymbol'");
+    test(nScanL > 0, "Unable to find 'scanTriggerMode'");
+
+    if (!bScan) {
+        // remove scanner functions
+        for (int i=nScanF;i<=nScanL;i++) {
+            strcpy(funcTable[i].name, "*");
+            funcProto[i*2] = "";
+            funcProto[i*2+1] = "";
+        }
+    }
+
+    f = fopen(name, "wb");
+    test(f, "Unable to open file");
+
+    
+    test(nBIFuncs < 256, "Too many functions!!!");
+    fputs("7.1.4\n", f);
+    fwrite(&nBIFuncs, sizeof(nBIFuncs), 1, f);
+    fwrite(funcTable, sizeof(FuncInfo), nBIFuncs, f);
+    for (int i=0;i<nBIFuncs*2;i++) {
+        fputs(funcProto[i], f);
+        fputc('\n', f);
+    }
+
+    fclose(f);
+}

@@ -1,0 +1,7 @@
+#include "add-ins/OrbTimeSet.oc"
+void addAnHour() {
+    Date date;
+    date.now();
+    date.hour = date.hour + 1;
+    setTime(date);
+}

@@ -1,0 +1,44 @@
+// PocketC Architect sample
+// NativeGadget - demonstrates using a native gadget in a form
+
+// gadget files
+#include "SampleAddInGadget.oc"
+
+// app definition
+@app app {
+  name = "Native Gadget"
+  dbname = "Native Gadget"
+  creator = "OFs6"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form mainForm {
+    id = 100
+    text = "Native Gadget"
+    x = 0, y = 0, w = 160, h = 160
+
+    gadget TargetGadget gadget101 {
+      id = 101
+      x = 9, y = 23, w = 73, h = 62
+    }
+
+    gadget TargetGadget gadget102 {
+      id = 102
+      x = 19, y = 101, w = 120, h = 25
+    }
+
+    label label103 {
+      id = 103
+      x = 101, y = 28
+      text = "          "
+    }
+  }
+}
+
+// source files
+#include "NativeGadget.oc"
+#include "mainform.oc"

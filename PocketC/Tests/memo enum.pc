@@ -1,0 +1,21 @@
+// Test memo enum
+include "PocketGuiLib.c"
+include "PocketGui.c"
+
+enum() {
+    int numInvalid, iter;
+    for (;iter<32;iter++) {
+        if (mmopen(iter)) {
+            GAdd(0, mmgetl());
+            numInvalid = 0;
+        }
+    }
+}	
+
+main() {
+    GInit("MemoPad Enum");
+    GList(0, "", 1, 1, 24, 10);
+    enum();
+    GPaint(0);
+    GEvent();
+}

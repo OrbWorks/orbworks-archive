@@ -1,0 +1,99 @@
+<p>Legacy PocketC applications can be compiled with PocketC Architect with very 
+few changes. This page lists the changes in the compiler and runtime that are 
+incompatible with legacy PocketC applications. At the bottom of the page is a 
+short list of the most common compiler errors during the porting process, and 
+how to fix them.</p>
+<h3>Deprecated Functions</h3>
+<p>The following functions are no longer supported:</p>
+<ul>
+  <li><i>malloc</i> - use <code><a href="mmalloct.html">malloct</a></code> or the <code>new</code> operator.</li>
+  <li><i>settype</i> - types can no longer be changed at runtime, use <code>
+  <a href="mmalloct.html">malloct</a></code> instead.</li>
+  <li><i>typeof</i> - types can no longer be changed at runtime. <code>typeof</code> is 
+  a keyword in OrbC.</li>
+  <li><i>seropen</i> - use PocketC's <code>seropenx</code>, or convert to using 
+  the <a href="oSerial.html">Serial</a> object.</li>
+  <li><i>unpack</i> - instead of reading into a byte array and unpacking it, use 
+  <code><a href="mSerial-recv.html">Serial.recv</a></code> or <code><a href="mSerialStream-read.html">SerialStream.read</a></code> to read the bytes in the intended format.</li>
+  <li><i>deepsleep</i> - no equivalent.</li>
+  <li><i>dbmovecat</i> - no equivalent.</li>
+</ul>
+<h3>Changed Functions</h3>
+<p>The following functions have changed either their signatures or behaviors:</p>
+<ul>
+  <li><i>event</i> - this function has been renamed to <code>pcevent</code>.</li>
+  <li><i>malloct</i> - the parameters have been reversed.</li>
+  <li><i>mathlib</i> - this function always returns 1. All math functions that require 
+  MathLib will cause a runtime error rather than returning an invalid result as 
+	they did in PocketC.</li>
+  <li><i>memcpy</i> - this function now requires that the source and destination have 
+  the same memory types. In PocketC, this function would change the memory type 
+  at the destination to match the source.</li>
+  <li><i>tone</i> - a volume parameter has been added</li>
+  <li><i>seropenx</i> and other serial functions - return true for success and false 
+  for failure, rather than 0 for success and an error code on error.</li>
+</ul>
+<h3>All or Nothing Conversions</h3>
+<ul>
+  <li>Old graphics APIs (such as <code>graph_on</code>, <code>rect</code>) cannot be used in the same 
+  application as the Draw object.</li>
+  <li>Event handlers (and therefore the new UI) cannot be used in the same 
+  application as the PocketC eventing functions (such as <code>pcevent</code>, <code>wait</code>).</li>
+  <li><code>atexit</code> cannot be used in an application with event handlers. 
+	Use the app onstop event instead.</li>
+</ul>
+<h3>Native Libraries</h3>
+<p>Any new native code should be written as an OrbC native add-in. However, 
+native libraries are supported with a few limitations:</p>
+<ul>
+  <li>The native library interface function <code>callBI</code> only supports 
+  the following functions - <code>graph_on</code>, <code>hookmenu</code>, <code>
+  hooksilk</code>, <code>event</code>, <code>malloc</code>, and <code>textattr</code>.</li>
+  <li>Native libraries can take pointer parameters, but cannot call <code>deref</code> 
+  on non-parameters unless they are global values.</li>
+  <li>To pass a function address to <code>Fctl </code>when using PToolboxLib, 
+  first cast it to a <code>pointer</code>.</li>
+	<li>Several PToolboxLib functions are not yet compatible with the OrbC 
+	runtime, and will cause unexpected behavior or crashes.</li>
+</ul>
+<p>For native library developers, do the following things to ensure that your 
+library runs correctly:</p>
+<ul>
+	<li>Use the extended APIs to deal will strings. DO NOT use the old 
+	lockString/unlockString. DO NOT use your own code for directly manipulating 
+	strings. See the original PocketC native library document for details. 
+	Strings that are pushed and popped to be handled as they always have.</li>
+	<li>In you library's open function (where you allocate the global memory 
+	block), set the reserved field to 0x12345678 to inform the OrbC runtime that 
+	your library will not try to access strings manually.</li>
+	<li>When calling deref(), never increment/decrement the pointer that is 
+	returned. In PocketC, this usually worked. In OrbC, this is not valid. Call 
+	deref() for each value you need to access.</li>
+</ul>
+<h3>Other Issues/Differences</h3>
+<ul>
+  <li>Older versions of CControls had bugs which made them incompatible with the 
+  OrbC runtime. Only the version of CControls which is included with PocketC 
+  Architect can be used.</li>
+  <li>In an application that uses the output form or graphics form (rather than 
+  the new UI), when the <code>main</code> function exits, the application 
+  remains on the final form it was on. In order to go back to the application 
+  launcher, call <code>exit</code>.</li>
+  <li>Macros which contain other macros are now implemented properly</li>
+  <li>Function pointers in OrbC do not require a dereference. PocketC-style 
+  function pointer still require a dereference for compatibility.</li>
+  <li><code>&amp;array</code> is no longer valid. Instead, used <code>array</code> 
+  or <code>&amp;array[0]</code>.</li>
+  <li><code>@bmp</code>, <code>@res</code>, and the PRC properties are no longer 
+  supported. Instead, use the new OrbC resource syntax.</li>
+</ul>
+<h3>Common Compiler Errors</h3>
+<p>In porting your legacy PocketC application to OrbC, there are several common 
+errors you may encounter:</p>
+<ul>
+  <li><i>expected resource type</i> - this is most commonly caused by the 
+  presence of one of the unsupported PRC properties, such as <code>@bmp</code> 
+  or <code>@licon1</code>.</li>
+  <li><i>cannot call a non-funcptr type</i> - this is most commonly caused by an 
+  attempt to call the PocketC <code>event()</code> function. In OrbC, call <code>pcevent()</code> instead.</li>
+</ul>

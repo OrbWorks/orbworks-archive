@@ -1,0 +1,6 @@
+// Anil test
+main()
+{
+  float x =  76.18009172947146;
+  puts(x);
+}

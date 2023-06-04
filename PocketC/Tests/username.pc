@@ -1,0 +1,10 @@
+//username to hex
+main() {
+  string name;
+  int i, len;
+  name = getsysval(0);
+  len = strlen(name);
+  for (i=0;i<len;i++)
+    puts(hex(name@[i]) + " ");
+}
+  

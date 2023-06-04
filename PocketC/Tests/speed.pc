@@ -1,0 +1,52 @@
+//speed.c
+
+int t;
+
+//Declare some helper functions
+start() {
+ t=ticks();
+}
+
+stop(string s) {
+ puts(s+": "+(ticks()-t)+"\n");
+}
+
+main() {
+int x;
+pointer a;
+int k[1000];
+clear();
+
+a = malloc(1000);
+
+start();
+x=1000;
+while(x--) a[x]=0;
+stop("Dynamic Array");
+
+start();
+x=1000;
+while(x--) a[0]=0;
+stop("Dynamic a[0] Array");
+
+start();
+x=1000;
+while(x--) a[1]=0;
+stop("Dynamic a[1] Array");
+
+start();
+x=1000;
+while(x--) k[x]=0;
+stop("Static Array");
+
+start();
+x=1000;
+while(x--) k[0]=0;
+stop("Static k[0] Array");
+
+start();
+x=1000;
+while(x--) k[1]=0;
+stop("Static k[1] Array");
+
+}

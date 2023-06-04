@@ -1,0 +1,78 @@
+// PocketC date/time compatibility functions
+
+int seconds() {
+    Date d;
+    d.now();
+    return d.secs & 0x7fffffff;
+}
+
+int secondsx(int date, int time)  {
+    Date d;
+    d.ymd = date;
+    d.hour = time / 10000;
+    d.min = (time / 100) % 100;
+    d.sec = time % 100;
+    return d.secs & 0x7fffffff;
+}
+
+string _time(Date d, int mode) {
+    if (mode == 0) {
+        return d.hour * 100 + d.min;
+    } else if (mode == 1) {
+        return d.time();
+    } else {
+        return d.hour * 10000 + d.min * 100 + d.sec;
+    }
+}
+
+string time(int mode) {
+    Date d;
+    d.now();
+    return _time(d, mode);
+}
+
+string timex(int secs, int mode) {
+    Date d;
+    d.secs = secs | 0x80000000;
+    return _time(d, mode);
+}
+
+string _date(Date d, int mode) {
+    if (mode == 0) {
+        return d.ymd;
+    } else if (mode == 1) {
+        return d.date();
+    } else {
+        return d.ldate();
+    }
+}
+
+string date(int mode) {
+    Date d;
+    d.now();
+    return _date(d, mode);
+}
+
+string datex(int secs, int mode) {
+    Date d;
+    d.secs = secs | 0x80000000;
+    return _date(d, mode);
+}
+
+int selecttime(int secs, string title) {
+    Date d;
+    d.secs = secs | 0x80000000;
+    if (d.selecttime(title))
+        return d.secs & 0x7fffffff;
+    else
+        return 0;
+}
+
+int selectdate(int secs, int selectby, string title) {
+    Date d;
+    d.secs = secs | 0x80000000;
+    if (d.selectdate(selectby, title))
+        return d.secs & 0x7fffffff;
+    else
+        return 0;
+}

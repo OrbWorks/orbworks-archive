@@ -1,0 +1,21 @@
+#include "tests.h"
+
+@app app { creator="oBVT", name="bvt_math.oc", dbname="bvt_math.oc" }
+
+void main() {
+    float f = 0.4;
+    float r;
+    int a, b;
+    
+    r = cos(f);
+    puts("cos(0.4) = " + r + "\n");
+    srand(2345);
+    a = random(0x10000);
+    b = random(0x10000);
+    putsl("a: " + a);
+    putsl("b: " + b);
+    srand(2345);
+    test(random(0x10000) == a, "srand.1");
+    test(random(0x10000) == b, "srand.2");
+    final();
+}

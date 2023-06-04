@@ -1,0 +1,39 @@
+#include "tests.h"
+
+@app app { creator="oBVT", name="bvt_system.oc", dbname="bvt_system.oc" }
+
+struct PrefData {
+    int x;
+    string s;
+};
+
+void test_prefs() {
+    Preferences prefs;
+    PrefData pd = { 5, "MyData" }, pd2;
+    
+    test(prefs.set("DVci", true, &pd, typeof(pd), 1), "prefs.set");
+    test(prefs.get("DVci", true, &pd2, typeof(pd2), 1), "prefs.get");
+    test(pd2.x == 5, "prefs.get x");
+    test(pd2.s == "MyData", "prefs.get s");
+    prefs.del("DVci", true);
+    test(prefs.get("DVci", true, &pd2, typeof(pd2), 1) == false, "prefs.del");
+}
+
+void main() {
+    resetaot();
+    test(username() == "DaVinci", "username() == DaVinci");
+    puts(serialnum() + "\n");
+    puts("OS#: " + hex(osver()) + "\n");
+    puts("OS$: " + osvers() + "\n");
+    puts("Orb#: " + hex(orbver()) + "\n");
+    setclip("OrbForms rocks!");
+    test(getclip()=="OrbForms rocks!", "g/setclip()");
+    putsl("free mem: " + freemem());
+    putsl("battery volts: " + battery(true));
+    putsl("battery %: " + battery(false));
+    
+    test_prefs();
+    
+    final();
+    //launch("memo");
+}

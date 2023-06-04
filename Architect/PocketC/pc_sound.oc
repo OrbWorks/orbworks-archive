@@ -1,0 +1,12 @@
+// PocketC sound compatibility functions
+
+int getvol(int type) {
+    UIApp app;
+    int pref = sysPrefAlarmSoundVolume;
+    if (type == 0)
+        pref = sysPrefSysSoundVolume;
+    else if (type == 1)
+        pref = sysPrefGameSoundVolume;
+    
+    return app.getSysPref(pref);
+}

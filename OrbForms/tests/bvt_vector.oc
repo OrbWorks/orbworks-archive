@@ -1,0 +1,164 @@
+#include "tests.h"
+#include "../utilcode/ovector.oc"
+#include "../utilcode/vector.oc"
+
+object Point : OVectorItem { int x; int y; };
+OVector points;
+OVector points2;
+
+void test_OVector() {
+    int i, count;
+    Point* pt;
+    OVectorItem** old;
+    
+    // add a few Points
+    pt = new Point; // this memory will be deleted when removed from vector
+    pt->x = 5;
+    pt->y = 8;
+    test(points.add(pt) == 1, "OVector.add");
+    pt = new Point;
+    pt->x = 13;
+    pt->y = 7;
+    test(points.add(pt) == 2, "OVector.add");
+    test(points.count() == 2, "OVector.count");
+
+    // iterate over the Points in the vector
+    for (i=0;i<points.count();i++) {
+        pt = (Point*)points.get(i);
+        if (i == 0)
+            test(pt->x == 5 && pt->y == 8, "OVector.get");
+        else if (i == 1)
+            test(pt->x == 13 && pt->y == 7, "OVector.get");
+        // do something with this point
+    }
+    
+    old = points._data->data;
+    // add move to force realloc
+    for (i=0;i<10;i++) {
+        pt = new Point;
+        pt->x = i;
+        pt->y = i*i;
+        points.add(pt);
+    }
+    
+    test(points._data->data != old, "OVector.add - grow");
+    test(points.count() == 12, "OVector.add - grow");
+    test(((Point*)points.get(9))->x == 7, "OVector.get - grow");
+    
+    points2 = points;
+    test(points._data == points._data, "OVector._copy");
+    
+    old = points._data->data;
+    points.reserve(28);
+    test(points._data->nalloc == 28, "OVector.reserve");
+    test(points._data->data != old, "OVector.reserve");
+
+    // delete the first point
+    test(points.del(0) == 11, "OVector.del");
+    test(((Point*)points.get(9))->x == 8, "OVector.get - del");
+    
+    // clear everything
+    points.clear();
+    test(points.count() == 0, "OVector.clear");
+}
+
+struct SPoint { int x; int y; };
+Vector spoints;
+Vector spoints2;
+
+void test_Vector() {
+    int i, count;
+    SPoint a = { 5, 8 }, b = { 13, 7 };
+    SPoint* pt;
+    void* old;
+    
+    // init Vector
+    spoints.init(typeof(SPoint), sizeof(SPoint));
+    spoints2.init(typeof(SPoint), sizeof(SPoint));
+    
+    // add a few Points
+    test(spoints.add(&a) == 1, "Vector.add");
+    test(spoints.add(&b) == 2, "Vector.add");
+    test(spoints.count == 2, "Vector.count");
+
+    // iterate over the Points in the vector
+    for (i=0;i<spoints.count;i++) {
+        pt = (SPoint*)spoints.get(i);
+        if (i == 0)
+            test(pt->x == 5 && pt->y == 8, "Vector.get");
+        else if (i == 1)
+            test(pt->x == 13 && pt->y == 7, "Vector.get");
+        // do something with this point
+    }
+    
+    old = spoints._data;
+    // add more to force realloc
+    for (i=0;i<10;i++) {
+        a.x = i;
+        a.y = i*i;
+        spoints.add(&a);
+    }
+    
+    test(spoints._data != old, "Vector.add - grow");
+    test(spoints.count == 12, "Vector.add - grow");
+    test(((SPoint*)spoints.get(9))->x == 7, "Vector.get - grow");
+    
+    spoints2 = spoints;
+    test(spoints._data != spoints2._data, "Vector._copy");
+    test(((SPoint*)spoints2.get(9))->x == 7, "Vector._copy");
+    
+    old = spoints._data;
+    spoints.reserve(28);
+    test(spoints._nalloc == 28, "Vector.reserve");
+    test(spoints._data != old, "Vector.reserve");
+
+    // delete the first point
+    test(spoints.del(0) == 11, "Vector.del");
+    test(((SPoint*)spoints.get(9))->x == 8, "Vector.get - del");
+    
+    // clear everything
+    spoints.clear();
+    test(spoints.count == 0, "Vector.clear");
+}
+
+void func7() {
+    test_Vector();
+}
+
+void func6() {
+    func7();
+}
+
+void func5() {
+    func6();
+}
+
+void func4() {
+    func5();
+}
+
+void func3() {
+    func4();
+}
+
+void func2() {
+    func3();
+}
+
+void func1() {
+    func2();
+}
+
+void main() {
+    //test_Vector();
+    debug {
+        alert("debug on");
+    }
+    debuglog("i love debug log");
+    func1();
+    assert(true);
+    assert("a" == "b)\"" + 'c');
+    assert(false);
+    test_OVector();
+    final();
+}

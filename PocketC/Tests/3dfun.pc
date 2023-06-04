@@ -1,0 +1,90 @@
+// 3d fun2
+//#include "mother.h"
+
+pixel(int, int);
+
+pixel(int x, int y) {
+    line(1, x, y, x, y);
+}
+
+point3d(float x, float y, float z, pointer xout, pointer yout) {
+    float newx, newy;
+    newx = x;
+    newy = y;
+    newx = newx + z/2;
+    newy = newy + z/2;
+    *xout = newx;
+    *yout = newy;
+}
+
+graphics() {
+    graph_on();
+    rect(0, 0, 0, 160, 20, 0);
+}
+
+#define NUM_OBJ 5
+float obj_x[NUM_OBJ], obj_y[NUM_OBJ], obj_z[NUM_OBJ];
+float vel_x[NUM_OBJ], vel_y[NUM_OBJ], vel_z[NUM_OBJ];
+float mass[NUM_OBJ];
+int last_x[NUM_OBJ], last_y[NUM_OBJ];
+
+init() {
+    int i;
+    for (i=0;i<NUM_OBJ;i++) {
+        obj_x[i] = random(100);
+        obj_y[i] = random(100);
+        obj_z[i] = random(100);
+        vel_x[i] = rand() * 2 - 1;
+        vel_y[i] = rand() * 2 - 1;
+        vel_z[i] = rand() * 2 - 1;
+        mass[i]  = rand() * 5;
+        point3d(obj_x[i], obj_y[i], obj_z[i], &last_x[i], &last_y[i]);
+    }
+}
+
+sqr(float f) { return f*f; }
+sign(float f) { if (f < 0) return -1.0; return 1.0; }
+
+update() {
+    int i, j;
+    float f;
+
+    for (i=0;i<NUM_OBJ;i++) {
+        obj_x[i] = obj_x[i] + vel_x[i];
+        obj_y[i] = obj_y[i] + vel_y[i];
+        obj_z[i] = obj_z[i] + vel_z[i];
+        for (j=0;j<NUM_OBJ;j++) {
+            f = obj_x[i] - obj_x[j];
+            vel_x[j] = vel_x[j] + (mass[j]/mass[i]) / (f*f) * sign(f);
+            f = obj_y[i] - obj_y[j];
+            vel_y[j] = vel_y[j] + (mass[j]/mass[i]) / (f*f) * sign(f);
+            f = obj_z[i] - obj_z[j];
+            vel_z[j] = vel_z[j] + (mass[j]/mass[i]) / (f*f) * sign(f);
+        }
+    }
+}
+
+draw() {
+    int x, y, i;
+    for (i=0;i<NUM_OBJ;i++) {
+        point3d(obj_x[i], obj_y[i], obj_z[i], &x, &y);
+        line(1, last_x[i], last_y[i], x, y);
+        //pixel(x, y);
+        last_x[i] = x; last_y[i] = y;
+    }
+}
+
+main() {
+    int i;
+    while (1) {
+        clearg();
+        graphics();
+        init();
+        while (1) {
+            draw();
+            update();
+            if (event(0)) break;
+        }
+    }
+}
+    

@@ -1,0 +1,205 @@
+/*
+ovector.oc
+
+OVector - a vector ideal for storing objects. An OVector stores an
+    array of pointers to OVectorItems. To store useful data in an OVector,
+    define an object which derives from OVectorItem.
+
+NOTES:
+ *  An OVector stores its data is a ref-counted _OVectorData struct. When
+    assigning from one OVector to another (a = b), both structures point to
+    the same data. Thus, changes to a affect b.
+ *  This implementation increases the size of the vector by 10 whenever
+    more storage is needed. Thus, it is ideal for smaller data sets. If
+    your application will need to store lots of data, you should increase
+    this constant in OVector.add or modify the behavior to double the
+    storage size each time. This will minimize the cost of adding more
+    data by reducing the number of reallocations/copies. If you know the
+    data size in advance, call OVector.reserve to pre-allocate the needed
+    memory.
+
+Methods:
+
+int add(OVectorItem* item) - adds the specified item to the vector. The
+    item must have been dynamically allocated with 'new', since it will
+    be deleted when the vector removes it. Returns the number of items in
+    the vector.
+int del(int index) - removes the items at the specified index and deletes
+    it. Returns the number of items remaining in the vector.
+void clear() - removes and deletes all the items from the vector.
+OVectorItem* get(int index) - retrieves the item at the specified index.
+    Cast the return value to the derived type that was originally added.
+int count() - retrieve the current number of items in the vector.
+void reserve(int size) - ensure that the vector has enough storage for the
+    specified number of items. If the number of items that will be stored
+    is known in advance, this method should be called before adding any
+    items for efficiency.
+
+Sample usage:
+
+// define an object that inherits from OVectorItem that contains the data
+// interesting to your application
+object Point : OVectorItem {
+    int x;
+    int y;
+};
+
+OVector points;
+void func() {
+    int i;
+    Point* pt;
+    
+    // add a couple Points
+    pt = new Point; // this memory will be deleted when removed from vector
+    pt->x = 5;
+    pt->y = 8;
+    points.add(pt);
+    pt = new Point;
+    pt->x = 13;
+    pt->y = 7;
+    points.add(pt);
+
+    // iterate over the Points in the vector
+    for (i=0;i<points.count();i++) {
+        pt = (Point*)points.get(i);
+        // do something with this point
+    }
+    
+    // delete the first point
+    points.del(0);
+    
+    // clear everything
+    points.clear();
+}
+
+*/
+
+object OVectorItem {
+};
+
+struct _OVectorData {
+    OVectorItem** data;
+    int nalloc;
+    int refcnt;
+    int count;
+};
+
+object OVector {
+    void _init();
+    void _destroy();
+    void _copy(OVector);
+    
+    int add(OVectorItem*);
+    int del(int);
+    OVectorItem* get(int);
+    void clear();
+    int count();
+    void reserve(int);
+    // internal data
+    _OVectorData* _data;
+};
+
+void OVector._init() {
+    _data = null;
+}
+
+void OVector._destroy() {
+    if (_data && --_data->refcnt == 0) {
+        clear();
+        delete _data;
+    }
+}
+
+void OVector._copy(OVector src) {
+    if (_data && --_data->refcnt == 0) {
+        clear();
+        delete _data;
+        _data = null;
+    }
+    if (src._data) {
+        _data = src._data;
+        _data->refcnt++;
+    }
+}
+
+int OVector.count() {
+    if (_data) {
+        return _data->count;
+    }
+    return 0;
+}
+
+void OVector.clear() {
+    int i;
+    if (_data) {
+        for (i=0;i<_data->count;i++) {
+            delete _data->data[i];
+        }
+        delete _data->data;
+        _data->data = null;
+        _data->nalloc = _data->count = 0;
+    }
+}
+
+void OVector.reserve(int size) {
+    OVectorItem** pNewData;
+    
+    if (size < 1) return;
+    
+    if (!_data) {
+        _data = new _OVectorData;
+        _data->refcnt = 1;
+    }
+    
+    if (size > _data->nalloc) {
+        pNewData = new OVectorItem*[size];
+        if (_data->data) {
+            memcpy(pNewData, _data->data, _data->nalloc);
+            delete _data->data;
+        }
+        _data->data = pNewData;
+        _data->nalloc = size;
+    }
+}
+
+int OVector.add(OVectorItem* pObj) {
+    OVectorItem** pNewData;
+    
+    if (!_data) {
+        _data = new _OVectorData;
+        _data->refcnt = 1;
+    }
+    
+    if (_data->count + 1 > _data->nalloc) {
+        pNewData = new OVectorItem*[_data->nalloc + 10];
+        if (_data->data) {
+            memcpy(pNewData, _data->data, _data->nalloc);
+            delete _data->data;
+        }
+        _data->data = pNewData;
+        _data->nalloc += 10;
+    }
+    _data->data[_data->count] = pObj;
+    return ++_data->count;
+}
+
+int OVector.del(int iDel) {
+    if (_data) {
+        if (iDel < _data->count) {
+            delete _data->data[iDel];
+            if (iDel < _data->count - 1) {
+                memcpy(_data->data + iDel, _data->data + iDel + 1, _data->count - iDel - 1);
+            }
+            _data->count--;
+        }
+        return _data->count;
+    }
+    return 0;
+}
+
+OVectorItem* OVector.get(int iGet) {
+    if (_data && iGet < _data->count) {
+        return _data->data[iGet];
+    }
+    return null;
+}

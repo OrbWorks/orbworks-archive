@@ -1,0 +1,14 @@
+int g = 1;
+object X { virtual void f(); };
+void X.f() { }
+
+void main() {
+   int i;
+   string s;
+   for (i=0;i<32;i++) {
+      s = i;
+      if (i < 10)
+         s = "0" + s;
+      puts("      <% echo day(\"09" + s + "\") %>\n");
+   }
+}

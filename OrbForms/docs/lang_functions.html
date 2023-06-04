@@ -1,0 +1,65 @@
+<p>A function is a group of statements which is the basic unit of a program. A function has a return type, may have
+parameters, and may have local variables. The return type is the type (such as
+<code>int</code>) of the value the function returns - when used in an expression, the body of
+the function is executed and its return value is used as part of the expression.
+(If a function does not return a value, its
+type is <code>void</code>, and the function cannot be used in an expression.)<i><br/>
+return-type func-name</i>([<i>param-type param-name</i>,...]) { <i>local-variables
+statements</i> }</p>
+
+<p>Function names follow the same rules as variable names - 1. the name must be 31
+characters or less. 2. the name may only contain letters, numbers, and the
+underscore character (_) 3. the name must not begin with a number. All function
+names must be unique, and you may not declare a function with the same name as
+one of the built-in functions.</p>
+<p>Statements are discussed later, but for now, here are a few examples:</p>
+<pre>int area(int width, int height) {
+   return width * height;
+}
+
+float square(float x) {
+   return x * x;
+}
+
+int five() {
+   return 5;
+}
+
+void sayHello() {
+   alert(&quot;Hello&quot;);
+}</pre>
+
+<p><b>Local variables</b> are variables that can only be seen inside a function.
+In fact, they only exist while the function is executing. In other words,
+function A cannot access the variable inside of function B, and vice versa. When
+a function returns, the memory used by the local variables is cleaned up, and
+they are no longer accessible. This leads to the
+topic of <b>variable scope</b>. All variables have a scope - either global,
+local, or struct/object member. You can define a local variable (or parameter)
+with the same name as a global variable - when using the variable name inside the function, the local
+variable will be accessed/modified, but the global variable will be
+inaccessible.</p>
+<p><b>Parameters</b> are local variables whose value is provided by the calling
+function. In the function above, <code>area</code>, there are two parameters - <code>width</code> and
+<code>height</code>. <code>width</code> and <code>height</code> are local variables, but there value is initialized
+elsewhere. To invoke area with a width of 5 and a height of 4, you would
+type:</p>
+
+<pre>area(5, 4);</pre>
+
+<p>Parameters (except struct and object parameters) are passed by value, which
+means that if you pass a variable into a function as a parameter, the function
+is not able to modify the original variables. For example:</p>
+
+<pre>void six(int x) {
+  x = 6; // only sets the local variable
+}
+
+void test() {
+  int y = 9;
+  six(y);
+  // y is still 9
+}</pre>
+
+<p>Structs and objects, however, are passed by reference. We'll discuss these
+later.</p>

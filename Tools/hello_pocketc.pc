@@ -1,0 +1,7 @@
+hello(string name) {
+    return "Hello, " + name + "!";
+}
+
+main() {
+    puts(hello("world"));
+}

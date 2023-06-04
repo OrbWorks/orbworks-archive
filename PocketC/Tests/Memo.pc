@@ -1,0 +1,112 @@
+//Memo Copier
+library "PToolboxLib"
+#include "PToolboxLib/Fctl.h"
+ 
+#define MAIN 3000 //form
+#define BTNCOPY 3001
+#define LIST 3002
+#define LABEL1 3003
+#define LABEL2 3004
+#define NEWNAME 3005
+#define BTNCLEAR 3006
+#define BTNEXIT 3007
+#define UPKEY 5
+#define DOWNKEY 6
+ 
+string data,memos[256];
+ 
+int mmenum(pointer p,int max)
+{
+int i,j,k,num;
+num=mmcount();
+if((j=num)>max) j=max;
+ 
+for(i=0;i<j;i++)
+{
+if(mmopen(i)==0) continue;
+if(strlen(p[k]=mmgetl())) k++;
+mmclose();
+}
+return k;
+}
+ 
+docopy(pointer old,pointer new)
+{
+mmfind(*old);
+mmgetl();
+data=*new+'\n';
+while(!mmeof())
+data=data+mmgetl()+'\n';
+mmclose();
+ 
+mmnew();
+mmputs(data);
+mmclose();
+tone(400,100);
+}
+ 
+main()
+{
+string oldmemo,newmemo;
+int i,e,num;
+ 
+if(!(num=mmenum(memos,256)))
+{
+alert("No available memos to copy...exiting");
+return;
+}
+ 
+Form(MAIN,"Memo Copier");
+ 
+Button(BTNCOPY,0,2,147,0,10,"Copy Memo");
+Button(BTNEXIT,0,133,148,0,10,"Exit");
+Button(BTNCLEAR,0,128,121,0,9,"Clear");
+Label(LABEL1,1,17,"Choose a memo to duplicate...");
+Label(LABEL2,1,120,"New Name (max 256)...");
+ 
+List(LIST,2,30,156,8,0);
+FsetList(LIST,0,num,memos);
+Field(NEWNAME,0x10,1,132,156,12,256,"");
+ 
+FsetText(NEWNAME,(oldmemo=FgetText(LIST))+" (copy)");
+ 
+Fctl(DRAW,MAIN);
+i=Fctl(SHOW,LIST);
+line(2,0,143,160,143);
+ 
+while(1) {
+  e=Fevent(1);
+  switch(e)
+{
+  case BTNCOPY: 
+    newmemo=FgetText(NEWNAME);
+    if(newmemo=="")
+    {
+      alert("You must specify a new name!");
+      FsetText(NEWNAME,oldmemo+" (copy)");
+      break;
+    }
+    if(confirm("Copy '"+oldmemo+"' to '"+newmemo+"'?")) docopy(&oldmemo,&newmemo);
+     break;
+  case LIST:
+    oldmemo=FgetText(LIST);
+    FsetText(NEWNAME,oldmemo+" (copy)");
+    break;
+ 
+  case BTNCLEAR:
+    FsetText(NEWNAME,newmemo="");
+    break;
+ 
+  case UPKEY:
+    Fctl(LISTPGUP,LIST);
+    break;
+ 
+  case DOWNKEY:
+    Fctl(LISTPGDOWN,LIST);
+    break;
+ 
+  case BTNEXIT:
+    return; //this one
+}
+}
+}

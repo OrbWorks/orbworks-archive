@@ -1,0 +1,17 @@
+// Test string@[]
+main() {
+    string cstr = "Const";
+    string mstr = "M";
+    pointer ps;
+    
+    mstr = mstr + "alleable";
+    ps = &cstr;
+    
+    puts("Const@[1] = " + cstr@[1] + "\n");
+    puts("Malleable@[2] = " + mstr@[2] + "\n");
+    
+    cstr@[1] = 'X';
+    mstr@[2] = 'X';
+    ps@[1] = '4';
+    puts(cstr + "\n" + mstr + "\n");
+}

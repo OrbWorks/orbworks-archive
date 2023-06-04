@@ -1,0 +1,106 @@
+<p>The OrbC runtime is built around a stack-based virtual machine. The
+virtual machine's memory is represented by Values, as defined in OrbNative.h.
+The following text describes the architectural aspects that are important to a
+native add-in.</p>
+<h3>Values</h3>
+<p>A Value is a union of the supported basic data types - int, float, string,
+and char. ints, floats, and chars are stored directly in the Value structure.
+Strings, however, are stored as ref-counted handles.</p>
+<p>Other types supported by the language, such as pointers and bools, are
+treated as ints by the virtual machine.</p>
+<h3>Strings</h3>
+<p>There are two types of strings supported by the virtual machine: constant
+and shared. A constant string is just a pointer to some constant data, usually a
+string literal in C++ code. A shared string is a handle to a ref-counted
+structure containing the string's data. This structure is not exposed directly
+to the
+native add-ins. Instead, functions are provided to create and modify these
+strings.</p>
+<h3>Function calls</h3>
+<p>In order to implement a function in a native add-in, your code must pop all
+the arguments off the stack, do something useful, and then (optionally) set the
+return value. If you declare your function with a return type, you MUST set a
+return value.</p>
+<p>The calling convention for functions is quite simple. Each argument is pushed
+onto the stack from left to right, which means that the last argument will be on top of
+the stack. For example, an add function declared as &quot;<code>int add(int x, int y)</code>&quot;
+looks like this:</p>
+<pre>void add(OrbFormsInterface* ofi) {
+  Value* y = ofi-&gt;vm_pop(); // pop the last arg
+  Value* x = ofi-&gt;vm_pop(); // pop the first arg
+  ofi-&gt;vm_retVal-&gt;type = vtInt; // set the return type
+  ofi-&gt;vm_retVal-&gt;iVal = x-&gt;iVal + y-&gt;iVal;
+}</pre>
+<p><b>Note</b>: If your function takes an object (or structure) as a parameter, this is
+converted to a pointer by the compiler. So, a function declared as &quot;<code>void
+box(Point top_left, Point bottom_right)</code>&quot; will be implemented as if it were
+&quot;<code>void box(<b>Point*</b> top_left, <b>Point*</b> bottom_right)</code>&quot;.</p>
+<h3>Method calls</h3>
+<p>A method call is the same as function call, but the compiler inserts a
+parameter to the beginning of the parameter list which is a pointer to the
+object. For example, &quot;<code>void Point.add(int x, int y)</code>&quot; will be
+implemented as &quot;<code>void Point_add(<b>Point*</b> this, int x, int y)&quot;</code>.</p>
+<h3>Returning objects</h3>
+<p>If a function returns an object (or structure), the compiler adds a pointer
+to the return location as the first parameter. For a method that returns an
+object (or structure), the &quot;this&quot; pointer gets moved to the second parameter. In
+addition to filling in the structure passed as the first parameter, a function
+or method must also set the virtual machine's return value to type point to this
+same structure.</p>
+<pre>struct Point { int x, int y; };
+Point makePt(int x, int y) @ library(&quot;AddInName&quot;, 0);
+
+void makePt(OrbFormsInterface* ofi) {
+  Value* y = ofi-&gt;vm_pop();
+  Value* x = ofi-&gt;vm_pop();
+  Value* optr = ofi-&gt;vm_pop(); // pointer to return struct
+  Value* o_x = ofi-&gt;vm_deref(optr-&gt;iVal); // dereference the struct pointer to
+  Value* o_y = ofi-&gt;vm_deref(optr-&gt;iVal + 1); // get pointers to the two fields
+  // fill in the return struct
+  o_x-&gt;iVal = x-&gt;iVal;
+  o_y-&gt;iVal = y-&gt;iVal;
+  // return the pointer as well!
+  ofi-&gt;vm_retVal-&gt;type = vtInt;
+  ofi-&gt;vm_retVal-&gt;iVal = optr-&gt;iVal;
+}</pre>
+<h3>Properties</h3>
+<p>A property is similar to a field in an object (or structure) - except that it
+is not actually stored in the object's memory. Instead, the value of the
+property is get and set by
+calling a native function. A property may only be a simple type, not an object or
+structure.</p>
+<p>Getting and setting a property is implemented as a method call. A
+&quot;get&quot; method takes a pointer to the object and returns the property
+value. A &quot;set&quot; method takes a pointer to the object and the new property
+value, returning a copy of the new property value. For example, if you implemented <code>Point</code> as a native 
+struct with <code>x</code> as a
+read-write property:</p>
+<pre>struct Point { int x @ library(&quot;AddInName&quot;, 0:1); };</pre>
+<p>the methods that get and set the properties would be implemented like this:</p>
+<pre>int Point_get_x(Point* this)
+int Point_set_x(Point* this, int new_x)</pre>
+<h3>Object/Struct Memory Layout</h3>
+<p>All the fields in an object and structure are laid out in memory in the
+same order as they are declared. Methods and properties require no space in the
+struct. For example:</p>
+<pre>struct Point {
+  int x; // location 0
+  int y; // location 1
+};
+struct NativeStruct {
+  int id; // location 0
+  void method(); // no space
+  string prop @ library(&quot;AddInName&quot;, 1:2); // no space
+  int state; // location 1
+  Point pt; // locations 2 and 3
+};</pre>
+<p>The memory layout for an object is slightly different than a struct. The 
+first memory location in an object is an object type id used by the runtime 
+engine. For example:</p>
+<pre>object Point {
+  // location 0 is object type id
+  int x; // location 1
+  int y; // location 2
+  void setPoint(int x, int y); // no space
+};
+</pre>

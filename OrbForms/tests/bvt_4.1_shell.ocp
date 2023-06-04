@@ -1,0 +1,17 @@
+@app app {
+    creator = "Shll"
+    name = "BVT 4.1 Shell"
+    dbname = "bvt_4.1_shell"
+}
+
+void main() {
+    int x;
+    puts("In shell\n");
+    if (strlen(app.launchArgs) > 0) {
+        puts("Compiler returned:\n" + app.launchArgs);
+    } else {
+        // compile main.ocp
+        puts("Launching compiler");
+        launchCustomString("PCAr", 0x8002, "main.ocp,Shll");
+    }
+}

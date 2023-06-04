@@ -1,0 +1,18 @@
+======  Code ======
+    0   Call (9) "main"
+    5   Halt 
+: "main"
+    9   Link 0 
+   11 StInit (0) "i"
+   14  CWord 0 
+   17 StorFP 3 
+   20    Pop 
+   21    LTI SP <= [0xc003],0x000a
+   27   JmpZ 42
+   30   AddI SP <= [0xc003],0x0001
+   36 StorFP 3 
+   39    Jmp 21
+   42    Pop 
+   43 UnLink 
+   44   RetN 0 
+

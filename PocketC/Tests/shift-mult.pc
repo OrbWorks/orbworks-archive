@@ -1,0 +1,14 @@
+// shift - mult
+main() {
+  int i, j, t;
+  t = ticks();
+  for (i=0;i<1000;i++)
+    j = i * 4;
+  t = ticks() - t;
+  puts("mult: " + t + "\n");
+  t = ticks();
+  for (i=0;i<1000;i++)
+    j = i << 2;
+  t = ticks() - t;
+  puts("shift: " + t + "\n");
+}

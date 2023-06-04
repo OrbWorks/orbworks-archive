@@ -1,0 +1,1 @@
+!include "PocketC-base.nsi"

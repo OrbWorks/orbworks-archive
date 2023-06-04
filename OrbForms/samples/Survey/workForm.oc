@@ -1,0 +1,65 @@
+// workForm.oc
+// Created for personalForm
+
+void loadWorkData() {
+    // initialize the form with the current record
+    fldWorkEmployer.text = entry.work.employer;
+    fldWorkPosition.text = entry.work.position;
+    fldWorkYears.text = entry.work.years;
+    fldWorkDistance.text = entry.work.distance;
+}
+
+void saveWorkData() {
+    // save the data from the work form into the current record
+    entry.work.employer = fldWorkEmployer.text;
+    entry.work.position = fldWorkPosition.text;
+    entry.work.years = fldWorkYears.text;
+    entry.work.distance = fldWorkDistance.text;
+}
+
+handler workForm.onopen() {
+    // setup the form popup
+    string pages[2] = { "Personal", "Work" };
+    listWorkPages.setitems(2, pages);
+    listWorkPages.selitem = 1;
+    popWorkPage.text = "Work";
+    
+    loadWorkData();
+
+    // setup the record manager to modify the controls
+    // on this form
+    recMgr.setControls(lblWorkRecord, btnWorkPrevious, btnWorkNext);
+}
+
+handler workForm.onclose() {
+    saveWorkData();
+}
+
+handler miWorkOptionsAbout.onselect() {
+    doAbout();
+}
+
+handler popWorkPage.onlistselect() {
+    if (event.value == 0) {
+        personalForm.load();
+        appPrefs.iPage = PAGE_PERSONAL;
+    }
+}
+
+handler btnWorkPrevious.onselect() {
+    saveWorkData();
+    recMgr.prev();
+    loadWorkData();
+}
+
+handler btnWorkNext.onselect() {
+    saveWorkData();
+    recMgr.next();
+    loadWorkData();
+}
+
+handler btnWorkAdd.onselect() {
+    saveWorkData();
+    recMgr.add();
+    loadWorkData();
+}

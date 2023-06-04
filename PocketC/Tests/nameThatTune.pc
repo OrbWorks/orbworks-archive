@@ -1,0 +1,59 @@
+// name that tune
+main()
+{float a, b, c, d , e, f, g ,c2,a2,b2,c3,d2,e2,f2,g2, ix;
+float hs,fs;
+
+graph_on();
+clearg();
+hs= pow(2.000000, 
+          1/12.0000000);
+fs= hs*hs;
+c=220.000000*pow(hs,3) ;
+d=c*fs;
+e=d*fs;
+f=e*hs;
+g=f*fs;
+a=g*fs;
+b=a*fs;
+a2=a*2.00;
+b2=b*2.00;
+c2=c*2.00;
+c3=c2*2.00;
+d2=d*2.00;
+e2=e*2.00;
+f2=f*2.00;
+g2=g*2.00;
+
+tone(a,500);
+tone(c2,500);
+tone(e2,500);
+tone(a2,500);
+tone(b2,500);
+tone(e2,500);
+tone(c2,500);
+tone(b2,500);
+tone(c3,500);
+tone(e2,500);
+tone(c2,500);
+tone(c3,500);
+tone(g2/hs,500);
+tone(d2,500);
+tone(a,500);
+tone(g2/hs,500);
+tone(e2,500);
+tone(c2,500);
+tone(a,500);
+tone(c2,500);
+tone(e2,500);
+tone(c2,500);
+tone(a,500);
+tone(g,500);
+tone(a,500);
+tone(a,500);
+tone(a,500);/*
+tone(a/2,500);
+tone(f,500);
+tone(e,500);*/
+ix++;
+
+}

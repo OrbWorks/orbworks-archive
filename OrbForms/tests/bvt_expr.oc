@@ -1,0 +1,341 @@
+// expr tests
+#include "tests.h"
+
+struct Point {
+    int x, y;
+};
+
+enum { Zero, One, Three=3, Four };
+const int cint3 = Three, cint6 = 6;
+const float pi = 3.141592;
+const char cchar='c';
+const string me="Jeremy";
+
+string days[7] = {"Sun", "Mon", "Tues" };
+
+void ptrarith() {
+    Point pts[3] = { {1,2}, {3,4}, {5,6} };
+    Point* ppt;
+    
+    ppt = pts;
+    test(ppt->x==1, "ppt->x==1");
+    test((ppt + 2)->x==5, "(ppt + 2)->x==5");
+    test((ppt++)->x==1, "(ppt++)->x==1");
+    test(ppt->x==3, "ppt->x==3");
+    test((ppt--)->x==3, "(ppt--)->x==3");
+    test(ppt->x==1, "ppt->x==1");
+    test((++ppt)->x==3, "(++ppt)->x==3");
+    test(ppt->x==3, "ppt->x==3");
+    test((--ppt)->x==1, "(--ppt)->x==1");
+    test(ppt->x==1, "ppt->x==1");
+    test((ppt+=2)->x == 5, "(ppt+=2)->x == 5");
+    test((ppt-=1)->x == 3, "(ppt-=1)->x == 3");
+}
+
+void assign() {
+    int a, b, c;
+    Point pt, pt2, pt3;
+    
+    c = b = 5;
+    test(c==5, "multiple assign 1");
+    test(b==5, "multiple assign 2");
+    
+    pt.x = pt.y = 7;
+    test(pt.x==7, "multiple member assign 1");
+    test(pt.y==7, "multiple member assign 2");
+    pt.x = 4;
+    
+    pt2 = pt3 = pt;
+    test(pt2.x==4 && pt2.y==7, "multiple struct assign 1");
+    test(pt3.x==4 && pt3.y==7, "multiple struct assign 2");
+}
+
+int inc_g = 6;
+void incdec() {
+    int inc_l = 6;
+    
+    test(inc_l++ == 6, "inc_l++ == 6");
+    test(inc_l == 7, "inc_l == 7");
+    test(inc_l-- == 7, "inc_l-- == 7");
+    test(inc_l == 6, "inc_l == 6");
+    test(++inc_l == 7, "++inc_l == 7");
+    test(inc_l == 7, "inc_l == 7");
+    test(--inc_l == 6, "--inc_l == 6");
+    test(inc_l == 6, "inc_l == 6");
+
+    test(inc_g++ == 6, "inc_g++ == 6");
+    test(inc_g == 7, "inc_g == 7");
+    test(inc_g-- == 7, "inc_g-- == 7");
+    test(inc_g == 6, "inc_g == 6");
+    test(++inc_g == 7, "++inc_g == 7");
+    test(inc_g == 7, "inc_g == 7");
+    test(--inc_g == 6, "--inc_g == 6");
+    test(inc_g == 6, "inc_g == 6");
+}
+    
+void add() {
+    int ia=8, ib=9, ir;
+    float fa=3.1, fb=5.6, fr;
+    char ca='0', cb=2, cr;
+    string sa="first", sb="second", sr;
+    int ar[2];
+    
+    ir = ia + ib;
+    fr = fa + fb;
+    cr = ca + cb;
+    sr = sa + sb;
+    
+    test(ir==17, "+int");
+    test(cr=='2', "+char");
+    test(fr<8.71 && fr>8.69, "+float");
+    test(sr=="firstsecond", "+string");	
+
+    // +=
+    ar[1] = 6;
+    ar[1] += 2;
+    test(ar[1]==8, "ar[1]+=2");
+    ia = 8;
+    ia += 3;
+    test(ia==11, "ia+=3");
+}
+
+string retstring(string name) {
+    return "hello, " + name;
+}
+
+void sub() {
+    int ia=28, ib=9, ir;
+    float fa=12.1, fb=5.6, fr;
+    char ca='3', cb=2, cr;
+    int ar[2];
+    
+    ir = ia - ib;
+    fr = fa - fb;
+    cr = ca - cb;
+    
+    test(ir==19, "-int");
+    test(cr=='1', "-char");
+    test(fr<6.51 && fr>6.49, "-float");
+
+    ar[1] = 6;
+    ar[1] -= 2;
+    test(ar[1]==4, "ar[1]-=2");
+    ia = 8;
+    ia -= 3;
+    test(ia==5, "ia-=3");
+}
+
+void mult() {
+    int ia=3, ib=9, ir;
+    float fa=1.2, fb=1.1, fr;
+    char ca=3, cb=2, cr;
+    
+    ir = ia * ib;
+    fr = fa * fb;
+    cr = ca * cb;
+    
+    test(ir==27, "*int");
+    test(cr==6, "*char");
+    test(fr<1.33 && fr>1.31, "*float");
+
+    ia = 8;
+    ia *= 3;
+    test(ia==24, "ia*=3");
+}
+
+void div() {
+    int ia=12, ib=4, ir;
+    float fa=33.0, fb=11.0, fr;
+    char ca=27, cb=3, cr;
+    
+    ir = ia / ib;
+    fr = fa / fb;
+    cr = ca / cb;
+    
+    test(ir==3, "/int");
+    test(cr==9, "/char");
+    test(fr<3.01 && fr>2.99, "/float");
+
+    ia = 8;
+    ia /= 2;
+    test(ia==4, "ia/=2");
+}
+
+void mod() {
+    int ia=12, ib=5, ir;
+    char ca=27, cb=6, cr;
+    
+    ir = ia % ib;
+    cr = ca % cb;
+    
+    test(ir==2, "%int");
+    test(cr==3, "%char");
+
+    ia = 8;
+    ia %= 3;
+    test(ia==2, "ia%=3");
+}
+
+int g_pass;
+int pass_true() {
+    g_pass++;
+    return 1;
+}
+
+int pass_false() {
+    g_pass++;
+    return 0;
+}
+
+void pass() {
+    test(true, "shortcut");
+}
+
+int fail() {
+    test(false, "shortcut");
+    return 0;
+}
+
+void compare() {
+    g_pass = 0;
+    if (pass_true() || fail()) {
+        test(g_pass == 1, "true || x");
+    } else {
+        fail();
+    }
+    
+    g_pass = 0;
+    if (pass_false() || pass_false()) {
+        fail();
+    } else {
+        test(g_pass == 2, "false || false");
+    }
+    
+    g_pass = 0;
+    if (pass_true() || fail() || fail()) {
+        test(g_pass == 1, "true || x || x");
+    } else {
+        fail();
+    }
+    
+    g_pass = 0;
+    if (pass_false() || pass_false() || pass_false()) {
+        fail();
+    } else {
+        test(g_pass == 3, "false || false || false");
+    }
+
+    g_pass = 0;
+    if (pass_false() || pass_false() || pass_true()) {
+        test(g_pass == 3, "false || false || true");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() || pass_true() || fail()) {
+        test(g_pass == 2, "false || true || x");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() && fail()) {
+        fail();
+    } else {
+        test(g_pass == 1, "false && x");
+    }
+    
+    g_pass = 0;
+    if (pass_true() && pass_false()) {
+        fail();
+    } else {
+        test(g_pass == 2, "true && false");
+    }
+
+    g_pass = 0;
+    if (pass_true() && pass_true()) {
+        test(g_pass == 2, "true && false");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() || (pass_false() && fail()) || pass_true()) {
+        test(g_pass == 3, "false || (false && x) || true");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() || (pass_true() && pass_false()) || pass_true()) {
+        test(g_pass == 4, "false || (false && x) || true");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() || (pass_true() && pass_false()) || pass_true()) {
+        test(g_pass == 4, "false || (true && false) || true");
+    } else {
+        fail();
+    }
+
+    g_pass = 0;
+    if (pass_false() || (pass_true() && pass_true()) || fail()) {
+        test(g_pass == 3, "false || (true && true) || x");
+    } else {
+        fail();
+    }
+    
+    test(3 == 3 || fail(), "3 == 3 || fail");
+    test(4 == 0 || 4, "4 == 0 || 4");
+}
+
+void bitwise() {
+    int ia = 0x80000001;
+    char ca = 0x81;
+    
+    test(ia & 0x80000000 == 0x80000000, "&int");
+    test(ia ^ 0xC0000000 == 0x40000001, "^int");
+    test(ia | 0xC0000000 == 0xC0000001, "|int");
+    test(~ia == 0x7FFFFFFE, "~int");
+    test(ia >> 3 == 0xF0000000, ">>int");
+    test(ia << 2 == 0x00000004, "<<int");
+
+    test(ca & 0x80 == 0x80, "&char");
+    test(ca ^ 0xC0 == 0x41, "^char");
+    test(ca | 0xC0 == 0xC1, "|char");
+    test(~ca == 0x7E, "~char");
+    test(ca >> 3 == 0xF0, ">>char");
+    test(ca << 2 == 0x04, "<<char");
+}
+
+void consts() {
+    test(pi > 3.14 && pi < 3.15, "const float");
+    test(cchar == 'c', "const char");
+    test(cint3 == 3, "const int");
+    test(Zero == 0, "enum 0");
+    test(Three == 3, "enum 3");
+}
+
+void main() {
+    test(days[2] == "Tues", "days[2] = 'Tues'");
+    test(days[3] == "", "days[3] = ''");
+    test(days[6] == "", "days[6] = ''");
+    assign();
+    incdec();
+    ptrarith();
+    add();
+    sub();
+    mult();
+    div();
+    mod();
+    compare();
+    bitwise();
+    consts();
+    
+    test(retstring("Jeremy") == "hello, Jeremy", "return string");
+    
+    final();
+}	

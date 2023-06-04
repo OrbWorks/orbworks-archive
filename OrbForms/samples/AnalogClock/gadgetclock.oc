@@ -1,0 +1,118 @@
+struct Point {
+    int x, y;
+};
+
+struct ClockHand {
+    float angle;
+    int length;
+};
+
+const float pi = 3.141592;
+
+struct ClockGadget {
+    // A UIGadget must always be the first member of a gadget
+    UIGadget gadget;
+
+    // default event handlers
+    void onopen();
+    void ondraw();
+
+    // internal methods
+    void DrawClockFace();
+    void DrawClockHands();
+    void DrawClockHand(ClockHand hand, int color);
+    void CalculateFace();
+
+    // internal data
+    Draw 	draw;
+
+    Point	face[12];	
+    int 	radius;
+    int 	border;
+    Point	ptCenter;
+
+    ClockHand chHour, chMin, chSec;
+};
+
+void ClockGadget.CalculateFace() {
+    // when the gadget is first opened, we want to attach
+    // our Draw object, pre-calculate some metrics based
+    // on gadget size
+    int i;
+    border = 3;
+    draw.attachGadget(gadget);
+    
+    if (gadget.h >=  gadget.w) {
+        radius = 0.80 * (gadget.w - 2*border) / 2;
+    } else {
+        radius = 0.80 * (gadget.h - 2*border) / 2;
+    }
+    
+    ptCenter.x = gadget.w / 2;
+    ptCenter.y = gadget.h / 2;
+    
+    for (i=0;i<12;i++) {
+        face[i].x = ptCenter.x + cos((i * 30 - 90) * pi / 180) * radius;
+        face[i].y = ptCenter.y + sin((i * 30 - 90) * pi / 180) * radius;
+    }
+    
+    chSec.length = radius - 5;
+    chMin.length = radius - 5;
+    chHour.length = (radius - 5) * 0.6;
+}
+
+void ClockGadget.onopen() {
+    CalculateFace();
+}
+
+void ClockGadget.ondraw() {
+    DrawClockFace();
+    DrawClockHands();
+}
+
+void ClockGadget.DrawClockFace() {
+    int i;
+
+    draw.begin();
+    draw.frame(clrFG, border, border, gadget.w-border,
+        gadget.h-border, 5, border);
+
+    draw.textAlign(11);
+    draw.text(clrFG, face[0].x, face[0].y, "12");
+    for (i=1; i<12; i++) {
+        draw.text(clrFG, face[i].x, face[i].y, i);
+    }
+    draw.pixel(clrFG, ptCenter.x, ptCenter.y);
+    draw.end();
+}
+
+void ClockGadget.DrawClockHand(ClockHand hand, int color) {
+    int x, y;
+    draw.begin();
+    
+    x = cos(hand.angle) * hand.length + ptCenter.x;
+    y = sin(hand.angle) * hand.length + ptCenter.y;
+    
+    draw.line(color, ptCenter.x, ptCenter.y, x, y);
+    draw.end(); 
+}
+
+void ClockGadget.DrawClockHands() {
+    Date today;
+    
+    // erase the previouly drawn hands
+    DrawClockHand(chHour, clrBG);
+    DrawClockHand(chMin, clrBG);
+    DrawClockHand(chSec, clrBG);
+
+    today.now();
+    // calculate the new angles
+    chHour.angle = ((float)(today.hour % 12) * 30 + today.min / 2 - 90) / 180 * pi;
+    chMin.angle = ((float)today.min * 6 - 90) / 180 * pi;
+    chSec.angle = ((float)today.sec * 6 - 90) / 180 * pi;
+    
+    // draw the current time
+    DrawClockHand(chHour, clrFG);
+    DrawClockHand(chMin, clrFG);
+    DrawClockHand(chSec, clrFG);
+}

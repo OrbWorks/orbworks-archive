@@ -1,0 +1,64 @@
+
+<p>A native add-in is implemented as a code resource. As a code resource, the
+add-in only has one exported function (as opposed to a system library, which can
+have numerous entries). The exported function, the entry function, is called to
+startup, shutdown, and execute code in the add-in.</p>
+<p>This documentation is not a step-by-step tutorial for creating a native
+add-in. The easiest way to create a
+native add-in is to copy one of the sample add-ins, modifying it for your
+needs.&nbsp;</p>
+<h3>Entry Function</h3>
+<p>The entry function, which must be named __Startup__ to satisfy the linker,
+takes 3 parameters:</p>
+<p><code>void* __Startup__(OrbFormsInterface* ofi, void* data, UInt16 iFunc)</code></p>
+<p>The first parameter is a structure embodying the OrbC interface which
+contains a number of functions to access the virtual machine and other
+functionality. The second parameter, data, is a pointer to the add-in's global
+data. The final parameter is the function number that is to be executed.</p>
+<h3>Startup and Shutdown</h3>
+<p>Two special function indexes are defined for startup and shutdown of the
+add-in - NATIVE_STARTUP and NATIVE_SHUTDOWN.</p>
+<ul>
+  <li>NATIVE_STARTUP - this is your opportunity to allocate and initialize any
+    global data needed. A pointer to the allocated data (or NULL, if not needed) should be
+    returned from the entry function. All calls after this will provide this
+    data pointer as a parameter.</li>
+  <li>NATIVE_SHUTDOWN - this is used to cleanup any state or data allocated. At
+    this point, the global data must be cleaned up if it was allocated.</li>
+</ul>
+<h3>Project Settings</h3>
+<p>In order for a native add-in to be compatible with OrbC, it must follow
+certain guidelines.</p>
+<ul>
+  <li>The code resource should be type 'ofNA', with id '0'</li>
+  <li>If you use string literals, you must specify that these strings are PC
+    relative</li>
+  <li>Creator ID should be registered with Palm.</li>
+</ul>
+<h3>Additional Resources</h3>
+<p>If your native add-in requires additional resources, such as forms or
+bitmaps, you can add these to the .prc file. When a standalone application is
+built, these additional resources will be copied over.&nbsp;</p>
+<h3>OrbC Declarations</h3>
+<p>In order to use a native function in OrbC, you must declare it as
+specified below. You should create a .oc file with these declarations and
+include it in the main source file of your application. If you are creating a
+native gadget, you should add the .oc file with the declarations to the project
+as a gadget declaration file.</p>
+<p>A native function is declared like a normal function, with additional syntax
+that specifies the name of the add-in (without the .prc) and the function
+index that implements it:</p>
+<pre>int add(int x, int y) @ library(&quot;AddInName&quot;, 1);
+string find(string) @ library(&quot;AddInName&quot;, 2);
+struct MyStruct {
+  void doSomething(float) @ library(&quot;AddInName&quot;, 3);
+};</pre>
+<p>A native struct can expose properties, which can be readable, writeable, or
+both. A property is exposed as a function call and has an index associated
+with the getting and setting of it, as shown below.</p>
+<pre>struct MyStruct {
+  // 4 is get, 5 is set
+  int read_write_property @ library(&quot;AddInName&quot;, 4:5);
+  string read_only_property @ library(&quot;AddInName&quot;, 6);
+  char write_only_property @ library(&quot;AddInName&quot;, :7);
+};</pre>

@@ -1,0 +1,50 @@
+<p>OrbForms Designer makes it extremely easy to translate your application to 
+multiple languages through its language file support. When a language file is 
+selected in the application properties, the compiler will do the following:</p>
+<ul>
+  <li>For each translatable string in the application (e.g. form titles, literal 
+  strings in source code), the compiler will lookup the string in the language 
+  file.</li>
+<li>If the string exists in the language file and a translation is provided, the 
+translated string will be used instead of the original.</li>
+  <li>If the string does not exist in the language file, the compiler will add 
+  it.</li>
+</ul>
+<h3>Translating an Application</h3>
+<p>To translate your application, follow the steps below:</p>
+<ul>
+  <li>Create an empty text file in your project folder (e.g. deutsch.txt)</li>
+  <li>Add this language file to the project by right-clicking on &quot;Language Files&quot;
+  from the source tree and selecting &quot;Add Language File&quot;.</li>
+  <li>Specify the language file to use by selecting the application in the project
+  tree and modifying the &quot;Language file&quot; property.</li>
+  <li>Compile the application. This will fill the language file with all the 
+  translatable strings from your application.</li>
+  <li>Edit the language file in a text editor, adding translations where 
+  appropriate.</li>
+  <li>Compile the application again, and the translated strings will be used 
+  instead of the originals.</li>
+</ul>
+<p>To translate to another language, repeat the steps above with a new language 
+file. To build the original application (with no translation) change the 
+application property to no longer use a language file.</p>
+<h3>Language File Format</h3>
+<p>A language file is a text file with a very simple format. Each string entry 
+is four lines long with an empty line in the middle:</p>
+<pre>// app display name
+// user comment
+"Application"
+"Anwendung"</pre>
+<p>The first line is a compiler-generated comment which specifies where the 
+string was first encountered by the compiler (a given string will only show up 
+once in the language file, no matter how many times it shows up in the 
+application). This comment is regenerated each time the project is compiled. The 
+second line is a user comment. Insert whatever you want here - the compiler will 
+preserve it across compiles. The third line is the string to be translated. The 
+fourth line is the translated string. If the translated string is empty (&quot;&quot;), 
+the original string will be used.</p>
+<p>As the application evolves, some strings may be removed from the application. 
+These are not automatically removed from the language file. Instead, they are 
+moved to the end of the file with the compiler comment set to &quot;unused&quot; for easy 
+removal.</p>
+

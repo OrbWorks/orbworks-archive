@@ -1,0 +1,20 @@
+handler nameForm.onopen() {
+    // fill in the default (current) name
+    fieldName.text = options.name;
+}
+
+handler buttonNameCancel.onselect() {
+    nameForm.close();
+}
+
+handler buttonNameSave.onselect() {
+    options.name = fieldName.text;
+    if (options.name) {
+        saveOptions();
+    }
+    nameForm.close();
+    // since close returns the "active form" to
+    // the mainForm immediately, we can now access
+    // the controls it contains
+    popupGames.text = options.name;
+}

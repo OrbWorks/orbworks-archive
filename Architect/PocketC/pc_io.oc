@@ -1,0 +1,16 @@
+// PocketC basic I/O compatibility functions
+
+string getsd(string text, string def) {
+    string res;
+    if (promptcd("Input", text, "OK:Cancel", alertQuestion, def, &res) == 1)
+        res = "";
+    return res;
+}
+
+string gets(string prompt) {
+    return getsd(prompt, "");
+}
+
+string getsm(int x, int y, int w, int lines, string def) @ 338;
+string getsi(int x, int y, int w, string def) { return getsm(x, y, w, 1, def); }
+void clear() @ 337;

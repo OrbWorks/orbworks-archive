@@ -1,0 +1,10 @@
+// test string array
+main() {
+    int i;
+    string abc[3];
+    "abc";
+    "def";
+    while (i < 3)
+        puts(abc[i++]);
+}
+    

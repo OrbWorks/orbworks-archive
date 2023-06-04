@@ -1,0 +1,243 @@
+// VFS test
+#include "tests.h"
+#include "../add-ins/OrbVFS.oc"
+
+bool deltree(Volume vol, string path) {
+    Directory dir;
+    string name;
+    int attribs;
+    bool first = true;
+    
+    if (vol.openDir(path, dir) == 0) {
+        while (dir.enumerate(first, &name, &attribs)) {
+            first = false;
+            if (attribs & vfsAttrDirectory) {
+                deltree(vol, path + "/" + name);
+            } else {
+                vol.del(path + "/" + name);
+            }
+        }
+        dir.close();
+    } else return false;
+}
+
+void enumdir(Volume vol) {
+    Directory dir;
+    bool first = true;
+    int attribs;
+    string name;
+    
+    puts("/:\n");
+    vol.create("/blah");
+    vol.createDir("/newdir");
+    if (0 == vol.openDir("/", dir)) {
+        while (dir.enumerate(first, &name, &attribs)) {
+            first = false;
+            puts("  " + name + ": " + hex(attribs) + "\n");
+        }
+        puts("  end\n");
+    } else {
+        puts("failed to open /\n");
+    }
+}
+
+bool findfile(Volume vol, string path) {
+    File file;
+    if (0 == vol.open(path, vfsModeRead, file)) {
+        file.close();
+        return true;
+    }
+    return false;
+}
+
+string printDate(Date date) {
+    return date.year + "/" + date.month + "/" + date.day;
+}
+
+void testdir(Volume vol) {
+    Directory dir;
+    Date date;
+    int count;
+    bool first = true;
+    int attribs;
+    string name;
+    
+    puts("** Directory\n");
+    test(vol.createDir("/dir2") == 0, "createDir");
+    test(vol.create("/dir2/file1") == 0, "create");
+    test(vol.create("/dir2/file2") == 0, "create");
+    test(vol.openDir("/dir2", dir) == 0, "openDir");
+    while (dir.enumerate(first, &name, &attribs)) {
+        first = false;
+        count++;
+        puts(".. " + name + "\n");
+    }
+    test(count == 2, "count");
+    puts("dir2: " + hex(dir.attribs) + "\n");
+    test(dir.attribs & vfsAttrDirectory, "dir.attrib");
+    /*
+    attribs = dir.attribs;
+    dir.attribs = attribs | vfsAttrReadOnly;
+    puts("dir2: " + hex(dir.attribs) + "\n");
+    test(dir.attribs & vfsAttrReadOnly, "dir.attrib");
+    dir.attribs = attribs;
+    */
+    puts("dir.created = " + printDate(dir.getDate(vfsDateCreated)) + "\n");
+    date.now();
+    date.year = date.year + 1;
+    dir.setDate(vfsDateCreated, date);
+    test(dir.getDate(vfsDateCreated).year == date.year, "setDate");
+    dir.close();
+    test(vol.del("/dir2/file1") == 0, "del dir2/file1");
+    test(vol.del("/dir2/file2") == 0, "del dir2/file2");
+    test(vol.del("/dir2") == 0, "del dir2");
+}
+
+struct Data {
+    int i;
+    float f;
+    char c;
+    string s;
+    int i2;
+};
+
+void testfile(Volume vol) {
+    File file;
+    Data data = { 12345678, 3.141592, 'c', "Jeremy", 7654321 };
+    Data data2;
+    FileStream fstr;
+    int attribs;
+     
+    puts("** File\n");
+    vol.create("/file3");
+    test(vol.open("/file3", vfsModeReadWrite, file) == 0, "vol.open");
+    test(file.offset == 0, "offset");
+    test(file.write(&data, typeof(data), 1) == 5, "write");
+    test(file.offset == 20, "offset.2");
+    test((file.offset = 0) == 0, "offset.3");
+    test(file.offset == 0, "offset.4");
+    test(file.read(&data2, typeof(data2), 1) == 5, "read");
+    test(data.i == data2.i, "read.1");
+    test(data.i2 == data2.i2, "read.2");
+    test(data.c == data2.c, "read.3");
+    test(data.s == data2.s, "read.4");
+    test(data.f == data2.f, "read.5");
+    test(file.eof, "eof");
+    file.offset = 0;
+    test(file.eof == false, "eof.2");
+
+    fstr.file = file;
+    data2.i = 0;
+    data2.i2 = 1;
+    data2.c = 'a';
+    data2.s = "Megan";
+    data2.f = 1.245;
+    test(fstr.write(&data, typeof(data), 1) == true, "fstr.write");
+    file.offset = 0;
+    test(fstr.read(&data2, typeof(data2), 1) == true, "fstr.read");
+    test(data.i == data2.i, "fstr.read.1");
+    test(data.i2 == data2.i2, "fstr.read.2");
+    test(data.c == data2.c, "fstr.read.3");
+    test(data.s == data2.s, "fstr.read.4");
+    test(data.f == data2.f, "fstr.read.5");
+    file.offset = 0;
+    
+    test(file.size == 20, "size");
+    test((file.size = 16) == 16, "size.2");
+    test(file.size == 16, "size.3");
+    test(file.read(&data2, typeof(data2), 1) == 4, "read.2");
+    puts("file.attribs = " + hex(file.attribs) + "\n");
+    attribs = file.attribs;
+    file.attribs = attribs | vfsAttrReadOnly;
+    test(file.attribs & vfsAttrReadOnly, "attribs");
+    puts("file.attribs = " + hex(file.attribs) + "\n");
+    file.attribs = attribs; // remove read-only so we can delete
+    file.close();
+    vol.del("/file3");
+}
+
+void testdb(Volume vol) {
+    File file;
+    DBRecord rec;
+    Database db;
+    DBRecordStream dbstream;
+    string text, text2;
+    int len;
+    
+    puts("** Database\n");
+    test(vol.open("/MemoDB.pdb", vfsModeRead, file) == 0, "vol.open");
+    test(file.getRec(0, rec) == 0, "file.getRec");
+    dbstream.rec = rec;
+    test(dbstream.readString(&text), "dbstream.read");
+    rec.close();
+    test(file.getRes("1lke", 0, rec) != 0, "file.getRes(fail)");
+    file.close();
+    test(db.open("MemoDB", true), "db.open");
+    test(db.getrec(0, rec, true), "db.getrec");
+    dbstream.rec = rec;
+    test(dbstream.readString(&text2), "dbstream.read");
+    test(text == text2, "same data");
+    rec.close();
+    test(vol.open("/bvt_vfs.prc", vfsModeRead, file) == 0, "vol.open");
+    test(file.getRes("ofCD", 0, rec) == 0, "file.getRes");
+    dbstream.rec = rec;
+    test(dbstream.readWord(&len), "dbstream.read");
+    test(len > 2000 && len < 32000, "dbstream.read.2");
+    file.close();
+    rec.close();
+}
+
+void testvol(Volume vol) {
+    Database db;
+    string name;
+    puts("** Volume\n");
+    test(vol.create("/file1") == 0, "create");
+    test(findfile(vol, "/file1"), "create.2");
+    test(vol.rename("/file1", "file2") == 0, "rename");
+    test(findfile(vol, "/file2"), "rename.2");
+    test(vol.del("/file2") == 0, "del");
+    test(findfile(vol, "/file2") == false, "del.2");
+    puts("default jpeg: " + vol.getDefaultDir("image/jpeg") + "\n");
+    test(vol.createDir("/dir1") == 0, "createDir");
+    test(findfile(vol, "/dir1"), "createDir.2");
+    test(vol.del("/dir1") == 0, "delDir");
+    test(findfile(vol, "/dir1") == false, "delDir.2");
+    test(vol.export("MemoDB", "/MemoDB.pdb") == 0, "export");
+    test(findfile(vol, "/MemoDB.pdb"), "export.2");
+    test(db.open("MemoDB", true), "db.open");
+    db.deldb();
+    test(vol.import("/MemoDB.pdb", &name) == 0, "import");
+    test(name == "MemoDB", "import.name = MemoDB");
+    test(db.open("MemoDB", true), "import.2");
+    db.close();
+    
+    test(vol.export("bvt_vfs.prc", "/bvt_vfs.prc") == 0, "export.prc");
+    
+    testdir(vol);
+    testfile(vol);
+    testdb(vol);
+
+    vol.del("/MemoDB.pdb");
+    vol.del("/bvt_vfs.prc");
+}
+
+void enumvols() {
+    VolumeMgr vm;
+    Volume vol;
+    bool first = true;
+    while (vm.enumerate(first, vol)) {
+        puts("vol: " + vol.label + "\n");
+        enumdir(vol);
+        if (first) {
+            // only test on the first volume
+            testvol(vol);
+        }
+        first = false;
+    }
+    puts("end\n");
+}
+
+void main() {
+    enumvols();
+    final();
+}

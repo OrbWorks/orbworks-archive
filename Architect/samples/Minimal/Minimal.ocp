@@ -1,0 +1,33 @@
+// PocketC Architect sample
+// Minimal application
+
+// app declaration
+@app myApp {
+  creator = "OFs0"; // creator id
+  name = "Minimal"; // display name
+  dbname = "Minimal-OFs0"; // name of .prc database
+}
+
+// form declaration
+@form myForm {
+  id = 1000
+  text = "Minimal"
+  x = 0, y = 0, w = 160, h = 160
+
+  button myButton {
+    id = 1001
+    x = 60, y = 80, w = 40, h = 12
+    text = "Hello"
+  }
+}
+
+// when the app starts, load the myForm form
+handler myApp.onstart() {
+  myForm.load();
+}
+
+// when myButton is pressed, display Hello world
+handler myButton.onselect() {
+  alert("Hello world");
+}
+ 

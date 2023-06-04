@@ -1,0 +1,18 @@
+void main() {
+    // Test fragment
+    int foo;
+    float bar;
+    
+    foo = 90;
+    bar = ( float ) foo;
+    // PocketC and OrbForms bar equals 90
+    
+    bar = ( float ) foo / 100;
+    // PocketC and OrbForms bar equals .9 or .899999999
+    puts(bar + "\n");
+    
+    bar = 1 - ( ( float ) foo / 100 );
+    puts(bar + "\n");
+    // PocketC bar equals .1 or .09999999
+    // Orbworks bar equals 1677722
+}

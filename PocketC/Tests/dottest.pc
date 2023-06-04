@@ -1,0 +1,8 @@
+// dottest
+#define .hi [0]
+#define .lo [1]
+main() {
+int data[2];
+data.hi = 5;
+data.lo = 6;
+}

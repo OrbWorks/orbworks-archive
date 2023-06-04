@@ -1,0 +1,20 @@
+// font test
+main() {
+int x,y,i;
+
+puts("Width of \"Width\" = " + textwidth("Width") + "\n");
+
+graph_on();
+for (i=0;i<200;i++)
+line(1, random(160), random(160), random(160), random(160));
+
+textattr(0, 0, 0);
+text(30, 50, "Font color zero");
+textattr(0, 1, 0);
+text(30, 66, "Font color one");
+textattr(0, 2, 0);
+text(30, 82, "Font color two");
+textattr(0, 3, 0);
+text(30, 98, "Font color three");
+waitp();
+}

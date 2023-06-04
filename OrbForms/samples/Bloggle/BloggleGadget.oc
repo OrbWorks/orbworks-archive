@@ -1,0 +1,139 @@
+// BloggleGadget.oc
+// implementation of the BloggleGadget
+
+// Each string in the list represent one die
+string facesText[25] = {
+    "OOOTTU",
+    "HOHRLD",
+    "CNTWSC",
+    "PHRRIY",
+    "HOLDNR",
+    "PISETC",
+    "FASAIR",
+    "NOTDHH",
+    "TOMETT",
+    "WVORRG",
+    "MEGANN",
+    "NOTWOU",
+    "LICITE",
+    "EEEEAA",
+    "BQJXZK",
+    "PLITEC",
+    "LDDORN",
+    "SIPFRY",
+    "TITIIE",
+    "SUNSES",
+    "EEEEAM",
+    "MEGAEU",
+    "ISFRAY",
+    "DEANNN",
+    "FRASAA"
+};
+
+// bitmaps for each letter
+@bitmap Bitmap bmpLetterA { id = 8000 image4="letters/A.bmp" imageh4="letters/A-h.bmp" }
+@bitmap Bitmap bmpLetterB { id = 8001 image4="letters/B.bmp" imageh4="letters/B-h.bmp" }
+@bitmap Bitmap bmpLetterC { id = 8002 image4="letters/C.bmp" imageh4="letters/C-h.bmp" }
+@bitmap Bitmap bmpLetterD { id = 8003 image4="letters/D.bmp" imageh4="letters/D-h.bmp" }
+@bitmap Bitmap bmpLetterE { id = 8004 image4="letters/E.bmp" imageh4="letters/E-h.bmp" }
+@bitmap Bitmap bmpLetterF { id = 8005 image4="letters/F.bmp" imageh4="letters/F-h.bmp" }
+@bitmap Bitmap bmpLetterG { id = 8006 image4="letters/G.bmp" imageh4="letters/G-h.bmp" }
+@bitmap Bitmap bmpLetterH { id = 8007 image4="letters/H.bmp" imageh4="letters/H-h.bmp" }
+@bitmap Bitmap bmpLetterI { id = 8008 image4="letters/I.bmp" imageh4="letters/I-h.bmp" }
+@bitmap Bitmap bmpLetterJ { id = 8009 image4="letters/J.bmp" imageh4="letters/J-h.bmp" }
+@bitmap Bitmap bmpLetterK { id = 8010 image4="letters/K.bmp" imageh4="letters/K-h.bmp" }
+@bitmap Bitmap bmpLetterL { id = 8011 image4="letters/L.bmp" imageh4="letters/L-h.bmp" }
+@bitmap Bitmap bmpLetterM { id = 8012 image4="letters/M.bmp" imageh4="letters/M-h.bmp" }
+@bitmap Bitmap bmpLetterN { id = 8013 image4="letters/N.bmp" imageh4="letters/N-h.bmp" }
+@bitmap Bitmap bmpLetterO { id = 8014 image4="letters/O.bmp" imageh4="letters/O-h.bmp" }
+@bitmap Bitmap bmpLetterP { id = 8015 image4="letters/P.bmp" imageh4="letters/P-h.bmp" }
+@bitmap Bitmap bmpLetterQ { id = 8016 image4="letters/Qu.bmp" imageh4="letters/Qu-h.bmp" }
+@bitmap Bitmap bmpLetterR { id = 8017 image4="letters/R.bmp" imageh4="letters/R-h.bmp" }
+@bitmap Bitmap bmpLetterS { id = 8018 image4="letters/S.bmp" imageh4="letters/S-h.bmp" }
+@bitmap Bitmap bmpLetterT { id = 8019 image4="letters/T.bmp" imageh4="letters/T-h.bmp" }
+@bitmap Bitmap bmpLetterU { id = 8020 image4="letters/U.bmp" imageh4="letters/U-h.bmp" }
+@bitmap Bitmap bmpLetterV { id = 8021 image4="letters/V.bmp" imageh4="letters/V-h.bmp" }
+@bitmap Bitmap bmpLetterW { id = 8022 image4="letters/W.bmp" imageh4="letters/W-h.bmp" }
+@bitmap Bitmap bmpLetterX { id = 8023 image4="letters/X.bmp" imageh4="letters/X-h.bmp" }
+@bitmap Bitmap bmpLetterY { id = 8024 image4="letters/Y.bmp" imageh4="letters/Y-h.bmp" }
+@bitmap Bitmap bmpLetterZ { id = 8025 image4="letters/Z.bmp" imageh4="letters/Z-h.bmp" }
+
+// BloggleGadget: a simple gadget for managing and
+// drawing the bloggle letter dice
+struct BloggleGadget {
+    UIGadget gadget;
+    void onopen();
+    void ondraw();
+    void redraw();
+    void roll();
+    
+    int w, h;
+    Draw draw;
+    int dice[25];
+    int faces[25];
+    bool showdice;
+};
+
+void BloggleGadget.onopen() {
+    // initialize the Draw object and cache the size
+    draw.attachGadget(gadget);
+    w = gadget.w;
+    h = gadget.h;
+    
+    // this gadget won't look right if it's size is
+    // not a multiple of 5 + 6 (for the lines)
+    assert((w - 6) % 5 == 0);
+    assert((h - 6) % 5 == 0);
+}
+
+void BloggleGadget.ondraw() {
+    redraw();
+}
+
+void BloggleGadget.redraw() {
+    int i, x, y;
+    Bitmap letter;
+    
+    draw.begin();
+    // erase the background
+    draw.rect(clrBG, 0, 0, w, h, 0);
+    // draw the border
+    draw.frame(clrFG, 1, 1, w-1, h-1, 0, 1);
+    // only draw the rest if dice should be shown
+    if (showdice) {
+        // draw separator lines
+        for (;i<4;i++) {
+            y = (i + 1) * h / 5;
+            draw.line(clrFG, 0, y, w, y);
+            x = (i + 1) * w / 5;
+            draw.line(clrFG, x, 0, x, h);
+        }
+        // draw the dice
+        draw.font(fntLargeBold);
+        draw.textAlign(11);
+        for (i=0;i<25;i++) {
+            x = i % 5;
+            y = i / 5;
+            // calculate which bitmap id to draw
+            letter.id = 8000 + (facesText[dice[i]][faces[i]] - 'A');
+            draw.bitmap(letter, x * w / 5 + 1, y * h / 5 + 1);
+        }
+    }
+    draw.end();
+}
+
+void BloggleGadget.roll() {
+    int i, die, temp;
+    // initialize all dice
+    for (;i<25;i++) {
+        dice[i] = i;
+    }
+    // shuffle the dice and pick sides
+    for (i=0;i<25;i++) {
+        die = random(25);
+        temp = dice[i];
+        dice[i] = dice[die];
+        dice[die] = temp;
+        faces[i] = random(6);
+    }
+}

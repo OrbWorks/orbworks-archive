@@ -1,0 +1,172 @@
+// conversion test
+#include "tests.h"
+#include "../add-ins/OrbNetwork.oc"
+
+Network net;
+Socket s;
+Socket ls, as, cs;
+
+string addrOrbworks;
+
+struct TestData {
+    string s1;
+    int i;
+    char c;
+    float f;
+    string s2;
+} td, td2;
+
+void testNetwork() {
+    //string addr;
+    string name;
+    string localAddr;
+    int err;
+
+    puts("*** network\n");
+    //puts("net.hostName = " + net.hostName + "\n");
+    //puts("net.domainName = " + net.domainName + "\n");
+    
+    localAddr = net.localAddr;
+    test(strlen(localAddr) > 8, "net.localAddr");
+    puts("net.localAddr = " + localAddr + "\n");
+    testErr(net.getHostByName("www.orbworks.com", &addrOrbworks), "net.getHostByName");
+    test(addrOrbworks == "216.36.203.221", "net.getHostByName.2");
+    puts("www.orbworks.com = " + addrOrbworks + "\n");
+    err = net.getHostByAddr(addrOrbworks, &name);
+    if (err != 0) {
+        puts("(" + err + "): net.getHostByAddr\n");
+    } else {
+        puts(addrOrbworks + " = " + name + "\n");
+    }
+    test(net.timeout == 1000, "timeout");
+    test((net.timeout = 500) == 500, "timeout.2");
+    test(net.timeout == 500, "timeout.3");
+}
+
+void testSocket() {
+    string hello = "hello\n";
+    string index;
+
+    puts("*** socket\n");
+    testErr(s.open(netAfInet, netSockStream, netProtoIpTcp), "s.open");
+    testErr(s.connect("192.168.0.2:12345"), "s.connect");
+    puts("s.localAddr = " + s.localAddr + "\n");
+    puts("s.remoteAddr = " + s.remoteAddr + "\n");
+    testErr(s.send(&hello, typeof(hello), 1), "s.send");
+    testErr(s.sends("line2\n"), "s.sends");	
+    testErr(s.shutdown(netDirBoth), "s.shutdown");
+    s.close();
+    
+    testErr(s.open(netAfInet, netSockStream, netProtoIpTcp), "s.open.2");
+    testErr(s.connect(addrOrbworks + ":80"), "s.connect.2");
+    testErr(s.sends("GET /index.html HTTP/1.0\n\n"), "s.sends.2");
+    testErr(s.recvs(&index), "s.recvs");
+    puts("response len: " + strlen(index) + "\n");
+    index = strleft(index, 135);
+    puts("index.html:\n" + index + "\n");
+    test(strleft(index, 15) == "HTTP/1.1 200 OK", "s.recvs.2");
+    s.close();
+}
+
+void testListen() {
+    SocketStream cstr, astr;
+    string addr;
+    puts("*** listen\n");
+    testErr(ls.open(netAfInet, netSockStream, netProtoIpTcp), "ls.open");
+    testErr(ls.bind(":2345"), "ls.bind");
+    testErr(ls.listen(1), "ls.listen");
+    addr = ls.localAddr;
+    //test(strlen(addr) > 6, "ls.localAddr");
+    if (!addr) addr = "192.168.0.2";
+    puts("ls.localAddr = " + addr + "\n");
+    if (strleft(addr, 7) == "0.0.0.0") addr = net.localAddr + ":2345";
+    puts("connecting to " + addr);
+    
+    testErr(cs.open(netAfInet, netSockStream, netProtoIpTcp), "cs.open");
+    testErr(cs.connect(addr), "cs.connect");
+    
+    puts("waiting for connection\n");
+    testErr(ls.accept(as), "ls.accept");
+    
+    td.s1 = "hello";
+    td.i = "12345678";
+    td.c = 'a';
+    td.f = 3.14;
+    td.s2 = "bye";
+    
+    testErr(cs.send(&td, typeof(td), 1), "cs.send");
+    testErr(as.recv(&td2, typeof(td), 1), "as.recv");
+    test(td2.s1 == td.s1, "td.s1");
+    test(td2.i == td.i, "td.i");
+    test(td2.c == td.c, "td.c");
+    test(td2.f == td.f, "td.f");
+    test(td2.s2 == td.s2, "td.s2");
+    
+    cstr.socket = cs;
+    astr.socket = as;
+    test(cstr.write(&td, typeof(td), 1) == true, "cstr.write");
+    test(astr.read(&td2, typeof(td), 1) == true, "astr.read");
+    test(td2.s1 == td.s1, "td.s1");
+    test(td2.i == td.i, "td.i");
+    test(td2.c == td.c, "td.c");
+    test(td2.f == td.f, "td.f");
+    test(td2.s2 == td.s2, "td.s2");
+
+    cs.close();
+    as.close();
+    ls.close();	
+}
+
+/*
+void testUdp() {
+    string addr;
+    string rAddr;
+    string msg = "hello";
+    string rMsg;
+    puts("*** udp\n");
+    addr = net.localAddr;
+    if (!addr) addr = "192.168.0.2";
+    testErr(ls.open(netAfInet, netSockDgram, netProtoIpUdp), "ls.open");
+    testErr(ls.bind(":2345"), "ls.bind");
+    testErr(cs.open(netAfInet, netSockDgram, netProtoIpUdp), "cs.open");
+    testErr(cs.sendto(addr + ":2345", &msg, "s", 1), "cs.sendto");
+    testErr(ls.recvfrom(&rAddr, &rMsg, "s", 1), "ls.recvfrom");
+    puts("rMsg = " + rMsg + "\n");
+    test(rMsg == "hello", "ls.recvfrom.2");
+    puts("rAddr = " + rAddr + "\n");
+    ls.close();
+    cs.close();
+}
+*/
+
+void testLotsaSockets() {
+    int i, err;
+    while (true) {
+        //puts(i + "\n");
+        testErrQ(err = s.open(netAfInet, netSockStream, netProtoIpTcp), "o." + i);
+        if (err == 0) {
+            if (random(4) == 3) {
+                testErrQ(s.connect("192.168.0.40:80"), "cB." + i);
+            } else {
+                testErrQ(s.connect(addrOrbworks + ":80"), "cG." + i);
+            }
+            testErrQ(s.shutdown(netDirBoth), "s." + i);
+            testErrQ(s.close(), "cl." + i);
+        }
+        events(false);
+        i++;
+    }
+}
+
+void main() {
+    testErr(net.open(), "net.open");
+    
+    testNetwork();
+    testSocket();
+    testListen();
+    //testUdp();
+    //testLotsaSockets();
+        
+    net.close();
+    final();
+}

@@ -1,0 +1,85 @@
+
+<p>Many types of native functions and methods have an interest in serializing
+and de-serializing user data, such as the way many built-in methods do. For
+example, both DBRecord.write and Preferences.set take a pointer to arbitrary
+user data and serialize the data according to a user specified type string. To
+help native functions and methods process these <a href="ttypeStrings.html">type
+strings</a>, the OrbC native interface supplies a few helpful functions. See
+the OrbSerial sample to see these functions in action.</p>
+<h3>Memory Iteration</h3>
+<p>The type string functions operate by iterating over a block of memory where each
+Value in the memory block is processed according to the <a href="ttypeStrings.html">type
+string</a>. If the data in the block of memory is not compatible
+with the type string, a runtime error will be raised. When using the <code>ts_iterate</code>
+function, you provide a <code>NATIVE_TS_ITER</code> callback function. This
+callback function is called once for each Value in memory. Along with a pointer
+to the Value in memory, this callback function is also provided with the type
+and size as defined in the type string. The following table maps the type string
+values to the resulting function parameters:</p>
+<p><code><b>typedef bool (*NATIVE_TS_ITER)(OrbFormsInterface*, Value* val,
+VarType type, int size, void* context)</b></code></p>
+<table border="1">
+  <tbody>
+    <tr>
+      <th>Specifier<br>
+        <code>strFormat</code></th>
+      <th>Primitive Type<br>
+        <code>type</code></th>
+      <th>Data Size<br>
+        <code>size</code></th>
+      <th>Valid Memory Type(s)<br>
+        <code>val-&gt;type</code></th>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>int</td>
+      <td>4</td>
+      <td>vtInt</td>
+    </tr>
+    <tr>
+      <td>w</td>
+      <td>2-byte int</td>
+      <td>2</td>
+      <td>vtInt</td>
+    </tr>
+    <tr>
+      <td>b</td>
+      <td>1-byte int</td>
+      <td>1</td>
+      <td>vtInt or vtChar</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>char</td>
+      <td>1</td>
+      <td>vtInt or vtChar</td>
+    </tr>
+    <tr>
+      <td>f</td>
+      <td>float</td>
+      <td>4</td>
+      <td>vtFloat</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>string</td>
+      <td>0</td>
+      <td>vtString</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>fixed-length string</td>
+      <td>len</td>
+      <td>vtString</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>object type id</td>
+      <td>--</td>
+      <td>--</td>
+    </tr>
+  </tbody>
+</table>
+<p>When an object type id is encountered it is skipped rather than being passed 
+to the native add-in.</p>
+

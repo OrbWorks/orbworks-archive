@@ -1,0 +1,55 @@
+<p>A type string is a way of describing the structure of data. Several API
+					functions use type strings to control how data is read and written, such
+					as <a href="mPreferences-get.html">Preferences.get</a>. The
+					easiest way to generate a type string is to use the <code>typeof()</code>
+					operator, which generates a correct type string for any object/data type.
+					However, sometimes it is necessary to create type strings by hand in order
+					to interoperate with the data formats of other applications.
+					</p>
+					<p>A type string consists of a list of characters representing primitive
+					types, with
+					optional modifier to specify repetition. The types are as follows:
+					<table border="1">
+						<tr><th>Specifier</th><th>Primitive Type</th></tr>
+						<tr><td>i</td><td>int</td></tr>
+						<tr><td>w</td><td>2-byte int</td></tr>
+                        <tr>
+                          <td>b</td><td>1-byte int</td>
+                        </tr>
+						<tr><td>c</td><td>char</td></tr>
+						<tr><td>f</td><td>float</td></tr>
+						<tr><td>s</td><td>string</td></tr>
+						<tr>
+                          <td>l</td><td>fixed-length string</td>
+                        </tr>
+						<tr><td>o</td><td>object type id</td></tr>
+					</table>
+					<b>Note:</b> When using a fixed-length string, the 'l' specifier must be
+					followed with the length of the string followed by a dot '.'.
+					<p>A specifier may be preceded by a number representing the number of
+					repeated values of the type in a row.
+					</p>
+					<p>For example:
+<pre>struct X {
+  int x, y;
+  string name;
+  float f[4];
+};</pre>
+					The type string for X could be encoded as "iisffff" or "2is4f".
+					<p>If name were required to be stored as a 32 character array:
+<pre>struct X {
+  int x, y;
+  string name; // stored as a 32 character array
+  float f[4];
+};</pre>
+					The type string for X could be encoded as "iil32.ffff" or "2il32.4f".<p>
+The object type id is a location in memory at the start of an object that lets 
+the runtime know what type of object is stored there. This value is skipped by 
+the methods that take type strings (because writing out an object id is not 
+possible). So, if the struct above was declared as an object:</p>
+<pre>object X {
+  int x, y;
+  string name;
+  float f[4];
+};</pre>
+					The type string for X could be encoded as "oiisffff" or "o2is4f".

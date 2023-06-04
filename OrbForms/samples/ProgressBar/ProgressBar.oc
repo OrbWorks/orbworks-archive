@@ -1,0 +1,6 @@
+// ProgressBar.oc
+// Main application code
+
+handler app.onstart() {
+    mainForm.load();
+}

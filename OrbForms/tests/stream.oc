@@ -1,0 +1,52 @@
+object Dog : ISerializable {
+    // ISerializable methods
+    bool serialize(Stream* stream);
+    bool deserialize(Stream* stream);
+    
+    string color;
+    string breed;
+};
+bool Dog.serialize(Stream* stream) {
+    return stream->write(&this, typeof(this), 1);
+}
+bool Dog.deserialize(Stream* stream) {
+    return stream->read(&this, typeof(this), 1);
+}
+
+object SocketStream : IStream {
+    Socket socket;
+    bool write(void* data, string type, int count);
+    bool read(void* data, string type, int count);
+};
+bool SocketStream.write(void* data, string type, int count) {
+    return socket.write(data, type, count) == 0;
+}
+bool SocketStream.read(void* data, string type, int count) {
+    return socket.read(data, type, count) == 0;
+}
+
+object FileStream : IStream {
+    File file;
+    bool write(void* data, string type, int count);
+    bool read(void* data, string type, int count);
+};
+bool FileStream.write(void* data, string type, int count) {
+    return file.write(data, type, count) == __expectedCount(type);
+}
+bool FileStream.read(void* data, string type, int count) {
+    return file.read(data, type, count) == __expectedCount(type);
+}
+
+void main() {
+    DBRecordStream stream;
+    Dog dog;
+    Database db;
+    DBRecord rec;
+    int recid;
+    
+    db.open("dogStream");
+    db.newrec(&recid, rec);
+    stream.rec = rec;
+    
+    dog.serialize(&stream);
+}

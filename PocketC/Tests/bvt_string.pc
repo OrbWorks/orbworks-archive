@@ -1,0 +1,66 @@
+// string bvt
+@cid "1234";
+@name "string bvt";
+@dbname "string bvt";
+
+#include "tests.h"
+
+float format_f[9] = { 4.6, 4.6, 4.6, 0.0, 0.0, 0.0, -1.2, -1.2, 1.2e-9 };
+int format_p[9] = { 1, 2, 0, 0, 3, 7, 0, 3, 0 };
+string format_r[9] = { "4.6", "4.60", "5", "0", "0.000", "0.0000000", "-1", "-1.200", "0" };
+
+test_numeric() {
+    int i;
+    for (i=0;i<9;i++) {
+        test(format(format_f[i], format_p[i]) == format_r[i], "format(" + format_r[i] + ")");
+    }
+    
+    test(hex(1) == "0x1", "hex(1)");
+    test(hex(-1) == "0xffffffff", "hex(-1)");
+    test(hex(0) == "0x0", "hex(0)");
+}
+
+
+main() {
+    char carray[32] = { 'l', 'i', 'm', 'e', '\0' };
+    string str;
+    
+    test(strlen("hello") == 5, "strlen('hello')");
+    test(strlen("") == 0, "strlen('')");
+
+    test(substr("", 5, 5) == "", "substr('', 5, 5)");
+    test(substr("hello", 1, 3) == "ell", "substr('hello', 1, 3)");
+    test(substr("hello", 1, 10) == "ello", "substr('hello', 1, 10)");
+    test(substr("hello", 1, -1) == "ell", "substr('hello', 1, -1)");
+    test(substr("hello", 1, -10) == "", "substr('hello', 1, -10)");
+
+    test(strleft("hello", 3) == "hel", "strleft('hello', 3)");
+    test(strleft("hello", 0) == "", "strleft('hello', )");
+    test(strleft("hello", 13) == "hello", "strleft('hello', 13)");
+    test(strleft("hello", -3) == "he", "strleft('hello', -3)");
+
+    test(strright("hello", 3) == "llo", "strright('hello', 3)");
+    test(strright("hello", 7) == "hello", "strright('hello', 7)");
+    test(strright("hello", -2) == "llo", "strright('hello', -1)");
+
+    test(strupr("hEllo") == "HELLO", "strupr('hEllo')");
+    test(strlwr("hEllo") == "hello", "strlwr('hEllo')");
+
+    test(strstr("hello", "ell", 0) == 1, "strstr('hello', 'ell', 0)");
+    test(strstr("hello", "ell", 1) == 1, "strstr('hello', 'ell', 1)");
+    test(strstr("hello", "ell", 2) == -1, "strstr('hello', 'ell', 2)");
+
+    test(ctostr(carray) == "lime", "ctostr(lime)");
+    strtoc("kiwi", carray);
+    test(ctostr(carray) == "kiwi", "ctostr(kiwi)");
+    
+    str = "lI" + "Me longer name";
+    str = strlwr(str);
+    strtoc(str, carray);
+    test(ctostr(carray) == "lime", "ctostr(lime)");
+    
+    
+    test_numeric();
+
+    final();
+}

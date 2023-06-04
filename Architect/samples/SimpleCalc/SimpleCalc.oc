@@ -1,0 +1,4 @@
+
+handler SimpleCalc.onstart() {
+    mainForm.load();
+}

@@ -1,0 +1,8 @@
+// PktCSysLib.lib - definition file for PktCSysLib by Marvin E. Wilborne III
+// Get the latest version at http://www3.gamewood.net/mew3/pilot/pocketc/
+PCSLVersion();
+SetAutoOffTime(int seconds);
+GetAutoOffTime();
+BatteryInfo(int getvalue);
+GetSystemFeature(int feature);
+Backlight(int value);

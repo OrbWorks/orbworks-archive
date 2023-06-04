@@ -1,0 +1,272 @@
+<h3>Forms</h3>
+<p>A form is like the canvas of a painting. Within a form you can 
+place user interface elements like labels, buttons, and check boxes. Each 
+Palm application contains at least one form which is opened when the application 
+starts up. There are two types of forms, non-modal (regular) and modal. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Regular Form</td>
+    <td width="50%">Modal Form</td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="form.gif" width="166" height="165"></img></td>
+    <td width="50%"><img border="0" src="dialog.gif" width="164" height="111"></img></td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <ul>
+      <li>Title on the left side</li>
+      <li>Allowed to have menus</li>
+      <li>Has no border</li>
+    </ul>
+    </td>
+    <td width="50%">
+    <ul>
+      <li>Title centered</li>
+      <li>No menus allowed</li>
+      <li>Has help button on the top right corner</li>
+      <li>Has a border with round corner</li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<p>A form has many properties other than its size. To 
+simplify the design process, OrbForms Designer's Inspection tool allows you to 
+adjust all of a form's properties and add code to handle user events.</p>
+<table border="2" cellpadding="3" style="border-collapse: collapse; border-width: 3; " bordercolor="#C0C0C0" width="100%" cellspacing="3">
+  <tr>
+    <td width="17%" style="border-style: none; border-width: medium" bordercolor="#000000" valign="top">
+    <b>
+    Property</b></td>
+    <td width="83%" style="border-style: none; border-width: medium" bordercolor="#000000">
+    <b>Meaning</b></td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Name</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    The name that is used in source code to refer to the form.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Text</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    The form's title</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    MenuBar</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A regular form is allowed to have a menu bar, you can create menu bars in the form 
+    and pick one of them to be your main menu bar.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Modal</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    Determines if this is a modal form.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    HelpID</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A string from the string table which is displayed when the &quot;i&quot; is
+    clicked in a modal form's title bar.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Default Button</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A modal form should have a default button. If the user attempts to switch
+    application when the form is active, the OS will simulate a click on this
+    button to close the form. The default button should close the form without
+    performing any undesirable operation (such as deleting something). </td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Resizable</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    Determines if a form should resize or move when the screen layout changes. 
+    If this is true, XResize and YResize must be specified on the form and all 
+    of its controls.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    XResize</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    Determines the form's horizontal resize behavior - Attach left, Attach 
+    right, or Stretch</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    YResize</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    Determines the form's vertical resize behavior - Attach top, Attach bottom, 
+    or Stretch</td>
+  </tr>
+</table>
+<p>Next to the Property group, there is a size and handler group. The size 
+group simply states the form's size. The handler group lists all the 
+events a form can have. Clicking on a handler will jump to the handler code if
+it exists (in which case the handler name will be bold), or offer to create the
+handler for you. For a complete list of events and their description, refer to
+the <a href="oUIForm.html">UIForm</a> object in the Library Reference.</p>
+<h3>Controls</h3>
+<p>OrbForms Designer supports a rich set of user interface elements. Almost all
+the controls offered by the Palm OS can be created with OrbForms Designer. If
+these controls do not meet your need, you can create a gadget - a custom control
+for which you provide the drawing and can define your own events.</p>
+<p>For a list of events, methods, and runtime properties of these controls,
+refer to the <a href="cUI.html">User Interface</a> section of the Library
+Reference.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="13%"><b>Element</b></td>
+    <td width="19%"><b>How it looks</b></td>
+    <td width="35%" valign="top"><b>Description</b></td>
+    <td width="28%" valign="top"><b>Remarks</b></td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIButton.html">Button</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics7.gif" width="52" height="16"></img></td>
+    <td width="35%" valign="top">A round rectangle shape with a text string in the center.
+    </td>
+    <td width="28%" valign="top">You can select a bitmap as the button's face instead of 
+    the text, but your app will only work on OS 3.5 and above.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUICheckbox.html">Check Box</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics8.gif" width="63" height="10"></img></td>
+    <td width="35%" valign="top">A square box with a text string on the right
+      side, representing a true/false property.</td>
+    <td width="28%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIPushButton.html">Push Button</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="pushbuttons.gif" border="0" width="145" height="48"></img></td>
+    <td width="35%" valign="top">A rectangle box with a text string in the center.
+      Many push buttons are created beside one another, representing a group of
+      mutually-exclusive options.</td>
+    <td width="28%" valign="top">Each push button in a group must have the same
+      group id &gt; 0. You can select a bitmap as the button's face instead of 
+    the text, but your app will only work on OS 3.5 and above.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIRepeatButton.html">Repeat Button</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics7.gif" width="52" height="16"></img></td>
+    <td width="35%" valign="top">Looks like a button, however the button is repeatedly 
+    selected until the pen lifts. </td>
+    <td width="28%" valign="top">You can select a bitmap as the button's face instead of 
+    the text, but your app will only work on OS 3.5 and above.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUILabel.html">Label</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics9.gif" width="76" height="11"></img></td>
+    <td width="35%" valign="top">A non-editable text on the screen.</td>
+    <td width="28%" valign="top">Although the text of a label can be changed at
+      runtime, it cannot contain a longer string that was specified in the
+      Visual Designer.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIFBitmap.html">Bitmap</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics10.gif" width="28" height="30"></img></td>
+    <td width="35%" valign="top">This control displays a bitmap of your choice on the Palm 
+    Screen.</td>
+    <td width="28%" valign="top">If you want your program to look good on color screens, 
+    remember to 
+    provide grayscale and color bitmaps.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUISlider.html">Slider</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="Slider.gif" border="0" width="114" height="18"></img></td>
+    <td width="35%" valign="top">In Palm OS 3.5 or later, slider controls are added. It 
+    shows a value within a particular range. On Palm OS previous to 3.5, this
+      control will not be displayed.</td>
+    <td width="28%" valign="top">The OS provides a default slider background and slider thumb
+      image, but you can also provide custom images.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIScroll.html">Scroll bar</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="Scroll.gif" border="0" width="9" height="41"></img></td>
+    <td width="35%" valign="top">A vertical scroll bar. Palm OS does not support
+      horizontal scroll bars.</td>
+    <td width="28%" valign="top">These are generally used in conjunction with
+      multi-line fields.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIPopup.html">Popup</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="popup.gif" border="0" width="48" height="16"></img></td>
+    <td width="35%" valign="top">Displays a text label and an arrow pointing down on the 
+    left. A popup is usually associated with a list.</td>
+    <td width="28%" valign="top">If the text label changes, the width of the control expands 
+    or contracts to the width of the new label plus the graphic element</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUISelector.html">Selector</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="selector.gif" border="0" width="51" height="18"></img></td>
+    <td width="35%" valign="top">Displays a text label surrounded by a gray rectangular box.</td>
+    <td width="28%" valign="top">If the text label changes, the width of the control expands 
+    or controls to the width of the new label.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIList.html">List</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics11.gif" width="41" height="49"></img></td>
+    <td width="35%" valign="top">A rectangular box with multiple line of text as choices</td>
+    <td width="28%" valign="top">If a popup is associated with the list, the
+      list will be hidden until the popup is selected.</td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIField.html">Field</a></td>
+    <td width="19%" valign="center" align="center">
+    <img src="fieldtext.gif" border="0" width="73" height="9"></img></td>
+    <td width="35%" valign="top">A field displays one or more lines of text and allow the 
+    user to edit the text</td>
+    <td width="28%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="13%"><a href="oUIGadget.html">Gadget</a></td>
+    <td width="19%" valign="center" align="center"><img border="0" src="basics12.gif" width="104" height="104"></img></td>
+    <td width="35%" valign="top">Looks like an empty box. The gadget type is displayed 
+    in the center.</td>
+    <td width = "28%" valign="top">The developer must handle the pen events and drawing since 
+    there is no default behavior for the control.</td>
+  </tr>
+</table>
+<p>There are two ways to add controls to a form:</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Right click on the form node in the Workspace</td>
+    <td width="50%">Right click on the form in the Visual Designer</td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <img border="0" src="addelement1.gif" width="169" height="122"></img>
+    <p>The element will appear at the (0,0) position.</p></td>
+    <td width="50%">
+    <img border="0" src="addelement2.gif" width="247" height="133"></img>
+    <p>The element will appear at the location where you right clicked.</p></td>
+  </tr>
+</table>
+<p></p>
+<h3> Menus</h3>
+<p>A regular form can have a menu bar, which contains one or more menus. Each
+menu contains one or more menu items and separators. A menu item should have an
+onselect handler which is called when the user taps the menu item or enters the
+associated shortcut key. To create a separator, create a menu item and set its
+text to a dash &quot;-&quot;.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Palm OS Menu </td>
+    <td width="50%">OrbForms Designer Workspace View</td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <img src="UserInterface17.gif" width="360" height="125" border="0"></img></td>
+    <td width="50%"><img border="0" src="basics2.gif" width="147" height="109"></img></td>
+  </tr>
+</table>

@@ -1,0 +1,41 @@
+// Triangle
+@cid "TriA";
+@ver "1.0";
+@name "Sierpinsky's Triangle";
+@dbname "Triangle";
+@licon1 "D:/Development/PocketC/DistSrc/_PDE/large1.bmp";
+@licon2 "D:/Development/PocketC/DistSrc/_PDE/large2.bmp";
+@licon8 "D:/Development/PocketC/DistSrc/_PDE/large8.bmp";
+@sicon1 "D:/Development/PocketC/DistSrc/_PDE/small1.bmp";
+@sicon2 "D:/Development/PocketC/DistSrc/_PDE/small2.bmp";
+@sicon8 "D:/Development/PocketC/DistSrc/_PDE/small8.bmp";
+
+int tx[3], ty[3], x, y;
+myae() { dbcreate("TriExit"); }
+
+main() {
+  int i, r;
+  
+  tx[0] = 160;  ty[0] = 48;
+  tx[1] = 20;  ty[1] = 300;
+  tx[2] = 300; ty[2] = 300;
+  
+  r = random(3);
+  x = tx[r]; y = ty[r];
+  
+  graph_on();
+  title("Sierpinsky's Triangle");
+  atexit(myae);
+  pushdraw();
+  drawnative(true);
+  waitp();
+  while (event(0)==0) {
+    r = random(3);
+    x = (x + tx[r])/2;
+    y = (y + ty[r])/2;
+    line(1, x, y, x, y);
+  }
+  drawnative(false);
+  //launch("memo");
+  exit();
+}

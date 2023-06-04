@@ -1,0 +1,17 @@
+// network test
+@cid "PcPc";
+@name "PcNetTest";
+@dbname "PcNetTest";
+
+//#addin "PocketC"
+main() {
+    int r;
+    string addr, name;
+    r = netopen();
+    puts("netopen(): " + r);
+    r = nethostbyname("www.orbworks.com", &addr);
+    puts("\nnethbn(): " + r);
+    puts("\nwww.orbworks.com\n" + addr);
+    netclose();
+    waitp();
+}

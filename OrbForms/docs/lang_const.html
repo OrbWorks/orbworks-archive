@@ -1,0 +1,23 @@
+<p>It is often useful to give names to important constants. This makes source
+code more readable. You can do this by defining a constant using the <code>const</code>
+keyword, or by creating an enumeration using the <code>enum</code> keyword. A
+constant is defined the same way a variable is, but begins with the <code>const</code>
+keyword. A constant can only be created for the five simple types. For example:</p>
+
+<pre>const float pi = 3.141592;
+const string version = &quot;1.0&quot;;</pre>
+
+<p>Enumerations are a way of creating a group of related integer contants. Each
+enumeration name is put in a list, and can be given an explicit value (such a
+four, below). If an explicit value is not given, the compiler will provide a
+default value - the value for each name is 1 greater than the previous name, and
+0 for the first name. To clarify:</p>
+
+<pre>enum { zero, one, two, four = 4, five };</pre>
+
+<p><b>Note</b>: constants and enumerations are treated by the compiler at a low level.
+Because of this, whenever the compiler sees
+the name of a constant or enum, it treats it as if it was the defined value. If
+the programmer attempts to define a variable or function with the same name as a
+constant/enum, the compiler will give an error saying that an identifier was
+expected.</p>

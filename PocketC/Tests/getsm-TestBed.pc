@@ -1,0 +1,27 @@
+// TestBed
+include "textwrap.h"
+// Global variables...
+  int  giEvent;
+// Functions...
+fShow()
+{
+rect(0,10,20,150,150,0);
+textwrap(10,20,150,150,(getsm(10,20,90,8,"Enter...")));
+}
+main()
+{
+// Initialization...
+graph_on();
+getsi(10, 20, 120, "Long");
+
+// Main loop...
+   do
+ {
+ giEvent = event(1);
+ if (giEvent == 2)
+           {
+         fShow();
+            }
+ }
+        while(1);
+}

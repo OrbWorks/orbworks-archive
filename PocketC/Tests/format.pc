@@ -1,0 +1,10 @@
+main()
+{
+    int i;
+    for(i = 8; i >= 0; i--) // OK
+        puts(i + " " + format(1.0, i) + "\n"); 
+    for(i = 8; i >= 0; i--) // error
+        puts(i + " " + format(0.999999, i) + "\n"); 
+    for(i = 8; i >= 0; i--) // OK
+        puts(i + " " + format(1.999999, i) + "\n"); 
+}

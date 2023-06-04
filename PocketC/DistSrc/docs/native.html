@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PocketC Native Libraries</title>
+</head>
+
+<body>
+
+<h1>PocketC Native Libraries</h1>
+
+<p>Creating native libraries allows a PocketC developer to write code that executes faster
+than similar PocketC code. It also allows a user to expose functionality to a PocketC
+applet that PocketC's built-in library does not provide. Such libraries can be released
+for use by other developers, which helps the PocketC and Palm community.</p>
+
+<p>This document does not cover aspects of PalmOS system libraries. In theory, all that
+you need to know about system libraries to create a PocketC native library is either
+included in the document, or is already written in the sample library. For more
+information, check the PalmOS SDK.</p>
+
+<p>Assuming you have a copy of CodeWarrior installed, creating native libraries is almost
+trivial. Users who wish to use other tools, such as GCC, will need to do a little more
+work. At this time, OrbWorks will provide no support for GCC developers since we 
+have not used or tested it. However, a short tutorial is provided with the 
+sample library.</p>
+
+<h3>There a few basic steps to create a PocketC library:</h3>
+
+<ol>
+  <li>Copy the PocketCLib project to a new directory into your CodeWarrior tree. Rename it
+    whatever you like, and open it.</li>
+  <li>Open the settings of the PocketCLib project, and change the output name and creator id.
+    Creator ID's must be unique, so if you plan to release your library to the public, you
+    must choose and register a unique ID with 3com. You may also need to change some of the
+    include/lib paths.</li>
+  <li>In PocketCLib.h:
+  <ul>
+    <li>Add whatever globals you will to the <em>PocketCLibGlobalsType</em>.</li>
+  </ul></li>
+  <li>In PocketCLib.cpp:
+  <ul>
+    <li>Add code to initialize your globals in <em>PocketCLibOpen</em>()</li>
+    <li>Add code to cleanup your globals in <em>PocketCLibClose</em>()</li>
+    <li>Write the routines that your library will export to PocketC</li>
+    <li>Add function prototypes for your functions in <em>PocketCLibAddFunctions</em>()</li>
+    <li>Add calls to your functions in the switch statement in <em>PocketCLibExecuteFunction</em>()</li>
+  </ul></li>
+  <li>No changes are needing in PocketCLibDispatch.cpp</li>
+  <li>In PocketCLib.lib (description file for PocketC Desktop Edition):<ul>
+      <li>List each function in the order that <em>PocketCLibAddFunctions</em>() enumerates them.</li>
+      <li>For each function, declare it as you would in PocketC source code, followed by a
+        semicolon rather than a function body.</li>
+    </ul>
+  </li>
+  <li>Compile and enjoy!</li>
+</ol>
+
+<hr>
+
+<h1>General Info</h1>
+
+<h3>Value</h3>
+
+<p>A <em>value</em> is the C++ datatype that represents all PocketC datatypes in the form
+of a union. A value has a <em>type</em> field, which describes the type of the <em>value</em>.
+Only one of the other fields is used (based on the <em>type</em>). A type can be one of <em>vtInt,
+vtFloat, vtChar, or vtString</em>.</p>
+
+<p><strong>Important:</strong> A string is stored somewhere in dynamic memory, and a <em>value</em>
+holds a <strong>handle</strong> to it, not a pointer. Once a <em>value</em> containing a
+string is no longer needed, it must be deleted using the <em>cleanup</em>() function.</p>
+
+<h3>Function Prototypes</h3>
+
+<p>A function declaration (created with a call to <em>addFunc</em>() ) consists of a name,
+a number of arguments, and a list of up to ten argument types. The arguments may be one of
+the standard types or can be of type <em>vmVoid</em>. A parameter of type <em>vmVoid</em>
+means that the compiler will not cast the parameter that is passed. In other words, the
+user can pass in any type of value, and no conversion is automatically performed.</p>
+
+<h3>The Stack</h3>
+
+<p>PocketC pushes all parameters on the the stack in the order they appear in the function
+declaration. So, a function declared with two parameters [func(int x, int y)] will have
+the x pushed on the stack first, followed by the y. Therefore, the first value popped off
+the stack will be the y.</p>
+
+<h3>Return Values</h3>
+
+<p>A function set the return value by setting the global variable <em>retVal</em>. When
+PocketC calls the library, the return value is set to <em>type=vtInt</em>, <em>vtInt=0</em>.</p>
+
+<h3>The C++ Function</h3>
+
+<p>The C++ function that implements your PocketC library function will take only one
+parameter, a pointer to the global data. It will obtain the PocketC parameters by using
+the <em>pop</em>() function and will call <em>cleanup</em>() on all string parameters.</p>
+
+<h3>Dereferencing a Pointer to a String</h3>
+
+<p>In PocketC version 3.5, the internal representation of strings changed. A
+Value that a native library pops off the stack will still be in the old format
+for backwards compatibility, as is the <i>retVal</i> that the native library
+sets. However, if a native library dereferences a pointer passed into the
+function, the Value will contain the new format. There are two types of strings,
+constants and reference-counted strings. If a string is a constant, the sVal
+member of the Value is a char* which should not be freed. If the string is
+ref-counted, the sVal is a handle (and therefore has the most significant bit
+set) to this structure:</p>
+
+<pre>struct String {
+   StrType sType; // ignored - only used in debug builds
+   unsigned int nRef; // current reference count
+   char data[1]; // variable sized array
+};</pre>
+
+<p>The information above is only informational - to access new-style strings, 
+you must use the new extended API (functions defined in PocketCLibraryApiExt).</p>
+
+<hr>
+
+<h1>Standard Library Exports</h1>
+
+<h3><em>PocketCLibOpen</em>()</h3>
+
+<p>This function is called both at compile and run time. This function should set up your
+globals and return a pointer to you <strong>locked</strong> globals. The function pointers
+in the global structure are filled in <strong>after</strong> this call, so they are not
+yet available.</p>
+
+<h3><em>PocketCLibClose</em>()</h3>
+
+<p>This function is called both at compile and run time. This function should free the
+global structure.</p>
+
+<h3><em>PocketCLibAddFunctions</em>()</h3>
+
+<p>This function is called only at compile time. This function should add function
+prototypes by calling <em>addFunc</em>(). The first function added is given an index of 0.</p>
+
+<h3><em>PocketCLibExecuteFunction</em>()</h3>
+
+<p>This function is called only at runtime. The function should contain a switch statement
+which calls your C++ functions to process the PocketC function call. The index of the
+functions must match the order in which they were added in <em>PocketCLibAddFunctions</em>().</p>
+
+<hr>
+
+<h1>Global Functions</h1>
+
+<h3><em>pop</em>(Value&amp;)</h3>
+
+<p>pops a value off the stack. If it is a string value, you must call <em>cleanup</em>()
+on it when you are finished using it.</p>
+
+<h3><em>push</em>(Value&amp;)</h3>
+
+<p>pushes a value on the stack. The value is copied to the stack. If it is a string, the
+string is also copied, so you must call <em>cleanup</em>() on the original value after you
+push it on the stack.</p>
+
+<h3><em>cleanup</em>(Value&amp;)</h3>
+
+<p>Frees the memory held by a string value. If the value is not a string, no processing is
+done. (i.e. it is always safe to call <em>cleanup</em>(), even when not needed).</p>
+
+<h3><em>typeCast</em>(Value&amp;, VarType)</h3>
+
+<p>Casts a value to the given type. If the new value is a string, it must be freed when no
+longer needed. If the original value is a string which is converted to another type, the
+string is freed automatically.</p>
+
+<h3><em>typeMatch</em>(Value&amp;, Value&amp;)</h3>
+
+<p>Casts both values to a matching type. For example, when this function is called with a
+float and an int, the int is cast to a float. If one is a string, the other is cast to a
+string.</p>
+
+<h3><em>UIYield</em>(bool blocking)</h3>
+
+<p>Allows the system to process PalmOS events. This function also sets up the return
+values for the PocketC <em>event</em>() function and processing PalmOS events on behalf of
+PocketC. You must call this if your operation will take a while. If the <em>blocking</em>
+parameter is true, a single PalmOS event will be processed. If none are available, the
+system will wait for one. If <em>blocking</em> is false, the system will process all
+waiting messages and return.</p>
+
+<h3><em>callFunc32</em>(long location)</h3>
+
+<p>Calls the PocketC function at address <em>location</em>. Before this call, you must
+push the parameters on the stack (in the order of the function's parameter list). You can
+obtain the address of a function by accessing it in your PocketC source code <strong>without</strong>
+parentheses. (e.g. puts(main); will print the address of the function main). This function
+cannot be used to call PocketC's built in functions. Calling this function recursively is
+not very smart. <i>This function replaces callFunc, which does not work with
+function pointers &gt; 64k.</i></p>
+
+<p><strong>Important: </strong>The function's return value is placed on the stack. You
+must pop it off the stack after it has been called. A call to this function will modify <em>retVal</em></p>
+
+<h3><em>callBI</em>(char* name)</h3>
+
+<p>Calls the built-in PocketC function with the given name. Before this call, you must
+push the parameters on the stack (in the order of the function's parameter list). The
+function's return value is placed in <em>retVal</em>. So if it returns a string, you must
+clean it up (by calling <em>cleanup()</em>) before you overwrite <em>retVal</em>. This
+function returns false if the function is not found.</p>
+
+<h3><em>deref</em>(int ptr)</h3>
+
+<p>Dereferences a PocketC pointer, returning a <em>Value*</em> which points to the memory
+to which the pointer refers. Remember, this is a pointer to the actual value, not a copy
+of it. </p>
+
+<h3><em>vmCtrl</em>(UInt32 id, UInt32 val)</h3>
+
+<p>Performs an operation to control the way the virtual machine behaves. The <i>id</i>
+is a control id, and <i>val</i> is the value required by that control id. The
+following control id are currently implemented: </p>
+
+<table border="0" width="100%" id="table1">
+  <tr>
+    <td width="10%" bgcolor="#CCCCCC" valign="top"><code>VMCTRL_ENABLE_EVENTS</code></td>
+    <td width="90%">Enable or disable the virtual machine's background event
+      processing. A <i>val</i> of 1 enables, 0 disables. When the virtual
+      machine starts, it polls for events every 100 VM instructions. If your
+      native library handles events, you can disable events. However, if you
+      receive an appStopEvent, you must re-enable events and re-post the message
+      to the message queue. Disabling events will also increase performance
+      somewhat at the expense of not allowing the application to respond to
+      events (including essential things like the power button).</td>
+  </tr>
+</table>
+
+<h2>String Functions</h2>
+<p>All string functions are provided in the <i>PocketCLibraryApiExt</i> structure. 
+This functions are to be used with new-style strings only (see &quot;Dereferencing a 
+pointer to a string&quot; above).</p>
+<h3><em>char* lockString</em>(Value* v)<span style="font-weight: 400"> </span></h3>
+
+<p>Locks a new-style string, returning a pointer to the buffer.</p>
+
+<h3><em>unlockString</em>(Value* v)</h3>
+
+<p>Unlocks a new-style string.</p>
+
+<h3><em>acquireString</em>(Value* dest, Value* src)<span style="font-weight: 400"> </span></h3>
+
+<p>Acquires a copy of a new-style string, increasing it's ref-count for 
+ref-counted strings.</p>
+
+<h3><em>releaseString</em>(Value* v)<span style="font-weight: 400"> </span></h3>
+
+<p>Releases a string. Call this function to free the contents of a string Value 
+before reassigning to it.</p>
+
+<h3><em>unlockReleaseString</em>(Value* v)<span style="font-weight: 400"> </span></h3>
+
+<p>Unlocks and releases a string at the same time.</p>
+<h3><em>char* newString</em>(Value* v, unsigned short len)<span style="font-weight: 400"> </span></h3>
+
+<p>Allocates a new string into the given Value (ensure that you have released 
+any old contents first). Returns a pointer to the locked buffer. Once you have 
+filled the buffer, be sure to unlock the string.</p>
+
+<h3><em>bool newStringFromConst</em>(Value* v, const char* data)<span style="font-weight: 400"> </span></h3>
+
+<p>Allocates a new string into the given Value (ensure that you have released 
+any old contents first), copying the given data. Returns false if no memory is 
+available.</p>
+
+<h3><em>newConstString</em>(Value* v, const char* data)<span style="font-weight: 400"> </span></h3>
+
+<p>Stores a new string into the given Value (ensure that you have released any 
+old contents first), retaining a pointer to the given data. Only call this 
+function if for constant (literal) strings that will not change over the 
+lifetime of the application.</p>
+
+<hr>
+
+<h1>Using Native Libaries</h1>
+
+<p>To use a native library in a PocketC applet, you must instruct the compiler to load the
+library's functions. This is done through the library keyword.</p>
+
+<p>Example:</p>
+
+<pre>// My Applet
+library &quot;PocketCLib&quot;
+
+main() {
+   int x;
+   x = times5(7);
+}</pre>
+
+<p>The name of a library function cannot be the same as a user function. However, it may
+be the same as the name of a builtin function. In this case, the compiler will generate
+calls to the native library function rather than the builtin function.</p>
+</body>
+</html>

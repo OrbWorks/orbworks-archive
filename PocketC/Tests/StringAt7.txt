@@ -1,0 +1,95 @@
+   Name: Test string@[]
+Version: 7.00
+ Header: 12 bytes
+   Libs: 0 (@ 151)
+
+   17	CInt		25
+   22	Call
+   23	Pop
+   24	Halt
+
+Func 0: main()
+   25	Link		(0 args)
+   27	CString		1	"Const"
+   30	CString		7	"M"
+   33	CInt		0
+   38	CWordPFP	local 2
+   41	GetL		4
+   44	CString		9	"alleable"
+   47	Add
+   48	Save
+   49	Pop
+   50	CWordPFP	local 3
+   53	CWordPFP	local 1
+   56	Save
+   57	Pop
+   58	CString		18	"Const@[1] = "
+   61	CWordPFP	local 1
+   64	CWord		1
+   67	GetC
+   68	Add
+   69	CString		31	"\n"
+   72	Add
+   73	ToString
+   74	CallBI		puts
+   76	Pop
+   77	CString		33	"Malleable@[2] = "
+   80	CWordPFP	local 2
+   83	CWord		2
+   86	GetC
+   87	Add
+   88	CString		31	"\n"
+   91	Add
+   92	ToString
+   93	CallBI		puts
+   95	Pop
+   96	CWordPFP	local 1
+   99	CWord		1
+  102	CChar		88
+  104	SetC
+  105	Pop
+  106	CWordPFP	local 2
+  109	CWord		2
+  112	CChar		88
+  114	SetC
+  115	Pop
+  116	CWordPFP	local 3
+  119	CWord		1
+  122	CChar		52
+  124	SetC
+  125	Pop
+  126	GetL		3
+  129	CString		31	"\n"
+  132	Add
+  133	GetL		4
+  136	Add
+  137	CString		31	"\n"
+  140	Add
+  141	CallBI		puts
+  143	Pop
+  144	SetRet0
+  145	PopN		3
+  148	UnLink
+  149	Ret		0
+
+
+Instruction count:
+    CInt 2	   CChar 3	  CFloat 0	 CString 9	
+   ToInt 0	  ToChar 0	 ToFloat 0	ToString 2	
+    GetG 0	    SetG 0	    GetL 3	    SetL 0	
+   Array 0	   IncGA 0	   DecGA 0	   IncLA 0	
+   DecLA 0	   IncGB 0	   DecGB 0	   IncLB 0	
+   DecLB 0	     Add 8	     Sub 0	    Mult 0	
+     Div 0	     Mod 0	     Neg 0	     Not 0	
+     And 0	      Or 0	      Eq 0	     NEq 0	
+      LT 0	     LTE 0	      GT 0	     GTE 0	
+     Jmp 0	    JmpZ 0	   JmpNZ 0	 OldCall 0	
+  CallBI 3	     Ret 1	  SetRet 0	 SetRet0 1	
+     Pop 9	    PopN 1	    Link 1	  UnLink 1	
+    Halt 1	    Swap 0	 LibCall 0	   CWord 5	
+CWordPFP 8	    Call 1	    Load 0	    Save 2	
+    IncA 0	    DecA 0	    IncB 0	    DecB 0	
+    BAnd 0	     BOr 0	    BNot 0	      SL 0	
+      SR 0	     Xor 0	    NoOp 0	   NoOp2 0	
+     XXX 0	     XXX 0	 AddExtI 0	    GetC 2	
+    SetC 3	    Case 0	

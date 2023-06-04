@@ -1,0 +1,179 @@
+/*
+vector.oc
+
+Vector - a vector ideal for storing non-objects.
+
+NOTES:
+ *  Copying a Vector creates a duplicate of all data stored in the
+    Vector, so unintentional copying should be avoided. Using a Vector
+    as the return type of a function will cause the Vector to be copied.
+    To avoid this, either return a Vector*, or pass the Vector as a
+    parameter to the function.
+ *  This implementation increases the size of the vector by 10 whenever
+    more storage is needed. Thus, it is ideal for smaller data sets. If
+    your application will need to store lots of data, you should increase
+    this constant in Vector.add or modify the behavior to double the
+    storage size each time. This will minimize the cost of adding more
+    data by reducing the number of reallocations/copies. If you know the
+    data size in advance, call Vector.reserve to pre-allocate the needed
+    memory.
+
+Methods:
+
+void init(string type, int size) - initialize the type that will be
+    stored in the vector. This method must be called before the vector
+    can be used. See example below.
+int add(void* item) - adds the specified item to the vector. The item is
+    copied into the memory owned by the vector. Returns the number of
+    items in the vector.
+int del(int index) - removes the items at the specified index. Returns
+    the number of items remaining in the vector.
+void clear() - removes all the items from the vector and releases the
+    memory.
+void* get(int index) - retrieves the item at the specified index. Cast
+    the return value to the stored type.
+void reserve(int size) - ensure that the vector has enough storage for the
+    specified number of items. If the number of items that will be stored
+    is known in advance, this method should be called before adding any
+    items for efficiency.
+
+Fields:
+
+int count - the current number of items in the vector.
+
+Sample usage:
+
+struct Point {
+    int x;
+    int y;
+};
+
+Vector points;
+void func() {
+    int i;
+    Point* pt;
+    Point a = { 1, 2 }, b = { 3, 4 };
+    
+    // initialize the Vector to store Points
+    vector.init(typeof(Point), sizeof(Point));
+    
+    // add a couple Points
+    vector.add(&a);
+    vector.add(&b);
+    
+    // iterate over the Points in the vector
+    for (i=0;i<points.count;i++) {
+        pt = (Point*)points.get(i);
+        // do something with this point
+        alert("(x,y) = (" + pt->x + "," + pt->y + ")");
+    }
+    
+    // delete the first point
+    points.del(0);
+    
+    // clear everything
+    points.clear();
+}
+
+*/
+
+object Vector {
+    void _destroy();
+    void _copy(Vector);
+    
+    void init(string type, int size);
+    int add(void*);
+    int del(int);
+    void* get(int);
+    void clear();
+    void reserve(int size);
+    
+    int count;
+    
+    // internal implementation
+    void* _data;
+    int _nalloc;
+    int _size;
+    string _type;
+};
+
+void Vector.init(string type, int size) {
+    _type = type;
+    _size = size;
+}
+
+void Vector._destroy() {
+    delete _data;
+}
+
+void Vector._copy(Vector src) {
+    void* pNewData;
+    
+    if (src._size != _size || src._type != _type)
+        fatal("different data types");
+    
+    clear();
+    reserve(src.count);
+    count = src.count;
+    memcpy(_data, src._data, count * _size);
+}
+
+int Vector.add(void* item) {
+    void* pNewData;
+    
+    if (count + 1 > _nalloc) {
+        if (_size == 0)
+            fatal("Vector not initialized");
+        pNewData = malloct(_type, _nalloc + 10);
+        if (_data) {
+            memcpy(pNewData, _data, count * _size);
+            delete _data;
+        }
+        _data = pNewData;
+        _nalloc += 10;
+    }
+    memcpy(_data + count * _size, item, _size);
+    return ++count;
+}
+
+int Vector.del(int iDel) {
+    if (iDel < count) {
+        if (iDel < count - 1) {
+            memcpy(_data + iDel * _size, _data + (iDel + 1) * _size, (count - iDel - 1) * _size);
+        }
+        count--;
+    }
+    return count;
+}
+
+void* Vector.get(int iGet) {
+    if (iGet < count) {
+        return _data + iGet * _size;
+    } else {
+        return null;
+    }
+}
+
+void Vector.clear() {
+    if (_data) {
+        delete _data;
+        _data = null;
+        count = _nalloc = 0;
+    }
+}
+
+void Vector.reserve(int total) {
+    void* pNewData;
+    
+    if (total > _nalloc) {
+        if (_size == 0)
+            fatal("Vector not initialized");
+        pNewData = malloct(_type, total);
+        if (_data) {
+            memcpy(pNewData, _data, count * _size);
+            delete _data;
+        }
+        _data = pNewData;
+        _nalloc = total;
+    }
+}

@@ -1,0 +1,72 @@
+// PocketCLib Test copywrite 2004 by Mark Roth
+// Do what you what with is file, it is under the freedom of use act, or something like that
+
+@cid "PCL!";
+@name "PCL Test";
+@dbname "PCL Test";
+@licon1 "./large1.bmp";
+@sicon1 "./small1.bmp";
+@licon8 "./large8.bmp";
+@sicon8 "./small8.bmp";
+
+
+library "PocketCLib"
+
+@doc "Take the raw input from the bribe screen and filter out everything but the numbers.\n\nfrom jobfair_myfuncts.c";
+    cleanup_bribe(string b){
+        int bribe_back=0;
+        int length;
+        string temp_bribe="";
+        char x;
+        string xy="";
+        int y=0;
+        length=strlen(b);
+        bribe_back=0;
+        while (length>0){
+            xy=substr(b,y,1);
+            x=xy;
+            if ((x>47)&&(x<58)){
+                temp_bribe=temp_bribe+xy;
+            }
+            y++;
+            length--;
+        }
+        bribe_back=temp_bribe;
+        if(temp_bribe == "") return -200;
+        return bribe_back;
+    }
+
+main(){
+
+    string str_x, str_y;
+    int x;
+    float z;
+    
+    title("PocketCLib Test");
+    clear();
+    puts("This is a simple app to test the\nfunction of PocketCLib compiled with GCC. Tap the screen to continue...\n\n");
+    waitp();
+    str_x = getsd("This will test times5(). Enter a number between -100 and 100:", "5");
+    x = cleanup_bribe(str_x);
+    if(x == -200){
+        alert("Don't enter letters, only numbers.");
+    }
+    if(x<-100 || x>100){
+        alert("Follow directions please and next time enter a number between -100 and 100");
+    }else puts("5 times "+x+" = "+times5(x)+"\n\nTap to continue\n\n");
+    waitp();
+    puts("This will test reverse(). Enter a string and it will be reversed.\n\nTap to continue\n\n");
+    waitp();
+    str_x=getsd("Enter a string; ","test");
+    str_y=reverse(str_x);
+    puts("The string "+str_x+" reversed is "+str_y+"\n\nTap to continue\n\n");
+    waitp();
+    puts("Since I don't want to bother with the checking on a float the volume of a box with dimentions of 1.0, 2.5, 10.7 will be passed to volume().\n\nTap to continue.\n\n");
+    waitp();
+    z = volume(1.0,2.5,10.7);
+    puts("The volume is : "+z+"\n\nThanks for trying this out.\n\nTap to continue.");
+    waitp();
+    puts("\n\nCode derived from PocketCLib example by Jeremy Dewey of orbworks.com. Thanks go to Joe Stadolnik for his invaluable help. Test program derived from xGrfxLib by Gary A. Clark.\n\nTap to exit.");
+    waitp();
+    exit();
+}

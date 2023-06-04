@@ -1,0 +1,94 @@
+   Name: Test string@[]
+Version: 4.40
+ Header: 4 bytes
+
+    9	CWord		15
+   12	Call
+   13	Pop
+   14	Halt
+
+Func 0: main()
+   15	Link		(0 args)
+   17	CString		1	"Const"
+   20	CString		7	"M"
+   23	CInt		0
+   28	CWordPFP	local 1
+   31	GetL		3
+   34	CString		9	"alleable"
+   37	Add
+   38	Save
+   39	Pop
+   40	CWordPFP	local 2
+   43	CWordPFP	local 0
+   46	Save
+   47	Pop
+   48	CString		18	"Const@[1] = "
+   51	CWordPFP	local 0
+   54	CWord		1
+   57	GetC
+   58	Add
+   59	CString		31	"\n"
+   62	Add
+   63	ToString
+   64	CallBI		puts
+   66	Pop
+   67	CString		33	"Malleable@[2] = "
+   70	CWordPFP	local 1
+   73	CWord		2
+   76	GetC
+   77	Add
+   78	CString		31	"\n"
+   81	Add
+   82	ToString
+   83	CallBI		puts
+   85	Pop
+   86	CWordPFP	local 0
+   89	CWord		1
+   92	CChar		88
+   94	SetC
+   95	Pop
+   96	CWordPFP	local 1
+   99	CWord		2
+  102	CChar		88
+  104	SetC
+  105	Pop
+  106	CWordPFP	local 2
+  109	CWord		1
+  112	CChar		52
+  114	SetC
+  115	Pop
+  116	GetL		2
+  119	CString		31	"\n"
+  122	Add
+  123	GetL		3
+  126	Add
+  127	CString		31	"\n"
+  130	Add
+  131	CallBI		puts
+  133	Pop
+  134	SetRet0
+  135	PopN		3
+  138	UnLink
+  139	Ret		0
+
+
+Instruction count:
+    CInt 1	   CChar 3	  CFloat 0	 CString 9	
+   ToInt 0	  ToChar 0	 ToFloat 0	ToString 2	
+    GetG 0	    SetG 0	    GetL 3	    SetL 0	
+   Array 0	   IncGA 0	   DecGA 0	   IncLA 0	
+   DecLA 0	   IncGB 0	   DecGB 0	   IncLB 0	
+   DecLB 0	     Add 8	     Sub 0	    Mult 0	
+     Div 0	     Mod 0	     Neg 0	     Not 0	
+     And 0	      Or 0	      Eq 0	     NEq 0	
+      LT 0	     LTE 0	      GT 0	     GTE 0	
+     Jmp 0	    JmpZ 0	   JmpNZ 0	 OldCall 0	
+  CallBI 3	     Ret 1	  SetRet 0	 SetRet0 1	
+     Pop 9	    PopN 1	    Link 1	  UnLink 1	
+    Halt 1	    Swap 0	 LibCall 0	   CWord 6	
+CWordPFP 8	    Call 1	    Load 0	    Save 2	
+    IncA 0	    DecA 0	    IncB 0	    DecB 0	
+    BAnd 0	     BOr 0	    BNot 0	      SL 0	
+      SR 0	     Xor 0	    NoOp 0	   NoOp2 0	
+     XXX 0	     XXX 0	 AddExtI 0	    GetC 2	
+    SetC 3	    Case 0	

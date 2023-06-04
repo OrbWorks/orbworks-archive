@@ -1,0 +1,9 @@
+// VM Error test
+myfunc() {
+  int x[10];
+  x[30] = 7;
+}
+
+main() {
+  myfunc();
+}

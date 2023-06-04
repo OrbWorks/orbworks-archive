@@ -1,0 +1,10 @@
+// MainForm.oc
+// Created for MainForm
+
+handler MainForm.ondraw() {
+    Draw draw;
+    draw.attachForm(this);
+    draw.begin();
+    draw.text(clrFG, 50, 50, "Hello, World!");
+    draw.end();
+}

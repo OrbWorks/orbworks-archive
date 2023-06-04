@@ -1,0 +1,145 @@
+<p>OrbC exposes networking through objects based on BSD sockets. This
+article does not attempt to teach the use of BSD sockets, instead it describes
+what is unique to the Palm OS or OrbC implementation. OrbC support for
+networking is provided by the OrbNetwork native add-in.
+To use it, you must add the line below to your application's source code. If
+your application is not built standalone, you must also ensure that
+OrbNetwork.prc
+is installed on the device or emulator.
+</p>
+<pre>#include &quot;add-ins/OrbNetwork.oc&quot;</pre>
+<p>To use any of the networking methods, you must first call <a href="mNetwork-open.html">Network.open()</a>,
+which initializes the network stack and attempts to connect to the configured
+network (e.g. wi-fi or PPP). OrbNetwork does not support the Palm VII or i705,
+since they do not use the standard network library.
+</p>
+<p>The most obvious difference between BSD and OrbC sockets are the
+addresses. Rather than using SOCKADDR pointers, addresses are represented by
+strings. This makes coding a bit easier, and enables applications to use IPv6
+without any code changes (once IPv6 becomes available on the Palm OS). An
+address string is a dotted IP address with optional port, such as:
+</p>
+<pre>&quot;129.22.104.22:80&quot;</pre>
+<p>An empty string is interpreted as the local address. Thus, when calling <a href="mSocket-bind.html">Socket.bind()</a>,
+only a port needs to be specified:
+</p>
+<pre>&quot;:1234&quot;</pre>
+<p>All Socket methods (and the DNS methods) have a timeout associated with them.
+This timeout value is globally set on the <a href="oNetwork.html">Network</a>
+ object.
+</p>
+<p>OrbC networking currently only support stream-based sockets. All OrbC sockets
+are currently blocking.
+</p>
+<p>The following error codes may be returned from the Network and Socket methods:
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">netErrInvalidAddrString</td>
+    <td width="50%">netErrOther</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrParamErr</td>
+    <td width="50%">netErrNoMoreSockets</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrOutOfResources</td>
+    <td width="50%">netErrOutOfMemory</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrSocketNotOpen</td>
+    <td width="50%">netErrSocketBusy</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrMessageTooBig</td>
+    <td width="50%">netErrSocketNotConnected</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrNoInterfaces</td>
+    <td width="50%">netErrPortInUse</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrQuietTimeNotElapsed</td>
+    <td width="50%">netErrInternal</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrTimeout</td>
+    <td width="50%">netErrSocketAlreadyConnected</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrSocketClosedByRemote</td>
+    <td width="50%">netErrOutOfCmdBlocks</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrWrongSocketType</td>
+    <td width="50%">netErrSocketNotListening</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrUnknownSetting</td>
+    <td width="50%">netErrUnknownProtocol</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrUnreachableDest</td>
+    <td width="50%">netErrWouldBlock</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSNameTooLong</td>
+    <td width="50%">netErrDNSBadName</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSBadArgs</td>
+    <td width="50%">netErrDNSLabelTooLong</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSAllocationFailure</td>
+    <td width="50%">netErrDNSTimeout</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSUnreachable</td>
+    <td width="50%">netErrDNSFormat</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSServerFailure</td>
+    <td width="50%">netErrDNSNonexistantName</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSNIY</td>
+    <td width="50%">netErrDNSRefused</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSImpossible</td>
+    <td width="50%">netErrDNSNoRRS</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSAborted</td>
+    <td width="50%">netErrDNSBadProtocol</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSTruncated</td>
+    <td width="50%">netErrDNSNoRecursion</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSIrrelevant</td>
+    <td width="50%">netErrDNSNotInLocalCache</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrDNSNoPort</td>
+    <td width="50%">netErrIPCantFragment</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrIPNoRoute</td>
+    <td width="50%">netErrIPNoSrc</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrIPNoDst</td>
+    <td width="50%">netErrIPktOverflow</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrTooManyTCPConnections</td>
+    <td width="50%">netErrNoDNSServers</td>
+  </tr>
+  <tr>
+    <td width="50%">netErrInterfaceDown</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+</table>

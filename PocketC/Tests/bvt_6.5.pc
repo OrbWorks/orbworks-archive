@@ -1,0 +1,29 @@
+#include "tests.h"
+@cid "bvt6";
+@dbname "bvt 6.5";
+@name "bvt 6.5";
+@ver "1.0";
+@licon1 "icon_l1.bmp";
+@licon4 "icon_l4.bmp";
+@licon8 "icon_l8.bmp";
+@licon8h "icon_lh8.bmp";
+@sicon1 "icon_s1.bmp";
+@sicon4 "icon_s4.bmp";
+@sicon8 "icon_s8.bmp";
+@sicon8h "icon_sh8.bmp";
+// embed the source in the output
+@res "src0,0,bvt_6.5.pc";
+
+main() {
+    int d;
+    clear();
+    d = seconds();
+    d = selectdate(d, 0, "pick a day");
+    if (d == 0) puts("cancelled\n");
+    else puts(datex(d, 2));
+    d = seconds();
+    d = selecttime(d, "pick a time");
+    if (d == 0) puts("cancelled\n");
+    else puts(timex(d, 1));
+    final();
+}

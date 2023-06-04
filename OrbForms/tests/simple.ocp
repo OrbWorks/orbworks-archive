@@ -1,0 +1,25 @@
+@app myApp {
+  creator = "MyAp"; // creator id
+  name = "App Name"; // display name
+  dbname = "AppName-MyAp"; // name of .prc database
+}
+
+@form myForm {
+  id = 1000
+  text = "My Form"
+  x = 0, y = 0, w = 160, h = 160
+
+  button myButton {
+    id = 1003
+    x = 50, y = 80, w = 60, h = 12
+    text = "My button"
+  }
+}
+
+handler myApp.onstart() {
+  myForm.load();
+}
+
+handler myButton.onselect() {
+  alert("Button pressed");
+}

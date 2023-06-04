@@ -1,0 +1,22 @@
+// OrbC Sample Resources
+// includes icons for sample applications
+
+// app definition
+@app UIApp SimpleCalc {
+  name = "OrbCSampleRes"
+  dbname = "OrbCSampleRes"
+  creator = "OFs0"
+  resonly = true
+  icon {
+    large1 = "icon_l1.bmp"
+    small1 = "icon_s1.bmp"
+    large2 = "icon_l2.bmp"
+    small2 = "icon_s2.bmp"
+    large4 = "icon_l4.bmp"
+    small4 = "icon_s4.bmp"
+    large8 = "icon_l8.bmp"
+    small8 = "icon_s8.bmp"
+    largeh8 = "icon_lh8.bmp"
+    smallh8 = "icon_sh8.bmp"
+  }
+}

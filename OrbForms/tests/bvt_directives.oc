@@ -1,0 +1,116 @@
+#include "tests.h"
+
+#define ONE
+#define TWO 4 
+
+void directives() {
+  int i;
+  section("directives");
+#if ONE
+  test(true, "1");
+  i++;
+#else
+  test(false, "2");
+#endif
+  test(i == 1, "2.5");
+
+#if ONE
+#if TWO
+  test(true, "3");
+  i++;
+#else
+  test(false, "4");
+#endif
+#else
+#if THREE
+  test(false, "5");
+#else
+#endif
+  test(false, "6");
+#endif
+  test(i == 2, "7");
+
+#if THREE
+  test(false, "8");
+#else
+  test(true, "9");
+  i++;
+#endif
+  test(i == 3, "10");
+
+#if !THREE
+  test(true, "11");
+  i++;
+#else
+  test(false, "12");
+#endif
+  test(i == 4, "13");
+
+#if !ONE
+  test(false, "14");
+#else
+  test(true, "15");
+  i++;
+#endif
+  test(i == 5, "16");
+
+#if ONE
+#if !TWO
+  test(false, "17");
+#else
+  test(true, "18");
+  i++;
+#endif
+#else
+#if TWO
+  test(false, "20");
+#else
+#endif
+  test(false, "21");
+#endif
+  test(i == 6, "22");
+
+#if !ONE
+  #if !TWO
+  test(false, "23");
+  #else
+  test(false, "24");
+  #endif
+#else
+  #if TWO
+  test(true, "25");
+  i++;
+  #else
+  #endif
+  test(true, "26");
+  i++;
+#endif
+  test(i == 8, "27");
+
+#undef TWO
+#if TWO
+  test(false, "28");
+#endif
+}
+
+#define MULT *
+#define MULT2 MULT
+#define MULT3 MULT3
+#define ONE_PLUS_THREE 1 + 3
+#define TEST test(true, 
+void macros() {
+  section("macros");
+  test(5 MULT 4 == 20, "*");
+  test(5 MULT2 4 == 20, "macro with a macro");
+  //MULT3;
+  test(ONE_PLUS_THREE * 2 == 7, "complex macro");
+  TEST "complex macro.2" ONE);
+}
+
+void main() {
+  directives();
+  macros();
+  
+  final();
+}
+#define LAST

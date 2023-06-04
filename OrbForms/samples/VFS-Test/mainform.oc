@@ -1,0 +1,300 @@
+// mainform.oc
+// Created for mainForm
+
+void showFileInfo() {
+    int 	i = mainList.selitem;
+    string	str;
+
+    CurrFileIsDir = false;						// assume a file...
+        
+    if (i>=0) {
+        str = mainList.gettext(i);
+        if (str[0] == '�') {
+            CurrFileIsDir = true;				// ...and correct if wrong
+        }
+        CurrFile = strright(str, -1);			// its a file
+    }
+    else
+        CurrFile = "";
+    
+    // in a real life app, this call would appear inside the if() block,
+    // but since this is an orbforms-feature-test-app, I want to be able to
+    // open all included forms
+    fileinfoForm.domodal();
+}
+
+void FillList() {
+    Directory	dir;
+    string 		name;
+    int 		attribs;
+    bool 		first = true;
+    StringList	sl;
+
+    mainPath.text = CurrPath;
+    if (CurrVolume.openDir(CurrPath, dir) == 0) {			// open the current directory
+        while (dir.enumerate(first, &name, &attribs)) {		// get all the files/folders
+            first = false;
+            if ((attribs & vfsAttrDirectory))				// mark folders with a symbol
+                name = "�" + name;
+            else
+                name = " " + name;
+            sl.add(name);
+        }
+        dir.close();
+    }
+    else
+        alert("Cant open\n" + CurrPath);
+    mainList.setitemslist(sl);
+    LastSel = mainList.selitem;
+    mainList.redraw();
+}
+
+Draw mainDraw;
+void drawFolderList(int item, int x, int y, int w, int h, string text) {
+    mainDraw.begin();
+    if (text[0] == '�')
+        mainDraw.bitmap(folderBitmap, x, y);
+    else
+        mainDraw.bitmap(newBitmap, x, y);
+    mainDraw.textTrunc(x + 12, y, w - 12, strright(text, -1));
+    
+    mainDraw.end();
+}
+
+handler mainForm.onopen() {
+    VolumeMgr	vm;
+    bool		first = true;
+    Volume		vol;
+    StringList	sl;
+    
+    mainBack.text = (char)3;				// left arrow in symbol font
+    mainInfo.text = (char)10;				// "Info-I" in symbol font
+    mainCopy.text = (char)21;
+    mainPath.text = "/";
+    mainStat.text = "";
+    
+    while (vm.enumerate(first, vol)) {		// get the available volumes...
+        first = false;
+        sl.add(vol.label);
+    }
+    mainCardSelList.setitemslist(sl);		// ...and show them in a popup
+    mainCardSelList.selitem = 0;
+    this.timer(1);							// let the form become visible before doing the
+                                            // (probably time consuming) directory-reading
+    mainDraw.attachForm(this);
+    mainList.setdrawfunc(drawFolderList);
+}
+
+handler mainCardSel.onlistselect() {
+    mainForm.timer(1);
+}
+
+handler mainForm.ontimer() {
+    int 		i = mainCardSelList.selitem;
+    VolumeMgr	vm;
+    bool		first = true;
+    Volume		vol;
+    string		str;
+
+    if (i<0) return;						// no item selected
+    
+    str = mainCardSelList.gettext(i);		// get the name of the selected volume
+    mainCardSel.text = str;
+    while (vm.enumerate(first, vol)) {		// find it again (could be removed since filling the popup)
+        first = false;
+        if (vol.label == str) {
+            CurrVolume = vol;
+            break;
+        }
+    }
+    CurrPath = "/";
+    FillList();
+}
+
+handler mainList.onselect() {
+    int		i = mainList.selitem;
+    string	str = mainList.gettext(i);
+
+    if (i == LastSel) {	
+        if (str[0] == '�') {						// user selected a folder?
+            CurrPath += strright(str, -1) + "/";	// add the folder name to the path
+            FillList();								// and show its contents
+        }
+        else
+            showFileInfo();
+    }
+    LastSel = i;
+}
+
+handler mainBack.onselect() {
+    int i;
+    
+    i = strlen(CurrPath)-2;						// dont find the trailing "/"
+    if (i <= 0) return;							// already at root
+    
+    // strip of the rightmost folder name from the current path
+    while (i>=0) {
+        if (CurrPath[i] == '/') {
+            CurrPath = strleft(CurrPath, i+1);
+            FillList();
+            return;
+        }
+        --i;
+    }
+}
+
+handler mainInfo.onselect() {
+    showFileInfo();
+}
+
+handler mainForm.onhkey() {
+    int i = mainList.selitem;
+    int n = mainList.count;
+    
+    switch (event.key) {
+    case evUp:
+        if (i == 0) return;
+        i--;
+        mainList.topitem = mainList.selitem = i;
+        LastSel = i;
+        mainList.redraw();
+        break;
+    case evDown:
+        if (i == n-1) return;
+        i++;
+        if (i>11) mainList.topitem = i-11;
+        mainList.selitem = i;
+        LastSel = i;
+        mainList.redraw();
+        break;
+    case evJogRelease:
+    case evSelect:
+        showFileInfo();
+        break;
+    }
+}
+
+handler mainDelete.onselect() {
+    int		i = mainList.selitem;
+    string	str;
+    
+    if (i<0) return;								// nothing to delete
+    
+    str = mainList.gettext(i);
+    str = strright(str, -1);						// strip the indentation
+    
+    if (confirm("Delete the selected object?")) {
+        if (CurrVolume.del(CurrPath + str) == 0)
+            FillList();
+        else
+            alert("Failed to delete the selected object.");
+    }
+}
+
+handler mainNew.onselect() {
+    createForm.domodal();
+}
+
+handler mainCopy.onselect() {
+    int		i = mainList.selitem;
+    string	src, dst;
+    File	fSrc, fDst;
+    char	*buf;
+    int		size;
+    int		sum;
+    Date	t, t2;
+    
+    if (i<0) return;								// nothing to copy
+    
+    src = mainList.gettext(i);
+    if (src[0] == '�') {
+        alert("cant copy folders.");
+        return;
+    }
+    
+    src = strright(src, -1);
+    dst = CurrPath + "copy of " + src;
+    src = CurrPath + src;
+    
+    if (CurrVolume.open(src, vfsModeRead, fSrc) != 0) {
+        alert("cant open source-file");
+        return;
+    }
+    if (CurrVolume.create(dst) != 0) {
+        alert("cant create dest-file");
+        fSrc.close();
+        return;
+    }
+    if (CurrVolume.open(dst, vfsModeReadWrite, fDst) != 0) {
+        alert("cant open dest-file");
+        return;
+    }
+    
+    t.now();
+    sum = 0;
+    size = 1024;
+    buf = new char[size];
+    mainStat.text = "R " + sum;
+    while (i = fSrc.read(buf, "c", size)) {
+        mainStat.text = "W " + sum;
+        fDst.write(buf, "c", i);
+        sum += i;
+        mainStat.text = "R " + sum;
+        if ((penstate() || keystate()) && confirm("Cancel copy?")) break;
+    }
+    fSrc.close();
+    fDst.close();
+    delete buf;
+    t2.now();
+    alert("secs needed: " + (t2.secs - t.secs));
+    
+    // Simulator 5.2, POSESlot1, filesize 924 KB
+    // size		ticks("c", i)	ticks(i+"c", 1)	read only	secs
+    // 1024		18789			18720			13277		145
+    // 2048		18542							14437
+    // 3072		19034
+    
+    mainStat.text = "";
+    FillList();
+}
+
+handler mainSeektest.onselect() {
+    int		i = mainList.selitem;
+    string	src;
+    File	f;
+    int		x;
+    Date	t, t2;
+    char	buf[20];
+
+    if (i<0) return;								// nothing selected
+    
+    src = mainList.gettext(i);
+    if (src[0] == '�') {
+        alert("This test requires a selected file.");
+        return;
+    }
+    
+    src = CurrPath + strright(src, -1);
+    if (CurrVolume.open(src, vfsModeRead, f) != 0) {
+        alert("cant open source-file");
+        return;
+    }
+    
+    if (f.size < 20) {
+        alert("cannot perform seek test on small/empty file");
+        f.close();
+        return;
+    }
+
+    t.now();
+    for (i=0; i<1000; i++) {
+        x = random(f.size);
+        f.offset = x;
+        mainStat.text = x;
+        f.read(buf, "c", 20);
+    }
+    t2.now();
+    f.close();
+    mainStat.text = "";
+    alert("1000 random seek/read iterations.\nSecs needed: " + (t2.secs - t.secs));
+}

@@ -1,0 +1,1924 @@
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+</HEAD>
+<BODY>
+<OBJECT type="text/site properties">
+<param name="Window Styles" value="0x800025">
+<param name="comment" value="title:">
+<param name="comment" value="base:">
+</OBJECT>
+<UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="What's New">
+<param name="Local" value="bWhatsNew.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="What's New">
+<param name="Local" value="tWhatsNew.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="OrbForms Basics">
+<param name="Local" value="bBasics.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Getting Started">
+<param name="Local" value="tGetStart.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Environment">
+<param name="Local" value="tOrbEnv.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Project">
+<param name="Local" value="tProject.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Forms and Controls">
+<param name="Local" value="tFormsControls.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Language Translation">
+<param name="Local" value="tTranslation.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Quick Tutorials">
+<param name="Local" value="bTutorials.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Hello, World">
+<param name="Local" value="tLesson1.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Calculator">
+<param name="Local" value="tLesson2.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Survey">
+<param name="Local" value="tLesson3.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="ProgressBar Gadget">
+<param name="Local" value="tLesson4.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Language Reference">
+<param name="Local" value="bLanguage.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Basics">
+<param name="Local" value="tBasics.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Variables">
+<param name="Local" value="tVariables.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Functions">
+<param name="Local" value="tFunctions.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Expressions">
+<param name="Local" value="tExpressions.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Constants and Enumerations">
+<param name="Local" value="tConstantsEnums.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Statements">
+<param name="Local" value="tStatements.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Pointers">
+<param name="Local" value="tPointers.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Structures">
+<param name="Local" value="tStructures.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Objects">
+<param name="Local" value="tObjects.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Inheritance">
+<param name="Local" value="tInheritance.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Interfaces">
+<param name="Local" value="tInterfaces.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Function Pointers">
+<param name="Local" value="tFunction Pointers.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Event handlers">
+<param name="Local" value="tEvents.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Creating and Using Gadgets">
+<param name="Local" value="tGadgets.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Debug Support">
+<param name="Local" value="tDebug.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Compiler Directives">
+<param name="Local" value="tPreprocessor.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Library Reference">
+<param name="Local" value="bLibrary.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Type Strings">
+<param name="Local" value="ttypeStrings.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="High Density Graphics">
+<param name="Local" value="thighDensity.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Strings">
+<param name="Local" value="cStrings.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strlen">
+<param name="Local" value="mstrlen.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="substr">
+<param name="Local" value="msubstr.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strleft">
+<param name="Local" value="mstrleft.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strright">
+<param name="Local" value="mstrright.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strupper">
+<param name="Local" value="mstrupper.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strlower">
+<param name="Local" value="mstrlower.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strstr">
+<param name="Local" value="mstrstr.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strinsert">
+<param name="Local" value="mstrinsert.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strreplace">
+<param name="Local" value="mstrreplace.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="hex">
+<param name="Local" value="mhex.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="format">
+<param name="Local" value="mformat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="lformat">
+<param name="Local" value="mlformat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="lparse">
+<param name="Local" value="mlparse.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strctos">
+<param name="Local" value="mstrctos.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="strstoc">
+<param name="Local" value="mstrstoc.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Math">
+<param name="Local" value="cMath.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="cos">
+<param name="Local" value="mcos.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sin">
+<param name="Local" value="msin.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tan">
+<param name="Local" value="mtan.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="acos">
+<param name="Local" value="macos.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="asin">
+<param name="Local" value="masin.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="atan">
+<param name="Local" value="matan.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="cosh">
+<param name="Local" value="mcosh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sinh">
+<param name="Local" value="msinh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tanh">
+<param name="Local" value="mtanh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="acosh">
+<param name="Local" value="macosh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="asinh">
+<param name="Local" value="masinh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="atanh">
+<param name="Local" value="matanh.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="exp">
+<param name="Local" value="mexp.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="log">
+<param name="Local" value="mlog.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="log10">
+<param name="Local" value="mlog10.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sqrt">
+<param name="Local" value="msqrt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="atan2">
+<param name="Local" value="matan2.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="pow">
+<param name="Local" value="mpow.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="random">
+<param name="Local" value="mrandom.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="rand">
+<param name="Local" value="mrand.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="srand">
+<param name="Local" value="msrand.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Sound">
+<param name="Local" value="cSound.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="beep">
+<param name="Local" value="mbeep.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tone">
+<param name="Local" value="mtone.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tonea">
+<param name="Local" value="mtonea.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tonema">
+<param name="Local" value="mtonema.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="System">
+<param name="Local" value="cSystem.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Date">
+<param name="Local" value="oDate.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="now">
+<param name="Local" value="mDate-now.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="selectdate">
+<param name="Local" value="mDate-selectdate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="selecttime">
+<param name="Local" value="mDate-selecttime.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="addsecs">
+<param name="Local" value="mDate-addsecs.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="adddays">
+<param name="Local" value="mDate-adddays.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="subsecs">
+<param name="Local" value="mDate-subsecs.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="subdays">
+<param name="Local" value="mDate-subdays.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="diffsecs">
+<param name="Local" value="mDate-diffsecs.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="diffdays">
+<param name="Local" value="mDate-diffdays.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="time">
+<param name="Local" value="mDate-time.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="date">
+<param name="Local" value="mDate-date.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="ldate">
+<param name="Local" value="mDate-ldate.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Preferences">
+<param name="Local" value="oPreferences.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="get">
+<param name="Local" value="mPreferences-get.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="set">
+<param name="Local" value="mPreferences-set.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mPreferences-del.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Serial">
+<param name="Local" value="oSerial.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mSerial-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mSerial-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="settings">
+<param name="Local" value="mSerial-settings.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setbuffer">
+<param name="Local" value="mSerial-setbuffer.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="clearerr">
+<param name="Local" value="mSerial-clearerr.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="send">
+<param name="Local" value="mSerial-send.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recv">
+<param name="Local" value="mSerial-recv.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sendb">
+<param name="Local" value="mSerial-sendb.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recvb">
+<param name="Local" value="mSerial-recvb.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sendcheck">
+<param name="Local" value="mSerial-sendcheck.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recvcheck">
+<param name="Local" value="mSerial-recvcheck.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sendwait">
+<param name="Local" value="mSerial-sendwait.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recvwait">
+<param name="Local" value="mSerial-recvwait.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sendflush">
+<param name="Local" value="mSerial-sendflush.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recvflush">
+<param name="Local" value="mSerial-recvflush.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="SerialStream">
+<param name="Local" value="oSerialStream.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mSerialStream-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mSerialStream-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readInt">
+<param name="Local" value="mSerialStream-readInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeInt">
+<param name="Local" value="mSerialStream-writeInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readWord">
+<param name="Local" value="mSerialStream-readWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeWord">
+<param name="Local" value="mSerialStream-writeWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readFloat">
+<param name="Local" value="mSerialStream-readFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeFloat">
+<param name="Local" value="mSerialStream-writeFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readString">
+<param name="Local" value="mSerialStream-readString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeString">
+<param name="Local" value="mSerialStream-writeString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readChar">
+<param name="Local" value="mSerialStream-readChar.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeChar">
+<param name="Local" value="mSerialStream-writeChar.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Stream">
+<param name="Local" value="oStream.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mStream-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mStream-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readInt">
+<param name="Local" value="mStream-readInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeInt">
+<param name="Local" value="mStream-writeInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readWord">
+<param name="Local" value="mStream-readWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeWord">
+<param name="Local" value="mStream-writeWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readFloat">
+<param name="Local" value="mStream-readFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeFloat">
+<param name="Local" value="mStream-writeFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readString">
+<param name="Local" value="mStream-readString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeString">
+<param name="Local" value="mStream-writeString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readChar">
+<param name="Local" value="mStream-readChar.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeChar">
+<param name="Local" value="mStream-writeChar.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="ISerializable">
+<param name="Local" value="oISerializable.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="serialize">
+<param name="Local" value="mISerializable-serialize.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="deserialize">
+<param name="Local" value="mISerializable-deserialize.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="events">
+<param name="Local" value="mevents.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="fatal">
+<param name="Local" value="mfatal.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="callstack">
+<param name="Local" value="mcallstack.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="debuglog">
+<param name="Local" value="mdebuglog.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="assert">
+<param name="Local" value="massert.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="ticks">
+<param name="Local" value="mticks.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tickspersec">
+<param name="Local" value="mtickspersec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="resetaot">
+<param name="Local" value="mresetaot.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sleep">
+<param name="Local" value="msleep.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="launch">
+<param name="Local" value="mlaunch.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="launchGoto">
+<param name="Local" value="mlaunchGoto.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="launchCustomString">
+<param name="Local" value="mlaunchCustomString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="username">
+<param name="Local" value="musername.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="serialnum">
+<param name="Local" value="mserialnum.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="osver">
+<param name="Local" value="mosver.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="osvers">
+<param name="Local" value="mosvers.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="orbver">
+<param name="Local" value="morbver.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getclip">
+<param name="Local" value="mgetclip.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setclip">
+<param name="Local" value="msetclip.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="memcpy">
+<param name="Local" value="mmemcpy.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="malloct">
+<param name="Local" value="mmalloct.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="free">
+<param name="Local" value="mfree.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="freemem">
+<param name="Local" value="mfreemem.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="battery">
+<param name="Local" value="mbattery.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Database">
+<param name="Local" value="cDatabase.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="DBRecord">
+<param name="Local" value="oDBRecord.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mDBRecord-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mDBRecord-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="erase">
+<param name="Local" value="mDBRecord-erase.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mDBRecord-close.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="DBRecordStream">
+<param name="Local" value="oDBRecordStream.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mDBRecordStream-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mDBRecordStream-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readInt">
+<param name="Local" value="mDBRecordStream-readInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeInt">
+<param name="Local" value="mDBRecordStream-writeInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readWord">
+<param name="Local" value="mDBRecordStream-readWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeWord">
+<param name="Local" value="mDBRecordStream-writeWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readFloat">
+<param name="Local" value="mDBRecordStream-readFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeFloat">
+<param name="Local" value="mDBRecordStream-writeFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readString">
+<param name="Local" value="mDBRecordStream-readString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeString">
+<param name="Local" value="mDBRecordStream-writeString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readChar">
+<param name="Local" value="mDBRecordStream-readChar.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeChar">
+<param name="Local" value="mDBRecordStream-writeChar.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Database">
+<param name="Local" value="oDatabase.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mDatabase-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="opentc">
+<param name="Local" value="mDatabase-opentc.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="create">
+<param name="Local" value="mDatabase-create.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mDatabase-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="deldb">
+<param name="Local" value="mDatabase-deldb.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getdate">
+<param name="Local" value="mDatabase-getdate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getcatname">
+<param name="Local" value="mDatabase-getcatname.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setcatname">
+<param name="Local" value="mDatabase-setcatname.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="moverec">
+<param name="Local" value="mDatabase-moverec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="removerec">
+<param name="Local" value="mDatabase-removerec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="removeres">
+<param name="Local" value="mDatabase-removeres.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="delrec">
+<param name="Local" value="mDatabase-delrec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="archiverec">
+<param name="Local" value="mDatabase-archiverec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getrec">
+<param name="Local" value="mDatabase-getrec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="newrec">
+<param name="Local" value="mDatabase-newrec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="findrec">
+<param name="Local" value="mDatabase-findrec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getresinfo">
+<param name="Local" value="mDatabase-getresinfo.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getres">
+<param name="Local" value="mDatabase-getres.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="newres">
+<param name="Local" value="mDatabase-newres.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="hasappinfo">
+<param name="Local" value="mDatabase-hasappinfo.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getappinfo">
+<param name="Local" value="mDatabase-getappinfo.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setappinfo">
+<param name="Local" value="mDatabase-setappinfo.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="createappinfo">
+<param name="Local" value="mDatabase-createappinfo.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="DatabaseMgr">
+<param name="Local" value="oDatabaseMgr.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="dbenum">
+<param name="Local" value="mDatabaseMgr-dbenum.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Memo">
+<param name="Local" value="oMemo.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="find">
+<param name="Local" value="mMemo-find.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="create">
+<param name="Local" value="mMemo-create.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mMemo-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="puts">
+<param name="Local" value="mMemo-puts.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="line">
+<param name="Local" value="mMemo-line.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="end">
+<param name="Local" value="mMemo-end.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="rewind">
+<param name="Local" value="mMemo-rewind.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mMemo-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mMemo-del.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="archive">
+<param name="Local" value="mMemo-archive.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="remove">
+<param name="Local" value="mMemo-remove.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="erase">
+<param name="Local" value="mMemo-erase.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="VFS">
+<param name="Local" value="cVFS.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="File">
+<param name="Local" value="oFile.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mFile-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mFile-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mFile-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getRec">
+<param name="Local" value="mFile-getRec.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getRes">
+<param name="Local" value="mFile-getRes.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setDate">
+<param name="Local" value="mFile-setDate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getDate">
+<param name="Local" value="mFile-getDate.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="FileStream">
+<param name="Local" value="oFileStream.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mFileStream-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mFileStream-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readInt">
+<param name="Local" value="mFileStream-readInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeInt">
+<param name="Local" value="mFileStream-writeInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readWord">
+<param name="Local" value="mFileStream-readWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeWord">
+<param name="Local" value="mFileStream-writeWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readFloat">
+<param name="Local" value="mFileStream-readFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeFloat">
+<param name="Local" value="mFileStream-writeFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readString">
+<param name="Local" value="mFileStream-readString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeString">
+<param name="Local" value="mFileStream-writeString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readChar">
+<param name="Local" value="mFileStream-readChar.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeChar">
+<param name="Local" value="mFileStream-writeChar.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Directory">
+<param name="Local" value="oDirectory.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mDirectory-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setDate">
+<param name="Local" value="mDirectory-setDate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getDate">
+<param name="Local" value="mDirectory-getDate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="enumerate">
+<param name="Local" value="mDirectory-enumerate.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Volume">
+<param name="Local" value="oVolume.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mVolume-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="openDir">
+<param name="Local" value="mVolume-openDir.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="create">
+<param name="Local" value="mVolume-create.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="createDir">
+<param name="Local" value="mVolume-createDir.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mVolume-del.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="rename">
+<param name="Local" value="mVolume-rename.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="export">
+<param name="Local" value="mVolume-export.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="import">
+<param name="Local" value="mVolume-import.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getDefaultDir">
+<param name="Local" value="mVolume-getDefaultDir.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="VolumeMgr">
+<param name="Local" value="oVolumeMgr.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="enumerate">
+<param name="Local" value="mVolumeMgr-enumerate.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Using VFS">
+<param name="Local" value="tUsingVFS.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Networking">
+<param name="Local" value="cNetworking.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Socket">
+<param name="Local" value="oSocket.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mSocket-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mSocket-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="accept">
+<param name="Local" value="mSocket-accept.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="bind">
+<param name="Local" value="mSocket-bind.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="connect">
+<param name="Local" value="mSocket-connect.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="listen">
+<param name="Local" value="mSocket-listen.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sends">
+<param name="Local" value="mSocket-sends.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="send">
+<param name="Local" value="mSocket-send.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recvs">
+<param name="Local" value="mSocket-recvs.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="recv">
+<param name="Local" value="mSocket-recv.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="shutdown">
+<param name="Local" value="mSocket-shutdown.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="SocketStream">
+<param name="Local" value="oSocketStream.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="read">
+<param name="Local" value="mSocketStream-read.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="write">
+<param name="Local" value="mSocketStream-write.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readInt">
+<param name="Local" value="mSocketStream-readInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeInt">
+<param name="Local" value="mSocketStream-writeInt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readWord">
+<param name="Local" value="mSocketStream-readWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeWord">
+<param name="Local" value="mSocketStream-writeWord.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readFloat">
+<param name="Local" value="mSocketStream-readFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeFloat">
+<param name="Local" value="mSocketStream-writeFloat.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readString">
+<param name="Local" value="mSocketStream-readString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeString">
+<param name="Local" value="mSocketStream-writeString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="readChar">
+<param name="Local" value="mSocketStream-readChar.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="writeChar">
+<param name="Local" value="mSocketStream-writeChar.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Network">
+<param name="Local" value="oNetwork.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mNetwork-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mNetwork-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="closei">
+<param name="Local" value="mNetwork-closei.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getHostByName">
+<param name="Local" value="mNetwork-getHostByName.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getHostByAddr">
+<param name="Local" value="mNetwork-getHostByAddr.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Using Networking">
+<param name="Local" value="tUsingNet.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Printing">
+<param name="Local" value="cPrinting.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="PalmPrint">
+<param name="Local" value="oPalmPrint.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="open">
+<param name="Local" value="mPalmPrint-open.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="printString">
+<param name="Local" value="mPalmPrint-printString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="xmitString">
+<param name="Local" value="mPalmPrint-xmitString.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="beginPrint">
+<param name="Local" value="mPalmPrint-beginPrint.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="endPrint">
+<param name="Local" value="mPalmPrint-endPrint.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="beginXmit">
+<param name="Local" value="mPalmPrint-beginXmit.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="endXmit">
+<param name="Local" value="mPalmPrint-endXmit.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="printLine">
+<param name="Local" value="mPalmPrint-printLine.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="xmitLine">
+<param name="Local" value="mPalmPrint-xmitLine.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="printLinePassThru">
+<param name="Local" value="mPalmPrint-printLinePassThru.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="xmitLinePassThru">
+<param name="Local" value="mPalmPrint-xmitLinePassThru.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Data structures">
+<param name="Local" value="cDataStructs.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Dict">
+<param name="Local" value="oDict.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="clear">
+<param name="Local" value="mDict-clear.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="add">
+<param name="Local" value="mDict-add.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mDict-del.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="find">
+<param name="Local" value="mDict-find.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="has">
+<param name="Local" value="mDict-has.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="key">
+<param name="Local" value="mDict-key.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="value">
+<param name="Local" value="mDict-value.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="StringList">
+<param name="Local" value="oStringList.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="clear">
+<param name="Local" value="mStringList-clear.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="add">
+<param name="Local" value="mStringList-add.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="insert">
+<param name="Local" value="mStringList-insert.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mStringList-del.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="find">
+<param name="Local" value="mStringList-find.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sort">
+<param name="Local" value="mStringList-sort.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="tokens">
+<param name="Local" value="mStringList-tokens.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="item">
+<param name="Local" value="mStringList-item.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="sort">
+<param name="Local" value="msort.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="User Interface">
+<param name="Local" value="cUI.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Bitmap">
+<param name="Local" value="oBitmap.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Draw">
+<param name="Local" value="oDraw.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="attachForm">
+<param name="Local" value="mDraw-attachForm.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="attachGadget">
+<param name="Local" value="mDraw-attachGadget.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="create">
+<param name="Local" value="mDraw-create.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="copyForm">
+<param name="Local" value="mDraw-copyForm.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="copyGadget">
+<param name="Local" value="mDraw-copyGadget.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="release">
+<param name="Local" value="mDraw-release.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="begin">
+<param name="Local" value="mDraw-begin.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="nbegin">
+<param name="Local" value="mDraw-nbegin.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="end">
+<param name="Local" value="mDraw-end.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="fg">
+<param name="Local" value="mDraw-fg.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="fgRGB">
+<param name="Local" value="mDraw-fgRGB.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="bg">
+<param name="Local" value="mDraw-bg.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="bgRGB">
+<param name="Local" value="mDraw-bgRGB.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textColor">
+<param name="Local" value="mDraw-textColor.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textRGB">
+<param name="Local" value="mDraw-textRGB.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="font">
+<param name="Local" value="mDraw-font.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textAlign">
+<param name="Local" value="mDraw-textAlign.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textWidth">
+<param name="Local" value="mDraw-textWidth.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textHeight">
+<param name="Local" value="mDraw-textHeight.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="underline">
+<param name="Local" value="mDraw-underline.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="indexFromColor">
+<param name="Local" value="mDraw-indexFromColor.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="uiColor">
+<param name="Local" value="mDraw-uiColor.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="selectIndex">
+<param name="Local" value="mDraw-selectIndex.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="line">
+<param name="Local" value="mDraw-line.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="pixel">
+<param name="Local" value="mDraw-pixel.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="rect">
+<param name="Local" value="mDraw-rect.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="frame">
+<param name="Local" value="mDraw-frame.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="bitmap">
+<param name="Local" value="mDraw-bitmap.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="bitmapm">
+<param name="Local" value="mDraw-bitmapm.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="text">
+<param name="Local" value="mDraw-text.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="textTrunc">
+<param name="Local" value="mDraw-textTrunc.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="draw">
+<param name="Local" value="mDraw-draw.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="drawm">
+<param name="Local" value="mDraw-drawm.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Event">
+<param name="Local" value="oEvent.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIApp">
+<param name="Local" value="oUIApp.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getdepth">
+<param name="Local" value="mUIApp-getdepth.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setdepth">
+<param name="Local" value="mUIApp-setdepth.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getScreenAttrib">
+<param name="Local" value="mUIApp-getScreenAttrib.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="getSysPref">
+<param name="Local" value="mUIApp-getSysPref.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="hookhard">
+<param name="Local" value="mUIApp-hookhard.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="abort">
+<param name="Local" value="mUIApp-abort.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIButton">
+<param name="Local" value="oUIButton.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UICheckbox">
+<param name="Local" value="oUICheckbox.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIFBitmap">
+<param name="Local" value="oUIFBitmap.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIField">
+<param name="Local" value="oUIField.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="insert">
+<param name="Local" value="mUIField-insert.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="select">
+<param name="Local" value="mUIField-select.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="cut">
+<param name="Local" value="mUIField-cut.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="copy">
+<param name="Local" value="mUIField-copy.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="paste">
+<param name="Local" value="mUIField-paste.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="undo">
+<param name="Local" value="mUIField-undo.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="del">
+<param name="Local" value="mUIField-del.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="grabfocus">
+<param name="Local" value="mUIField-grabfocus.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="relfocus">
+<param name="Local" value="mUIField-relfocus.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="scroll">
+<param name="Local" value="mUIField-scroll.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="phonelookup">
+<param name="Local" value="mUIField-phonelookup.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIForm">
+<param name="Local" value="oUIForm.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="load">
+<param name="Local" value="mUIForm-load.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="close">
+<param name="Local" value="mUIForm-close.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="redraw">
+<param name="Local" value="mUIForm-redraw.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="domodal">
+<param name="Local" value="mUIForm-domodal.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="dodialog">
+<param name="Local" value="mUIForm-dodialog.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="timer">
+<param name="Local" value="mUIForm-timer.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="select">
+<param name="Local" value="mUIForm-select.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="help">
+<param name="Local" value="mUIForm-help.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="activefield">
+<param name="Local" value="mUIForm-activefield.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="keyboard">
+<param name="Local" value="mUIForm-keyboard.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIGadget">
+<param name="Local" value="oUIGadget.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UILabel">
+<param name="Local" value="oUILabel.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIList">
+<param name="Local" value="oUIList.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setitems">
+<param name="Local" value="mUIList-setitems.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setitemslist">
+<param name="Local" value="mUIList-setitemslist.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="gettext">
+<param name="Local" value="mUIList-gettext.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="makevisible">
+<param name="Local" value="mUIList-makevisible.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="scroll">
+<param name="Local" value="mUIList-scroll.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="popup">
+<param name="Local" value="mUIList-popup.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="redraw">
+<param name="Local" value="mUIList-redraw.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="setdrawfunc">
+<param name="Local" value="mUIList-setdrawfunc.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIMenuItem">
+<param name="Local" value="oUIMenuItem.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIPopup">
+<param name="Local" value="oUIPopup.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIPushButton">
+<param name="Local" value="oUIPushButton.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIRepeatButton">
+<param name="Local" value="oUIRepeatButton.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIScroll">
+<param name="Local" value="oUIScroll.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="update">
+<param name="Local" value="mUIScroll-update.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UISelector">
+<param name="Local" value="oUISelector.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UISlider">
+<param name="Local" value="oUISlider.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="UIString">
+<param name="Local" value="oUIString.html">
+</OBJECT>
+</LI>
+<UL>
+</UL>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="alert">
+<param name="Local" value="malert.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="alertc">
+<param name="Local" value="malertc.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="confirm">
+<param name="Local" value="mconfirm.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="prompt">
+<param name="Local" value="mprompt.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="promptc">
+<param name="Local" value="mpromptc.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="promptcd">
+<param name="Local" value="mpromptcd.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="keystate">
+<param name="Local" value="mkeystate.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="penstate">
+<param name="Local" value="mpenstate.html">
+</OBJECT>
+</LI>
+</UL>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Color Tables">
+<param name="Local" value="tColorTables.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="Native Add-ins">
+<param name="Local" value="bAddIns.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Add-in Overview">
+<param name="Local" value="tNativeOverview.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Creating Add-ins">
+<param name="Local" value="tNativeCreating.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="VM Architecture">
+<param name="Local" value="tNativeVM.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Native Structs">
+<param name="Local" value="tNativeObjects.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Native Gadgets">
+<param name="Local" value="tNativeGadgets.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="System Events">
+<param name="Local" value="tNativeSysEvents.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Type Strings">
+<param name="Local" value="tNativeTypeStrings.html">
+</OBJECT>
+</LI>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Add-in Reference">
+<param name="Local" value="tNativeReference.html">
+</OBJECT>
+</LI>
+</UL>
+<LI><OBJECT type="text/sitemap">
+<param name="Name" value="About OrbWorks">
+<param name="Local" value="bAbout.html">
+</OBJECT>
+</LI>
+<UL>
+<LI><OBJECT type="text/sitemap"><param name="Name" value="Contact Info">
+<param name="Local" value="tContactInfo.html">
+</OBJECT>
+</LI>
+</UL>
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+// network sample
+#include "../UtilCode/neterror.h"
+
+@doc "send a string on a socket";
+socksends(int id, string s) {
+    return socksend(id, &s, "s", 1);
+}
+
+main() {
+    int err, s;
+    string name, addr, index;
+
+    err = netopen();
+    if (err == 0) {
+        puts("[" + netlocaladdr() + "]\n");
+        if (0 == nethostbyname("www.orbworks.com", &addr)) {
+            if (0 == sockopen(&s)) {
+                if (0 == sockconnect(s, addr + ":80")) {
+                    socksends(s, "GET /index.html HTTP/1.0\n\n");
+                    sockrecv(s, &index, "s", 1);
+                    index = strleft(index, 135);
+                    puts("index.html:\n" + index + "\n");
+                }
+                sockclose(s);
+            }
+        }
+        netclose();
+    } else {
+        puts("Failed to open network: " + neterror(err) + "\n");
+    }
+}

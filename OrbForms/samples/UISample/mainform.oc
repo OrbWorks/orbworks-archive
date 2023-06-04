@@ -1,0 +1,101 @@
+// mainform.oc
+// Created for mainForm
+
+handler mainForm.onopen() {
+    string fruits[4] = {"apple", "orange", "kiwi", "lime"};
+    listFruit.setitems(4, fruits);
+    popFruit.text = "kiwi";
+    cbShow.checked = true; // show by default
+    pbStandard.checked = true; // standard by default
+    timer(100); // one second before scrolling starts
+}
+
+handler mainForm.ontimer() {
+    string t = lblScroller.text;
+    t = t + t[0];
+    lblScroller.text = strright(t, -1);
+    timer(1);
+}
+
+handler buClick.onselect() {
+    buClick.text = "Clicked!";
+}
+
+handler cbShow.onselect() {
+    buClick.visible = cbShow.checked;
+}
+
+string reverse(string str) {
+    int i=0, j=strlen(str)-1;
+    char c;
+    while (i < j) {
+        c = str[i];
+        str[i] = str[j];
+        str[j] = c;
+        i++;
+        j--;
+    }
+    return str;
+}
+
+handler fldSource.onchange() {
+    fldDest.text = reverse(fldSource.text);
+}
+
+handler pbStandard.onselect() {
+    fldDest.fontid = fntStandard;
+}
+
+handler pbBold.onselect() {
+    fldDest.fontid = fntBold;
+}
+
+StringList slItems;
+
+handler buAdd.onselect() {
+    if (fldNewItem.text) {
+        slItems.add(fldNewItem.text);
+        listItems.setitemslist(slItems);
+        listItems.redraw();
+        fldNewItem.text = "";
+    }
+}
+
+handler selChoose.onselect() {
+    int buttonId = chooseForm.dodialog();
+    if (buttonId == buOption1.id) {
+        selChoose.text = "Option 1";
+    } else if (buttonId == buOption2.id) {
+        selChoose.text = "Option 2";
+    } else {
+        selChoose.text = "Option 3";
+    }
+}
+
+handler popFruit.onlistselect() {
+    popFruit.text = listFruit.gettext(event.value);
+}
+
+handler sliderAlpha.onmove() {
+    lblAlpha.text = (char)event.value + 'A';
+}
+
+handler popDynamic.onselect() {
+    int sel;
+    if (slItems.count) {
+        listDynamic.setitemslist(slItems);
+        // 11 is height of standard font
+        if (slItems.count > 5)
+            listDynamic.h = 5 * 11;
+        else
+            listDynamic.h = slItems.count * 11;
+        sel = listDynamic.popup();
+        if (sel != -1) {
+            text = slItems.item(sel);
+        }
+    }
+}
+
+handler buMemo.onselect() {
+    memoForm.domodal();
+}

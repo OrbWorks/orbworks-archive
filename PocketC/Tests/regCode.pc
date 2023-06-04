@@ -1,0 +1,152 @@
+@cid "RegC";
+@name "RegCode";
+@dbname "RegCode";
+@ver "1.0";
+
+@cmd "notepad.exe regCode.pc";
+
+// RegCode 98/5/22
+int accum[32], oper[32], temp[32];
+
+loadoper(int num) {
+  char neg, i;
+  if (num < 0) {
+    neg = 1;
+    num = -num;
+  }
+  while (num && i<32) {
+    oper[i] = num % 2;
+    num = num / 2;
+    i++;
+  }
+  while (i<32) oper[i++] = 0;
+
+  if (neg) {
+    // two's complement
+    for (i=0;i<32;i++) oper[i] = !oper[i];
+    i = 0;
+    do {
+      oper[i] = !oper[i];
+    } while (!oper[i++])
+  }
+}
+
+loadaccum(int num) {
+  char neg, i;
+  if (num < 0) {
+    neg = 1;
+    num = -num;
+  }
+  while (num && i<32) {
+    accum[i] = num % 2;
+    num = num / 2;
+    i++;
+  }
+  while (i<32) accum[i++] = 0;
+
+  if (neg) {
+    // two's complement
+    for (i=0;i<32;i++) accum[i] = !accum[i];
+    i = 0;
+    do {
+      accum[i] = !accum[i];
+    } while (!accum[i++])
+  }
+}
+
+add() {
+  // Do accum += oper
+  int i, c, nc, t;
+  for (i=0;i<32;i++) {
+    t = accum[i] + oper[i] + c;
+    nc = t > 1;
+    accum[i] = t % 2;
+    c = nc;
+  }
+}
+
+lshift() {
+  // Left shift oper
+  int i;
+  i=31;
+  while (i)
+    oper[i] = oper[--i];
+  oper[0] = 0;
+}
+
+getaccum() {
+  int k,i,res;
+  k = 1;
+  for (i=0;i<32;i++) {
+    if (accum[i]) res = res + k;
+    k = k * 2;
+  }
+  return res;
+}
+
+mod() {
+  // Do accum % 1000000000
+  int acc;
+  acc = getaccum();
+  loadaccum(acc % 1000000000);
+}
+
+accum_to_oper() {
+  int i;
+  for (i=0;i<32;i++) {
+    oper[i]=accum[i];
+    accum[i]=0;
+  }
+}
+  
+accum_to_temp() {
+  int i;
+  for (i=0;i<32;i++) {
+    temp[i]=accum[i];
+    accum[i]=0;
+  }
+}
+  
+mult(int fact) {
+  // Do accum * oper
+  int i;
+  accum_to_oper();
+  loadaccum(fact);
+  accum_to_temp();
+  for (i=0;i<32;i++) {
+    if (temp[i]) add();
+    lshift();
+  }
+}
+
+main() {
+  int index;
+  string name, code;
+  char c;
+
+  if (date(0) > 19980522) {
+    alert("RegCode has expired!");
+    return;
+  }
+  clear();
+  puts("Generating RegCode:\n(This may take a while!)\n");
+
+  name = getsysval(0);
+  loadaccum(123456789);
+
+  for (index=0;index < strlen(name); index++) {
+    c = substr(name, index, 1);
+    puts(c);
+    mult(c);
+    while (accum[31]) {
+      loadoper(-2000000000);
+      add();
+    }
+    while (accum[30]) {
+      loadoper(-1000000000);
+      add();
+    }
+    mod();
+  }
+  puts("\nHotSync Username: " + name + "\nCode: " + getaccum() + "\n");
+}

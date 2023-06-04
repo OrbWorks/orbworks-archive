@@ -1,0 +1,154 @@
+<p>The OrbForms Designer environment consists of many tools to increase your
+productivity while creating applications - a Workspace bar containing the
+project view and source view, a Visual Designer for manipulation forms and
+controls, an Inspection bar listing properties of the current object, and Output
+bar showing build output, and a Source editor window for creating your
+application's source code.</p>
+<p><img border="0" src="frontview.gif" width="655" height="461"></img></p>
+<h3>Workspace Bar - Project</h3>
+<p>The Project view of the Workspace bar contains all of the resources in your
+application displayed in a tree. Selecting an item will display its properties
+in the Inspection bar, allowing you to edit it's attributes. Right-clicking on
+an item will display a menu of operations that can be performed on the item.</p>
+<p>Each project can have following resources:</p>
+<ul>
+  <li><i>app</i>:&nbsp; determines the basic project properties like project 
+  name, creator id.&nbsp; </li>
+  <li><i>forms</i>: contains all the forms in the project.&nbsp; Each project 
+  can have unlimited number of forms.</li>
+  <li><i>bitmaps</i>: contains all the bitmaps this project needed.&nbsp; For 
+  example, a button's UI can be text or graphic.&nbsp; If the button has graphic 
+  user interface, the user can pick a bitmap from this list.</li>
+  <li><i>Strings</i>: contains all the strings.&nbsp; For example, a form could 
+  have help strings, and the user can pick a list of possible strings to be the 
+  form's helper string.&nbsp; That list is generated from the list of strings in 
+  the project resource.</li>
+</ul>
+<h3>Workspace Bar - Source</h3>
+<p>The Source view of the Workspace bar contains all the source code in the 
+application, including gadget files. Right-click a source file to move it up or 
+down in the list, which controls the order in which the files are compiled and 
+the functions and objects are defined. Double-clicking a file will open it and 
+display a list of the functions, methods, handlers, and objects defined in the 
+file. Double-clicking one of the functions, etc. will jump to the function in 
+the source editor.</p>
+<p>Each project can have following type of source files:</p>
+<ul>
+  <li><i>Gadget Files</i>: contain a list of files where custom gadgets are 
+  defined.&nbsp; Each file should only contain one gadget.</li>
+  <li><i>Source Files</i>:: contains a list of source code files.</li>
+  <li><i>Language Files</i>: contains a list of localized <a href="tTranslation.html">language resource</a> files. </li>
+</ul>
+<h3>Form Designer</h3>
+<p>The Form Designer is the place where the user interface is created and
+tweaked. The view displayed in the Form Designer is very similar to the way
+the application will appear on an actual device (some controls are drawn
+slightly differently to make them easier to edit, such as the field control).</p>
+<P>&nbsp;</P>
+<table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="22%" valign="top"><IMG alt="" src="formdesigner.gif" width="199" height="236" ></td>
+    <td width="78%"><b>Key Features:</b><P><b><i>Drag and drop controls</i></b> 
+    - click the left mouse button to select a control, and hold the mouse to 
+    move the controls to the desired position on the screen.&nbsp; The control's 
+    position is relative to the form position.&nbsp; If the Form designer's grid 
+    snap is enabled, the control movements are snapped to the closest point on 
+    the grid.&nbsp; </P>
+<P><i><b>Select controls </b></i>- </P>
+    <ul>
+      <li>Select one control: left click on a control to select the control.&nbsp; 
+      </li>
+      <li>Select more than 1 control at once: Press Shift key and continue left 
+      click on a control.&nbsp; </li>
+      <li>Select controls that are covered by another control: Press Alt key 
+      while left click on a control.&nbsp; </li>
+    </ul>
+<P><b><i>Add controls </i></b>- right click on the form, and select a list of 
+the possible controls can be added to the form.&nbsp; </P>
+<P><i><b>Remove controls </b></i>- There are two ways to remove controls from 
+the designer.&nbsp; </P>
+    <ul>
+      <li>Select one or more controls and press Delete key. </li>
+      <li>Select one or more controls and press the right click on the mouse, 
+      and select drop down menu item Delete.</li>
+    </ul>
+<P><i><b>Organize controls' Z-order </b></i>- controls can overlap each other.&nbsp; 
+Control's Z order determines which control is drawn on the top.&nbsp; The 
+control's Z order can be modified by right click on the control and select Move 
+Up or Move Down.</P>
+<P><i><b>Align multiple controls</b></i>:&nbsp; Select multiple controls, and 
+right click on anyone of them will display a context menu that has following 
+choices:</P>
+    <ul>
+      <li>Align Top/Left/Right/Bottom: Align selected controls with selected 
+      edge of the first selected control.</li>
+      <li>Align Width : make all controls to have the same width as the first 
+      selected control.</li>
+      <li>Align Height: make all controls to have the same height as the first 
+      selected control.</li>
+    </ul>
+<P><i><b>Copy/Paste controls</b></i>: Select one more multiple controls, and 
+press key Ctrl+C for Copy and Ctrl+V for Paste.</P>
+<P><b><i>Undo/Redo actions</i></b>: To undo the last action, press key Ctrl+Z.&nbsp; 
+To redo the last action, press key Ctrl+Y.</P>
+    <p>&nbsp;</td>
+  </tr>
+</table>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<H3>Menu Designer</H3>
+<P>The Menu Designer is the place where the menu bar is created and tweaked. The 
+view displayed in the Menu Designer is very similar to the way the application 
+menu bar will appear on an actual device.&nbsp; The menu items can be dragged 
+and dropped.</P>
+<table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="21%"><IMG alt="" src="menudesigner.gif" width="199" height="236" ></td>
+    <td width="79%" valign="top"><b>Key Features:</b><P><b><i>Drag and drop menu 
+    items</i></b> - click the left mouse button to select a menu item, hold the 
+    mouse to move the menu item to the desired menu on the screen, and let go.&nbsp; 
+    The menu item will be inserted into the picked menu.</P>
+<P><i><b>Copy/Paste menu items</b></i>: Select one more multiple menu items, and 
+press key Ctrl+C for Copy and Ctrl+V for Paste.</P>
+<P><b><i>Undo/Redo actions</i></b>: To undo the last action, press key Ctrl+Z.&nbsp; 
+To redo the last action, press key Ctrl+Y.</P>
+    <p>&nbsp;</td>
+  </tr>
+</table>
+<h3>Inspection Bar</h3>
+<p>The Inspection bar shows the properties of the currently selected object. The
+Inspection Bar, Workspace Bar, and Visual Designer are synchronized - selecting
+an object in the Workspace Bar shows the properties in the Inspection Bar;
+changing a property in the Inspection Bar will affect the display in the
+Workspace Bar and Visual Designer.</p>
+<table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="26%"><IMG alt="" src="hellol5.gif" width="272" height="580" ></td>
+    <td width="74%" valign="top"><b>Key Features:</b><p><b><i>Property Display</i>:&nbsp;
+    </b>display selected project item's property.&nbsp; A property can have a 
+    dependency on another property.&nbsp; When a property is enabled, the 
+    Inspection property viewer will enable its dependent properties.&nbsp; For 
+    example:&nbsp; When a form's Modal property is set to False, Default Button 
+    and Help properties are disabled.&nbsp; </p>
+    <p><i><b>Customize Event Handling</b></i>: allows the user to go to a 
+    customized event handler function or automatically generate the handler 
+    code.&nbsp; When the source file is saved, the event handler properties are 
+    dynamically updated.</p>
+    <p><i><b>Built-in Help</b></i>: When a property or event handler is 
+    selected, its description is displayed on the bottom panel.</p>
+    <p><i><b>Input Error Detection</b></i>: Property's input values are 
+    validated.&nbsp; For example, if a string&nbsp; is entered in the position 
+    property X, Y, W, H, an error message will popup and indicating the input is 
+    not valid.</p>
+    <p><b>Sort Property by Name</b>: The properties can be displayed sorted base 
+    on their names.<b> </b></td>
+  </tr>
+</table>
+<h3>&nbsp;</h3>
+<H3>Output Bar</H3>
+<p>The Output bar displays the results of the most recent build, including the
+last error encountered.</p>
+<h3>Source Code Editor</h3>
+<p>The Source Code Editor is a syntax-coloring editor. When an error occurs when
+attempting to build the project, a balloon will appear at the location of the
+error to show you exactly what went wrong.</p>

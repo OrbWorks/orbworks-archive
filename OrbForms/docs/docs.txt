@@ -1,0 +1,1072 @@
+strlen
+Calculates the number of characters in a string.
+substr
+Creates a substring from the source string str. The first character of the string is at zero-based index, with the string being a maximum of len characters. If len is negative, it means -len chars from the end of the string.
+strleft
+Creates a substring from the left len characters of the source string str. If len is negative, it means to include all except the last -len chars.
+strright
+Creates a substring from the right len characters of the source string str. If len is negative, it means to include all except the first -len chars.
+strupper
+Creates a string from the source string str in all uppercase characters.
+strlower
+Creates a string from the source string str in all lowercase characters.
+strstr
+Searches the source string str to find sub, beginning at index first.
+hex
+Creates a hexadecimal string representation of value in the form "0xh".
+format
+Returns the string representation of value with prec decimal places.
+lformat
+Returns the string representation of value with prec decimal places. The decimal point used is based on the OS locale settings.
+lparse
+Converts the string representation value into a float. Unlike relying on the compiler to do the conversion, this function takes into account the decimal point character as defined by the current OS locale settings.
+strctos
+Builds a string from an array of characters, array.
+strstoc
+Copy each character of a str into the character array array.
+cos
+Returns the cosine of value
+sin
+Returns the sine of value
+tan
+Returns the tangent of value
+acos
+Returns the arccosine of value
+asin
+Returns the arcsine of value
+atan
+Returns the arctangent of value
+cosh
+Returns the hyperbolic cosine of value
+sinh
+Returns the hyperbolic sine of value
+tanh
+Returns the hyperbolic tangent of value
+acosh
+Returns the hyperbolic arccosine of value
+asinh
+Returns the hyperbolic arcsine of value
+atanh
+Returns the hyperbolic arctangent of value
+exp
+Returns the exponential of value.
+log
+Returns the logarithm of value.
+log10
+Returns the base-10 logarithm of value.
+sqrt
+Returns the square root of value.
+atan2
+Returns the arctangent of x/y.
+pow
+Returns x to the power of y.
+random
+Return a random integer between 0 and n-1.
+rand
+Returns a random float between 0 and 1.
+beep
+Generate one of the pre-defined system beeps.
+tone
+Synchronously play a tone of frequency freq, at volume vol, for duration dur. An application should play the sound at the volume specified by the system preferences by first calling UIApp.getSysPref().
+tonea
+Asynchronously play a tone of frequency freq, at volume vol, for duration dur. An application should play the sound at the volume specified by the system preferences by first calling UIApp.getSysPref().
+tonema
+Asynchronously play the note key, at velocity (volume) vel, for duration dur.
+events
+Processes all pending events, calling user provided event handlers, returning when the queue is empty. If blocking is true and no events are in the queue, the function will not return until an event is processed. If an appStopEvent is received, the app's onstop handler is called but this function never returns. This function should be called during long calculations to allow the user interface to respond (for example, allowing the user to cancel).
+fatal
+Displays a runtime error message containing the specified text and information about the current function. When the error message is dismissed, the app exits. This function does not return.
+callstack
+Creates a string containing a list of functions in the current callstack, one per line.
+debuglog
+Writes the text as a line to the debug log. See Debug support for details. This is not a real function, as no code is generated unless the project is compiled with the debug property set.
+assert
+When expr is false, displays an error message containing the text of the expression and a call stack. See Debug support for details. This is not a real function, as no code is generated unless the project is compiled with the debug property set.
+ticks
+Returns the number of clock ticks since the device was last reset.
+tickspersec
+Returns the number of clock ticks that occur each second.
+resetaot
+Reset the device's auto off timer. If the device goes without input for a short time, it will turn itself off. To prevent this, periodically call this function.
+sleep
+Causes the app to sleep for ms milliseconds. While sleeping, the CPU will be put into low power mode, but the user will not be able to interact with the device (including turning it off).
+launch
+Launch the app with the given 4 character creator id. This function will post a message to quit the current app if the specified app is found. However, it will return and allow the current app to process its queued events.
+username
+Returns the HotSync username associated with the device.
+serialnum
+Returns the string representation of the device's serial number, or the empty string if it does not have one.
+osver
+Returns the integer version of the OS, using the standard Palm OS version specification - 32-bit number with the high 8 bits being the major version, the the next 8 bits being the minor version, and the remaining bits representing the fix number, build number, and build type.
+osvers
+Returns the string representation of the OS version.
+orbver
+Returns the OrbForms runtime version the current app is using - 16-bit number with the high 8 bits being the major version, and the low 8 bits being the minor version.
+getclip
+Returns the contents of the clipboard if it currently contains text, otherwise it returns the empty string.
+setclip
+Copys text to the clipboard.
+memcpy
+Copies len values from pSrc to pDst. The data types at the destination must be the same as the source, or the application's behavior will be unpredictable.
+malloct
+Allocates count blocks of memory, initializing the memory elements to the types specified by the type stringtype.
+free
+Releases the memory allocated by calling malloct.
+sort
+Sorts an array of objects (or structures). data is a pointer to the first element in the array. The order specifier is a string which first states the direction to sort, followed by the offset into the object of the field to sort. The direction is specified as a '>' for ascending or a '<' for descending. Either one or two fields may be sorted on.
+alert
+Displays an alert dialog containing the text text.
+alertc
+Displays an alert dialog with the specified title, text, and buttons. buttons is the text of a button, or a string containing the names of several buttons separated by colons. "OK:Cancel".
+confirm
+Displays a confirmation dialog containing the text text and "yes" and "no" buttons. Returns true if the user tapped "yes", false otherwise.
+prompt
+Displays an input prompt with the specified text, returning the string entered by the user. If the user presses the Cancel button, an empty string is returned. Works only on OS 3.5 and higher.
+promptc
+Displays an input prompt with the specified title, message, and buttons. buttons is the text of a button, or a string containing the names of several buttons separated by colons. "OK:Cancel".
+promptcd
+Displays an input prompt with the specified title, message, and buttons. text is used to initialize the prompt's field. buttons is the text of a button, or a string containing the names of several buttons separated by colons. "OK:Cancel".
+keystate
+Retrieves the current set of pressed keys. Can be zero of more of the following flags: keyPageUp, keyPageDown, keyHard1-keyHard4, keyContrast. The return value may also include other device-specific flags.
+penstate
+Retrieves the current state of the pen: true for down, false for up.
+Date
+Encapsulates date and time operations.
+Date.secs
+Gets or sets the seconds since January 1st, 1904.
+Date.year
+Gets or sets the year
+Date.month
+Gets or sets the month. January = 1, December = 12.
+Date.day
+Gets or sets the day. First day of the month is 1.
+Date.hour
+Gets or sets the hour. Valid range is 0-23.
+Date.min
+Gets or sets the minute. Valid range is 0-59.
+Date.sec
+Gets or sets the second. Valid range is 0-59.
+Date.weekday
+Gets the day of week, with 0 being Sunday.
+Date.ymd
+Gets or sets the date as an integer in yyyymmdd format, such as 20000527 for May 27th, 2000.
+Date.now
+Sets the date object to the current date and time.
+Date.selectdate
+Displays the system date selector dialog, using the mode specified by selby, using title as the dialog title. If the user selects a date, true is returned; if the user cancels, false is returned.
+Date.selecttime
+Displays the system time selector dialog, using title as the dialog title. If the user selects a time, true is returned; if the user cancels, false is returned. Available only on OS v3.1 and higher.
+Date.addsecs
+Adds s seconds to the date object.
+Date.adddays
+Adds d days to the date object.
+Date.subsecs
+Subtracts s seconds from the date object.
+Date.subdays
+Subtracts d days from the date object.
+Date.diffsecs
+Returns the difference of this date and d. If d is before this date, the result will be positive.
+Date.diffdays
+Returns the difference of this date and d. If d is before this date, the result will be positive.
+Date.time
+Returns the string representation of the time in the format specified by the system preferences.
+Date.date
+Returns the short string representation of the date in the format specified by the system preferences.
+Date.ldate
+Returns the long string representation of the date in the format specified by the system preferences.
+Preferences
+Stores and retrieves application preferences.
+Preferences.get
+Load the preference associated with creatorid into the memory pointed to by pdata. The memory must be in a format compatible with that specified by the type stringtype. The format is repeated count. If the preference does not exist, or is shorter than requested, this method returns false.
+Preferences.set
+Save the data pointed to by pdata into the saved or unsaved preference associated with creatorid using the format specified by type. The format is repeated count. This method returns true if successful.
+Preferences.del
+Delete the preference, saved or unsaved, associated with the app creatorid.
+Serial
+Serial I/O and raw IR support.
+Serial.error
+Gets the current set of line error bits. Call clearerr() to clear. Possible bits are serErrorParity, serErrorHWOverrun, serErrorFraming, serErrorBreak, serErrorHShake, serErrorSWOverrun, serErrorCarrierLost.
+Serial.status
+Gets the current set of status bits. Possible bits are serStatusCTS, serStatusRTS, serStatusDSR, serStatusBreak.
+Serial.open
+Open the specified port at the specified baud rate, using default settings (1 stop bit, 8 bits per char, parity off, RTS receive flow control).
+Serial.close
+Closes the open port.
+Serial.settings
+Apply the given settings to the open port.
+Serial.setbuffer
+Allocates a new receive buffer of the specified size. The default buffer is 512 bytes, so most applications will not need to enlarge it.
+Serial.clearerr
+Clears all pending line errors. This method must be called if a line error occurs before further sending and receiving can be done.
+Serial.send
+Sends count blocks of data over the port from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+Serial.recv
+Attempts to receive count blocks of data from the port into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type. timeout is the number of ticks to wait for the data.
+Serial.sendb
+Sends the given byte over the port.
+Serial.recvb
+Recieves one byte from the port, waiting up to one second to receive it. If successful, the received byte is stored in the char pointed to by pbyte.
+Serial.sendcheck
+Retrieves the number of bytes remaining to be sent.
+Serial.recvcheck
+Retrieves the number of bytes in the recieve buffer.
+Serial.sendwait
+Waits for all pending data to be sent.
+Serial.recvwait
+Waits for the specified number of bytes to be received into the receive buffer, waiting up to timeout ticks. Returns when the data is received or the timeout is reached.
+Serial.sendflush
+Flushes all pending send data.
+Serial.recvflush
+Flushes all data from the recieve buffer, and waits until timeout ticks have passed with no new data received.
+SerialStream
+Exposes a Serial object as a Stream.
+SerialStream.serial
+Sets the Serial object that this stream should read/write to.
+SerialStream.read
+Reads count blocks of data from the stream into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+SerialStream.write
+Writes count blocks of data to the stream from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+SerialStream.readInt
+Read an int from the stream into the memory pointed to by pi.
+SerialStream.writeInt
+Write an int to the stream.
+SerialStream.readWord
+Read an 2-byte word from the stream into the memory pointed to by pw.
+SerialStream.writeWord
+Write a 2-byte word to the stream.
+SerialStream.readFloat
+Read a float from the stream into the memory pointed to by pf.
+SerialStream.writeFloat
+Write a float to the stream.
+SerialStream.readString
+Read a string from the stream into the memory pointed to by ps.
+SerialStream.writeString
+Write a string to the stream.
+SerialStream.readChar
+Read a char from the stream into the memory pointed to by pc.
+SerialStream.writeChar
+Write a char to the stream.
+Stream
+The Stream object provides a common set of methods for reading and writing data. The Stream object is a base object for specialized implementations, so you should never create an instance of this object. Instead, create an instance of the desired derived object.
+Stream.read
+Reads count blocks of data from the stream into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+Stream.write
+Writes count blocks of data to the stream from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+Stream.readInt
+Read an int from the stream into the memory pointed to by pi.
+Stream.writeInt
+Write an int to the stream.
+Stream.readWord
+Read an 2-byte word from the stream into the memory pointed to by pw.
+Stream.writeWord
+Write a 2-byte word to the stream.
+Stream.readFloat
+Read a float from the stream into the memory pointed to by pf.
+Stream.writeFloat
+Write a float to the stream.
+Stream.readString
+Read a string from the stream into the memory pointed to by ps.
+Stream.writeString
+Write a string to the stream.
+Stream.readChar
+Read a char from the stream into the memory pointed to by pc.
+Stream.writeChar
+Write a char to the stream.
+ISerializable
+The ISerializable interface can be implemented by any object which can be written to and read from a Stream.
+ISerializable.serialize
+This method should write all of the important data of the implementing object to the stream.
+ISerializable.deserialize
+This method should read all of the important data of the implementing object to the stream.
+DBRecord
+Encapsulates a database record.
+DBRecord.offset
+Gets or sets the current read/write location in the record. If offset is set to a value greater than the size of the record, offset becomes the record size.
+DBRecord.size
+Gets the current size of the record.
+DBRecord.category
+Gets or sets the category of the record. Valid values are 0-15.
+DBRecord.id
+Gets the id of the record.
+DBRecord.uniqueid
+Gets the uniqueid of the record.
+DBRecord.handle
+The MemHandle associated with this record to allow access to native add-ins.
+DBRecord.read
+Reads count blocks of data from the record into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type. Advances the current offset.
+DBRecord.write
+Writes count blocks of data to the record from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type. Advances the current offset.
+DBRecord.erase
+Erases the contents of the record, but does not remove it from the database.
+DBRecord.close
+Closes the record. The object cannot be used again until it is re-initialized using Database.newrec() or Database.getrec().
+DBRecordStream
+Exposes a DBRecord as a Stream.
+DBRecordStream.rec
+Sets the DBRecord object that this stream should read/write to.
+DBRecordStream.read
+Reads count blocks of data from the stream into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+DBRecordStream.write
+Writes count blocks of data to the stream from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+DBRecordStream.readInt
+Read an int from the stream into the memory pointed to by pi.
+DBRecordStream.writeInt
+Write an int to the stream.
+DBRecordStream.readWord
+Read an 2-byte word from the stream into the memory pointed to by pw.
+DBRecordStream.writeWord
+Write a 2-byte word to the stream.
+DBRecordStream.readFloat
+Read a float from the stream into the memory pointed to by pf.
+DBRecordStream.writeFloat
+Write a float to the stream.
+DBRecordStream.readString
+Read a string from the stream into the memory pointed to by ps.
+DBRecordStream.writeString
+Write a string to the stream.
+DBRecordStream.readChar
+Read a char from the stream into the memory pointed to by pc.
+DBRecordStream.writeChar
+Write a char to the stream.
+Database
+Encapsulates a Palm OS database.
+Database.nrecs
+Gets the number of records or resources in the database
+Database.backup
+Gets or sets the backup bit. If set, the database will be backed up the next time the device is HotSynced.
+Database.locked
+Gets or sets the locked bit. If set, the database cannot be beamed from one device to another.
+Database.version
+Gets or sets the database version number. The version stored in the database is 16-bits unsigned, so it must be less than 65536.
+Database.size
+Gets the total size of the database.
+Database.type
+Gets the 4-character type of the database.
+Database.creator
+Gets the 4-character creator id of the database.
+Database.name
+Gets or sets the name of the database.
+Database.res
+True if this is a resource database, false otherwise.
+Database.inrom
+True if this database is in ROM.
+Database.dbref
+The DmOpenRef for this database to allow access to native add-ins.
+Database.open
+Opens the database named name. This method searches all the available cards, starting with the builtin RAM. Returns true on success.
+Database.opentc
+Opens the first database of type type and creator id creatorid.
+Database.create
+Creates a database named name with type type and creator id creatorid on card 0 (builtin RAM). If res is true a resource database is created, otherwise a record database is created. If a database with this name already exists, the method will fail. Returns true on success.
+Database.close
+Close the database. All open records MUST be closed first.
+Database.deldb
+Close and delete the database. All open records MUST be closed first.
+Database.getdate
+Retrieve the creation, modification, or backup date of the database.
+Database.getcatname
+Get the category name associated with the index num. This method may only be called if the the database has an app info block.
+Database.setcatname
+Set the category associated with the index num to name. This method may only be called if the the database has an app info block. You can create an empty app info block using createappinfo().
+Database.moverec
+Remove the record at index from and insert it at index to.
+Database.removerec
+Remove the record at index id. This method may NOT be called when any records in the database are open.
+Database.removeres
+Remove the resource of the given type with the given id.
+Database.delrec
+Delete the record at index id, but leave the record entry in the database header. If a conduit exists, the next synchronization should remove the corresponding record on the desktop and remove this record entry from the device.
+Database.archiverec
+Archive the record at index id. This leaves the record in the database, but marks it as deleted. If a conduit exists, the next synchronization should archive the corresponding record on the desktop and remove this record from the device.
+Database.getrec
+Gets the record at index id, and attaches the DBRecord rec to it. Pass true for readonly if you only intend to read from the record. Returns true if successful.
+Database.newrec
+Inserts a new record at index id, and attaches the DBRecord rec to it. If id is greater than the number of records in the database or -1, the new record is appended to the end of the database - use the id property to determine its index.
+Database.findrec
+Finds the record which has the specified uniqueid, returning the record index if found, or -1 if not found. Calling this method on some OSes will cause a fatal error if the record is not found.
+Database.getresinfo
+Gets the resource type and id of the resource with the given index. Returns true if successful.
+Database.getres
+Gets the resource with the given type and the given id, and attaches the DBRecord rec to it. Returns true if successful.
+Database.newres
+Inserts a new resource with the given type and the given id, and attaches the DBRecord rec to it. Returns true if successful.
+Database.hasappinfo
+Checks if the database has an app info block. Only a record database can have an app info block.
+Database.getappinfo
+Retrieves the app info block of the database and creates a record to hold its data. Before closing the database, you must remove this temporary record, or call setappinfo to convert it to an app info block. This method will fail if the database was opened in read-only mode.
+Database.setappinfo
+Converts the record at index id into an app info block and attaches it to the database. Removes the specified record.
+Database.createappinfo
+Creates an empty app info block.
+DatabaseMgr
+Allows for enumerating databases.
+DatabaseMgr.dbenum
+Enumerates the databases with the given creatorid and type. Call this function once with first = true to get the first database, and (if it doesn't return an empty string) continue calling with first = false until the empty string is returned.
+Memo
+Provides access to reading and writing memos.
+Memo.text
+Gets or sets the entire text of the memo.
+Memo.nrecs
+Gets the number of records in the memo database.
+Memo.index
+Gets the index of the record in the memo database.
+Memo.find
+Searches for a memo beginning with name as the first line, and opens it if found. Returns true on success.
+Memo.create
+Create a new, empty memo record. Returns true on success.
+Memo.open
+Opens the memo record at location index. This may fail if index is greater than the number of records, or if the specified record is marked for deletion.
+Memo.puts
+Appends text to the end of the current memo.
+Memo.line
+Reads the next line of text from the memo. This method does NOT return the \n character at the end of the line. Returns the empty string if the contents have all been read, or if the current line is blank.
+Memo.end
+Returns true if the end of the memo has been reached while reading the the record using the line() method.
+Memo.rewind
+Resets the location from which the line() method reads to be the start of the memo.
+Memo.close
+Closes the current memo. This must be called before opening or creating another memo.
+Memo.del
+Close the memo and delete it from the memo database. A record header will remain in the database until the next sync so that the desktop database can be cleaned up.
+Memo.archive
+Close the memo and mark it for archival. The record will remain in the database until the next sync so that the desktop can archive the contents.
+Memo.remove
+Close the memo and completely removes it from the memo database. This method may not be called when any other Memo object is open.
+Memo.erase
+Erases the contents of the current memo.
+File
+Encapsulates a file on external storage.
+File.offset
+Gets or sets the current file offset.
+File.eof
+True if the end of the file has been reached.
+File.size
+Gets or sets the size of the file. When setting, the file is expanded or truncated to the new size.
+File.attribs
+Gets or sets the file attributes.
+File.close
+Closes the file.
+File.read
+Reads count blocks of data from the file into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type. Advances the current offset.
+File.write
+Writes count blocks of data to the file from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type. Advances the current offset.
+File.getRec
+Retrieves the record at index id from the file and attaches it to rec. This method can only be called if the current file is a .pdb file. The DBRecord is opened in read-only mode.
+File.getRes
+Retrieves the resource of the given type with the specified id from the file and attaches it to rec. This method can only be called if the current file is a .prc file. The DBRecord is opened in read-only mode.
+File.setDate
+Sets one of the dates associated with the file.
+File.getDate
+Gets one of the dates associated with the file.
+FileStream
+Exposes a File as a Stream.
+FileStream.file
+Sets the File object that this stream should read/write to.
+FileStream.read
+Reads count blocks of data from the stream into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+FileStream.write
+Writes count blocks of data to the stream from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+FileStream.readInt
+Read an int from the stream into the memory pointed to by pi.
+FileStream.writeInt
+Write an int to the stream.
+FileStream.readWord
+Read an 2-byte word from the stream into the memory pointed to by pw.
+FileStream.writeWord
+Write a 2-byte word to the stream.
+FileStream.readFloat
+Read a float from the stream into the memory pointed to by pf.
+FileStream.writeFloat
+Write a float to the stream.
+FileStream.readString
+Read a string from the stream into the memory pointed to by ps.
+FileStream.writeString
+Write a string to the stream.
+FileStream.readChar
+Read a char from the stream into the memory pointed to by pc.
+FileStream.writeChar
+Write a char to the stream.
+Directory
+Encapsulates a directory on external storage.
+Directory.attribs
+Gets or sets the file attributes.
+Directory.close
+Closes the directory.
+Directory.setDate
+Sets one of the dates associated with the file.
+Directory.getDate
+Gets one of the dates associated with the file.
+Directory.enumerate
+Enumerate through files and directories in a directory.
+Volume
+Encapsulates a volume on external storage.
+Volume.label
+Gets the Volume's label
+Volume.open
+Opens the file at path, using the flags specified in mode.
+Volume.openDir
+Opens the directory at path.
+Volume.create
+Creates an empty file at path.
+Volume.createDir
+Creates an empty directory at path.
+Volume.del
+Deletes the file or directory at path. If the path is a directory, it must be empty before calling this method.
+Volume.rename
+Rename a file or directory at path to name. path is the complete path, name is just the new file/directory name.
+Volume.export
+Exports the database specified by name to a file at path.
+Volume.import
+Imports the database at path, returning the database name in the string specified by name.
+Volume.getDefaultDir
+Retrieves the name of the default directory for a given type, such as "image/jpeg".
+VolumeMgr
+Exposes an enumeration of Volumes.
+VolumeMgr.enumerate
+Enumerate through volumes present on a device. If VFS is not supported by the device, false is returned.
+Socket
+Encapsulates a BSD-style socket.
+Socket.localAddr
+Gets the local address associated with this socket when connected.
+Socket.remoteAddr
+Get the remote address associated with this socket when connected.
+Socket.open
+Opens this socket for use with the specified family, type, and protocol.
+Socket.close
+Closes this socket.
+Socket.accept
+Accepts a connection.
+Socket.bind
+Binds this socket to a particular local address and port.
+Socket.connect
+Connects this socket to a remote address.
+Socket.listen
+Causes this socket to start listening.
+Socket.sends
+Sends a string to the remote node.
+Socket.send
+Sends count blocks of data over the socket from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+Socket.recvs
+Receives a string from the remote node.
+Socket.recv
+Reads count blocks of data from the socket into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+Socket.shutdown
+Shut down this socket in one or both directions.
+SocketStream
+Exposes a Socket as a Stream.
+SocketStream.socket
+Sets the Socket object that this stream should read/write to.
+SocketStream.read
+Reads count blocks of data from the stream into the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+SocketStream.write
+Writes count blocks of data to the stream from the memory pointed to by pdata, using the format specified by the type stringtype. The given memory must be compatible with type.
+SocketStream.readInt
+Read an int from the stream into the memory pointed to by pi.
+SocketStream.writeInt
+Write an int to the stream.
+SocketStream.readWord
+Read an 2-byte word from the stream into the memory pointed to by pw.
+SocketStream.writeWord
+Write a 2-byte word to the stream.
+SocketStream.readFloat
+Read a float from the stream into the memory pointed to by pf.
+SocketStream.writeFloat
+Write a float to the stream.
+SocketStream.readString
+Read a string from the stream into the memory pointed to by ps.
+SocketStream.writeString
+Write a string to the stream.
+SocketStream.readChar
+Read a char from the stream into the memory pointed to by pc.
+SocketStream.writeChar
+Write a char to the stream.
+Network
+Encapsulates general network settings and methods.
+Network.localAddr
+Gets the local address of the device when connect.
+Network.timeout
+Gets or sets the maximum wait time for network operations, expressed in system ticks. -1 implies infinite.
+Network.open
+Opens the networking stack and connects it to the network according to system settings.
+Network.close
+Closes the networking stack. The stack remains open for a short period in case another app will be using it. In most cases, this is the preferred way to close the stack.
+Network.closei
+Closes the networking stack immediately.
+Network.getHostByName
+Looks up the given name using DNS, putting the resulting address in paddr.
+Network.getHostByAddr
+Attempts to find a matching DNS name for the specified addr.
+PalmPrint
+Serial and IR printing support.
+PalmPrint.charsPerLine
+Gets or sets the number of characters per line. When setting this property, supply the width of the entire line. When getting this property, the width is adjusted to exclude the margins and indent.
+PalmPrint.linesPerPage
+Gets or sets the number of lines per page. When setting this property, supply the height of the entire page. When getting this property, the height is adjusted to exclude the margins.
+PalmPrint.font
+Sets the current font. Possible fonts are prtFontCourier, prtFontTimes, prtFontHelvetica, prtFontStandard.
+PalmPrint.fontSize
+Sets the current font size. Possible sizes are prtSize9, prtSize10, prtSize12.
+PalmPrint.style
+Sets the current font style. Possible styles are prtStylePlain, prtStyleBold.
+PalmPrint.leftMargin
+Sets the width of the left margin.
+PalmPrint.topMargin
+Sets the height of the top margin.
+PalmPrint.indent
+Sets the current indent.
+PalmPrint.numCopies
+Sets the number of copies to print. This properties does not affect printString() or xmitString().
+PalmPrint.orientation
+Sets the paper orientation. Possible orienations are prtOrientLandscape, prtOrientPortrait.
+PalmPrint.open
+Open the PalmPrint library.
+PalmPrint.printString
+Print a complete string
+PalmPrint.xmitString
+Transmit a complete string as plain text.
+PalmPrint.beginPrint
+Begin printing in line by line mode.
+PalmPrint.endPrint
+End printing in line-by-line mode.
+PalmPrint.beginXmit
+Begin trasmitting in line-by-line mode.
+PalmPrint.endXmit
+End trasmitting in line-by-line mode.
+PalmPrint.printLine
+Print a line in line-by-line mode.
+PalmPrint.xmitLine
+Transmit a line in line-by-line mode.
+PalmPrint.printLinePassThru
+Print a line in line-by-line mode without transforming special characters.
+PalmPrint.xmitLinePassThru
+Transmit a line in line-by-line mode without transforming special characters.
+Dict
+A dictionary, mapping a key string to a value string.
+Dict.count
+Gets the number of items in the dictionary.
+Dict.clear
+Removes all the items from the dictionary.
+Dict.add
+Adds value to the dictionary and associate it with key. Returns the new number of items.
+Dict.del
+Deletes the specified key and its associated value from the dictionary. Returns the number of remaining items.
+Dict.find
+Returns the value associated with key, or the empty string if the key is not found.
+Dict.has
+Returns true if key is in the dictionary.
+Dict.key
+Returns the key for the given index in the dictionary.
+Dict.value
+Returns the value for the given index in the dictionary.
+StringList
+Manages a list of strings.
+StringList.count
+Gets the number of strings in the list
+StringList.clear
+Removes all the strings from the list.
+StringList.add
+Adds the string str to the end of the list and returns the new number of strings in the list.
+StringList.insert
+Inserts the string str into the list at position index and returns the new number of strings in the list.
+StringList.del
+Removes the string at position index and returns the number of strings remaining in the list.
+StringList.find
+Finds the string str in the string list and returns the string's index in the list or -1 if the string is not found.
+StringList.sort
+Sorts the strings in the list, using the specified case sensitivity.
+StringList.tokens
+Splits the string str into multiple tokens, and adds each token to the list. Tokens are specified as characters in toks. The number of tokens found is returned.
+StringList.item
+Retrieves the string at location index. Returns the empty string if the index is invalid.
+Bitmap
+A bitmap created in the app designer.
+Draw
+Provides all drawing routines.
+Draw.handle
+The WinHandle of the the draw object. This handle is only available for offscreen buffers, and only if the begin() method has been called.
+Draw.nw
+Gets the width of the drawing surface in native pixels. This value can only be retrieved after calling nbegin() and before calling end().
+Draw.nh
+Gets the height of the drawing surface in native pixels. This value can only be retrieved after calling nbegin() and before calling end().
+Draw.attachForm
+Attaches this object to form. All operations performed on this Draw object will immediately affect the attached form. There is no need to call release().
+Draw.attachGadget
+Attaches this object to gadget. All operations performed on this Draw object will immediately affect the attached gadget. There is no need to call release().
+Draw.create
+Creates an offscreen buffer with width w and height h. release() must be called when the offscreen buffer is no longer needed.
+Draw.copyForm
+Creates an offscreen buffer the same size as form, and copies the form's contents to the buffer. release() must be called when the offscreen buffer is no longer needed.
+Draw.copyGadget
+Creates an offscreen buffer the same size as gadget, and copies the gadget's contents to the buffer. release() must be called when the offscreen buffer is no longer needed.
+Draw.release
+Releases the offscreen buffer if one was created.
+Draw.begin
+Prepares the object for drawing. Either this method or nbegin() must be called before any drawing operation.
+Draw.nbegin
+Prepares the object for drawing at native resolution. Either this method or begin() must be called before any drawing operation.
+Draw.end
+Cleans up from the drawing process. This must be called after the drawing operations are complete.
+Draw.fg
+Sets the foreground color to the color specified by index in the current palette.
+Draw.fgRGB
+Sets the foreground color.
+Draw.bg
+Sets the background color to the color specified by index in the current palette.
+Draw.bgRGB
+Sets the background color.
+Draw.textColor
+Sets the text color to the color specified by index in the current palette.
+Draw.textRGB
+Sets the text color.
+Draw.font
+Sets the drawing font to be used by the text method.
+Draw.textAlign
+Sets the text alignment mode used by the text method.
+Draw.textWidth
+Measures the number of pixel required to display str in the currently selected font.
+Draw.textHeight
+Measures the height in pixels of the currently selected font.
+Draw.underline
+Sets the underline mode to be used by the text method.
+Draw.indexFromColor
+Calculates the nearest index in the current color palette to the color specified by (r, g, b).
+Draw.uiColor
+Retrieves the color the system uses to draw a particular UI element. Only available on OS 3.5 and higher - on earlier OSes this method returns 0.
+Draw.selectIndex
+Displays a color picker dialog box with the given title. pIndex is a pointer to an int which contains initial color index and which will contain the selected index upon return. If the user selected a color, this method return true; if the user canceled, false is returned. Do NOT call this method during a draw operation (between begin and end). Available only on OS 3.5 and higher.
+Draw.line
+Draws a line from (x1, y1) to (x2, y2) in color c.
+Draw.pixel
+Draws a pixel at (x, y).
+Draw.rect
+Draws a solid rectangle from (x1, y1) to (x2, y2) in color c, with rounded corners of radius rad.
+Draw.frame
+Draws an empty frame from (x1, y1) to (x2, y2) in color c, with rounded corners of radius rad and line thickness thick.
+Draw.bitmap
+Draws the bitmap bmp at (x, y).
+Draw.text
+Draws the text text at (x, y).
+Draw.textTrunc
+Draws the text text at (x, y), truncating and adding "..." it if necessary so that its width is no more than w.
+Draw.draw
+Draws the contents of d at (x, y).
+Event
+Data related to the current event.
+Event.x
+The relative horizontal location at which the event occured
+Event.y
+The relative vertical location at which the event occured
+Event.nx
+The relative horizontal location in native pixels at which the event occured
+Event.ny
+The relative vertical location in native pixels at which the event occured
+Event.inside
+True if the pen location is within the object
+Event.value
+The new value of the object
+Event.prev
+The previous value of the object
+Event.key
+The key entered or hard key pressed
+Event.code
+The form redraw code specified in the call to UIForm.redraw(). If the form is being redrawn by the system, code is 0x8000
+UIApp
+Represents the application.
+UIApp.version
+Gets the string version of the current application.
+UIApp.creator
+Gets the creator id of the current application.
+UIApp.getdepth
+Gets the current color depth in bits per pixel.
+UIApp.setdepth
+Sets the current color depth to bits bits per pixel. Returns true if successful. This will fail if the hardware does not support the the color depth.
+UIApp.getScreenAttrib
+Retrieves various screen attributes. This method is only supported on OS 5 and higher - it will always return 0 on earlier OSes.
+UIApp.getSysPref
+Retrieves various system preference values.
+UIApp.hookhard
+Enables the app to handle the hard keys (Memo, Address, etc.). If hook is false, the system will process the keys. If hook is true, pressing the hard keys will generate calls to the current form's onhkey handler.
+UIApp.abort
+Forcefully exits the application. This method should only be called in the case of a fatal error since it aborts the application immediately without calling any handlers. If you would like to display an error message before exiting, using fatal instead.
+UIButton
+A button created in the app designer.
+UIButton.x
+Gets or sets the x value of control location.
+UIButton.y
+Gets or sets the y value of control location.
+UIButton.w
+Gets or sets the width of the control.
+UIButton.h
+Gets or sets the height of the control.
+UIButton.visible
+Sets the visibility of the control. This property cannot be read.
+UIButton.bmpid
+Sets the default bitmap for a graphic control. This property cannot be read. Ex. button.bmpid = newbitmap.id;
+UIButton.sbmpid
+Sets the selected bitmap for a graphic control. This property cannot be read.
+UIButton.text
+Gets or sets the button caption. Do not use for graphic controls.
+UICheckbox
+A checkbox created in the app designer.
+UICheckbox.x
+Gets or sets the x value of control location.
+UICheckbox.y
+Gets or sets the y value of control location.
+UICheckbox.w
+Gets or sets the width of the control.
+UICheckbox.h
+Gets or sets the height of the control.
+UICheckbox.visible
+Sets the visibility of the control. This property cannot be read.
+UICheckbox.checked
+Gets or sets the check on the checkbox
+UICheckbox.text
+Gets or sets the checkbox caption.
+UIFBitmap
+A form bitmap created in the app designer.
+UIFBitmap.x
+Gets or sets the x value of bitmap location.
+UIFBitmap.y
+Gets or sets the y value of bitmap location.
+UIFBitmap.w
+Gets the width of the bitmap.
+UIFBitmap.h
+Gets the height of the bitmap.
+UIFBitmap.visible
+Sets the visibility of the control. This property cannot be read.
+UIField
+A field created in the app designer.
+UIField.x
+Gets or sets the x value of control location.
+UIField.y
+Gets or sets the y value of control location.
+UIField.w
+Gets or sets the width of the control.
+UIField.h
+Gets or sets the height of the control.
+UIField.visible
+Sets the visibility of the control. This property cannot be read.
+UIField.editable
+Sets whether of not the field can be edited. This property cannot be read.
+UIField.numeric
+Sets whether of not the field is restricted to numbers. This property cannot be read.
+UIField.text
+Gets or sets the text of the field.
+UIField.inspt
+Gets or sets the insertion point as an index into the text.
+UIField.seltext
+Gets or sets the selected text. Setting the text overwrite the current selection, or insert the text at the insertion point if there is no selection.
+UIField.fontid
+Gets or sets the field font. Crashes on OS < 3.5 (OS bug)
+UIField.scrollpos
+Gets the offset of the first visible character in the first visible line in the field.
+UIField.dirty
+Gets or sets the dirty attribute.
+UIField.insert
+Inserts text at the current insertion point.
+UIField.select
+Sets the selection to the characters inclusively between start and end.
+UIField.cut
+Cuts the current selection and places it on the clipboard.
+UIField.copy
+Copies the current selection to the clipboard.
+UIField.paste
+Paste the contents of the clipboard to the current insertion point.
+UIField.undo
+Undoes the last editing operation. Some operations cannot be undone.
+UIField.del
+Deletes the text inclusively between the start and end.
+UIField.grabfocus
+Sets the focus of the current form to this field.
+UIField.relfocus
+Releases the focus from this field.
+UIField.scroll
+Scrolls the field down nLines lines. If nLines is negative, the field is scrolled up. Call this method if the user drags a scroll bar associated with this field. See UIScroll for details.
+UIField.phonelookup
+Searches the address book and replaces the selected text or word at the cursor with the matching entry from the address book.
+UIForm
+A form created in the app designer.
+UIForm.x
+Gets the x value of form location
+UIForm.y
+Gets the y value of form location
+UIForm.w
+Gets the width of the form
+UIForm.h
+Gets the height of the form
+UIForm.title
+Gets or sets the title of the form
+UIForm.menu
+Sets the menu bar of the form using the id of the menu bar. form.menu = menubar.id. This property is write-only.
+UIForm.obscured
+Gets whether or not something is obscuring the form. This property is true when a menu or pop-up list is displayed above the form.
+UIForm.load
+Loads the form and sets it to be displayed. If another form is currently open, it is first closed. Returns immediately.
+UIForm.close
+Close the form and return to the previous form. This should only be called on a modal form, and is usually called in an onselect handler for a button.
+UIForm.redraw
+Queues an event to redraw the form, eventually calling the ondraw handler. The code can be retrieved in the ondraw handler through the Event object's code property.
+UIForm.domodal
+Loads the modal form and sets it to be displayed. Returns immediately. To execute a modal form synchronously (to wait until the user dismisses the form before continuing), use the events() function.
+UIForm.dodialog
+Loads the modal form, displays it as a dialog, and returns the id of the button the user pressed. The form and its controls will not receive events.
+UIForm.timer
+Sets a timer to be fired after nticks clock ticks (approx. 1/100 sec). When the timer is fired, the form's ontimer handler is called. The form will only receive the timer event if it is the active window.
+UIForm.select
+Selects a pushbutton in the group specified by groupid. Use the id member of the pushbutton as ctrlid.
+UIForm.help
+Display a help form with the specified string str as the help text (same form displayed when clicking the (i) icon on a modal form). The string str is the name of one of the strings in your project.
+UIForm.activefield
+Retrieve the pointer of the currently active field, or null if no field is active.
+UIForm.keyboard
+Displays the system keyboard dialog if there is an active field on the form.
+UIGadget
+Base implementation of a gadget.
+UIGadget.x
+Gets or sets the x value of control location.
+UIGadget.y
+Gets or sets the y value of control location.
+UIGadget.w
+Gets or sets the width of the control.
+UIGadget.h
+Gets or sets the height of the control.
+UIGadget.visible
+Sets the visibility of the control. This property cannot be read.
+UILabel
+A label created in the app designer.
+UILabel.x
+Gets or sets the x value of control location.
+UILabel.y
+Gets or sets the y value of control location.
+UILabel.w
+Gets the width of the control.
+UILabel.h
+Gets the height of the control.
+UILabel.visible
+Sets the visibility of the control. This property cannot be read.
+UILabel.text
+Gets or sets the label caption.
+UIList
+A list created in the app designer.
+UIList.x
+Gets or sets the x value of control location.
+UIList.y
+Gets or sets the y value of control location.
+UIList.w
+Gets or sets the width of the control.
+UIList.h
+Gets or sets the height of the control.
+UIList.visible
+Sets the visibility of the control. This property only works on OS 3.5 and higher. This property cannot be read.
+UIList.selitem
+Gets or sets the item selected. Evaluates to -1 if no item is selected.
+UIList.topitem
+Sets the top visible item. This property cannot be read.
+UIList.count
+Gets the number of items in the list.
+UIList.setitems
+Sets the items in the list. ptext is an array of num strings in the order in which they will be displayed in the list.
+UIList.setitemslist
+Sets the items in the list to the contents of sl.
+UIList.gettext
+Gets the text assosciate with the item at location index.
+UIList.makevisible
+Makes the item at location index visible.
+UIList.scroll
+Scrolls the list down lines lines. If lines is negative, the list is scrolled up. Returns true if the list is actually scrolled.
+UIList.popup
+Displays the list as a popup list and returns the item selected or -1 if none selected.
+UIList.redraw
+Redraws the list. After the list items are set, the list should be redrawn. Just like other drawing functions, this may not be called in a forms onopen handler.
+UIList.setdrawfunc
+Sets the custom drawing function for the list. Specifying null causes the OS to draw the list itself.
+UIMenuItem
+A menu item created in the app designer.
+UIPopup
+A popup trigger created in the app designer.
+UIPopup.x
+Gets or sets the x value of control location.
+UIPopup.y
+Gets or sets the y value of control location.
+UIPopup.w
+Gets or sets the width of the control.
+UIPopup.h
+Gets or sets the height of the control.
+UIPopup.visible
+Sets the visibility of the control. This property cannot be read.
+UIPopup.text
+Gets or sets the popup caption.
+UIPushButton
+A push button created in the app designer.
+UIPushButton.x
+Gets or sets the x value of control location.
+UIPushButton.y
+Gets or sets the y value of control location.
+UIPushButton.w
+Gets or sets the width of the control.
+UIPushButton.h
+Gets or sets the height of the control.
+UIPushButton.visible
+Sets the visibility of the control. This property cannot be read.
+UIPushButton.bmpid
+Sets the default bitmap for a graphic control. This property cannot be read. Ex. button.bmpid = newbitmap.id;
+UIPushButton.sbmpid
+Sets the selected bitmap for a graphic control. This property cannot be read.
+UIPushButton.checked
+Gets or sets the selection of the pushbutton. However, this method does not uncheck the other buttons in the group. In order to properly select a push button from a group, use UIForm.select().
+UIPushButton.text
+Gets or sets the pushbutton caption. Do not use for graphic controls.
+UIRepeatButton
+A repeat button created in the app designer.
+UIRepeatButton.x
+Gets or sets the x value of control location.
+UIRepeatButton.y
+Gets or sets the y value of control location.
+UIRepeatButton.w
+Gets or sets the width of the control.
+UIRepeatButton.h
+Gets or sets the height of the control.
+UIRepeatButton.visible
+Sets the visibility of the control. This property cannot be read.
+UIRepeatButton.bmpid
+Sets the default bitmap for a graphic control. This property cannot be read. Ex. button.bmpid = newbitmap.id;
+UIRepeatButton.sbmpid
+Sets the selected bitmap for a graphic control. This property cannot be read.
+UIRepeatButton.text
+Gets or sets the repeatbutton caption. Do not use for graphic controls.
+UIScroll
+A scroll bar created in the app designer.
+UIScroll.x
+Gets or sets the x value of control location.
+UIScroll.y
+Gets or sets the y value of control location.
+UIScroll.w
+Gets or sets the width of the control.
+UIScroll.h
+Gets or sets the height of the control.
+UIScroll.visible
+Sets the visibility of the control. This property cannot be read. This property is only supported on OS 3.5 and higher.
+UIScroll.value
+Gets or sets the value of the scroll bar position.
+UIScroll.min
+Gets or sets the minimum value.
+UIScroll.max
+Gets or sets the maximum value.
+UIScroll.page
+Gets or sets the page value.
+UIScroll.update
+Updates the position, min, max, and page values of this scroll bar to match the associated field. Call this method when the height of the field has changed, or when the user drags the scroll bar.
+UISelector
+A selector created in the app designer.
+UISelector.x
+Gets or sets the x value of control location.
+UISelector.y
+Gets or sets the y value of control location.
+UISelector.w
+Gets or sets the width of the control.
+UISelector.h
+Gets or sets the height of the control.
+UISelector.visible
+Sets the visibility of the control. This property cannot be read.
+UISelector.text
+Get

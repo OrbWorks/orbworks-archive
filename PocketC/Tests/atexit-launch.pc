@@ -1,0 +1,12 @@
+// atexit and launch
+func() {
+  if (dbopen("atexitl")) {
+    dbwrite("atexit launch");
+    dbclose();
+  }
+}
+
+main() {
+  atexit(func);
+  launch("memo");
+}

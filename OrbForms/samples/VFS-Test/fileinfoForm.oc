@@ -1,0 +1,135 @@
+
+string getAttrText(int a) {
+    string str;
+
+    if (a & vfsAttrReadOnly) str += "Read only\n";
+    if (a & vfsAttrDirectory) str += "Directory\n";
+    if (a & vfsAttrHidden) str += "Hidden\n";
+    if (a & vfsAttrArchive) str += "Archivebit\n";
+    if (a & vfsAttrSystem) str += "System file\n";
+    if (a & vfsAttrLink) str += "Link\n";
+    if (a & vfsAttrVolumeLabel) str += "Volume label\n";
+    
+    return str;
+}
+
+handler fileinfoForm.onopen() {
+    File		file;
+    Directory	dir;
+    string		str, tmp;
+    int			a, n;
+    Date		d;
+    char		*buf;
+
+    fileinfoName.text = CurrFile;
+    
+    if (CurrFile != "") {	
+        buf = new char[1026];
+        fileinfoForm.title = CurrFile;
+        str = CurrPath + CurrFile;
+        if (CurrFileIsDir) {
+            a = CurrVolume.openDir(str, dir);
+            if (a == 0) {
+                d = dir.getDate(vfsDateCreated);
+                str = "Created:\t\t" + d.date() + "\n";
+    
+                d = dir.getDate(vfsDateModified);
+                str += "Last changed:\t" + d.date() + "\n";
+    
+                d = dir.getDate(vfsDateAccessed);
+                str += "Last accessed:\t" + d.date() + "\n";
+    
+                str += getAttrText(file.attribs);
+                dir.close();
+            }
+            else
+                str = "unable to open the folder\n" + str + "\nErrorcode: " + a;
+        }
+        else {
+            a = CurrVolume.open(str, vfsModeRead, file);
+            if (a == 0) {
+                str = "Size:\t\t\t" + file.size + "\n";
+    
+                d = file.getDate(vfsDateCreated);
+                str += "Created:\t\t" + d.date() + "\n";
+    
+                d = file.getDate(vfsDateModified);
+                str += "Last changed:\t" + d.date() + "\n";
+    
+                d = file.getDate(vfsDateAccessed);
+                str += "Last accessed:\t" + d.date() + "\n";
+    
+                str += getAttrText(file.attribs);
+    
+                n = file.read(buf, "c", 1024);
+                buf[n] = 0;
+                for (a=0; a<n; a++) {
+                    if (buf[a] == 0) buf[a] = '.';
+                    else if (buf[a] == '\r') buf[a] = ' ';	// for windows textfiles to look nicer
+                }
+                tmp = strctos(buf);
+                str += "\n" + tmp;
+                delete buf;
+                
+                file.close();
+            }
+            else
+                str = "unable to open the file\n" + str + "\nErrorcode: " + a;
+        }
+    }
+    else
+        fileinfoName.editable = false;
+
+    fileinfoText.text = str;
+    fileinfoScroll.update(fileinfoText);
+}
+
+handler fileinfoOK.onselect() {
+    if (CurrFile != "" && CurrFile != fileinfoName.text) {
+        if (CurrVolume.rename(CurrPath + CurrFile, fileinfoName.text) != 0) {
+            alert("Failed to rename the file.");
+            return;
+        }
+        mainForm.timer(1);	// update the directory listing
+    }
+    
+    fileinfoForm.close();
+}
+
+handler fileinfoScroll.onmove() {
+    fileinfoText.scroll(event.value - event.prev);
+    fileinfoScroll.update(fileinfoText);
+}
+
+handler fileinfoForm.onhkey() {
+    // add some nice scrolling for the info-data
+    switch (event.key) {
+    case evUp:
+        if (fileinfoScroll.value > 0) {
+            fileinfoText.scroll(-1);
+            fileinfoScroll.update(fileinfoText);
+        }
+        break;
+    case evDown:
+        if (fileinfoScroll.value != fileinfoScroll.max) {
+            fileinfoText.scroll(1);
+            fileinfoScroll.update(fileinfoText);
+        }
+        break;
+    }
+}
+
+handler fileinfoCancel.onselect() {
+    fileinfoForm.close();
+}
+
+handler fileinfoPrint.onselect() {
+    PalmPrint	prn;
+    
+    if (prn.open() == false) {
+        alert("cant open PalmPrint.");
+        return;
+    }
+    prn.printLine("Name: " + fileinfoName.text);
+    prn.printString(fileinfoText.text);
+}

@@ -1,0 +1,23 @@
+int fib(int i) {
+    if (i < 2) return 1;
+    return fib(i-1) + fib(i-2);
+}
+
+/*
+void main() {
+    int i;
+    for (i=0;i<25;i++)
+        puts("fib(" + i + ") = " + fib(i) + "\n");
+}
+*/
+
+void main() {
+    int t, f;
+    t = 7;
+    puts("7/0 = " + (t/f) + "\n");
+    t = ticks();
+    f = fib(25);
+    t = ticks() - t;
+    
+    puts("fib(25) = " + f + ": took " + t + " ticks\n");
+}

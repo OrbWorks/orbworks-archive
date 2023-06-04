@@ -1,0 +1,74 @@
+Editor History: (See the separate "WhatsNew.txt" file for the compiler in the device directory)
+---------------
+2007/11/06  Fixed bugs in VFS file reading
+    v7.1.3
+
+2006/07/25  Added support for new Memo database
+    v7.1.3
+
+2006/03/22  Fixed a regression introduced in 7.1.1
+    v7.1.2
+
+2006/03/19  Fixed a bug in @res
+    v7.1.1
+
+2005/10/29  Updated to compiler 7.1
+    v7.1.0
+
+2005/04/26  Updated to compiler 7.0
+    v7.0.0  Fix bug in command-line usage that would break #include
+            Renamed installer to not conflict with output pde.exe
+            Fixed a crashing bug when a source .bmp file was 16-bits
+            Added MDI tab groups, right-click on file title to
+               manipulate tab groups of close file
+
+2004/08/17  Updated to compiler 6.6
+    v6.6.0
+
+2004/01/20  Updated to compiler 6.5
+    v6.5.0  Added @res directive to add a random resource to .prc
+            Added @category diretive to set the default launcher category
+
+2003/11/16  Updated to compiler 6.1
+    v6.1.0  XP theme now applied to controls
+            Documented high-density icons
+            Fixed bucopy/bucopyrect quickdocs
+            Support for upload/execute on simulator
+
+2003/04/28  Added command-line compile support (PDE.exe /? for details)
+    v6.0.0  Changed version number to match compiler
+            Added support for embedded bitmaps (@bmp directive)
+            Added support for high-density icons
+            Added support for 16-bit icons
+
+2002/12/01  Added "Set as Project" to context menu
+    v2.0.2  Fixed a crash when the project file was renamed/deleted.
+
+2002/11/15  Support for code >64k
+      v2.0  Rewrote "Project Mode" - now always compiles a project
+            Added function list bar
+            Added QuickDocs bar (put @doc "help string"; before your funcs)
+            Added "Find Definition" to jump to function definition
+            Added "Open #include" to context menu
+
+2002/07/13  Automatically upload .pdb/.prc to emulator on build
+      v1.8  Native library function highlighting and parameter help
+
+2002/03/07  Present an error if the generated app is too large
+      v1.7  Right-click menu for copy/cut/paste
+            Added @cmd source directive for post-build commands
+            #define __PKTC_PRC__ if building a .prc file
+            Ctrl-F3 searches for next instance of word at cursor
+
+2001/07/21  Dead function removal - if you don't call a function
+      v1.6    it won't show up in the output code
+            Added more optimizations
+
+2001/03/22  Build standalone applications
+      v1.5  Use multi-depth icons
+
+2001/02/20  Fixed printing bug
+      v1.4
+
+2000/09/11  Better scroll to function
+      v1.3  Added mouse wheel support

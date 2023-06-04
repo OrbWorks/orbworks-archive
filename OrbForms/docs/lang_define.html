@@ -1,0 +1,90 @@
+<p>OrbC supports basic C-style compiler directives for conditional compilation. 
+Conditional compilation allows you to have code in your source files that may or 
+may not be compiled, based on defined symbols. OrbC also supports basic 
+replacement macros.</p>
+<h3>#define <i>symbol</i></h3>
+<p>Defines a symbol for use with the conditional directives below.</p>
+<pre>#define INTERNAL_BUILD</pre>
+<h3>#define <i>symbol replacementText</i></h3>
+<p>Defines a symbol for source code replacement. When the compiler comes across
+<i>symbol</i> in a source file, it treats it as though it actually read<i> 
+replacementText</i>.</p>
+<pre>#define COLOR "green"
+#define DIVIDEBY3 / 3
+
+int x;
+string func() {
+  x = 12 DIVIDEBY3;
+  return COLOR;
+}
+</pre>
+<p>The code above will return &quot;green&quot;, because the compiler replaces COLOR with 
+&quot;green&quot;. In the the first line of the function, x is assigned 4, because the 
+compiler sees <code>x = 12 / 3;</code>.</p>
+<h3>#if <i>symbol</i>, #endif</h3>
+<p>These directives surround blocks of code. Code between an #if directive and 
+the matching #endif will be compiled if the specified symbol was previously 
+defined.</p>
+<pre>#define GREEN
+
+string func() {
+  string color = "red";
+#if GREEN
+  color = "green";
+#endif
+  return color;
+}</pre>
+<p>In the code above, func will return &quot;green&quot;. Because the symbol GREEN was 
+defined, the code in the middle of the function will be compiled.</p>
+<pre>string func() {
+  string color = "red";
+#if GREEN
+  color = "green";
+#endif
+  return color;
+}</pre><p>In the code above, func will return "red". The code in the middle of the function
+was not compiled, because GREEN had not been defined. The function was compiled 
+as if the line <code>color = &quot;green&quot;;</code> did not exist.</p>
+<h3>#if <i>symbol</i>, #else, #endif</h3>
+<p>The #else directive can be used between an #if and an #endif, with the 
+expected behavior.</p>
+<pre>#define GREEN
+
+string func() {
+  string color;
+#if GREEN
+  color = "green";
+#else
+  color = "red";
+#endif
+  return color;
+}</pre>
+<p>The code above returns &quot;green&quot;, because GREEN is defined. Had GREEN not been 
+defined, func would return &quot;red&quot;.</p>
+<h3>#if !<i>symbol</i></h3>
+<p>Using the ! operator before the symbol will test for the symbol <b>not</b> being 
+defined.</p>
+<pre>string func() {
+  string color;
+#if !RED
+  color = "green";
+#else
+  color = "red";
+#endif
+  return color;
+}</pre>
+<p>The code above returns &quot;green&quot; because the symbol RED has not been defined.</p>
+<h3>#undef <i>symbol</i></h3>
+<p>Undefines the specified symbol.</p>
+<pre>#define GREEN
+#undef GREEN
+
+string func() {
+  string color = "red";
+#if GREEN
+  color = "green";
+#endif
+  return color;
+}</pre>
+<p>The code above will return &quot;red&quot;. Although GREEN was defined, it was 
+undefined before the #if directive.</p>

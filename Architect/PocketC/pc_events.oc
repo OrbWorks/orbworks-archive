@@ -1,0 +1,25 @@
+// PocketC eventing compatibility functions
+
+int pcevent(int time) @ 350; // replacement for PocketC event()
+char key() @ 354;
+int penx() @ 355;
+int peny() @ 356;
+int npenx() @ 357;
+int npeny() @ 358;
+bool pstate() @ 349;
+
+int bstate() {
+    int ret = keystate();
+    if (ret & keyPageUp) return 1;
+    if (ret & keyPageDown) return -1;
+    return 0;
+}
+
+char wait() @ 346;
+void waitp() @ 347;
+char getc() @ 348;
+
+void hookmenu(bool bHook) @ 351;
+void hooksilk(bool bHook) @ 352;
+void hooksync(bool bHook) @ 353;
+void enableresize() @ 370;

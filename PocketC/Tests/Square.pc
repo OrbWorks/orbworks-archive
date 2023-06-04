@@ -1,0 +1,25 @@
+// Square
+
+int tx[4], ty[4], x, y;
+
+main() {
+  int i, r;
+  
+  tx[0] = 10;  ty[0] = 24;
+  tx[1] = 150; ty[1] = 24;
+  tx[2] = 10;  ty[2] = 150;
+  tx[3] = 150; ty[3] = 150;
+  
+  r = random(4);
+  x = tx[r]; y = ty[r];
+  
+  graph_on();
+  title("Sierpinsky's Square");
+  
+  while (event(0)==0) {
+    r = random(4);
+    x = (x + tx[r])/2;
+    y = (y + ty[r])/2;
+    line(1, x, y, x, y);
+  }
+}

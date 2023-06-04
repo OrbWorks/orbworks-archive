@@ -1,0 +1,257 @@
+<p>Statements are the individual parts that make up the body of a function. The
+following are the available statements:</p>
+<table border="1">
+  <tbody>
+    <tr>
+      <th>Statement</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>return;</code></td>
+      <td>Returns immediately from the current function. If the function has a
+        return type other than <code>void</code>, the next form of return must be used.</td>
+    </tr>
+    <tr>
+      <td><code>return <i>expr</i>;</code></td>
+      <td>Returns immediately from the current function, returning the value of
+        the expression <i>expr</i>. This may only be used if the function is
+        declared with a return type other than <code>void</code>.</td>
+    </tr>
+    <tr>
+      <td><code>if (<i>expr</i>) <i>stmt</i></code></td>
+      <td>Evaluates the expression <i>expr</i>, if its result is true (non-zero,
+        non-null pointer, or non-empty string), the statement <i>stmt</i> is executed, otherwise <i>stmt</i>
+        is skipped, and execution continues</td>
+    </tr>
+    <tr>
+      <td><code>if (<i>expr</i>) <i>stmtA</i><br/>
+        else <i>stmtB</i></code></td>
+      <td>Evaluates the expression <i>expr</i>, if its result is true (non-zero,
+        non-null pointer,
+        or non-empty string), the statement <i>stmtA</i> is executed, otherwise <i>stmtB</i>
+        is executed</td>
+    </tr>
+    <tr>
+      <td><code>while (<i>expr</i>) <i>stmt</i></code></td>
+      <td>The expression <i>expr</i> is evaluated. If it is true (non-zero,
+        non-null pointer, or
+        non-empty string), <i>stmt</i> is executed. The loop then begin again,
+        evaluating <i>expr</i> and executing <i>stmt</i> until <i>expr</i> is no
+        longer true. This means that <i>stmt</i> will never execute if <i>expr</i>
+        is initially false</td>
+    </tr>
+    <tr>
+      <td><code>do <i>stmt</i><br/>
+        while (<i>expr</i>)</code></td>
+      <td>The same as <code>while</code> except that the statement <i>stmt</i>
+        is executed before <i>expr</i> is evaluated. This guarantees that <i>stmt</i>
+        will executed at least once</td>
+    </tr>
+    <tr>
+      <td><code>for (<i>init</i>;<i>cond</i>;<i>iter</i>)<br/>
+        <i>stmt</i></code></td>
+      <td>The initializer expression <i>init</i> is first evaluated. The
+        condition expression <i>cond</i> is evaluated. If it is true, <i>stmt</i>
+        is executed and the iterator expression <i>iter</i> is evaluated
+        continuing the loop, otherwise the the <code>for</code> loop ends. Note:
+        <i>init</i> is evaluated only once.</td>
+    </tr>
+    <tr>
+      <td><code>break;</code></td>
+      <td>Immediately exits from the directly enclosing <code>while/do/for</code>
+        loop or <code>switch</code> statement..</td>
+    </tr>
+    <tr>
+      <td><code>continue;</code></td>
+      <td>Immediately jumps to the beginning of the the directly enclosing <code>while/do/for</code>
+        loop. In a <code>for</code> loop, the <i>iter</i> expression is
+        evaluated, followed by the <i>cond</i> expression and possibly the <i>stmt</i>.
+        In a <code>while</code>
+        loop, the <i>cond</i> expression is evaluated again, and possibly the <i>stmt</i>.</td>
+    </tr>
+    <tr>
+      <td><code>switch (<i>expr</i>)<br/>
+        { stmts }</code></td>
+      <td>Evaluates the expression <i>expr</i>. If <i>stmts</i> contains a <code>case</code>
+        statement with a matching value, the code immediately following the <code>case</code>
+        statement is executed until either a <code>break</code> statement or the
+        end of the <code>switch</code> statement is reached. If no matching <code>case</code>
+        statement is found and a <code>default</code> statement exists in the <code>switch</code>,
+        the code immediately following the <code>default</code> statement is
+        executed until either a <code>break</code> statement or the end of the <code>switch</code>
+        statement is reached. If no case statement matches the <i>expr</i>, and
+        no <code>default</code> statement is present, everything in the <code>switch</code>
+        statement is skipped, and execution continues after the final closing
+        brace. <i>expr</i> must evaluate to an <code>int</code>, <code>char</code>, or <code>string</code>.</td>
+    </tr>
+    <tr>
+      <td><code>case <i>constant</i>:</code></td>
+      <td>
+        <p align="left">A marker within a <code>switch</code> statement. The <i>constant</i>
+        must be either a <code>char</code> (<code>case 'a':</code>), an <code>int</code>
+        (<code>case 3:</code>), or a <code>string</code> (<code>case
+        &quot;apple&quot;:</code>) If the <i>constant</i> matches the <i>expr</i>
+        in the <code>switch</code> statement, then the code immediately
+        following this marker is run, until a <code>break</code> statement or
+        the end of the <code>switch</code> statement is reached.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><code>default:</code></td>
+      <td>An optional marker within a <code>switch</code> statement. If none of
+        the <code>case</code>s in the <code>switch</code> statement match the <code>switch</code>
+        <i>expr</i>, the code immediately following this marker is executed,
+        until a <code>break</code> statement or the end of the <code>switch</code>
+        statement is reached.</td>
+    </tr>
+    <tr>
+      <td><code>{ <i>statements</i> }</code></td>
+      <td>A brace followed by a list of statements, followed by another brace is
+        considered a single statement</td>
+    </tr>
+    <tr>
+      <td><code><i>expression</i>;</code></td>
+      <td>An expression followed by a semicolon is also considered to be a
+        statement</td>
+    </tr>
+  </tbody>
+</table>
+<h3>
+Statement Examples</h3>
+<p><b>return</b></p>
+<p>Let's visit a previous example function to see how return works.</p>
+<pre>int five() {
+   return 5;
+}</pre>
+<p>Since the return value of the function <i>five</i> is always 5, we can use
+the function any place we would normally put the literal 5.</p>
+<pre>alert(&quot;Five is &quot; + five()); // Prints &quot;Five is 5&quot;</pre>
+<p>Also, since <code>return</code> causes the function to exit immediately, we
+could do this:</p>
+<pre>int five() {
+   return 5;
+   alert(&quot;This won't display&quot;);
+}</pre>
+<p>and we would have the same effect.</p>
+<p><b>if</b></p>
+<pre>void lessThan5(int x) {
+   if (x &lt; 5)
+      alert(&quot;Less than five&quot;);
+   alert(&quot;Hello&quot;);
+}</pre>
+<p>If this function is called with a number less than 5, &quot;Less than
+five&quot; will be displayed followed by the word &quot;Hello&quot;, otherwise,
+only the word &quot;Hello&quot; is displayed.</p>
+<p><b>if ... else</b></p>
+<pre>void lessThan5(int x) {
+   if (x &lt; 5)
+      alert(&quot;Less than five&quot;);
+   else
+      alert(&quot;Greater than or equal to five&quot;);
+}</pre>
+<p>If this function is called with a parameter less than 5, &quot;Less than
+five&quot; is displayed, otherwise &quot;Greater than or equal to five&quot; is
+displayed.</p>
+<p><b>while</b></p>
+<pre>void count() {
+   int x;
+
+   x = 5;
+   while (x &gt; 0) {
+      alert(x);
+      x = x - 1;
+   }
+}</pre>
+<p>This bit of code will display the numbers from 5 to 1 counting backwards.
+Notice that braces were placed around the two lines of code in the <code>while</code>
+loop to make them act as a single statement.</p>
+<p><b>do ... while</b></p>
+<pre>void count() {
+   int x;
+
+   x = 6;
+   do {
+      x = x - 1; // could also be x--
+      alert(x);
+   } while (x &gt; 0);
+}</pre>
+<p>This bit of code (similar to the previous example) will display the numbers
+from 5 to <b>0</b> counting backwards. The zero is displayed in this case because
+the expression <code>x &gt; 0</code> is not evaluated until after the loop</p>
+<p><b>for</b></p>
+<pre>void output() {
+   string list[4];
+   int index;
+
+   list[0] = &quot;Zero&quot;;
+   list[1] = &quot;One&quot;;
+   list[2] = &quot;Two&quot;;
+   list[3] = &quot;Three&quot;;
+
+   for (index = 0 ; index &lt; 4 ; index++)
+      alert(list[index]);
+}</pre>
+<p>This example will display  "Zero", "One, "Two", "Three". When we dissect it we
+see that the array <i>list</i> is initialized first. We then reach the <code>for</code>
+loop. First, the initializer is evaluated, setting index to 0. Next, the
+condition is evaluated <code>index &lt; 4</code>, which is true, so the body of
+the loop executes, displaying &quot;Zero&quot;. The iterator expression is then
+evaluated, increasing <i>index</i> by one. This continues until <i>index</i> is
+equal to 4, at which point the loop exits without executing the body again.</p>
+<p><b>break</b></p>
+<pre>void count() {
+   int x;
+
+   x = 5;
+   while (x &gt; 0) {
+      if (x == 1)
+         break;
+      alert(x);
+      x = x - 1;
+   }
+}</pre>
+<p>In this slightly more complex piece of code, the counting goes on as it
+normally would, displaying &quot;5&quot;, &quot;4&quot;, &quot;3&quot;, 2&quot;. However, when <i>x</i> reaches 1,
+<code>break</code> is executed, breaking out of the <code>while</code> loop
+early, before the 1 gets displayed.</p>
+<p><b>continue</b></p>
+<pre>void count() {
+   int x;
+
+   x = 6;
+   while (x &gt; 1) {
+      x--; // Do the subtraction first
+      if (x == 3)
+         continue;
+      alert(x);
+   }
+}</pre>
+<p>In this clearly contrived example, the output is &quot;5421&quot;. When <i>x</i>
+reaches 3, the <code>continue</code> is executed, jumping to the
+beginning of the loop, skipping over the <i>alert</i>.</p>
+<p><b>switch, case, default</b></p>
+<pre>void which_number(int x) {
+   switch (x) {
+      case 1:
+         alert(&quot;x == 1\n&quot;);
+         break;
+      case 2:
+      case 3:
+         alert(&quot;x == 2 or x == 3\n&quot;);
+         break;
+      case 8:
+         alert(&quot;x == 8\n&quot;);
+      case 10:
+         alert(&quot;x == 8 or x == 10\n&quot;);
+         break;
+      default:
+         alert(&quot;x is not 1,2,3,8, or 10\n&quot;);
+   }
+}</pre>
+<p>The <i>which_number</i> function is passed a value, and will display a fact
+or two about it. If the value is 1, <code>case 1</code> is executed and <code>break</code>s
+to the end of the <code>switch</code>. If the value is 2 or 3, the code
+following <code>case 3:</code> is executed. If the value is 8, both
+&quot;x=8&quot; and &quot;x=8 or x=10&quot; is displayed because there is no <code>break</code>
+before <code>case 10:</code>, this is called &quot;fall-through&quot;. If none of the cases
+match the the value of <i>x</i>, the code following <code>default:</code> is executed.</p>

@@ -1,0 +1,13 @@
+struct TargetGadget {
+  UIGadget gadget;
+
+  void onopen() @ library("SampleAddIn", 1);
+  void onclose() @ library("SampleAddIn", 2);
+  void ondraw() @ library("SampleAddIn", 3);
+  void onpendown() @ library("SampleAddIn", 4);
+  void onpenup() @ library("SampleAddIn", 5);
+  void onpenmove() @ library("SampleAddIn", 6);
+  
+  handler onleft; // fired when the pen is in the left
+                  // 5 pixels
+};

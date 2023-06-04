@@ -1,0 +1,17 @@
+//
+// Sample provided by Holger Weets
+//
+
+#include "add-ins/OrbVFS.oc"
+#include "add-ins/OrbPrint.oc"
+
+string	CurrFile;		// the selected file (w/o path)
+Volume	CurrVolume;		// the currently viewed volume
+string	CurrPath;		// the currently viewed folder
+int		LastSel;
+bool	CurrFileIsDir;
+
+handler app.onstart() {
+    // load the main form
+    mainForm.load();
+}

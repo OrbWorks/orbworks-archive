@@ -1,0 +1,88 @@
+<p><b>Version 4.1.3</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+            <li>Reading a non-null-terminated string at the end of a file could fail</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.2</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>OrbSound add-in, supporting WAVE file playback</li>
+        </ul>
+    </li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+            <li>When compiling an app with the device compiler, an invalid app
+            would be created if there was already an app with the same creator ID
+            but different name</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.1</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+            <li>DBRecord.read() wouldn't properly read any value after a null-terminated string</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.0</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Added launchGoto() and launchCustomString() to launch external apps with parameters</li>
+			<li>Added Database.dbid and Database.card to retrieve the low level location of a database</li>
+			<li>Added UIApp.launchArgs to retrieve the string used when launching the app</li>
+			<li>Added UIField.underline to set the underline style of a field</li>
+            <li>Made the 'visible' property on controls readable</li>
+            <li>Added an 'enabled' property to most controls</li>
+			<li>Added a new launch code for the device compiler to allow it to return the results of the compile to the caller</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>UIField.seltext() returned a string that was longer than the actual selection</li>
+			<li>File.read() didn't read strings properly</li>
+            <li>DBRecord.read() didn't read non-null terminated strings properly</li>
+			<li>funcptrs within structures could result in a compiler error</li>
+			<li>Empty braces in code could crash the compiler</li>
+			<li>alertc() and promptc() would sometimes display garbage</li>
+            <li>Some type strings would get into an infinite loop</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 4.0.1</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Memo object can now open new Memo database</li>
+            <li>Updated OrbPDOC to allow specifying the output file name</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>Fixed several crashing bugs that would occur with compiler errors</li>
+			<li>Code completion sometimes wasn't available from files included from "add-ins".</li>
+            <li>Checkboxes on the main PCA form weren't moving when the DIA changed</li>
+            <li>Added PocketC serdata() implementation</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 4.0.0</b></p>
+<ul>
+	<li>
+		Initial release. Using version 4.0.0 to match the OrbC compiler and
+		runtime shared with OrbForms.</li>
+</ul>
+

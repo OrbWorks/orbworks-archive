@@ -1,0 +1,66 @@
+// AddExtI test
+int g[4] = { 0, 1, 2, 3 };
+pointer gp;
+int gi;
+
+int pass = 1;
+test(int cond, string str) {
+    puts(str);
+    if (!cond) {
+        puts(" FAILED\n");
+        pass = 0;
+    }
+    else
+        puts(" PASSED\n");
+}
+
+sub() {
+    int l[4] = { 0, 1, 2, 3 };
+    pointer lp;
+    int li;
+    
+    lp = g;
+    gp = g;
+    li = 3;
+    gi = 2;
+    
+    test(l[1] == 1, "local[const]");
+    test(g[2] == 2, "global[const]");
+    test(lp[3] == 3, "localp[const]");
+    test(gp[3] == 3, "globalp[const]");
+    test(l[li] == 3, "local[local]");
+    test(g[li] == 3, "global[local]");
+    test(lp[li] == 3, "localp[local]");
+    test(gp[li] == 3, "globalp[local]");
+    test(l[gi] == 2, "local[global]");
+    test(g[gi] == 2, "global[global]");
+    test(lp[gi] == 2, "localp[global]");
+    test(gp[gi] == 2, "globalp[global]");
+}
+
+main() {
+    int l[4] = { 4, 5, 6, 7 };
+    pointer lp;
+    int li;
+    
+    lp = g;
+    gp = g;
+    li = 3;
+    gi = 2;
+    
+    test(l[1] == 4, "local[const]");
+    test(g[2] == 2, "global[const]");
+    test(lp[3] == 3, "localp[const]");
+    test(gp[3] == 3, "globalp[const]");
+    test(l[li] == 7, "local[local]");
+    test(g[li] == 3, "global[local]");
+    test(lp[li] == 3, "localp[local]");
+    test(gp[li] == 3, "globalp[local]");
+    test(l[gi] == 6, "local[global]");
+    test(g[gi] == 2, "global[global]");
+    test(lp[gi] == 2, "localp[global]");
+    test(gp[gi] == 2, "globalp[global]");
+    puts("\nTesting SUB\n");
+    sub();
+}
+    

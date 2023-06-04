@@ -1,0 +1,74 @@
+<p>The Palm OS support for Virtual File Systems (VFS) allows an application to
+read and write files to removable storage, such as a compact flash card or
+memory stick. OrbC support for VFS is provided by the OrbVFS native add-in.
+To use it, you must add the line below to your application's source code. If
+your application is not built standalone, you must also ensure that OrbVFS.prc
+is installed on the device or emulator.
+</p>
+<pre>#include &quot;add-ins/OrbVFS.oc&quot;</pre>
+<p>Each removable storage device contains
+one or more volumes. To access a file, you must first retrieve the volume on
+which it resides using <a href="mVolumeMgr-enumerate.html">VolumeMgr.enumerate()</a>.
+This
+method will enumerate all volumes on the device - if the device does not support
+VFS, no volumes will be returned. Once you have retrieved the <a href="oVolume.html">Volume</a>
+object, you can use it to create and open files and directories. To get a list
+of all the files in a directory, first open the directory with <a href="mVolume-openDir.html">Volume.openDir()</a>,
+then enumerate through the files and directories using <a href="mDirectory-enumerate.html">Directory.enumerate()</a>.
+The get the files in the root directory, call <a href="mVolume-openDir.html">openDir(&quot;/&quot;)</a>.
+</p>
+<p>Unlike traditional operating systems, the Palm OS VFS support does not
+support a concept of &quot;current directory&quot;. Instead, all paths are fully
+specified for a given volume.
+</p>
+<p>The following error codes may be returned from the VFS methods:
+</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">vfsErrFileNotFound</td>
+    <td width="50%">vfsErrDirNotEmpty</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrFilePermissionDenied</td>
+    <td width="50%">vfsErrBadName</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrCardReadOnly</td>
+    <td width="50%">vfsErrVolumeFull</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrFileGeneric</td>
+    <td width="50%">vfsErrNotADirectory</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrFileStillOpen</td>
+    <td width="50%">vfsErrIsADirectory</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrFileAlreadyExists</td>
+    <td width="50%">vfsErrDirectoryNotFound</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsErrFileEOF</td>
+    <td width="50%">vfsErrNameShortened</td>
+  </tr>
+</table>
+<p>The following attributes may be set on a file or directory:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">vfsAttrReadOnly</td>
+    <td width="50%">vfsAttrDirectory</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsAttrHidden</td>
+    <td width="50%">vfsAttrArchive</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsAttrSystem</td>
+    <td width="50%">vfsAttrLink</td>
+  </tr>
+  <tr>
+    <td width="50%">vfsAttrVolumeLabel</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+</table>

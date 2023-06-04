@@ -1,0 +1,151 @@
+#include "tests.h"
+
+int nBaseInit, nBaseDest, nBaseCopy;
+int nABaseInit, nABaseDest;
+int nContInit, nContDest, nContCopy;
+
+string ToHex(int x) {
+    string res = "0x", back, hex="0123456789abcdef";
+    char c;
+    int len = 8, mod, i;
+    bool isNeg;
+    if (x < 0) {
+        x = x - 0x80000000;
+        isNeg = true;
+    }
+    
+    while (len--) {
+        mod = x % 16;
+        x /= 16;
+        if (isNeg && len==0) {
+            c = hex[mod+8];
+        } else {
+            c = hex[mod];
+        }
+        back += c;
+    }
+    
+    for (i=0;i<8;i++) {
+        res += back[7-i];
+    }
+    return res;
+}
+
+struct Point {
+    void _copy(Point);
+    int x,y;
+};
+
+object Base {
+    void _init();
+    void _destroy();
+    void _copy(Base ref);
+    int x;
+};
+
+object ContNoInit {
+    int x;
+    Base base;
+    int y[3];
+};
+
+object ContInit {
+    void _init();
+    void _destroy();
+    void _copy(ContInit ref);
+    int x;
+    Base base;
+    int y;
+};
+
+void Point._copy(Point ref) {
+    x = ref.x;
+    y = ref.y;
+}
+
+void Base._init() {
+    puts("  Base._init() @ " + ToHex((int)&this) + "\n");
+    nBaseInit++;
+    nABaseInit++;
+    x = 6;
+}
+
+void Base._copy(Base ref) {
+    puts("  Base._copy()\n");
+    x = ref.x;
+    x += 1;
+}
+
+void Base._destroy() {
+    puts("  Base._destroy()\n");
+    nBaseDest++;
+    nABaseDest++;
+    if (nBaseDest > nBaseInit)
+        test(false, "too many Base._destroy()");
+    if (nBaseDest == nBaseInit) {
+        test(true, "Base._destroy()");
+        final();
+        passed = false; // in case this isn't the last thing run
+    }
+}
+
+void ContInit._init() {
+    puts("  ContInit._init()\n");
+    nContInit++;
+    y = 5;
+}
+
+void ContInit._destroy() {
+    puts("  ContInit._destroy()\n");
+    nContDest++;
+    if (nContDest > nContInit)
+        test(false, "too many ContInit._destroy()");
+    if (nContDest == nContInit) {
+        test(true, "ContInit._destroy()");
+    }
+}
+
+void ContInit._copy(ContInit ref) {
+    puts("  ContInit._copy()\n");
+    base = ref.base;
+    y = ref.y - 1;
+}
+
+Base gb;
+
+void test_array() {
+    Base ba[3];
+    test(nABaseInit == 3, "array _init");
+}
+
+
+void sub() {
+    Base b1, b2, b3;
+    ContNoInit cni1, cni2;
+    ContInit ci1, ci2;
+    
+    test(b1.x == 6, "Base._init()");
+    b3 = b2 = b1;
+    test(b2.x == 7, "Base._copy()");
+    test(b3.x == 8, "Base._copy()");
+    test(gb.x == 6, "global Base._init()");
+    
+    test(cni1.base.x == 6, "ContNoInit._init()");
+    cni1.y[2] = 23;
+    cni2 = cni1;
+    test(cni2.base.x == 7, "ContNoInit._copy() - base");
+    test(cni2.y[2] == 23, "ContNoInit._copy() - member");
+    
+    test(ci1.base.x == 6, "ContInit._init() - base");
+    test(ci1.y == 5, "ContInit._init()");
+    ci2 = ci1;
+    test(ci2.base.x == 7, "ContInit._copy() - base");
+    test(ci2.y == 4, "ContInit._copy()");
+}
+
+void main() {
+    sub();
+    nABaseInit = nABaseDest = 0;
+    test_array();
+    test(nABaseDest == nABaseInit, "array _destroy");
+}

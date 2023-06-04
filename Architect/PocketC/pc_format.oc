@@ -1,0 +1,61 @@
+// PocketC format compatibility function
+// used by the database, network, and VFS wrappers
+
+#if !_FORMAT_OC_
+#define _FORMAT_OC_
+
+Dict _formatCache;
+bool _isdigit(char c) { return c >= '0' && c <= '9'; }
+string _convertFormat(string fmt) {
+    int len;
+    string res;
+    int i = 0;
+    char c;
+    res = _formatCache.find(fmt);
+    if (res != "")
+        return res;
+
+    len = strlen(fmt);
+    while (i < len) {
+        while (_isdigit(fmt[i]))
+            res += fmt[i++];
+        c = fmt[i++];
+        switch (c) {
+            case 'p':
+            case 'i':
+                if (fmt[i] == '2') {
+                    res += 'w';
+                    i++;
+                } else if (fmt[i] == '4') {
+                    res += 'i';
+                    i++;
+                } else {
+                    res += 'i';
+                }
+                break;
+            case 'c':
+                res += 'c';
+                break;
+            case 'f':
+                res += 'f';
+                break;
+            case 's':
+                if (fmt[i] == 'z') {
+                    res += 's';
+                } else {
+                    res += 'l';
+                    while (_isdigit(fmt[i])) {
+                        res += fmt[i++];
+                    }
+                    res += '.';
+                }
+                break;
+        }
+        if (fmt[i]=='.')
+            i++;
+    }
+    _formatCache.add(fmt, res);
+    return res;
+}
+
+#endif

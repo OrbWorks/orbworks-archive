@@ -1,0 +1,184 @@
+#include "PCA_res.h"
+
+FORM ID MainForm AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 1000
+BEGIN
+	TITLE "PocketC Architect"
+	LIST "" ID MainProgsList AT (2 31 156 112) USABLE VISIBLEITEMS 10
+	BUTTON "Compile..." ID MainCompileButton AT (2 146 44 12) USABLE FRAME FONT 0
+	LABEL "Source code:" ID MainUnnamed1006Label AT (2 17) USABLE FONT 0
+	CHECKBOX "Debug" MainDebugCheckbox AT (54 146 AUTO AUTO)
+	CHECKBOX "Show classic PocketC" MainClassicCheckbox AT (58 17 AUTO AUTO)
+END
+
+
+FORM ID CompileForm AT ( 2 82 156 76 )
+MODAL
+BEGIN
+    TITLE "Compiling"
+	LABEL "Mem Used:" AUTOID AT (2 16) FONT 1
+	LABEL "Mem Avail:" AUTOID AT (2 28) FONT 1
+	LABEL "Time:" AUTOID AT (2 40) FONT 1
+	
+	LABEL "used456789" CompileMemUsedLabel AT (60 15)
+	LABEL "avail56789" CompileMemAvailLabel AT (60 28)
+	LABEL "tim3456789 seconds" CompileTimeLabel AT (33 40)
+	LABEL "Compiling abcdefghijklmnopqrstuvwxyzabcdefghij()..." ID CompileStatusLabel AT (2 62) NONUSABLE FONT 0
+END
+
+
+FORM ID AboutForm AT (2 68 156 90) USABLE MODAL SAVEBEHIND HELPID 1002 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "About Architect"
+	BUTTON "OK" ID AboutOKButton AT (59 73 36 12) USABLE FRAME FONT 0
+	LABEL "PocketC Architect version 4.1.3\r              by Jeremy Dewey" ID AboutUnnamed1202Label AT (15 16) USABLE FONT 0
+	LABEL "�1997-2007 OrbWorks" ID AboutUnnamed1204Label AT (21 38) USABLE FONT 1
+	LABEL "Press \'i\' for registration information" ID AboutUnnamed1205Label AT (4 58) USABLE FONT 0
+END
+
+
+FORM ID RegisterForm AT (2 61 156 97) USABLE MODAL SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "Registration"
+	LABEL "UserName" ID RegisterUnnamed1601Label AT (4 48) USABLE FONT 0
+	LABEL "Registration Code:" ID RegisterUnnamed1602Label AT (4 62) USABLE FONT 0
+	BUTTON "OK" ID RegisterOKButton AT (4 81 36 12) USABLE FRAME FONT 0
+	BUTTON "Cancel" ID RegisterCancelButton AT (46 81 36 12) USABLE FRAME FONT 0
+	LABEL "Thank you for registering" ID RegisterUnnamed1605Label AT (26 15) USABLE FONT 0
+	FIELD ID RegisterCodeField AT (81 61 69 13) USABLE LEFTALIGN FONT 0 EDITABLE UNDERLINED SINGLELINE MAXCHARS 80 NUMERIC
+	LABEL "                                        " ID RegisterUserNameLabel AT (81 48) USABLE FONT 0
+	LABEL "PocketC Architect" ID RegisterUnnamed1605Label AT (32 25) USABLE FONT 1
+END
+
+
+FORM ID EditorOptionsForm  AT ( 2 94 156 64 ) USABLE MODAL SAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+MODAL
+BEGIN
+	TITLE "Editor Options"
+	LABEL "Memo Editor" EditorOptionsMemoLabel AT (4 18)
+	LABEL "Doc Editor" EditorOptionsDocLabel AT (4 32)
+	LIST EditorOptionsMemoList AT (60 0 92 134) VISIBLEITEMS 12 NONUSABLE
+	LIST EditorOptionsDocList AT (60 0 92 134) VISIBLEITEMS 12 NONUSABLE
+	POPUPTRIGGER "Program" EditorOptionsMemoTrigger AT (60 18 AUTO AUTO)
+	POPUPTRIGGER "Program" EditorOptionsDocTrigger AT (60 32 AUTO AUTO)
+	POPUPLIST EditorOptionsMemoTrigger EditorOptionsMemoList
+	POPUPLIST EditorOptionsDocTrigger EditorOptionsDocList
+	BUTTON "Done" EditorOptionsDone AT (3 49 AUTO AUTO)
+END
+
+MENU ID MainMenuBar
+BEGIN
+	PULLDOWN "Source"
+	BEGIN
+		MENUITEM "Edit Source" ID AppletEditSource "E"
+	END
+	PULLDOWN "Options"
+	BEGIN
+		MENUITEM "Editor Options..." ID OptionsEditorOptions "O"
+		MENUITEM "Register..." ID OptionsRegister "R"
+		MENUITEM "About Architect..." ID OptionsAboutPocketC "A"
+	END
+END
+
+APPLICATIONICONNAME ID 1000 "Architect"
+
+STRING ID RegInfoString "Thanks for trying PocketC Architect!\r\rOn-line registration is available at www.orbworks.com.\r\rVisit  www.orbworks.com for PocketC Architect programming resources, technical support, and user forums.\r\rCheck out PocketC Architect Desktop Edition, too!"
+
+ALERT ID CompilerErrorAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+	TITLE "Compiler Error"
+	MESSAGE "^1"
+	BUTTONS  "OK" "Goto..."
+END
+
+ALERT ID CompilerErrorNoFileAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+	TITLE "Compiler Error"
+	MESSAGE "^1"
+	BUTTONS  "OK"
+END
+
+ALERT ID MsgBoxAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+	TITLE "Message"
+	MESSAGE "^1"
+	BUTTONS  "OK"
+END
+
+ALERT ID ExpiredAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Unregistered Version"
+	MESSAGE "This unregistered copy of PocketC Architect has been used for more than 45 days. Please register."
+	BUTTONS  "I Promise to Register"
+END
+
+ALERT ID ExpiredPlusAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+	TITLE "Expired Version"
+	MESSAGE "This unregistered copy of PocketC Architect has been used for 60 days and has expired. Please register at www.orbworks.com!"
+	BUTTONS  "I\'m sorry"
+END
+
+ALERT ID AlreadyAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Already Registered"
+	MESSAGE "This copy of PocketC Architect is already registered to \'^1\'. Thank You!"
+	BUTTONS  "OK"
+END
+
+ALERT ID InvalidRegAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Invalid Registration Code"
+	MESSAGE "The registration code you have entered is invalid. If you believe this an error, please contact OrbWorks."
+	BUTTONS  "OK"
+END
+
+ALERT ID OldVersionRegAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Old Version Registration Code"
+	MESSAGE "The registration code you have entered is valid, but not for this version of PocketC Architect. Please visit www.orbworks.com for upgrade information."
+	BUTTONS  "OK"
+END
+
+ALERT ID UpgradeRegAlert HELPID 0 DEFAULTBUTTON 0 WARNING
+BEGIN
+	TITLE "Old Version Registration Code"
+	MESSAGE "Your registration code is not valid for this version of PocketC Architect. You may continue to use this version for 45 days, at which point you must either purchase an upgrade or re-install the previous version."
+	BUTTONS  "OK"
+END
+
+ALERT ID ValidRegAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+	TITLE "Registration Successful"
+	MESSAGE "Thank you for regis- tering this copy of PocketC Architect!"
+	BUTTONS  "OK"
+END
+
+ALERT ID ConfirmAlert HELPID 0 DEFAULTBUTTON 0 CONFIRMATION
+BEGIN
+	TITLE "Confirmation"
+	MESSAGE "^1"
+	BUTTONS  "Yes" "No"
+END
+
+ICONFAMILYEX ID 1001 COMPRESS
+BEGIN
+	BITMAP "IconS1.bmp"  BPP 1  COMPRESS
+	BITMAP "IconS2.bmp"  BPP 2  COMPRESS
+	BITMAP "IconS2h.bmp" BPP 2  COMPRESS DENSITY 144
+	BITMAP "IconS8.bmp"  BPP 8  COMPRESS TRANSPARENT 255 204 255
+	BITMAP "IconS8h.bmp" BPP 8  COMPRESS TRANSPARENT 255 204 255 DENSITY 144
+END
+
+ICONFAMILYEX ID 1000
+BEGIN
+	BITMAP "IconL1.bmp"  BPP 1  COMPRESS
+	BITMAP "IconL2h.bmp" BPP 1  COMPRESS DENSITY 144
+	BITMAP "IconL2.bmp"  BPP 2  COMPRESS
+	BITMAP "IconL2h.bmp" BPP 2  COMPRESS DENSITY 144
+	BITMAP "IconL8.bmp"  BPP 8  COMPRESS TRANSPARENT 255 204 255
+	BITMAP "IconL8h.bmp" BPP 8  COMPRESS TRANSPARENT 255 204 255 DENSITY 144
+END
+
+//HEX "pref" ID 0 0x00 0x1e 0x00 0x00 0x20 0x00 0x00 0x00 0x20 0x00
+
+VERSION ID 1000 "4.1.3"

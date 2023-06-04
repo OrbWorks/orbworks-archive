@@ -1,0 +1,782 @@
+<p><b>Version 4.1.3</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+            <li>Reading a non-null-terminated string at the end of a file could fail</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.2</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>OrbSound add-in, supporting WAVE file playback</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.1</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+            <li>DBRecord.read() wouldn't properly read any value after a null-terminated string</li>
+        </ul>
+    </li>
+</ul>
+<p><b>Version 4.1.0</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Added launchGoto() and launchCustomString() to launch external apps with parameters</li>
+			<li>Added Database.dbid and Database.card to retrieve the low level location of a database</li>
+			<li>Added UIApp.launchArgs to retrieve the string used when launching the app</li>
+			<li>Added UIField.underline to set the underline style of a field</li>
+            <li>Made the 'visible' property on controls readable</li>
+            <li>Added an 'enabled' property to most controls</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>UIField.seltext() returned a string that was longer than the actual selection</li>
+			<li>File.read() didn't read strings properly</li>
+            <li>DBRecord.read() didn't read non-null terminated strings properly</li>
+			<li>funcptrs within structures could result in a compiler error</li>
+			<li>Empty braces in code could crash the compiler</li>
+			<li>alertc() and promptc() would sometimes display garbage</li>
+            <li>Some type strings would get into an infinite loop</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 4.0.1</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Memo object can now open new Memo database</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>Fixed several crashing bugs that would occur with compiler errors</li>
+			<li>Specifying an invalid project path in the new project wizard would cause a crash</li>
+			<li>Code completion sometimes wasn't available from files included from "add-ins".</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 4.0.0</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Support for up to 512k of code</li>
+			<li>Implemented macro support in the preprocessor</li>
+			<li>Added freemem() to determine free memory</li>
+			<li>Added battery() to retrieve battery volts and percent remaining</li>
+			<li>Added Draw.bitmapm() and Draw.drawm() which allow you to specify the drawing mode</li>
+			<li>Added srand() to seed the random number generator</li>
+			<li>Added strinsert() and strreplace()</li>
+			<li>Added html docs (in HTMLdocs folder)</li>
+			<li>The add-ins folder is now searched by default if a file is not found, so #include "OrbNetwork.oc" will work</li>
+			<li>Bitmaps and icons can be imported from .prc files using PocketC Architect-style resource syntax</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>promtpc() and() alertc would behave erratically in full screen mode</li>
+			<li>Adding more than one menu separator could cause compile errors</li>
+			<li>UIForm.menu = 0 would cause device errors</li>
+			<li>Using UIList.setdrawfunc could incorrectly cause the debug runtime to display an error</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 3.0.4</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Refreshed UI with new icons, splash screen</li>
+			<li>Added option for automatically checking for updates</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 3.0.3</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>Runtime could crash when opening a form</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 3.0.2</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>File.getRec() and File.getRes to retrieve a DBRecord from a database stored on a memory card (VFS)</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>Inspection window ensures that a form is not resized larger than 160x160</li>
+			<li>Adding a onpenmove handler to a form actually created an "onopenmove" handler, which did not compile</li>
+			<li>Setting UILabel.text could cause a visible label to become invisible</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 3.0.1</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Accelerated DBRecord.write (up to 5x the previous speed)</li>
+			<li>MDI tab groups, right-click on title to manipulate tab groups of close file</li>
+			<li>OrbForms.html, a single HTML file containing the entire documentation collection for printing</li>
+		</ul>
+	</li>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>A control could be saved with an ID of -1, preventing the project from being compiled or reopened</li>
+			<li>Find in files did not honor the "match case" option</li>
+			<li>Auto form resize no longer changes the current width/height of a control unless stretch is specify (previously, the width/height would be reset)</li>
+			<li>Moving a file in the project without first opening it would crash the IDE</li>
+			<li>F2 would jump to the next bookmark, but would not properly set the caret</li>
+			<li>Shift-Del and Shift-Ins now cut/paste</li>
+			<li>Open/save file dialogs didn't work on Win9x</li>
+			<li>Fields and selectors caused forms to not draw on Win9x</li>
+			<li>Editor windows drop-down didn't work on Win9x</li>
+			<li>Using the string character operator (str[i]) to set a character within a string may also change other strings</li>
+			<li>Invalid syntax in a source file could cause the application to crash when it either attempts to complete a symbol or do background processing</li>
+			<li>Setting UILabel.text would cause a hidden label to be displayed</li>
+			<li>Project | Exit sometimes only closed the active project</li>
+			<li>Auto-hide could not be disabled on the form and menu designer</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 3.0.0</b></p>
+<ul>
+	<li>
+		<b>Upgrade notes</b>
+		<ul>
+			<li>All gadgets must be declared as structs, not objects
+		</ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Tooltips display the declaration of the symbol under the cursor
+			<li>IDE option for syncrhonizing the current form with the current source file
+			<li>Separate menu designer allowing drag &amp; drop of menu items
+			<li>Source editor's font type, size, and tab width can be adjusted
+			<li>Source file symbol list is sorted based on type and name
+			<li>Property inspector allows properties to be sorted by names
+			<li>Outline nodes in editor (and IDE option to enable/disable)
+			<li>Support for resizable forms and automatic layout
+			<li>Function drop-down list for current file in toolbar
+			<li>ALT-clicking on a control in the form designer will
+    select the bottom control
+
+			<li>Locked property on application to set the "do not
+    copy" bit on the .prc file
+    		<li>Hidden property on application to prevent it from showing in the launcher
+    			(useful for resource-only applications)
+
+			<li>Greatly enhanced language including object
+    inheritance and interfaces
+
+			<li>Language file support, making translation extremely
+    simple
+
+			<li>Conditional compilation (#define, #if...)
+
+			<li>Vector and OVector objects - resizable containers
+    (in utilcode folder)
+
+			<li>Implemented a base Stream object and specialized
+    implementations: FileStream, DBRecordStream, SocketStream, SerialStream
+
+			<li>Check boxes can be assigned to groups (where only
+    one per group can be selected)
+
+			<li>Serial constants for IrComm and RfComm virtual
+    ports
+
+			<li>StringList.sort()
+
+			<li>Database.locked property to get/set "do not copy"
+    bit
+			<li>Database.inrom property to determine if a database is in ROM
+			<li>DBRecord.uniqueid property to get a record's unique
+    id
+
+			<li>Database.findrec() method to find a record based on
+    its unique id
+
+			<li>Database.getdate() method to retrieve database
+    dates
+
+			<li>tickspersec() function
+
+			<li>UIForm.obscured property which returns true if a
+    menu or popup is above the form
+
+			<li>@resstring to specify project strings in source
+    code (see UIString)
+			<li>Debug setting for project
+			<li>debug blocks - code only compiled in debug build
+			<li>assert() pseudo-function
+			<li>debuglog() pseudo-function
+			<li>callstack() function for retrieving current stack
+			<li>fatal() function for reporting fatal errors
+			<li>oc.exe - command line compiler
+			<li>Bloggle sample application - demonstrates use of object inheritence
+			<li>Progress Bar sample application and tutorial
+		</ul>
+  <li>
+		<b>Bug Fixes</b>
+  <UL>
+			<li>Prefs app is no longer launched when an error
+    occurs or abort() is called
+
+			<li>Jump to definition now works when selecting the
+    declaration of a method
+
+			<li>OrbPDB used incorrect escaping for CSV files
+
+			<li>Fixed 16-bit high density icons (launcher would
+    crash on simulator)
+
+			<li>The font property of List control was not being
+    saved or honored
+
+			<li>structName.stringName[index] would cause an incorrect compiler error
+			<li>Opening a read-only project can now be canceled
+			<li>1-bit images are not required for non-icons
+			<li>Drag-and-drop of more than one file did not do anything
+			<li>Project close now will only ask for confirmation if project actually changed
+			<li>Gadgets will not recieve pen events when hidden
+		</ul>
+	</li>
+</ul>
+<P><b>Version 2.2.1</b></P>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Added Network.closei() to close the stack immediately</li>
+		</ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>Icons are no longer compressed (caused crashes on
+    some devices)
+
+			<li>alertc() would cause an error on debug OS 5
+    simulator
+
+			<li>event.nx and event.ny were not correct for form pen events</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 2.2.0</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Support for function pointers
+
+			<li>OrbNetwork add-in: networking support via BSD-style
+    sockets
+
+			<li>OrbVFS add-in: support for VFS (external card
+    access)
+
+			<li>OrbPrint add-in: support for printing via PalmPrint
+
+
+			<li>UIList.setdrawfunc() to enable custom drawing of
+    lists
+
+			<li>alertc() and promptc() allowing the app to specify
+    the alert type, title, and buttons of the dialog
+
+			<li>events() which processes pending events (allowing
+    the app to perform long calculations while still having a responsive UI)
+
+			<li>Database.version
+
+			<li>Draw.textTrunc() for drawing truncated "..." text
+
+			<li>Next/prev field characters now generate onhkey
+    events
+
+			<li>Resource items (e.g. buttons) have their own icon
+    in the code completion list
+
+			<li>Auto upload and launch now work with the simulator
+
+			<li>When a source file is activated, its associated
+    form is displayed
+
+			<li>Ctrl-click also selects multiple controls in the
+    layout designer
+
+			<li>Bitmaps are now compressed, resulting in a smaller
+    application
+
+			<li>Palm256Palette.pal, which specifies the Palm 256
+    color palette for use in many image editors
+
+			<li>Improved the performance of DBRecord.read() for some data layouts</li>
+		</ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>16-bit bitmaps that don't have the transparent
+    color will no longer be marked as transparent, improving draw performance
+
+			<li>Control ids start at 1000 instead of 100
+
+			<li>Last open files are now stored in .orb file with
+    relative paths when possible
+
+			<li>All editor windows are closed when closing a
+    project
+
+			<li>Checkboxes with empty text would result in
+    incorrect sized checkbox
+
+			<li>Math functions display an error if MathLib is not
+    installed, rather than crashing the app
+
+			<li>Form toolbar button now displays a menu instead of
+    an undo-style list
+
+			<li>RGB color functions did not work on OS 3.5
+
+			<li>Multiline fields were being created at the wrong
+    size
+
+			<li>Lists were drawn in the designer with incorrect
+    boundaries
+
+			<li>Modal forms were not being displayed correctly in
+    the designer
+
+			<li>Fixed a rare bug that caused invalid reference
+    errors while copying structures that spanned heap segments
+
+			<li>A compiler bug prevented properties on native
+    objects (in native add-ins) from working
+
+			<li>Randomly placed braces around statement lists would only execute the first statement</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 2.1.1</b></p>
+<ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>String resources were being incorrectly escaped
+    (broken in 2.1.0)
+
+			<li>Code completion would not work in the presense of
+    an @bitmap declaration
+
+			<li>Moving/resizing forms in 2x magnify view was broken
+
+
+			<li>Minor drawing issues in menu editor</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 2.1.0</b></p>
+<ul>
+	<li>
+		<b>Features Added</b>
+		<ul>
+			<li>Support for OS 5 high-density graphics (see Library Reference topic)
+			<li>Support for OS 5 high-density bitmaps and icons
+			<li>UIApp.getScreenAttrib() to retreive screen attributes such as density and size
+			<li>Event.nx and Event.ny to retrieve the native pixel offset of a pen event
+			<li>Support for 16-bit colors and images
+
+			<li>Methods for setting the drawing color using RGB
+    values
+
+			<li>UIString.text property
+
+			<li>Added cancel button to prompt() form
+
+			<li>UIField.editable write-only property
+
+			<li>UIField.numeric write-only property
+
+			<li>Debug runtime now gives errors for illegal drawing
+    (drawing in onopen handlers and drawing without calling Draw.begin)
+
+			<li>Support for Tungsten 5-way control (via
+    UIForm.onhkey event)
+
+			<li>Partial support for JogDial (via UIForm.onhkey
+    event)
+
+			<li>Draw.uiColor() to retrieve system colors
+
+			<li>UIApp.getSysPref() to retrieve system preferences
+
+			<li>Database.name property is now read/write to support db rename</li>
+		</ul>
+	<li>
+		<b>IDE Features Added</b>
+		<ul>
+			<li>Visual menu editor with keyboard navigation,
+    copy/paste
+
+			<li>Copy/paste now works in the project tree
+
+			<li>Copy/paste now works between multiple OrbForms
+    Designer instances
+
+			<li>Ability to add system edit menu items by explicitly
+    setting menu id
+
+			<li>Bitmap/icon property cells are now resized to show
+    the entire image
+
+			<li>After building, the application can be
+    automatically launched on the emulator
+
+			<li>On upload, OrbForms ensures that the latest
+    OrbFormsRT is installed
+
+			<li>New projects are created in My Documents/OrbForms
+    Projects by default
+
+			<li>New projects can no longer be created in a folder
+    that already contains a project
+
+			<li>New projects are named "myprojectNNN" by default
+    (NNN is an increasin number)
+
+			<li>Pressing ESC will now dismiss the error balloons</li>
+		</ul>
+	<li>
+		<b>Bug Fixes</b>
+		<ul>
+			<li>If a native add-in function was called only in a
+    global intializer (or there was only a native add-in object that was global
+    with a constructor) the application would not run
+
+			<li>Code completion for gadgets would only display the
+    members of UIGadget
+
+			<li>On some devices, setting a timer would cause the
+    CPU to spike
+
+			<li>Focus is not set to the output window after a
+    compile unless the output window is auto-hidden
+
+			<li>File tree no longer automatically expands on build
+
+			<li>Symbol parser would choke on some enums
+
+			<li>Apps built with the DEMO will now run on the simulator</li>
+		</ul>
+	</li>
+</ul>
+<p><b>Version 2.0.3</b></p>
+<ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Tweaked the fix for: Icon and bitmap paths were being store as absolute paths in the project</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 2.0.2</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Activate output bar when performing "find in files"</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Code completion now recognizes "this" as a local
+    variable in methods and handlers
+      <li>Icon and bitmap paths were being store as absolute paths in the project</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 2.0.1</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Added bmpid and sbmpid write-only properties to
+    UIButton, UIPushbutton, and UIRepeatButton for setting the images associated
+    with a graphic control
+      <li>Double clicking a form in the project tree will open the associated file</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>OrbPDB did not properly convert float values
+      <li>Write-only properties did not show up in the symbol
+    list
+      <li>Fixed 2 crashing bugs</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 2.0.0</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Code completion and calltips
+      <li>Jump to definition of function, object, control,
+    everything else
+      <li>Multiple select and copy/paste in visual designer
+      <li>Align edges of controls when more than one is
+    selected
+      <li>Files opened when a project is saved are reopened
+    when the project is loaded
+      <li>Smart window tabbing (ctrl-tab switches between
+    windows in order of which was most recently used)
+      <li>Added a utilcode directly with code for
+    reading/writing the address book and todo list databases
+      <li>Increased recent project/file lists to 10 entries
+      <li>orbpdb.exe, a command-line utitilty for converting between PDB and CSV files</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Using one bitmap on more than one form would cause
+    errors accessing it from the second form
+      <li>Menu sizes were incorrect wien non-US characters
+    were used
+      <li>sort() did not operate correctly on float fields
+      <li>Functions with lots of local data would sometime
+    break
+      <li>Local object destructors were not being called if a
+    return statement was executed
+      <li>When Memo.puts() is unable to expand the record, the record was being left open</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.2.0</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Serial I/O and raw IR
+      <li>Type string processing functions for native add-ins
+
+      <li>Native add-ins can intercept system events
+      <li>Redesigned project wizards
+      <li>Right-click to add menu separator
+      <li> UIApp.creator - retrieves the current application's
+    creator id
+      <li>UIForm.keyboard() - displays system keyboard dialog
+    for active field
+      <li>UIForm.activefield() - returns active field
+      <li>UIField.phonelookup() - executes system phonebook
+    lookup
+      <li>Date.weekday - retieves the week day for the date
+      <li>keystate() and penstate() - retrieve current state
+    of hard keys and pen
+      <li>Draw.handle - windows handle for native add-ins
+      <li>Source code editor supports ctrl+delete and
+    ctrl+backspace to delete\backspace by word
+      <li>In IDE About box, the user is able to check for the latest version by
+      click on Upgrade button</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Draw.create() needed to clear the buffer on OS 3.0
+      <li> Memo.del() and Memo.archive() were not fully
+    implemented
+      <li>UIField.grabfocus() now works when called in form
+    onopen handler
+      <li>Date.adddays() and Date.subdays() would behave
+    unexpectedly
+      <li>Deleting controls would sometime cause a crash
+      <li>Editing a control name, but leaving it unchanged
+    would display an error
+      <li>Project compile sometimes failed after opening a
+    file from another project
+      <li>Hitting F1 to launch help would keep the help
+    window on top, blocking the IDE
+      <li>IDE would crash if a control ID &gt; 10000 was
+    manually put in the project file (e.g. for system-defined edit menu IDs)
+      <li>Setting UIGadget.visible = true would cause the handler to exit immediately</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.1.2</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Database.getresinfo()</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Project wizard always generated basic app</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.1.1</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Decrease size of standalone applications by 10k
+      <li>lformat(), and lparse() for use with locale-based
+    number formats
+      <li>Memo.delete() and Memo.archive()
+      <li>Improved the speed of DBRecord.close(), (but
+    Database.removerec() may not be called when any record in the database is
+    open).
+      <li>DBRecord.handle and Database.dbref properties for
+    accessing these objects from native add-ins
+      <li>Buttons and repeat buttons can specify frame type
+      <li>IDE will prevent duplicate object names from being created in the UI</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Dynamic memory allocation problems (new/delete)
+      <li>Failed project load from recent project list will
+    pop up an error message box
+      <li>Subtracting two pointers now properly takes type
+    size into account
+      <li>"Find in all files" dialog sets focus to "find
+    text" edit box first
+      <li>StringList.tokens would sometimes miss the last
+    token
+      <li>% in controls was silently dissappearing
+      <li>serialnum() would crash on some devices
+      <li>UIField.undo and UIField.del didn't work as expected</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.1.0</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>Support for native add-ins, including samples
+      <li>Undo/redo support for project changes (e.g.
+    add/remove/reposition controls)
+      <li> sort() function (in native add-in OrbSort, with
+    source code)
+      <li> UIForm.redraw with update code
+      <li>Database.createappinfo() to create an empty app
+    info block
+      <li>Database.hasappinfo() to test if a database has an
+    app info block
+      <li>Date.selecttime()
+      <li>UIForm.help() to display a standard "Tips" window
+      <li>Draw.selectIndex() method for requesting the user
+    to select a color
+      <li> onchange event for UIField
+      <li> x, y, w, h properties are not writeable for most
+    controls
+      <li> sleep()
+      <li> prompt()
+      <li> format() now obeys number format preferences
+      <li>substr(), strleft(), and strright() can take
+    negative numbers as lengths, to indicate 'n less than the string length'
+      <li>Increase the max number of user tool entries to 20
+      <li>Shortcut keys to project open and save.
+      <li>Display wait cursor while compiling
+      <li>Uploading files to the emulator is done in the
+    background
+      <li>Menu option to restore the default window layout
+      <li>Double-clicking a source file will open the file in
+    an existing OrbForms window
+      <li> UI Sample to demonstrate using the standard
+    controls
+      <li>Chess Clock sample</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li> Date.diffdays() was inaccurate for large
+    differences
+      <li>Incomplete array initializations gave compile
+    errors
+      <li>When a project save failed (due to access rights,
+    out of storage space, etc), the user was not informed
+      <li>Selectors were drawn with a solid box
+      <li> Emulator warning on app exit if MathLib not
+    installed
+      <li> UIFBitmap's x, y, w, h, visible properties caused
+    errors
+      <li>Popup and selector text are now drawn left aligned
+    and their width is dynamically calculated
+      <li> GDI resource handles were leaked bug when
+    icon/bitmap is drawn on screen
+      <li> Database Name string in project wizard is renamed
+    to Palm File for clarity
+      <li> Before a build, OrbForms would attempt to save
+    readonly files
+      <li> DBRecord.size would sometimes incorrectly evaluate
+    to 0&nbsp;
+      <li>OrbForms would attempt to upload to the emulator
+    even it it was not running
+      <li> using += operator in the iterator expression of a
+    for loop would corrupt the stack
+      <li>serialnum() would crash on some devices
+      <li>Saving a project containing a gadget without first specifying the
+        gadget type would corrupt the project file</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.0.1</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>None</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Over-released some strings on exit
+      <li>Unable to delete MathLib
+      <li>Help window was always on top of IDE
+      <li>PRC file name rules too strict
+      <li>Menu would not work if form had an onchar handler
+      <li>Default form is now created as non-modal
+      <li>Assignment from a structure in an array would not
+    always work as expected
+      <li>Bogus assert when repeatedly changing form titles</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Version 1.0</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>UIApp.abort()</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Too many to mention</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Build 62</b></p>
+<ul>
+  <li><b>Features Added</b>
+    <ul>
+      <li>confirm() function
+      <li>Snap to grid in Visual Designer
+      <li>app.version property
+      <li>Find in files
+      <li>Survey tutorial
+      <li>Improved help index</li>
+    </ul>
+  <li><b>Bug Fixes</b>
+    <ul>
+      <li>Too many to mention</li>
+    </ul>
+  </li>
+</ul>

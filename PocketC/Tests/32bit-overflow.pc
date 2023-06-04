@@ -1,0 +1,7 @@
+// 32bit overflow
+main() {
+  int x;
+  
+  x = 0x7fffffff * 0xfffffffe;
+  puts(x);
+}

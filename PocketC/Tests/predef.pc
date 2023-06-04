@@ -1,0 +1,11 @@
+// predef macro test
+main() {
+    puts("__FILE__ = " + __FILE__ + "\n");
+    puts("__LINE__ = " + __LINE__ + "\n");
+#ifdef __PKTC__
+    puts("__PKTC__ defined\n");
+#endif
+#ifdef __PKTC_PALM__
+    puts("__PKTC_PALM__ defined\n");
+#endif
+}

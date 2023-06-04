@@ -1,0 +1,27 @@
+#include "scanner.h"
+
+// scantest
+main() {
+    int e;
+    string data;
+    
+    if (!scanIsSymbol()) {
+        alert("Symbol hardware required!");
+        return;
+    }
+    clear();
+    scanOpen();
+    scanEnable(1);
+    scanEnableType(0, 1);
+    puts("Waiting for scan...\n");
+    scanDecode(1);
+    while (1) {
+        e = event(1);
+        if (e==20) {
+            data = scanGetData();
+            puts("got: " + data + "\n");
+        }
+    }
+    scanEnable(0);
+    scanClose();
+}

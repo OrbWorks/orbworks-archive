@@ -1,0 +1,993 @@
+<p>The OrbC resource language allows you to easily specify any UI required for 
+your application.</p>
+<h3>General Syntax</h3>
+<p>OrbC resource language is embedded directly in OrbC source code. The @ symbol 
+specifies the beginning of a resource block, followed by a single resource 
+declaration (which can contain other declarations). For example, an app 
+declaration could look like this:</p>
+<pre>@app myApp {
+  creator = "MyAp"; // creator id
+  name = "App Name"; // display name
+  dbname = "AppName-MyAp"; // name of .prc database
+}</pre>
+<p>A resource declaration contains a type specifying the resource type being 
+declared. The above example declares an app resource - see the resource table 
+below for all types. Following the type is a name, which can be treated as a 
+global variable in source code. For the example above, a global variable of type 
+UIApp named myApp is created automatically by the compiler. In functions that 
+follow the declaration, you can use this variable to access app properties and 
+methods:</p>
+<pre>void func() {
+  int colorDepth;
+  // access myApp as a variable
+  colorDepth = myApp.getdepth();
+}</pre>
+<p>Following the name is a block in braces which contains a list of properties 
+(see tables below). The declaration above sets the creator property of the app 
+to &quot;MyAp&quot;. Each property is set using the assignment operator (<i>property</i> 
+= <i>value</i>). Properties are separated with semicolons or commas.</p>
+<p>This block my also contain other resource declarations. For example, 
+a simple form is declared like this:</p>
+<pre>@form myForm {
+  id = 1000
+  text = "My Form"
+  x = 0, y = 0, w = 160, h = 160
+
+  button myButton {
+    id = 1001
+    x = 60, y = 80, w = 40, h = 12
+    text = "My Button"
+  }
+}</pre>
+<p>As you can see, a resource of type &quot;form&quot; is declared named &quot;myForm&quot;. 
+Contained within the form is a button named &quot;myButton&quot;. Notice that the child 
+declaration does not begin is @, since this only appears on a top level 
+declaration.</p>
+<p>Most resources also have an id property. Each id must be unique within the 
+application, and must be &lt; 9000. The id property must be set on each resource 
+that supports it.</p>
+<p><a name="gadgetDecl">Two</a> controls have slightly different rules. First, the graffiti control has 
+no name or id. This is because there can be at most one graffiti shift indicator 
+per form, and they have no runtime properties:</p>
+<pre>@form myForm {
+  ...
+  graffiti {
+    x = 60, y = 80
+  }
+}</pre>
+<p>Second, a gadget declaration must include the gadget type. For example, to 
+declare a chart gadget such as the one discuss in <a href="tGadgets.html">
+Creating and Using Gadgets</a>, use code like this. Note that you must declare 
+the Chart type before declaring the resource that uses it.
+</p>
+<pre>@form myForm {
+  ...
+  gadget Chart myChart {
+    id = 1011
+    x = 60, y = 80, w = 40, h = 40
+  }
+}</pre>
+<p>The following resource types are root types and can be declared at the 
+top-level: app, form, resstring, bitmap, and resource. </p>
+<h3>Resizable Forms</h3>
+<p>Creating resizable forms is very easy. First declare your form with the 
+resizable property set to true, then define the form's resize behavior by 
+setting the hresize and vresize properties (generally use stretch for horizontal 
+and vertical). Finally, set the resize behavior for each control on the form. 
+For more details, see <a href="oUIForm.html">UIForm</a>.</p>
+<p>The following code declares a form which expands to the size of the screen. 
+The two buttons on the form move as the form resizes to stay in the corners.</p>
+<pre>@form myForm {
+  id = 1000
+  text = "My Form"
+  x = 0, y = 0, w = 160, h = 160
+  resizable = true, vresize = 2, hresize = 2
+
+  button topLeftButton {
+    id = 1001
+    x = 60, y = 80, w = 40, h = 12
+    hresize = 0, vresize = 0
+    text = "My Button"
+  }
+
+  button myButton {
+    id = 1001
+    x = 60, y = 80, w = 40, h = 12
+    hresize = 1, vresize = 1
+    text = "My Button"
+  }
+}</pre>
+<h3>Embedding Resources</h3>
+<p>In order to embed a resource such as a bitmap in your application, you must 
+specify the source of the original bitmap(s). There are two ways to do this. 
+You can either specify a series of BMP file (which only works on the desktop 
+compiler):</p>
+<pre>@bitmap bmpSplash {
+  id = 4000;
+  image1 = "splash1.bmp"; // b/w
+  image8 = "splash8.bmp"; // 8-bit color
+  imageh1 = "splashh1.bmp"; // b/w high
+  imageh8 = "splashh8.bmp"; // 8-bit color high
+}</pre>
+<p>or you can import a resource that already exists in a PRC file:</p>
+<pre>@bitmap bmpSplash {
+  id = 4000;
+  imageres = "MyResources,Tbmp,1000";
+}</pre>
+<p>The above declaration will import a resource of type 'Tbmp' and id '1000' 
+from a resource database named &quot;MyResources&quot;. When compiled on the desktop, the 
+compiler will look for a file named &quot;MyResources.prc&quot;. When compiled on the 
+device, the compiler will use the resource database named &quot;MyResources&quot;.</p>
+<p>The resource string format <code>&quot;&lt;database&gt;,&lt;source type&gt;,&lt;source id&gt;&quot;</code> is 
+used for all properties that import from a resource database, such as the smallres and largeres properties 
+of an icon.</p>
+<p>To embed a raw resource, such as a WAVE file, the same mechanism is used. The 
+following block would import a WAVE resource from a Windows .wav file:</p>
+<pre>@resource {
+  type = "WAVE";
+  id = 4002;
+  file = "boink.wav";
+}</pre>
+<p>The following would import the same wave from an existing resource database:</p>
+<pre>@resource {
+  type = "WAVE";
+  id = 4002;
+  res = "MyResources,WAVE,1234";
+}</pre>
+<p>Finally, you can embed all the resources from a specified resource database 
+using the following:</p>
+<pre>@resource {
+  res = "RawResources";
+}</pre>
+<h3>Resource Only Apps</h3>
+<p>To make it easier to compile applications on the device, it is possible to 
+create a resource only .prc from which to import all your bitmaps and other 
+resources. If you have both the desktop compiler and the Palm compiler and want 
+to compile on both, it is a good idea to separate your code into two apps - one 
+containing only resources, and one containing all the code. The resource app can 
+be compiled on the desktop and copied to the device, where it can be used as the 
+source for bitmaps and other resources when compiling the main application. Once 
+compiled, only the main application is needed unless you want to compile again. 
+See the Chess Clock sample included with PocketC Architect.</p>
+<p>A resource only app is compiled as type 'data' rather than type 'appl', like 
+other applications.</p>
+<h3>Enumerated Properties</h3>
+<table border="0" width="100%" id="table2" cellpadding="2">
+  <tr>
+    <td valign="top" bgcolor="#E0E0E0"><b>fontid</b></td>
+    <td>The following fonts are supported for most text-based controls:<ul>
+      <li>0 = standard (height = 11)</li>
+      <li>1 = bold (height = 11)</li>
+      <li>2 = large (height = 14)</li>
+      <li>3 = symbol (height = 9)</li>
+      <li>4 = symbol 11 (height = 11)</li>
+      <li>5 = symbol 7 (height = 8)</li>
+      <li>6 = LED (height = 19)</li>
+      <li>7 = large bold (height = 15)</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#E0E0E0"><b>frame</b></td>
+    <td>The following frame types are supported for buttons and repeat buttons:<ul>
+      <li>0 = none</li>
+      <li>1 = normal</li>
+      <li>2 = bold</li>
+      <li>3 = rectangle</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#E0E0E0"><b>hresize<br>
+    vresize</b></td>
+    <td>The following resize rules are supported for forms and controls:<ul>
+      <li>0 = attach left or top</li>
+      <li>1 = attach right or bottom</li>
+      <li>2 = stretch</li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<h3>Table of Resources</h3>
+<table border="0" width="100%" id="table1" cellpadding="2">
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>app</b> (<a href="oUIApp.html">UIApp</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">The application declaration. Each application must 
+    declare exactly one. An application can contain an optional icon, forms, 
+    bitmaps, resources, and resource strings.</td>
+  </tr>
+  <tr>
+    <td valign="top">creator</td>
+    <td>(4 char string) the creator id. Must be unique.</td>
+  </tr>
+  <tr>
+    <td valign="top">name</td>
+    <td>(string, max 32 chars) name as displayed in the app launcher</td>
+  </tr>
+  <tr>
+    <td valign="top">dbname</td>
+    <td>(string, max 32 chars) name of database (internal name of PRC file)</td>
+  </tr>
+  <tr>
+    <td valign="top">version</td>
+    <td>(string) optional version string</td>
+  </tr>
+  <tr>
+    <td valign="top">locked</td>
+    <td>(bool) specifies that the app cannot be beamed. Optional, default is 
+    false.</td>
+  </tr>
+  <tr>
+    <td valign="top">hidden</td>
+    <td>(bool) specifies that the app is not displayed in the app launcher. 
+    Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">resonly</td>
+    <td>(bool) specifies that this app contains only resource. Optional, default 
+    is false.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>icon</b></td>
+    <td bgcolor="#E0E0E0" valign="top">The application's icon. The icon can be specified 
+    either as a series of BMP files (using e.g. small1), or as resources to 
+    import (e.g. smallres). If a resource is specified, the files will be 
+    ignored. An icon is optional, but if one is specified, small1 and large1 are 
+    required. When specifying smallres and largeres, the type of resource being 
+    imported will generally be 'tAIB' or 'Tbmp'. When importing a 'tAIB' (icon), 
+    the id of the large icon is generally 1000, and the small icon is generally 
+    1001.</td>
+  </tr>
+  <tr>
+    <td valign="top">small<i>X</i></td>
+    <td>(string) file name of a BMP file for a small icon. <i>X</i> specifies 
+    the bit depth, and can be 1, 2, 4, 8, or 16. The bitmap must be 15x9 pixels.</td>
+  </tr>
+  <tr>
+    <td valign="top">smallh<i>X</i></td>
+    <td>(string) file name of a BMP file for a high-density small icon. <i>X</i> 
+    specifies the bit depth, and can be 1, 2, 4, 8, or 16. The bitmap must be 
+    30x18 pixels.</td>
+  </tr>
+  <tr>
+    <td valign="top">large<i>X</i></td>
+    <td>(string) file name of a BMP file for a large icon. <i>X</i> specifies 
+    the bit depth, and can be 1, 2, 4, 8, or 16. The bitmap must be 32x32 
+    pixels.</td>
+  </tr>
+  <tr>
+    <td valign="top">largeh<i>X</i></td>
+    <td>(string) file name of a BMP file for a high-density large icon. <i>X</i> 
+    specifies the bit depth, and can be 1, 2, 4, 8, or 16. The bitmap must be 
+    64x64 pixels.</td>
+  </tr>
+  <tr>
+    <td valign="top">smallres</td>
+    <td>(string) specifies the source of the small icon in &quot;database,type,id&quot; 
+    format.</td>
+  </tr>
+  <tr>
+    <td valign="top">largeres</td>
+    <td>(string) specifies the source of the large icon in &quot;database,type,id&quot; 
+    format.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>form</b> (<a href="oUIForm.html">UIForm</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A form declaration. A form may contain controls and 
+    menubars.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) position and size. The form must fit within a 
+    160x160 screen. See <a href="thighDensity.html">High Density Graphics</a> for an explanation of how the OS 
+    handles higher resolution screens. Non-square screen are handled by the 
+    resize properties, as explained in the beginining of this topic.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) form title. Optional, if not specified the form will not have a 
+    title bar.</td>
+  </tr>
+  <tr>
+    <td valign="top">modal</td>
+    <td>(bool) specifies that the form is modal (such as a popup or dialog).</td>
+  </tr>
+  <tr>
+    <td valign="top">menuid</td>
+    <td>(int) id of form menu bar, ignored for modal forms. Optional.</td>
+  </tr>
+  <tr>
+    <td valign="top">helpid</td>
+    <td>(int) id of resstring displayed when a user clicks the &quot;i&quot; icon in a modal form title bar. 
+	Optional, ignored for non-modal forms.</td>
+  </tr>
+  <tr>
+    <td valign="top">defbuttonid</td>
+    <td>(int) id of default button for modal dialogs. The OS will simulate a 
+    click of this button if the app is being exited while the dialog is open. 
+    Only relevant if the application uses UIForm.dodialog to open the form.</td>
+  </tr>
+  <tr>
+    <td valign="top">resizable</td>
+    <td>(bool) specifies that the form and its controls will be moved/resized 
+    automatically. Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if the resizable 
+    property is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if the resizable 
+    property is false.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>label</b> (<a href="oUILabel.html">UILabel</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A label declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y</td>
+    <td>(int) position. The width and height are automatically 
+    calculated.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>field</b> (<a href="oUIField.html">UIField</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A field declaration. </td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be 1 plus a multiple 
+    of the font height (e.g. 12, 23, 34 for standard font)</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) initial text. Optional.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">editable</td>
+    <td>(bool) specifies that the field can be edited. Optional, default is 
+    true.</td>
+  </tr>
+  <tr>
+    <td valign="top">singleline</td>
+    <td>(bool) specifies that the field is a single line. Optional, default is 
+    true.</td>
+  </tr>
+  <tr>
+    <td valign="top">dynamicsize</td>
+    <td>(bool) specifies that the field has dynamic height. Optional, default is 
+    false.</td>
+  </tr>
+  <tr>
+    <td valign="top">numeric</td>
+    <td>(bool) specifies that the field accepts only numbers. Optional, default 
+    is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">hasscroll</td>
+    <td>(bool) specifies that there is a scroll bar associated with this field. 
+    Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">autoshift</td>
+    <td>(bool) specifies that the field causes automatic graffiti state 
+    shifting. Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">underline</td>
+    <td>(bool) specifies that the field has an underline. Optional, default is 
+    true.</td>
+  </tr>
+  <tr>
+    <td valign="top">leftanchor</td>
+    <td>(bool) specifies that the field text is left aligned. Optional, default 
+    is true.</td>
+  </tr>
+  <tr>
+    <td valign="top">maxchars</td>
+    <td>(int) specifies the maximum number of chars in the field. Optional, 
+    default is unbounded.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>button</b> (<a href="oUIButton.html">UIButton</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A standard button declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be 1 plus the font 
+    height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text. Ignored if this is a graphic button.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">graphic</td>
+    <td>(bool) specifies that the button displays a graphic instead of text. 
+    The presence of a graphic button causes the application to require OS 3.5. Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">bitmapid</td>
+    <td>(int) bitmap id for a graphic button. Required for graphic button.</td>
+  </tr>
+  <tr>
+    <td valign="top">sbitmapid</td>
+    <td>(int) bitmap id for the selected state of a graphic button. Optional. If 
+    not specified for a graphic button, the selected state is drawn by inverting 
+    the normal state.</td>
+  </tr>
+  <tr>
+    <td valign="top">frame</td>
+    <td>(int) specifies the frame type. Optional, default is standard frame.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>pushbutton</b> (<a href="oUIPushButton.html">UIPushButton</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A push button declaration. A push button is a button 
+    whose state is toggled when pressed. If a push button is a member of a 
+    group, selecting one push button deselects the rest.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be 1 plus the font 
+    height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text. Ignored if this is a graphic pushbutton.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">graphic</td>
+    <td>(bool) specifies that the button displays a graphic instead of text. 
+    The presence of a graphic button causes the application to require OS 3.5. Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">bitmapid</td>
+    <td>(int) bitmap id for a graphic button. Required for graphic button.</td>
+  </tr>
+  <tr>
+    <td valign="top">sbitmapid</td>
+    <td>(int) bitmap id for the selected state of a graphic button. Optional. If 
+    not specified for a graphic button, the selected state is drawn by inverting 
+    the normal state.</td>
+  </tr>
+  <tr>
+    <td valign="top">group</td>
+    <td>(int) group id. Optional, default is 0 (no group).</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>repeatbutton</b> (<a href="oUIRepeatButton.html">UIRepeatButton</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A repeat button declaration. A repeat button is 
+    identical to a standard button except that it continues to raise onselect 
+    events while it is pressed.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be 1 plus the font 
+    height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text. Ignored if this is a graphic pushbutton.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">graphic</td>
+    <td>(bool) specifies that the button displays a graphic instead of text. 
+    Optional, default is false.</td>
+  </tr>
+  <tr>
+    <td valign="top">bitmapid</td>
+    <td>(int) bitmap id for a graphic button. Required for graphic button.</td>
+  </tr>
+  <tr>
+    <td valign="top">sbitmapid</td>
+    <td>(int) bitmap id for the selected state of a graphic button. Optional. If 
+    not specified for a graphic button, the selected state is drawn by inverting 
+    the normal state.</td>
+  </tr>
+  <tr>
+    <td valign="top">frame</td>
+    <td>(int) specifies the frame type. Optional, default is standard frame.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>checkbox</b> (<a href="oUICheckbox.html">UICheckbox</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A checkbox declaration. If a checkbox is a member of a 
+    group, selecting one checkbox deselects the rest.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be the font height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">group</td>
+    <td>(int) group id. Optional, default is 0 (no group).</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>selector</b> (<a href="oUISelector.html">UISelector</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A selector declaration. A selector is a 
+    text control that displays a value. When the selector is pressed, an editor 
+    should open to allow modification of the value. An example is a selector 
+    that displays a date; when pressed, a date selection dialog is opened. </td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be 1 plus the font height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text of current value.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">leftanchor</td>
+    <td>(bool) specifies that the control is left anchored. A selector is sized 
+    by the OS to the size of its contents. If leftanchor is true, the control's 
+    left edge is fixed. Optional, default is true.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>popup</b> (<a href="oUIPopup.html">UIPopup</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A popup declaration. A popup must have an 
+    associated list whose triggerid property is the id of the associated popup.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be the font height.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text of current value.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">leftanchor</td>
+    <td>(bool) specifies that the control is left anchored. A popup is sized by 
+    the OS to the size of its contents. If leftanchor is true, the control's 
+    left edge is fixed. Optional, default is true.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>list</b> (<a href="oUIList.html">UIList</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A list declaration. If the triggerid 
+    property set, the list is only displayed when the associated popup is 
+    selected.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height should be a multiple of the font height.</td>
+  </tr>
+  <tr>
+    <td valign="top">fontid</td>
+    <td>(int) font id. Optional, default is standard font.</td>
+  </tr>
+  <tr>
+    <td valign="top">triggerid</td>
+    <td>(int) id of the associated popup. Optional, default is a no associated 
+    popup.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>bitmap</b> (<a href="oUIFBitmap.html">UIFBitmap</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A bitmap control declaration. Displays a 
+    static bitmap.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y</td>
+    <td>(int) position.</td>
+  </tr>
+  <tr>
+    <td valign="top">bitmapid</td>
+    <td>(int) id of the bitmap to display.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>graffiti</b></td>
+    <td bgcolor="#E0E0E0" valign="top">A graffiti shift indicator. There may 
+    only be one per form. This control has no name and no id.</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y</td>
+    <td>(int) position.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>scroll</b> (<a href="oUIScroll.html">UIScroll</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A scroll bar declaration. Only vertical 
+    scroll bars are supported by the OS.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The width should be 7.</td>
+  </tr>
+  <tr>
+    <td valign="top">min</td>
+    <td>(int) minimum value. Optional, default is 0.</td>
+  </tr>
+  <tr>
+    <td valign="top">max</td>
+    <td>(int) maximum value. Optional, default is 99.</td>
+  </tr>
+  <tr>
+    <td valign="top">page</td>
+    <td>(int) page value. Optional, default is 20.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>slider</b> (<a href="oUISlider.html">UISlider</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A slider declaration. Only horizontal 
+    sliders are supported by the OS. The presence of a slider on a form causes 
+    the application to require OS 3.5.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position. The height is generally 12.</td>
+  </tr>
+  <tr>
+    <td valign="top">graphic</td>
+    <td>(bool) specifies that custom bitmaps are used for the thumb and the 
+    background.</td>
+  </tr>
+  <tr>
+    <td valign="top">bitmapid</td>
+    <td>(int) bitmap id for thumb. Required for a graphic slider</td>
+  </tr>
+  <tr>
+    <td valign="top">sbitmapid</td>
+    <td>(int) bitmap id for background. Required for a graphic slider</td>
+  </tr>
+  <tr>
+    <td valign="top">min</td>
+    <td>(int) minimum value. Optional, default is 0.</td>
+  </tr>
+  <tr>
+    <td valign="top">max</td>
+    <td>(int) maximum value. Optional, default is 99.</td>
+  </tr>
+  <tr>
+    <td valign="top">page</td>
+    <td>(int) page value. Optional, default is 20.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>gadget</b> (<a href="oUIGadget.html">UIGadget</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A custom gadget declaration. Unlike other 
+    controls, a gadget declaration must include the name of a type which 
+    implements the gadget. See details <a href="#gadgetDecl">above</a>.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">x,y,w,h</td>
+    <td>(int) size and position.</td>
+  </tr>
+  <tr>
+    <td valign="top">hresize</td>
+    <td>(int) defines the horizontal resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td valign="top">vresize</td>
+    <td>(int) defines the vertical resize rule. Ignored if parent form is not 
+    resizable.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>menubar</b></td>
+    <td bgcolor="#E0E0E0" valign="top">A menubar declaration. A menubar must be 
+    declared within a form declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>menu</b></td>
+    <td bgcolor="#E0E0E0" valign="top">A menu declaration. This control has no 
+    name and no id, and must be declared within a menubar declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) menu text.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>menuitem</b> (<a href="oUIMenuItem.html">UIMenuItem</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A menu item declaration. A menu item must 
+    be declared within a menu declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">sysid</td>
+    <td>(int) system menu id. If this menu should perform a system action (e.g. 
+    copy/paste), set this property to the system menu id. Optional, default is a 
+    non-system menu item.</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) menu item text.</td>
+  </tr>
+  <tr>
+    <td valign="top">shortcut</td>
+    <td>(string) shortcut key. Optional.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>resstring</b> (<a href="oUIString.html">UIString</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A resource string declaration.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">text</td>
+    <td>(string) text.</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>resource</b></td>
+    <td bgcolor="#E0E0E0" valign="top">A raw resource declaration. Specify 
+    either 1. file, type, and id (import a file as a resource - desktop only); 
+    2. res, type, and id (import a single resource from a PRC); or 3. just res 
+    (import all resources from a PRC).</td>
+  </tr>
+  <tr>
+    <td valign="top">file</td>
+    <td>(string) name of file to import.</td>
+  </tr>
+  <tr>
+    <td valign="top">res</td>
+    <td>(string) specifies the source of the resource in &quot;database&quot; or &quot;database,type,id&quot; format.</td>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>(4 char string) type of resource</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) resource id</td>
+  </tr>
+  <tr>
+    <td bgcolor="#E0E0E0" valign="top"><b>bitmap</b> (<a href="oBitmap.html">Bitmap</a>)</td>
+    <td bgcolor="#E0E0E0" valign="top">A bitmap declaration. Specify either 
+    imageres, or a collection image<i>X</i> and imageh<i>X</i> properties. When 
+    specifying imageres, the type of resource being imported will generally be &quot;Tbmp&quot;.</td>
+  </tr>
+  <tr>
+    <td valign="top">id</td>
+    <td>(int) unique id</td>
+  </tr>
+  <tr>
+    <td valign="top">w,h</td>
+    <td>(int) size of standard density bitmap (high density bitmap must be twice 
+    as large).</td>
+  </tr>
+  <tr>
+    <td valign="top">image<i>X</i></td>
+    <td>(string) file name of a BMP file. <i>X</i> specifies the bit depth, and 
+    can be 1, 2, 4, 8, or 16.</td>
+  </tr>
+  <tr>
+    <td valign="top">imageh<i>X</i></td>
+    <td>(string) file name of a BMP file. <i>X</i> specifies the bit depth, and 
+    can be 1, 2, 4, 8, or 16. Must be twice the size of image<i>X</i> files.</td>
+  </tr>
+  <tr>
+    <td valign="top">imageres</td>
+    <td>(string) specifies the source of the bitmap in &quot;database,type,id&quot; format.</td>
+  </tr>
+</table>

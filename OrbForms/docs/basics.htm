@@ -1,0 +1,669 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>New Page 1</title>
+<style>
+<!--
+.note        { font-family: Verdana; font-size: 8pt; vertical-align: bottom }
+-->
+</style>
+</head>
+
+<body style="font-family: Verdana">
+
+<h1>OrbForms Designer Basics</h1>
+<h2>Beta Notes</h2>
+<ul>
+  <li>Standalone applications will be delivered with the final build of v1.0.</li>
+  <li>Most methods in the library reference do not have examples. Please provide
+    us with feedback about which ones need an example.</li>
+</ul>
+<h2>Getting Started</h2>
+<h3>Installation</h3>
+<p>To start building and executing applications, you must do the following
+simple tasks:</p>
+<ul>
+  <li><b>Install OrbForms Designer</b> - If you are reading this, you have
+    probably done already installed OrbForms Designer.</li>
+  <li><b>Download and Install Palm 
+OS Emulator</b> - Download the Palm OS Emulator from Palm's development site - <a href="http://www.palmos.com/dev/tools/emulator/">get
+    it here</a>. Install it according the the instructions it provides. Either
+    download a ROM image (requires signing an agreement with Palm), or copy the
+    ROM from your Palm device by following the provided instructions. Using the
+    emulator is not strictly required, but make development much faster (the
+    emulator IS required when using the OrbForms Designer demo version).</li>
+  <li><b>Install OrbForms Runtime</b> - Copy OrbFormsRT.prc and Mathlib.prc to
+    your device/emulator. OrbFormsRT.prc is the OrbForms runtime engine - this
+    is not required if you build a standalone application. Mathlib.prc is a
+    standard mathematics library than many Palm OS applications use, and is
+    included in the ROM of some handhelds, such as Handspring devices.</li>
+</ul>
+<h3>Making a program using OrbForms Designer</h3>
+<p>If you're new to Palm programming, try creating a small application to get 
+the feel for how everything works. OrbForms Designer comes 
+equipped with tutorials to provide a quick and easy way to experience Palm 
+programming while learning the features and power of the OrbForms Designer tool.</p>
+<p>The basic steps for making a program are:</p>
+<ul>
+  <li><b> Create a project</b>. Using the OrbForms Designer project wizard,
+    create a project. A project 
+allows you to manage and organize all the source files that are part of the 
+application. It also maintains the user interface you design with the visual
+    designer.</li>
+  <li><b>Design the forms</b>. By default, a project will create an empty form. 
+You need to customize the form's appearance using the visual design tool within OrbForms
+    Designer. You can also add additional forms, menus, bitmaps, and help
+    strings.</li>
+  <li><b> Add customized code</b>. With the layout of the form complete, you now provide customized handlers for
+    events. An event occurs any time the user does something to your
+    application, such as tapping a button or selecting a menu item.</li>
+  <li><b> Compile the project</b>. When you're ready to see the results of your efforts, 
+compile the project into the finished Palm application.</li>
+  <li><b> Test the application</b>. To make sure the application looks and acts the way you 
+planned, you need to test it. Testing can be as simple as copying the 
+program to your Palm device or the Palm OS Emulator. 
+If you find problems, resolve them in the source files and compile the project
+    again. For the demo version of OrbForms Designer, the compiled applications
+    are only allowed to run on the emulator.</li>
+  <li><b> Deliver the final Palm application</b>. When you're satisfied with the way your 
+Palm application looks and acts, you make it available to others who may find 
+your program useful. That may mean sending the Palm application you 
+created to others through email, floppy disks, or simply beam it over to another 
+Palm device. Another popular method is to put on the internet for others 
+to download to their devices.</li>
+</ul>
+<h2>Environment</h2>
+<p>The OrbForms Designer environment consists of many tools to increase your
+productivity while creating applications - a Workspace bar containing the
+project view and source view, a Visual Designer for manipulation forms and
+controls, an Inspection bar listing properties of the current object, and Output
+bar showing build output, and a Source editor window for creating your
+application's source code.</p>
+<h3>Workspace Bar - Project</h3>
+<p>The Project view of the Workspace bar contains all of the resources in your
+application displayed in a tree. Selecting an item will display its properties
+in the Inspection bar, allowing you to edit it's attributes. Right-clicking on
+an item will display a menu of operations that can be performed on the item.</p>
+<h3>Workspace Bar - Source</h3>
+<p>The Source view of the Workspace bar contains all the source code in the
+application, including gadget files. Right-click a source file to move it up or
+down in the list, which controls the order in which the files are compiled and
+the functions and objects are defined. Double-clicking a file will open it and
+display a list of the functions, methods, handlers, and objects defined in the
+file. Double-clicking one of the functions, etc. will jump to the function in
+the source editor.</p>
+<h3>Visual Designer</h3>
+<p>The Visual Designer is the place where the user interface is created and
+tweaked. The view displayed in the Visual Designer is very similar to the way
+the application will appear on an actual device (some controls are drawn
+slightly differently to make them easier to edit, such as the field control).</p>
+<h3>Inspection Bar</h3>
+<p>The Inspection bar shows the properties of the currently selected object. The
+Inspection Bar, Workspace Bar, and Visual Designer are synchronized - selecting
+an object in the Workspace Bar shows the properties in the Inspection Bar;
+changing a property in the Inspection Bar will affect the display in the
+Workspace Bar and Visual Designer.</p>
+<h3>Output Bar</h3>
+<p>The Output bar displays the results of the most recent build, including the
+last error encountered.</p>
+<h3>Source Code Editor</h3>
+<p>The Source Code Editor is a syntax-coloring editor. When an error occurs when
+attempting to build the project, a balloon will appear at the location of the
+error to show you exactly what went wrong.</p>
+<h2>Project</h2>
+<p>A project is the collection of the application properties, application icon,
+forms, bitmaps, strings, source code, and gadget source code that go into an
+application. An OrbForms Designer project is stored as a .orb file which
+contains references to the source files, gadget files, and bitmaps files.</p>
+<h3>Project Items and Names</h3>
+<p>Each item in a project has a name. Each name must be unique, and must be a
+valid variable name. In fact, OrbForms Designer creates an object for each item
+that can be accessed from source code. Look through the tutorials to see how
+this works.</p>
+<h3>Compiling and Source File Order</h3>
+<p>The order of source and gadget files in the project is significant. OrbForms
+Designer compiles all the files in a project in order, essentially treating them
+as one large file. For this reason functions, object, methods, global variables,
+etc. defined in one file can be accessed by every file that is listed after it
+in the project.</p>
+<p>The project file contains an application definitions which is composed of all
+the forms, controls, etc. used by the application. When a form contains a
+gadget, the gadget object must be defined before the application definition. To
+accomplish this, the compiler processes the gadget files before the processing
+the application definition, followed by the source files. This has several
+implications, which are described below.</p>
+<h3>Source File Order Guidelines</h3>
+<p>To make this easier to understand, here are a few guidelines:</p>
+<ul>
+  <li>Gadget objects must be defined in gadget files.</li>
+  <li>The actual methods of a gadget may be defined in a source file.</li>
+  <li>Gadget files may not reference the forms, controls, etc. of the
+    application.</li>
+  <li>Objects and global variables may only be used in the file in which they
+    are defined, and the files that follow.</li>
+  <li>Functions can only be used in the file in which they are <i>declared</i>,
+    and the files that follow.</li>
+</ul>
+<h2>Forms and Controls</h2>
+<h3>Forms</h3>
+<p>A form is like the canvas of a painting. Within a form you can 
+place user interface elements like labels, buttons, and check boxes. Each 
+Palm application contains at least one form which is opened when the application 
+starts up. There are two types of forms, non-modal (regular) and modal. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Regular Form</td>
+    <td width="50%">Modal Form</td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="form.gif" width="166" height="165"></img></td>
+    <td width="50%"><img border="0" src="dialog.gif" width="164" height="111"></img></td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <ul>
+      <li>Title on the left side</li>
+      <li>Allowed to have menus</li>
+      <li>Has no border</li>
+    </ul>
+    </td>
+    <td width="50%">
+    <ul>
+      <li>Title centered</li>
+      <li>No menus allowed</li>
+      <li>Has help button on the top right corner</li>
+      <li>Has a border with round corner</li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<p>A form has many properties other than its size. To 
+simplify the design process, OrbForms Designer's Inspection tool allows you to 
+adjust all of a form's properties and add code to handle user events.</p>
+<table border="2" cellpadding="3" style="border-collapse: collapse; border-width: 3; " bordercolor="#C0C0C0" width="100%" cellspacing="3">
+  <tr>
+    <td width="17%" style="border-style: none; border-width: medium" bordercolor="#000000" valign="top">
+    <b>
+    Property</b></td>
+    <td width="83%" style="border-style: none; border-width: medium" bordercolor="#000000">
+    <b>Meaning</b></td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Name</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    The name that is used in source code to refer to the form.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Text</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    The form's title</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    MenuBar</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A regular form is allowed to have a menu bar, you can create menu bars in the form 
+    and pick one of them to be your main menu bar.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Modal</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    Determines if this is a modal form.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    HelpID</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A string from the string table which is displayed when the &quot;i&quot; is
+    clicked in a modal form's title bar.</td>
+  </tr>
+  <tr>
+    <td width="17%" style="border-left: medium none #FFFFFF; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top">
+    Default Button</td>
+    <td width="83%" style="border-left-style: none; border-left-width: medium; border-right: medium none #FFFFFF; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium">
+    A modal form should have a default button. If the user attempts to switch
+    application when the form is active, the OS will simulate a click on this
+    button to close the form. The default button should close the form without
+    performing any undesirable operation (such as deleting something). </td>
+  </tr>
+</table>
+<p>Next to the Property group, there is a size and handler group. The size 
+group simply states the form's size. The handler group lists all the 
+events a form can have. Clicking on a handler will jump to the handler code if
+it exists (in which case the handler name will be bold), or offer to create the
+handler for you. For a complete list of events and their description, refer to
+the <a href="oUIForm.html">UIForm</a> object in the Library Reference.</p>
+<h3>Controls</h3>
+<p>OrbForms Designer supports a rich set of user interface elements. Almost all
+the controls offered by the Palm OS can be created with OrbForms Designer. If
+these controls do not meet your need, you can create a gadget - a custom control
+for which you provide the drawing and can define your own events.</p>
+<p>For a list of events, methods, and runtime properties of these controls,
+refer to the <a href="cUI.html">User Interface</a> section of the Library
+Reference.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="13%"><b>Element</b></td>
+    <td width="19%"><b>How it looks</b></td>
+    <td width="35%" valign="top"><b>Description</b></td>
+    <td width="28%" valign="top"><b>Remarks</b></td>
+  </tr>
+  <tr>
+    <td width="13%">Button</td>
+    <td width="19%"><img border="0" src="basics7.gif" width="65" height="21"></img></td>
+    <td width="35%" valign="top">A round rectangle shape with a text string in the center.
+    </td>
+    <td width="28%" valign="top">You can also select a bitmap as the button's face instead of 
+    the text</td>
+  </tr>
+  <tr>
+    <td width="13%">Check Box</td>
+    <td width="19%"><img border="0" src="basics8.gif" width="66" height="16"></img></td>
+    <td width="35%" valign="top">A square box with a text string on the right
+      side, representing a true/false property.</td>
+    <td width="28%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="13%">Push Button</td>
+    <td width="19%">
+    <img hspace="20" src="pushbuttons.gif" border="0" width="145" height="48"></td>
+    <td width="35%" valign="top">A rectangle box with a text string in the center.
+      Many push buttons are created beside one another, representing a group of
+      mutually-exclusive options.&nbsp;</td>
+    <td width="28%" valign="top">Each push button in a group must have the same
+      group id &gt; 0.</td>
+  </tr>
+  <tr>
+    <td width="13%">Repeat Button </td>
+    <td width="19%"><img border="0" src="basics7.gif" width="65" height="21"></img></td>
+    <td width="35%" valign="top">Looks like a button, however the button is repeatedly 
+    selected until the pen lifts. </td>
+    <td width="28%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="13%">Label</td>
+    <td width="19%"><img border="0" src="basics9.gif" width="84" height="12"></img></td>
+    <td width="35%" valign="top">A non-editable text on the screen.</td>
+    <td width="28%" valign="top">Although the text of a label can be changed at
+      runtime, it cannot contain a longer string that was specified in the
+      Visual Designer.</td>
+  </tr>
+  <tr>
+    <td width="13%">Bitmap</td>
+    <td width="19%"><img border="0" src="basics10.gif" width="28" height="30"></td>
+    <td width="35%" valign="top">This control displays a bitmap of your choice on the Palm 
+    Screen.</td>
+    <td width="28%" valign="top">If you want your program to look good on color screens, 
+    remember to 
+    provide grayscale and color bitmaps.</td>
+  </tr>
+  <tr>
+    <td width="13%">Slider</td>
+    <td width="19%">
+    <img hspace="20" src="Slider.gif" border="0" width="114" height="18"></td>
+    <td width="35%" valign="top">In Palm OS 3.5 or later, slider controls are added. It 
+    shows a value within a particular range. On Palm OS previous to 3.5, this
+      control will not be displayed.</td>
+    <td width="28%" valign="top">The OS provides a default slider background and slider thumb
+      image. You can change them.</td>
+  </tr>
+  <tr>
+    <td width="13%">Popup</td>
+    <td width="19%">
+    <img hspace="20" src="popup.gif" border="0" width="48" height="16"></td>
+    <td width="35%" valign="top">Displays a text label and an arrow pointing down on the 
+    left. A popup is usually associated with a list.</td>
+    <td width="28%" valign="top">If the text label changes, the width of the control expands 
+    or contracts to the width of the new label plus the graphic element</td>
+  </tr>
+  <tr>
+    <td width="13%">Selector</td>
+    <td width="19%">
+    <img hspace="20" src="selector.gif" border="0" width="51" height="18"></td>
+    <td width="35%" valign="top">Displays a text label surrounded by a gray rectangular box.</td>
+    <td width="28%" valign="top">If the text label changes, the width of the control expands 
+    or controls to the width of the new label.</td>
+  </tr>
+  <tr>
+    <td width="13%">List</td>
+    <td width="19%"><img border="0" src="basics11.gif" width="78" height="92"></img></td>
+    <td width="35%" valign="top">A rectangular box with multiple line of text as choices</td>
+    <td width="28%" valign="top">If a popup is associated with the list, the
+      list will be hidden until the popup is selected.</td>
+  </tr>
+  <tr>
+    <td width="13%">Field</td>
+    <td width="19%">
+    <img hspace="20" src="fieldtext.gif" border="0" width="122" height="9"></td>
+    <td width="35%" valign="top">A field displays one or more lines of text and allow the 
+    user to edit the text</td>
+    <td width="28%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="13%">Gadget</td>
+    <td width="19%"><img border="0" src="basics12.gif" width="117" height="116"></img></td>
+    <td width="35%" valign="top">Looks like an empty box. The gadget type is displayed 
+    in the center.</td>
+    <td width = "28%" valign="top">The developer must handle the pen events and drawing since 
+    there is no default behavior for the control.</td>
+  </tr>
+</table>
+<p>There are two ways to add controls to a form:</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Right click on the form node in the Workspace</td>
+    <td width="50%">Right click on the form in the Visual Designer</td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <img border="0" src="addelement1.jpg" width="169" height="122"></img><p class="note">
+    The element will appear at the (0,0) position.</td>
+    <td width="50%">
+    <img border="0" src="addelement2.jpg" width="247" height="133"></img><p class="note">
+    The element will appear at the location where you right clicked.</td>
+  </tr>
+</table>
+<p></p>
+<h3> Menus</h3>
+<p>A regular form can have a menu bar, which contains one or more menus. Each
+menu contains one or more menu items and separators. A menu item should have an
+onselect handler which is called when the user taps the menu item or enters the
+associated shortcut key. To create a separator, create a menu item and set its
+text to a dash &quot;-&quot;.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="50%">Palm OS Menu </td>
+    <td width="50%">OrbForms Designer Workspace View</td>
+  </tr>
+  <tr>
+    <td width="50%">
+    <img height="124" hspace="20" src="UserInterface17.gif" width="360" border="0"></img></td>
+    <td width="50%"><img border="0" src="basics2.gif" width="147" height="109"></img></td>
+  </tr>
+</table>
+<h1>Quick Tutorials</h1>
+<h2>Hello, World</h2>
+<h3>Lesson 1: Create a simple &quot;Hello, World&quot; program.</h3>
+<p>It seems every programming book's first program is 
+always a &quot;Hello, World&quot; example, so we will follow the tradition here. 
+This example consists a minimal Palm program which simply displays a &quot;Hello, World&quot; 
+message on the screen.</p>
+<p>The goal here is to get you comfortable with the tool 
+and the development process. If you don't understand exactly the code 
+does, that is fine. We will discuss more about them in the later lessons.</p>
+<h3>Create a Project</h3>
+<ul>
+  <li>Select the Project menu and choose New Project.</li>
+  <li>A dialog will appear and collect the project related 
+  information.</li>
+  <li>Please enter the project name as &quot;HelloWorld&quot;</li>
+  <li>Enter the project location. This determines 
+  where you want to store the project.</li>
+  <li>Select the Simple Application Wizard.
+  </li>
+  <li>Click Next button.</li>
+  <li>Click Finish button. (We are 
+  just creating an example. You don't need to modify those default 
+  settings appeared in the table.)</li>
+</ul>
+<p>Now the project is created, so let us briefly go through the things you see on the screen.</p>
+<ul>
+  <li>The Workspace bar has two tabs, &quot;Project&quot; and &quot;Source&quot;. </li>
+  <li>The Project tab shows the entire project as a tree. Each tree node 
+  represents a component of the project. You can view and edit their properties
+    using the&nbsp; Inspection bar.</li>
+  <li>The Source tab shows all the source files as a tree. You can double click 
+  on a source file to open it (which also displays a list of functions in the
+    file).</li>
+  <li>The Inspection bar is where you can view the properties of the currently
+    selected node. </li>
+</ul>
+<h3>Add Customized Code</h3>
+<p>Select the root node HelloWorld, and see what appears in the Inspection bar.
+</p>
+<p>Change the Display Name to &quot;Hello World&quot;. It is important to set the 
+display name property since that is the name Palm OS application launcher will use to display your 
+program.</p>
+<p>Select the mainForm node from the Project tab in the Workspace bar. You should
+now see a list of properties and handlers in the Inspection bar.</p>
+<p>Click on the &quot;ondraw&quot; handler. This will open a dialog displaying
+an empty handler for the ondraw event. Click OK to append this code to the
+source file. If the source file wasn't already open, OrbForms Designer will open
+it.</p>
+<p>Edit the ondraw() handler that was just added so that it looks like this:</p>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td width="100%">
+<pre>handler mainForm.ondraw() {
+
+    // create a draw object
+    Draw draw;
+    // attach to this form
+    draw.attachForm(this);
+
+    draw.begin();
+
+    // write the Hello World string at the form position (40,80)
+    draw.text(clrText, 40, 80, &quot;Hello World&quot;);
+
+    draw.end();
+}</pre>
+    </td>
+  </tr>
+</table>
+<h3>Compile the Project</h3>
+<p>Select the Project menu and choose Build, or press the F7 key.</p>
+<p>If everything goes smoothly, you should see following messages in the build
+area:</p>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td width="100%">
+<pre>Project HelloWorld
+Compiling...
+Build duration [98.86] ms
+Build completed</pre>
+    </td>
+  </tr>
+</table>
+<p>The resulting HelloWorld.prc file should now be located in your project directory.</p>
+<h3>Test the Application</h3>
+<p>Copy the HelloWorld.prc file to the emulator. There are two quick 
+ways to do so.</p>
+<ul>
+  <li>Right click on the Emulator and select Install 
+  Application/Database-&gt;Others.</li>
+  <li>Use mouse to drag the HelloWorld.prc to the Palm OS Emulator screen area.</li>
+</ul>
+<p>Go to the application launcher on the emulator (if you are already there, you
+will need to swith to another application and switch back). You should see an
+application named HelloWorld on the emulator. Click on the 
+icon and the application should launch and display the infamous string
+&quot;Hello World&quot;.</p>
+<h3>Deliver the Final Palm Application</h3>
+<p>The last but not the least, after developing your first HelloWorld program, 
+you might want to share it with other friends who has Palm OS devices. 
+Just give the HelloWorld.prc file to your friends through email attachments or 
+web downloads. Make sure give them the OrbFormsRT.prc as well! </p>
+<p>If you create an application that you intend to give to others, you MUST get
+a unique creator id for each application. You can register a creator ID at the
+Palm development site - click on the OrbForms Designer's Help menu and select
+&quot;Palm OS Creator ID&quot; to go there. </p>
+<h3>Exercise:</h3>
+<p>1. Did you notice the HelloWorld program's title is &quot;Form Title&quot;? Can 
+you give it a more appropriate name? </p>
+<p>Hint: check out the inspection area.</p>
+<p>2. The message &quot;Hello World&quot; is rather pointless. How about replace it 
+your favorite proverb or fortune cookie saying?</p>
+<p>Hint: Be aware the screen width limitation. You might need to break the 
+words into a few different lines.</p>
+<p></p>
+<h2>Calculator</h2>
+<h2>Lesson 3: Make a Calculator!</h2>
+<p>In this lesson, you will learn how a simple calculator can be developed
+quickly. Instead of going through the entire development phase, we will just highlight the key steps. By now,
+you should be able to create new projects using the project wizard, build the project,
+and copy the compiled .prc file to the emulator or the actual device 
+with the OrbFormRT.prc installed. </p>
+<h3>Determine the Required Features</h3>
+<ul>
+  <li>Allow multiply, division, subtraction and addition</li>
+  <li>Allow user to input using a keypad</li>
+  <li>Has a display shows the input and output</li>
+  <li>Has a Clear button that clear the calculation</li>
+  <li>Has a equal button </li>
+</ul>
+<h3>Design the User Interface</h3>
+<p>To the main form we add 16 buttons and one field, and give each one of them 
+a name and a text string. Adding a button is as easy as right-clicking the form
+and selecting &quot;Add Button&quot;. Once all the buttons are added, arrange
+them neatly and change the names and text so that your environment looks
+something like the picture below. Also, change the properties of the field such
+that it uses the LED font, is not editable, and has no underline.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="47%">Form's Tree Structure in the Workspace</td>
+    <td width="53%">Form Layout in the Visual Design</td>
+  </tr>
+  <tr>
+    <td width="47%"><img border="0" src="calctree.jpg" width="116" height="291"><p class="note">
+    the button's name is used during coding. They are used to represent 
+    the button in the Workspace</td>
+    <td width="53%"><img border="1" src="basics1.gif" width="160" height="159"><p class="note">
+    the button's text is used during the programming running. </td>
+  </tr>
+</table>
+<h3>Provide event handlers</h3>
+<p>The calculator looks pretty good now. However it doesn't do anything 
+when you run it. To make it function, we need to add handlers for all the
+buttons. </p>
+<p>When you click on the button in the tree or on the form, the Inspection bar will 
+display the button's properties, size, and handlers.</p>
+<p>A button has only one handler which is onselect. This handler is executed
+whenever the user taps on the button. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="36%">
+    <img border="0" src="buthandler.jpg" width="267" height="42"></td>
+    <td width="64%">Bold handler text indicates the event is already handled. 
+    Clicking on the text will jump to the location in source code where the
+      handler is defined.</td>
+  </tr>
+  <tr>
+    <td width="36%">
+    <img border="0" src="buthandler2.jpg" width="267" height="42"></td>
+    <td width="64%">Normal handler text indicates the event is not yet handled. 
+    Clicking on the handler name will generate code to handle the event for you.</td>
+  </tr>
+</table>
+<p>Since all the number buttons do essentially the same thing, we've created a
+function called &quot;doNumber&quot; to do the actual work for each button. So,
+the code to handle each event is rather simple. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="100%">
+<pre>handler key0.onselect() {
+    doNumber(0);
+}
+
+handler key1.onselect() {
+    doNumber(1);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The complete code can be found in the SimpleCalc sample directory. </p>
+<h3>Provide User Feedback</h3>
+<p>The calculation result must be displayed on the screen. We will use a field to accomplish this task.
+A field's text can be set and retrieved during the program execution through the
+field's &quot;text&quot; property. We initialize this field to &quot;0&quot;
+when the main form opens. </p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="100%">
+<pre>handler mainForm.onopen() {
+    fldResult.text = &quot;0&quot;;
+}
+</pre></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    This is a handler for mainForm's onopen event. <br>
+    <b>mainForm</b> is the calculator's form<br>
+    <b>fldResult</b> is a Field we added in the mainForm<br>
+    fldResult.<b>text</b> is a property of the field which allows us to get/set the 
+    text it displays.
+    </td>
+  </tr>
+</table>
+<p>The display also needs to be updated each time the user enters a number. This is the function that all of the number button handlers
+call:</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td>
+<pre>void doNumber(int num) {
+    operand = operand * 10 + num;
+    fldResult.text = operand;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>For a complete list of the field's properties and methods, refer to the <a href="oUIField.html">UIField</a>
+object the Library Reference.</p>
+<h3>Add an About Menu</h3>
+<p>A menu item has an onselect handler as well. In our case, we want to make a 
+menu item whose text is &quot;About...&quot;. In order to add a menu item, we
+must first add a menu bar and a menu. First, create a menu bar on the main form
+called &quot;mbarMain&quot;. Traditionally the &quot;About&quot; menu item in a
+Palm application resides in a menu named &quot;Options&quot;, so add a menu to
+mbarMain called &quot;menuOptions&quot; whose text is &quot;Options&quot;.
+Finally, add a menu item to menuOptions called &quot;miOptionsAbout&quot;. Set
+its text to &quot;About...&quot;, and its shortcut to &quot;A&quot;. When the 
+user select the &quot;About...&quot; menu item, we want to display a message box with the 
+program's description.</p>
+<table border="3" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%">
+  <tr>
+    <td width="33%">What you see in the Workspace and Inspection bar.</td>
+    <td width="33%"><img border="0" src="calcmenu.jpg" width="400" height="116"></td>
+  </tr>
+  <tr>
+    <td width="33%">Handler source
+</td>
+    <td width="33%">
+<pre>handler miOptionsAbout.onselect() {
+    alert(&quot;SimpleCalc\nAn OrbForms sample application&quot;);
+
+}</pre>
+    alert is a function that creates a popup message box. Inside the 
+    message box, it displays the text you passed in.</td>
+  </tr>
+  <tr>
+    <td width="33%">Final result when the user selects the About menu</td>
+    <td width="33%"><img border="0" src="calcalert.gif" width="171" height="93"></img></td>
+  </tr>
+</table>
+<h3>Conclusion</h3>
+<p>These are all the major parts of a simple calculator. You should now be
+comfortable adding custom handlers on your own. In order to take full 
+advantage of each type of control, study the <a href="cUI.html">User Interface</a>
+section of the Library Reference. </p>
+<h3>Exercise:</h3>
+<p>1. A field is a very powerful user interface element. Can you make the 
+output display in different fonts? Or add an underline to the output number?</p>
+<p>2. In the current calculator state, f you try to divide a number by 0 a runtime error will
+occur. It is not a desirable thing to have runtime errors. Can you 
+add a feature that when the user tries to divide a number by 0, an <a href="mAlert.html"> alert</a> box 
+pops up and tell the user that this operation is invalid?</p>
+<h1>About OrbWorks, Inc.</h1>
+<h2>OrbWorks History</h2>
+<h2>Contact Info</h2>
+
+</body>
+
+</html>

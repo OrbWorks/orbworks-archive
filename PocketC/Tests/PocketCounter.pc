@@ -1,0 +1,81 @@
+//PocketCounter
+
+int x,y,ev;
+string x1,y1;
+
+topmenu(){
+  rect(0,0,11,160,15,0);
+  rect(1,0,0,150,11,0);
+  textattr(1,2,0);
+  text(2,0,"PocketCounter");
+  textattr(0,1,0);
+bitmap(149,0,"0bffe8028628028e28628628628f2802ffe");
+}
+draw(){
+  text(95,149,"by Dian Suharto");
+  text(95,57,"PAGE UP");
+  text(87,96,"PAGE DOWN");
+  text(26,46,"-1");
+  text(26,116,"-1");
+  text(80,42,"+1");
+  text(80,111,"+1");
+  text(129,20,"RESET");
+  text(129,133,"RESET");
+  frame(1,1,15,159,79,2);
+  frame(1,1,85,159,149,2);
+  frame2(1,8,22,53,37,3,2);
+  frame2(1,8,92,53,107,3,2);
+  frame(1,12,45,49,58,3);
+  frame(1,12,115,49,128,3);
+  frame(1,125,19,155,32,3);
+  frame(1,125,132,155,145,3);
+  line(1,80,70,140,70);
+  line(1,79,69,79,56);
+  line(1,141,69,141,56);
+  line(1,80,55,90,53);
+  line(1,140,55,130,53);
+  line(1,91,53,97,53);
+  line(1,129,53,123,53);
+  line(1,98,52,122,52);
+  line(1,80,93,140,93);
+  line(1,79,94,79,107);
+  line(1,141,94,141,107);
+  line(1,80,108,90,110);
+  line(1,140,108,130,110);
+  line(1,91,110,97,110);
+  line(1,129,110,123,110);
+  line(1,98,111,122,111);
+}
+inf(){
+alert("PocketCounter v1.0.\nPocketCounter is Freeware.\nPlease E-mail me for everything :)\n\nDian Suharto Iskandar\n(arto88@dnet.net.id).");
+}
+
+main(){
+  graph_on();topmenu();draw();
+  textattr(2,1,0);
+  while(1){
+    if(x<0)x=0;if(y<0)y=0;
+    x1="00000"+x;y1="00000"+y;
+    text(10,23,strright(x1,6));
+    text(10,93,strright(y1,6));
+    ev=event(1);
+
+//counting-up hardware button
+      if(ev==5){x++;tone(1000,20);}
+else if(ev==6){y++;tone(800,20);}
+else
+
+//counting-up tap screen
+if(ev==2){if(penx()>79&&penx()<141)if(peny()>52&&peny()<70){x++;tone(1000,20);}else if(peny()>93&&peny()<111){y++;tone(800,20);}
+
+//counting-down tap screen
+if(penx()>12&&penx()<49)if(peny()>45&&peny()<58){x--;tone(900,30);}else if(peny()>115&&peny()<128){y--;tone(700,30);}
+
+//reset
+if(penx()>125&&penx()<155)if(peny()>19&&peny()<32){x=0;tone(500,30);}else if(peny()>132&&peny()<145){y=0;tone(500,30);}
+
+//information
+if(penx()>148&&peny()<11)inf();
+    }
+  }
+}

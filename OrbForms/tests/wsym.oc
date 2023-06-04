@@ -1,0 +1,10 @@
+object X { int y; void ya();};
+X gx;
+UIApp app;
+handler app.onstart() {
+    Preferences prefs;
+    a
+    gx.ya();
+    bla = 5;
+    
+}

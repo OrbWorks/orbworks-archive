@@ -1,0 +1,145 @@
+// Address.oc
+//
+// utility code for accessing the records in the built-in
+// address database.
+
+object Address {
+    string lastName;
+    string firstName;
+    string company;
+    string phones[5];
+    string address;
+    string city;
+    string state;
+    string zipcode;
+    string country;
+    string title;
+    string custom[4];
+    string note;
+    
+    int options;
+};
+
+const int cNumFields = 19;
+
+object AddressDB {
+    bool open();
+    void close();
+    bool read(int id, Address addr);
+    bool write(int id, Address addr);
+    bool add(int* pid, Address addr);
+
+    bool writeInternal(DBRecord rec, Address addr);
+    
+    Database db;
+};
+
+// open the address database
+bool AddressDB.open() {
+    return db.open("AddressDB", false);
+}
+
+// close the address database
+void AddressDB.close() {
+    db.close();
+}
+
+// the header exactly as it is laid out in the record
+struct AddressHeader {
+    int options;
+    int flags;
+    char compoffset;
+};
+
+// read an existing address
+bool AddressDB.read(int id, Address addr) {
+    DBRecord rec;
+    AddressHeader hdr;
+    string* pstr;
+    int i;
+
+    if (db.getrec(id, rec, true)) {
+        if (rec.read(&hdr, typeof(hdr), 1)) {
+            addr.options = hdr.options;
+            // treat the Address as an array of strings,
+            // since it is just a bunch of strings stored
+            // sequentially
+            pstr = (string*)&addr;
+            for (i=0;i<cNumFields;i++) {
+                if (hdr.flags & (1 << i)) {
+                    if (!rec.read(pstr, "s", 1)) {
+                        // unable to read
+                        return false;
+                    }
+                } else {
+                    *pstr = "";
+                }
+                pstr++;
+            }
+            // successfully read everything
+            return true;
+        }
+    }
+    return false;
+}
+
+// write an existing address
+bool AddressDB.write(int id, Address addr) {
+    DBRecord rec;
+
+    if (db.getrec(id, rec, false)) {
+        return writeInternal(rec, addr);
+    }
+    return false;
+}
+
+// insert a new address
+bool AddressDB.add(int* pid, Address addr) {
+    DBRecord rec;
+    
+    if (db.newrec(pid, rec)) {
+        return writeInternal(rec, addr);
+    }
+    return false;
+}
+
+// internal write routine shared by add and write
+bool AddressDB.writeInternal(DBRecord rec, Address addr) {
+    AddressHeader hdr;
+    string* pstr;
+    int i;
+
+    hdr.options = addr.options;
+    pstr = (string*)&addr;
+    // generate the flags based on non-empty strings
+    for (i=0;i<cNumFields;i++) {
+        if (*pstr) {
+            hdr.flags |= (1 << i);
+        }
+        pstr++;
+    }
+    // calculate the company offset
+    if (addr.company) {
+        if (addr.lastName)
+            hdr.compoffset = strlen(addr.lastName) + 1;
+        if (addr.firstName)
+            hdr.compoffset += strlen(addr.firstName) + 1;
+        hdr.compoffset += 1;
+    }
+    
+    // write the header
+    if (!rec.write(&hdr, typeof(hdr), 1))
+        return false;
+    
+    // write out each value
+    pstr = (string*)&addr;
+    for (i=0;i<cNumFields;i++) {
+        if (*pstr) {
+            if (!rec.write(pstr, "s", 1))
+                return false;
+        }
+        pstr++;
+    }
+    // successfully wrote everything
+    return true;
+}

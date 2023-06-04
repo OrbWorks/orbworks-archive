@@ -1,0 +1,243 @@
+#include "tests.h"
+
+object TestOnlyDouble {
+    int single;
+    int double @ 4:5;
+};
+
+int initIntPlusOne(int i) {
+    puts("Init(" + i + ")\n");
+    return i + 1;
+}
+
+struct B {
+    float b1;
+    struct A {
+        int a1, a2;
+        char ac;
+    } a;
+    int b2;
+} b = { 3.0, { 1, -2, 'd'}, initIntPlusOne(6) };
+
+struct List {
+    int data;
+    List* next;
+    B* pb;
+};
+
+object Point {
+    int x, y;
+    void out();
+    string asString();
+    void dostuff();
+};
+
+string Point.asString() {
+    return "(" + this.x + "," + this.y + ")";
+}
+
+string toString(Point pt) {
+    return pt.asString();
+}
+
+void Point.dostuff() {
+    Point pt = { 4, 5 };
+    puts("1:" + toString(pt) + "2:" + toString(pt));
+}
+
+void Point.out() {
+    puts(asString() + "\n");
+}
+
+Point outPoint(Point pt) {
+    pt.out();
+    return pt;
+}
+
+object Object {
+    //void _init();
+    //void _destroy();
+    //void _copy(Object src);
+    int x, y;
+    int a[2];
+    TestOnlyDouble dbl;
+    int five();
+    void outAddr();
+    Point getPoint(int mult);
+};
+
+int Object.five() {
+    x = 6;	
+    return 5;
+}
+
+void Object.outAddr() {
+    puts("&obj = " + (int)&this + "\n");
+}
+
+Point Object.getPoint(int mult) {
+    Point pt;
+    pt.x = mult * this.x;
+    pt.y = mult * this.y;
+    return pt;
+}
+
+Point makePt(int x, int y) {
+    Point pt;
+    pt.x = x;
+    pt.y = y;
+    return pt;
+}
+
+Object g_obj;
+Object* getGlobal() {
+    return &g_obj;
+}
+
+Object* retObject(Object obj) {
+    return &obj;
+}
+
+void objects() {
+    Object obj;
+    Object* pobj;
+    TestOnlyDouble dbl;
+    Point pt;
+
+    pobj = &obj;
+    test(obj.five() == 5, "obj.five() = 5");
+    test(obj.x == 6, "obj.x = 6");
+    dbl.single = 8;
+    test(dbl.double == 16, "dbl.double = 16");
+    test((dbl.double = 15) == 14, "(dbl.double = 15) == 14");
+    test(dbl.single == 7, "dbl.single = 7");
+    obj.x = 2;
+    obj.y = 3;
+    pt = obj.getPoint(4);
+    test(pt.x == 8, "pt.x == 8");
+    test(pt.y == 12, "pt.x == 12");
+    pt.out();
+    test(makePt(5,6).asString() == "(5,6)", "makePt(5,6).asString()");
+    test(obj.getPoint(5).asString() == "(10,15)", "obj.getPoint(5).asString()");
+    test(pobj->getPoint(5).asString() == "(10,15)", "pobj->getPoint(5).asString()");
+    outPoint(obj.getPoint(5));
+    outPoint(obj.getPoint(5)).out();
+    test((obj.dbl.double = 13) == 12, "(obj.dbl.double = 13) == 12");
+    test((pobj->dbl.double = 13) == 12, "(pobj->dbl.double = 13) == 12");
+    obj.outAddr();
+
+    g_obj.x = 76;
+    g_obj.y = 89;
+    obj.x = 22;
+    obj.y = 33;
+    test(getGlobal()->x == 76, "getGlobal()->x == 76");
+    test(retObject(obj)->y == 33, "retObject(obj)->y == 33");
+    test(retObject(g_obj)->y == 89, "retObject(g_obj)->y == 89");
+    __temp_Point.out();
+    puts("1:" + toString(pt) + "2:" + toString(pt));
+}
+
+int getx(Point a, Point b) {
+    test(a.x == 7, "a.x == 7");
+    test(a.y == 8, "a.y == 8");
+    test(b.x == 9, "b.x == 9");
+    test(b.y == 10, "b.y == 10");
+    return a.x;
+}
+
+int array() {
+    int iobj, ia, pass = true;
+    Object objs[5];
+    
+    test(objs[2].five() == 5, "objs[2].five() == 5");
+    test(objs[2].x == 6, "objs[2].x == 6");
+    
+    for (;iobj < 5; iobj++) {
+        objs[iobj].x = iobj * 4;
+        for (ia=0; ia<2; ia++)
+            objs[iobj].a[ia] = iobj * 8 + ia * 7;
+    }
+    for (iobj=0 ;iobj < 5; iobj++) {
+        if (objs[iobj].x != iobj * 4)
+            pass = false;
+        for (ia=0; ia<2; ia++)
+            if (objs[iobj].a[ia] != iobj * 8 + ia * 7)
+                pass = false;
+    }
+    
+    test(pass, "array of objs with arrays");
+    objs[1].dbl.single = 3;
+    test(objs[1].dbl.single == 3, "objs[1].dbl.single == 3");
+    test(objs[1].dbl.double == 6, "objs[1].dbl.double == 6");
+    puts("objs[1].dbl.double = " + objs[1].dbl.double + "\n");
+}
+
+List lb;
+
+void typeoftest() {
+    test(typeof(int) == "i", "typeof(int)");
+    test(typeof(TestOnlyDouble) == "oi", "typeof(TestOnlyDouble)");
+    test(typeof(Point) == "oii", "typeof(Point)");
+    test(typeof(Object) == typeof(g_obj), "typeof(Object) == typeof(g_obj)");
+    test(typeof(Object) == "oiiiioi", "typeof(Object)");
+    test(typeof(&g_obj) == "p", "typeof(&g_obj)");
+    test(typeof(g_obj.a) == "p", "typeof(g_obj.a)");
+    test(typeof(lb) == "ipp", "typeof(lb)");
+    test(typeof(B) == "fiici", "typeof(B)");
+}
+
+void main() {
+    Point* ppt;
+    Point pt, pt2;
+    List la;
+    int* pi;
+
+    puts("{ " + b.b1 + ", { " + b.a.a1 + ", " + b.a.a2 +
+         ", '" + b.a.ac + "'}, " + b.b2 + "};\n");
+    test((b.b1 == 3.0 && b.a.a1 == 1 && b.a.a2 == -2 && b.a.ac == 'd' && b.b2 == 7), "struct init");
+        
+    pt = makePt(5,6);
+    makePt(8,9); // discard return value
+    
+    puts("pt.x = " + pt.x + "; pt.y = " + pt.y + "\n");
+    test((pt.x == 5 && pt.y == 6), "struct return");
+
+    test(sizeof(Point)==3, "sizeof(Point)");
+    test(sizeof(Point*)==1, "sizeof(Point*)");
+    test(sizeof(pt)==3, "sizeof(pt)");
+    test(sizeof(ppt)==1, "sizeof(ppt)");
+    test(sizeof(ppt+1)==1, "sizeof(ppt+1)");
+    test(sizeof(g_obj.a)==1, "sizeof(g_obj.a)");
+    ppt = &pt;
+    test(ppt->x == 5, "ppt=&pp; ppt->x");
+    pi = &pt.x;
+    *pi = 10;
+    test(*pi == 10 && pt.x == 10, "*pi == 10 && pt.x == 10");
+    pi = &ppt->x;
+    *pi = 11;
+    test(*pi == 11 && pt.x == 11, "*pi == 11 && pt.x == 11");
+    pt2 = pt;
+    test(pt2.x == 11 && pt2.y == 6, "pt2 = pt");
+    
+    la.next = &lb;
+    lb.next = &la;
+    lb.pb = &b;
+    la.data = 1;
+    lb.data = 2;
+    test(la.next->data == 2, "la.next->data == 2");
+    test(la.next->next->data == 1, "la.next->next->data == 1");
+    test(la.next->pb->a.ac == 'd', "la.next->pb->a.ac == 'd'");
+    
+    pt.x = 7; pt.y = 8; pt2.x = 9; pt2.y = 10;
+    test(getx(pt, pt2) == 7, "getx(pt, pt2) == 7");
+    test(getx(pt, makePt(9,10)) == 7, "getx(pt, makePt(9,10)) == 7");
+    test((makePt(11,12).x = 9) == 9, "(makePt(11,12).x = 9) == 9");
+    pi = &(makePt(13,14).y);
+    test(*pi == 14, "pi = &(makePt(13,14).y); *pi == 14");
+    
+    objects();
+    array();
+    typeoftest();
+    
+    final();
+}

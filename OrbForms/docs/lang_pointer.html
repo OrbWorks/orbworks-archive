@@ -1,0 +1,133 @@
+<p><strong>Note:</strong> Pointers are an advanced topic, which should be dealt
+with after the user is familiar with all the other programming concepts.</p>
+<p>All variables are stored at some address in memory. A pointer is a variable
+which holds the address of another variable - using the pointer the value of the
+original variable can be indirectly accessed (a process called
+&quot;dereferencing&quot;). A pointer can be used with only one value type (<code>int</code>,
+<code>string</code>, <code>struct</code>, etc.) - for example an integer pointer can only be used to
+access an integer. A pointer is declared in the same way as a normal variable
+with the addition of an asterisk (*) after the type name.</p>
+<p>There are two primary operators which are used with pointers, * and &amp;.
+The * operator dereferences the pointer. A dereferenced pointer acts just like
+the data to which it points. The &amp; operator returns the address of a given
+variable. To illustrate:</p>
+<pre>int* p, q; // <b>Note:</b> unlike in C/C++, this declares p and q to <b>BOTH</b> be pointers
+int i;
+
+void test() {
+  i = 5;
+  p = &amp;i;    // Assign the address of 'i' to the pointer 'p'
+             // now, typing '*p' is the same as typing 'i'
+  alert(*p); // Display the value of 'i'
+  *p = 7;    // Assign 7 to 'i'
+  q = p;     // Assign the value of 'p', which is the address of 'i', to 'q'
+             // now, typing '*q' is the also the same as typing 'i'
+
+  // Things not to do
+  p = 8;     // BAD! Don't assign a literal value to a pointer
+  *i = 9;    // BAD! Don't try to dereference a non-pointer
+}</pre>
+
+<p>When initially declared, the pointers will have the value <code>null</code> (which is
+equivalent to 0), which means they point to nothing and cannot be dereferenced.</p>
+
+<h3>Pointers and arrays</h3>
+<p>Pointers and arrays are fairly similar. Pointers can use the [] operator, and an
+array variable (when not used with []) results in the address of the first
+element. For example:</p>
+<pre>int array[5];
+int* p;
+
+void test() {
+  p = array; // Assign the address of the first element of
+             // 'array' to 'p'
+  *p = 7;    // Assign 7 to array[0]
+  p[1] = 8;  // Assign 8 to array[1]
+}</pre>
+<p>This enables the pointers to arrays to be passed as function parameters. This
+also allows the user to implement their own version of two-dimensional arrays
+(multi-dimensional arrays will be implemented in a future version). By creating an array of pointers, each of which is a pointer to an array (or
+part of one), a two-dimensional array can be simulated.</p>
+<pre>int array[100];
+int* twod[10]; // after init(), this can be treated
+               // like at 10x10 matrix
+
+void init() {
+  int i;
+  for (i=0;i&lt;10;i++)
+    twod[i]=array + i*10; // Pointer arithmetic
+}
+
+void test() {
+  int x, y;
+  init();
+  for (x=0;x&lt;10;x++)
+    for (y=0;y&lt;10;y++)
+      twod[x][y]=x * y; // Sets array[x*10 + y] = x*y
+}</pre>
+
+<h3>Pointer arithmetic</h3>
+<p>Pointer values can used in a limited number of expression. You can add and
+subtract from a pointer (and, thus, can use the increment and decrement
+operators as well). When you add 1 to a pointer, the pointer points to the next
+value in memory. Similarly, when you subtract 1 from a pointer, the pointer
+points to the previous value in memory. When you add to or subtract from a
+pointer to a structure/object, the pointer is changed by the number of
+structures specified, rather than the number of memory values (see example
+below). Caution should be used when using
+pointer arithmetic, because dereferencing an invalid memory location will cause
+an error in the applet.</p>
+
+<pre>struct Person {
+  string name;
+  int age;
+};
+...
+Person people[10];
+Person* pPerson;
+pPerson = &amp;people[4]; // pPerson now points to the 4th person
+pPerson++;            // pPerson now points to the 5th person</pre>
+
+<h3>Dynamically allocating memory (new and delete)</h3>
+<p>The OrbC language allows you to dynamically allocate memory at runtime.
+Two of the most common uses of this are allocating an array whose length cannot
+be determined before the program is run, and creating structures and objects
+(discussed soon).</p>
+
+<p>To allocate a new block of memory, use the new keyword. The new keyword takes
+the name of the type to allocate and returns a pointer to the allocated memory
+(or null if the allocation fails). For example:</p>
+
+<pre>int* pi;
+string* ps;
+pi = new int;
+ps = new string;
+*pi = 6;
+*ps = &quot;Hello&quot;;</pre>
+
+<p>The new keyword can also create arrays by specifying the number of desired
+elements in brackets after the type name:</p>
+
+<pre>int count = 10;
+int* parray;
+string* psarray;
+parray = new int[10]; // allocate an array of 10 integers
+psarray = new string[count * 2]; // allocates count*2 strings
+if (parray != null) { // since dynamic memory may run out,
+  parray[3] = 45;     // you should check that new succeeded
+}                     // before using the pointer!
+if (psarray) { // this is the same as (psarray != null)
+  psarray[12] = &quot;twelve&quot;;
+}</pre>
+
+<p>Once the memory is no longer needed, it must be freed using the delete
+operator. The delete operator takes a pointer to memory previously allocated by
+new. The pointer could have been allocated either as a single value, or as an
+array - if the pointer is null, it will safely do nothing.</p>
+
+<pre>delete pi; // delete the integer pointed to by pi
+delete parray; // deletes the entire array pointed to by parray
+delete null; // does nothing</pre>
+
+<p><b>Note:</b> The runtime also provides two methods for dealing with less
+structured memory allocations: malloct, and free.</p>

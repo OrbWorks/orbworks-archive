@@ -1,0 +1,120 @@
+<p>Object inheritance allows you to define a new object type by extending and 
+specializing an existing object type.</p>
+<h3>Extending</h3>
+<p>When you create a <i>derived</i> object from a <i>base</i> object, the 
+derived object inherits all the methods and members of the base object type. A 
+derived type can only have one base type - this is called single inheritance. As 
+in other object-oriented languages, a base class can have its own base class, 
+allowing a deep inheritance tree (e.g. Lion inherits from Cat which inherits 
+from Animal). To 
+declare such a derived object type, you must follow the name of the derived type 
+by a colon and the name of the base type:</p>
+
+<pre>// base object
+object Tree {
+  string name;
+  void grow();
+};
+
+// derived object
+object FruitTree : Tree {
+  string fruit;
+};</pre>
+
+<p>In the example above, the Tree is an object that represents a real-world tree 
+- it has a name (such as &quot;maple&quot;) and a method that makes it grow. The FruitTree 
+is a special kind of Tree which also has the name of the fruit (such as 
+&quot;apple&quot;). Because the FruitTree inherits from Tree, it has all the same methods 
+and members as a Tree. Thus, a FruitTree can be used like this:</p>
+<pre>FruitTree appleTree;
+appleTree.name = "Apple tree"; // name is inherited from Tree
+appleTree.fruit = "apple";
+appleTree.grow(); // grow() is also inherited from Tree</pre>
+<h3>Pointers</h3>
+<p>Because a derived object has all the methods and members as its base, a 
+pointer to the derived type can be used any place that a pointer to the base is 
+expected.</p>
+<pre>// this function expects a pointer to a Tree
+// a pointer to any object derived from a Tree will also work
+void GrowATree(Tree* tree) {
+  tree->grow();
+}
+
+void MakeATree() {
+  FruitTree* appleTree;
+  appleTree = new FruitTree;
+  GrowATree(appleTree); // passing a FruitTree to a function expecting a Tree
+}</pre>
+<h3>Specializing</h3>
+<p>You can specialize the behavior of a derived object by using virtual methods. 
+A virtual method is a method that is defined for a base class and (optionally) 
+overrided in derived classes to provide a specialized implementation. When a virtual 
+method is called through a base object pointer, the specialized version of the 
+method is called based on the object's actual type. To create a virtual method, use the
+<code>virtual</code> keyword
+in the base class (the method in the derived class is automatically virtual). An example makes this more 
+clear:</p>
+<pre>object Animal {
+  virtual string speak();
+};
+string Animal.speak() { return "(silence)"; }
+
+object Dog : Animal {
+  string speak();
+};
+string Dog.speak() { return "woof"; }
+
+object Cat : Animal {
+  string speak();
+};
+string Cat.speak() { return "meow"; }
+
+object Lion : Cat { // a derived object can inherit from another derived object
+  string speak();
+};
+string Lion.speak() { return "roar"; }
+
+void TalkToTheAnimals(Animal* animals, int count) {
+  int i;
+  for (i = 0; i &lt; count; i++) {
+    // although 'animals' is an array of Animal pointers,
+    // at runtime the actual type pointed to by each
+    // pointer is determined (e.g. Dog, Cat), and the
+    // correct method is called (e.g Dog.speak())
+    alert(animals[i]-&gt;speak());
+  }
+}
+
+void MakeAnimals() {
+  Animal* animals[4];
+  animals[0] = new Animal;
+  animals[1] = new Dog;
+  animals[2] = new Cat;
+  animals[3] = new Lion;
+  TalkToTheAnimals(animals, 4); // displays (silence), woof, meow, and roar
+}</pre>
+<p>Often when specializing a method from a base object, it is useful to call the 
+base object's implementation. This can be done using the <code>base</code> keyword. For 
+example, a BigDog might want to make the same sound as a Dog, only louder (in 
+all UPPERCASE). This is accomplished like this:</p>
+<pre>object BigDog : Dog {
+  string speak();
+};
+string BigDog.speak() {
+  string sound;
+  sound = base.speak(); // calls Dog.speak(), returning woof
+  return strupr(sound); // return WOOF
+}</pre>
+<h3>Special methods (_init, _destroy, _copy)</h3>
+<p>In derived classes, the special methods have some special behavior. The 
+_init() method automatically calls the base _init() method as well as the 
+_init() methods of all member objects before entering the method body. The 
+_destroy() method automatically calls the base _destroy() method as well as the 
+_destroy() method of all member objects after exiting the method body. All 
+_destroy() methods are automatically virtual. The _copy() method automatically 
+calls the base _copy() method as well as the _copy() method of all member 
+objects before entering the method.</p>
+<h3>Objects vs. Structs</h3>
+<p>A struct and an object are very similar - they both support methods and 
+members. However, an object cannot inherit from a struct and only objects may 
+inherit from other objects and interfaces.</p>

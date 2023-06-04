@@ -1,0 +1,19 @@
+//AlertcTest02
+//Testing alertc()with PDE version 7.0.0
+
+main()	{
+string TestString="";
+string out;
+graph_on() ;
+title("AlertcTest");
+while(1) {
+    out = "Sent: " + TestString +
+        ", Time-Out: " + TestString +
+        ", CRC: " + TestString;
+
+    if(alertc("Modbus Commands", out,
+        "OK:Clear", 0))TestString="";
+    TestString= TestString +"0"; //increasing the size of TestString.
+
+    }
+}

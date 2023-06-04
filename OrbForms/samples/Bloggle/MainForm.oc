@@ -1,0 +1,68 @@
+// MainForm.oc
+// Implementation of mainForm
+
+// BloggleTimer: a Timer derivitive for adding a timer
+// to the main form
+object BloggleTimer: Timer {
+    void ondisplay(int secs);
+    void ontimeout();
+};
+
+// Display the current timer time on the form. This
+// method is called by Timer when the time changes
+void BloggleTimer.ondisplay(int secs) {
+    string display;
+    display = secs / 60;
+    secs %= 60;
+    display += ":";
+    display += secs / 10;
+    display += secs % 10;
+    timerSelector.text = display;
+    // make sure the device doesn't turn off while
+    // the timer is running
+    resetaot();
+}
+
+// Hide the letters when time is up. This method is
+// called by Timer when the time reaches 0. 
+void BloggleTimer.ontimeout() {
+    bloggleGadget.showdice = false;
+    bloggleGadget.redraw();
+}
+
+BloggleTimer bloggleTimer;
+
+handler mainForm.onopen() {
+    // setup the form timer to fire in 1/10 second
+    mainForm.timer(tickspersec()/10);
+}
+
+handler mainForm.ontimer() {
+    // notify our BloggleTimer that time has passed
+    bloggleTimer.ontimer();
+    // ask the timer to fire again
+    mainForm.timer(tickspersec()/10);
+}
+
+handler mainOptionsAbout.onselect() {
+    alert("This is an OrbForms Designer Application");
+}
+
+handler rollButton.onselect() {
+    // roll the dice
+    bloggleGadget.roll();
+    // redraw the gadget
+    bloggleGadget.showdice = true;
+    bloggleGadget.redraw();
+    // set and start the timer
+    bloggleTimer.reset(60 * 3); // 3 minutes
+    bloggleTimer.start();
+}
+
+handler timerSelector.onselect() {
+    // start or stop the timer
+    if (bloggleTimer.running)
+        bloggleTimer.stop();
+    else
+        bloggleTimer.start();
+}

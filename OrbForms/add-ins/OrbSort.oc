@@ -1,0 +1,2 @@
+// native add-in declaration for OrbSort
+void sort(void*, int count, int size, string order) @ library("OrbSort", 0);

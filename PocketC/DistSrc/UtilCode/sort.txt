@@ -1,0 +1,46 @@
+(c)T.Frogley all rights reserved
+codemonkey_uk@hotmail.com
+reuse without limitation
+--------------------------------
+
+The sort function interface is the same as C's qsort
+
+sort(
+  pointer base, 	//start of data to be sorted
+  int num,		//number of elements
+  int width,	//size of each element
+  pointer compare	//function to compare
+) { ... }
+
+The following compare functions are included:
+
+compare			//
+reverse_compare		// for ints and floats
+comparestr			//
+reverse_comparestr	// for strings
+
+An example of use follows:
+
+//example sort
+#include "sort.h"
+
+main()
+{
+  int i,a[10]={ 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 };
+
+  puts("start data:\n");
+  for(i=0;i<10;i++) puts(a[i]+", ");
+  puts('\n');
+
+  sort(a,10,1,compare);
+
+  puts("in order:\n");
+  for(i=0;i<10;i++) puts(a[i]+", ");
+  puts("\n");
+
+  sort(a,10,1,reverse_compare);
+
+  puts("reverse order:\n");
+  for(i=0;i<10;i++) puts(a[i]+", ");
+  puts("\n");
+}

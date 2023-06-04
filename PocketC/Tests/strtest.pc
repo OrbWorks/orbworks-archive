@@ -1,0 +1,13 @@
+// strtest
+main() {
+    string a, b = "bob", c = "chuck", u;
+    a = "an" + "dy";
+    u = strupr(a);
+    puts("u = " + u + "\na = " + a + "\n");
+    u = strupr(a+b);
+    puts("u = " + u + "\na+b = " + (a+b) + "\n");
+    u = strupr("hello");
+    puts("u = " + u + "\n\"hello\"\n");
+}
+    
+    

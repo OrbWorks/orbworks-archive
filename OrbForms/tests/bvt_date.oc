@@ -1,0 +1,75 @@
+#include "tests.h"
+void testDiff() {
+    Date date1, date2;
+    int DaysGoneOfMyLife;
+    string out;
+    
+    date2.now(); // date at testing day is May,15 2002
+    date1.day = 24;
+    date1.month = 11;
+    date1.year = 1963; // <- wow, i'm older than a 1972 chicken
+    
+    DaysGoneOfMyLife = date2.diffdays(date1);
+    out = "date1: " + hex(date1.secs) + "\ndate2: " + hex(date2.secs) + "\n" + "diff days: " + DaysGoneOfMyLife;
+    out += "\nold: " + (date2.secs / 86400 - date1.secs / 86400);
+    out += "\ndiffsecs: " + date2.diffsecs(date1);
+    out += "\n/86400: " + date2.diffsecs(date1)/86400;
+    alert(out);
+}
+
+void main() {
+    Date d1, d2, d3;
+    testDiff();
+    d1.now();
+    puts("Time : " + d1.time() + "\n");
+    puts("SDate: " + d1.date() + "\n");
+    puts("LDate: " + d1.ldate() + "\n");
+    puts("ymd: " + d1.ymd + "\n");
+    puts(d1.month + "-" + d1.day + "-" + d1.year + ", " + d1.hour + ":" + d1.min + ":" + d1.sec + "\n");
+    test((d2.year = 2002) == 2002, "year");
+    test((d2.month = 10) == 10, "month");
+    test((d2.day = 22) == 22, "day");
+    test((d2.hour = 12) == 12, "hour");
+    test((d2.min = 45) == 45, "min");
+    test((d2.sec = 32) == 32, "sec");
+    test(d2.year == 2002, "year");
+    test(d2.month == 10, "month");
+    test(d2.day == 22, "day");
+    test(d2.hour == 12, "hour");
+    test(d2.min == 45, "min");
+    test(d2.sec == 32, "sec");
+    test(d2.ymd == 20021022, "ymd");
+    test((d2.ymd = 19150830) == 19150830, "ymd");
+    d2.hour = 0;
+    d2.min = 0;
+    d2.sec = 0;
+    puts("d2 [" + d2.secs + "] % 86400 = " + (d2.secs % 86400) + "\n");
+    test(d2.year == 1915, "year");
+    test(d2.month == 08, "month");
+    test(d2.day == 30, "day");
+    if (d2.selectdate(dateDayByDay, "Yo Mama!")) {
+        puts("You selected: " + d2.ldate() + "\n");
+    } else {
+        puts("You canceled\n");
+    }
+    d2.hour = 2;
+    d2.min = 15;
+    if (d2.selecttime("Pick you mom's nose (time)")) {
+        puts("You selected: " + d2.time() + "\n");
+    } else {
+        puts("You canceled\n");
+    }
+    d1.now();
+    alert(d1.date());
+    d1.adddays(10);
+    alert(d1.date());
+    
+    d3.ymd = 20050731;
+    alert("d3.ymd = " + d3.date());
+    d3.month = 6;
+    d3.day = 2;
+    d3.year = 2005;
+    alert("d3.y,m,d = " + d3.date());
+    
+    final();
+}

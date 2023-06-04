@@ -1,0 +1,148 @@
+// network test
+#include "tests.h"
+
+int s;
+int ls, as, cs;
+
+string addrOrbworks;
+
+string td1_s1;
+int td1_i;
+char td1_c;
+float td1_f;
+string td1_s2;
+
+string td2_s1;
+int td2_i;
+char td2_c;
+float td2_f;
+string td2_s2;
+
+socksends(int id, string s) {
+    return socksend(id, &s, "s", 1);
+}
+
+testNetwork() {
+    //string addr;
+    string name;
+    string localAddr;
+    int err;
+
+    puts("*** network\n");
+    //puts("net.hostName = " + net.hostName + "\n");
+    //puts("net.domainName = " + net.domainName + "\n");
+    
+    localAddr = netlocaladdr();
+    test(strlen(localAddr) > 8, "netlocaladdr");
+    puts("netlocaladdr = " + localAddr + "\n");
+    testErr(nethostbyname("www.orbworks.com", &addrOrbworks), "net.getHostByName");
+    test(addrOrbworks == "216.36.203.221", "net.getHostByName.2");
+    puts("www.orbworks.com = " + addrOrbworks + "\n");
+    err = nethostbyaddr(addrOrbworks, &name);
+    if (err != 0) {
+        puts("(" + err + "): net.getHostByAddr\n");
+    } else {
+        puts(addrOrbworks + " = " + name + "\n");
+    }
+    test(netgettimeout() == 1000, "timeout");
+    netsettimeout(500);
+    test(netgettimeout() == 500, "timeout.3");
+}
+
+testSocket() {
+    string hello = "hello\n";
+    string index;
+
+    puts("*** socket\n");
+    testErr(sockopen(&s), "s.open");
+    testErr(sockconnect(s, "192.168.0.2:12345"), "s.connect");
+    puts("s.localAddr = " + socklocaladdr(s) + "\n");
+    puts("s.remoteAddr = " + sockremoteaddr(s) + "\n");
+    testErr(socksend(s, &hello, "s", 1), "s.send");
+    testErr(socksends(s, "line2\n"), "s.sends");	
+    testErr(sockshutdown(s, 2), "s.shutdown");
+    sockclose(s);
+    
+    testErr(sockopen(&s), "s.open.2");
+    testErr(sockconnect(s, addrOrbworks + ":80"), "s.connect.2");
+    testErr(socksends(s, "GET /index.html HTTP/1.0\n\n"), "s.sends.2");
+    testErr(sockrecv(s, &index, "s", 1), "s.recvs");
+    puts("response len: " + strlen(index) + "\n");
+    index = strleft(index, 135);
+    puts("index.html:\n" + index + "\n");
+    test(strleft(index, 15) == "HTTP/1.1 200 OK", "s.recvs.2");
+    sockclose(s);
+}
+
+testListen() {
+    string addr;
+    puts("*** listen\n");
+    testErr(sockopen(&ls), "ls.open");
+    testErr(sockbind(ls, ":2345"), "ls.bind");
+    testErr(socklisten(ls, 1), "ls.listen");
+    addr = socklocaladdr(ls);
+    //test(strlen(addr) > 6, "ls.localAddr");
+    if (!addr) addr = "192.168.0.2";
+    puts("ls.localAddr = " + addr + "\n");
+    addr = addr + ":2345";
+    
+    testErr(sockopen(&cs), "cs.open");
+    testErr(sockconnect(cs, addr), "cs.connect");
+    
+    puts("waiting for connection\n");
+    testErr(sockaccept(ls, &as), "ls.accept");
+    
+    td1_s1 = "hello";
+    td1_i = "12345678";
+    td1_c = 'a';
+    td1_f = 3.14;
+    td1_s2 = "bye";
+    
+    testErr(socksend(cs, &td1_s1, "sicfs", 1), "cs.send");
+    testErr(sockrecv(as, &td2_s1, "sicfs", 1), "as.recv");
+    test(td2_s1 == td1_s1, "td.s1");
+    test(td2_i == td1_i, "td.i");
+    test(td2_c == td1_c, "td.c");
+    //puts("td.c=" + td1_c + ", td2.c=(" + (int)td2_c + ")\n");
+    test(td2_f == td1_f, "td.f");
+    test(td2_s2 == td1_s2, "td.s2");
+    
+    sockclose(cs);
+    sockclose(as);
+    sockclose(ls);	
+}
+
+
+/*
+void testUdp() {
+    string addr;
+    string rAddr;
+    string msg = "hello";
+    string rMsg;
+    puts("*** udp\n");
+    addr = net.localAddr;
+    if (!addr) addr = "192.168.0.2";
+    testErr(ls.open(netAfInet, netSockDgram, netProtoIpUdp), "ls.open");
+    testErr(ls.bind(":2345"), "ls.bind");
+    testErr(cs.open(netAfInet, netSockDgram, netProtoIpUdp), "cs.open");
+    testErr(cs.sendto(addr + ":2345", &msg, "s", 1), "cs.sendto");
+    testErr(ls.recvfrom(&rAddr, &rMsg, "s", 1), "ls.recvfrom");
+    puts("rMsg = " + rMsg + "\n");
+    test(rMsg == "hello", "ls.recvfrom.2");
+    puts("rAddr = " + rAddr + "\n");
+    ls.close();
+    cs.close();
+}
+*/
+
+main() {
+    testErr(netopen(), "netopen");
+    
+    testNetwork();
+    testSocket();
+    testListen();
+    //testUdp();
+        
+    netclose();
+    final();
+}

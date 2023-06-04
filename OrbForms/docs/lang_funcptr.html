@@ -1,0 +1,28 @@
+<p>A function pointer is a variable which contains the address of a function.
+When the address of a function is assigned to such a variable, it can be used
+just like the function. To use a function pointer, you must first declare a
+function pointer type using the <code>funcptr</code> keyword.</p>
+
+<pre>funcptr CallBack string(string, int);</pre>
+
+<p>In the above declaration, a new type named <code>CallBack</code> is
+declared. The second half of the declaration is the function signature, which
+states that the
+<code>CallBack</code> type can be used to point to any function which returns
+an string, and takes a string and an int as its arguments. In order to use the
+new type, you must declare a variable of that type and assign a matching
+function address to it:</p>
+
+<pre>string display(string str, int x) {
+  return str + &quot; = &quot; + x;
+}
+
+CallBack cb;
+cb = display;</pre>
+
+<p>Once assigned, the function pointer can be used as if it were the function it
+points to. The following two lines do the same thing:</p>
+
+<pre>result = display(&quot;value&quot;, 5);
+result = cb(&quot;value&quot;, 5);</pre>
+

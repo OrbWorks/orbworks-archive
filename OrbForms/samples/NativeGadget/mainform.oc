@@ -1,0 +1,11 @@
+// mainform.oc
+// Created for mainForm
+
+handler mainForm.onopen() {
+    // TODO: handle onopen event
+}
+
+handler gadget101.onleft() {
+    label103.text = "onleft";
+}
+

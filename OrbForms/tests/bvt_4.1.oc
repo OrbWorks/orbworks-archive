@@ -1,0 +1,20 @@
+@app MyApp {
+    creator = "MyAp"
+    name = "BVT 4.1"
+    dbname = "bvt_4.1.oc"
+}
+UIApp app;
+
+void main() {
+    int x;
+    if (true)
+    {
+    //blah;
+    }
+    //launchGoto("memo", "MemoDB", 3, 4, 10, 0, 5);
+    alertc("About", "My app.\nVersion " + app.version, "OK", alertInfo);
+    puts("In Launcher");
+    alert("launchArgs: " + app.launchArgs);
+    launchCustomString("oArg", launchCodeOrbCAppWithArgs,
+        "args are cool!!");
+}

@@ -1,0 +1,18 @@
+// func init
+DoA() {
+  puts("A\n");
+}
+
+DoB() {
+  puts("B\n");
+}
+
+pointer funcs[3] = { DoA, DoB, 0 };
+
+main() {
+  int i;
+  while (funcs[i]) {
+    (*funcs[i])();
+    i++;
+  }
+}

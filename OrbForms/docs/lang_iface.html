@@ -1,0 +1,55 @@
+<p>An interface is a way of specifying how to interact with an object without 
+needing to know the type of the object. An interface allows otherwise unrelated 
+object to expose a common set of methods. For example, both an orchestra and a 
+CD player can play a song. However, there is little similarity otherwise and 
+these objects should not derive from a common base object. The solution it to 
+have these objects implement a common interface.</p>
+<h3>Declaring an interface</h3>
+<p>An interface is declared with the <code>interface</code> keyword and looks 
+similar to an object declaration. An interface contains a list of methods, but 
+cannot have member variables. An interface can inherit from other interfaces. 
+All methods in an interface are virtual. Each object that claims to implement an 
+interface must provide an implementation for each method that is part of the 
+interface. For example:</p>
+<pre>interface ISongPlayer {
+  void playSong();
+};
+// an interface cannot have an implementation
+
+object CDPlayer : ISongPlayer {
+  void eject();
+  void playSong();
+};
+void CDPlayer.eject() { alert("ejecting CD"); }
+// provide an implementation for the ISongPlayer method
+void CDPlayer.playSong() { alert("playing a CD track"); }
+
+object Orchestra : ISongPlayer {
+  void playSong();
+  void practice();
+};
+// provide an implementation for the ISongPlayer method
+void Orchestra.playSong() { alert("playing lots of instruments"); }
+void Orchestra.practice() { alert("practicing"); }
+</pre>
+<p>In this example the ISongPlayer interface represents the commonality between 
+the Orchestra and CDPlayer, specifically the ability to play a song. The 
+CDPlayer and Orchestra each have other functionality as well.</p>
+<h3>Using an interface</h3>
+<p>An interface must be used through a pointer. Because an interface does not 
+represent any specific object, an interface cannot be instantiated directly. An 
+interface is used just like a pointer to an object, but the interface pointer 
+can only be used to call methods defined on that interface (plus any of the base 
+interfaces that the interface inherits from). For example:</p>
+<pre>void PlayASong(ISongPlayer* player) {
+  player->playSong(); // call a method on the interface
+}
+
+void Concert() {
+  Orchestra orchestra;
+  orchestra.practice();
+  // because Orchestra implements the ISongPlayer interface, we can
+  // pass a pointer to the orchestra to PlayASong, which is expecting
+  // an ISongPlayer pointer
+  PlayASong(&orchestra);
+}</pre>

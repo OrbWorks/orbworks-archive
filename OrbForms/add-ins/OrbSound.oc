@@ -1,0 +1,4 @@
+const int sndSystemVolume = -1;
+const int sndGameVolume = -2;
+const int sndAlarmVolume = -3;
+void playWave(int resId, int volume, bool async) @ library("OrbSound", 0);

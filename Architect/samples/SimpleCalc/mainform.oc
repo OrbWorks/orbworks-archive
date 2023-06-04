@@ -1,0 +1,75 @@
+int total;
+int operand;
+char operator = '+';
+
+handler mainForm.onopen() {
+    fldResult.text = "0";
+}
+
+handler miOptionsAbout.onselect() {
+    alert("SimpleCalc\nA PocketC Architect sample application");
+}
+
+void doOp() {
+    if (operator=='+') {
+        total += operand;
+    } else if (operator=='-') {
+        total -= operand;
+    } else if (operator=='*') {
+        total *= operand;
+    } else if (operator=='/') {
+        total /= operand;
+    } else if (operator=='=') {
+        // do nothing
+    }
+    operand = 0;
+    operator = '+';
+    fldResult.text = total;
+}
+
+void doNumber(int num) {
+    operand = operand * 10 + num;
+    fldResult.text = operand;
+}
+
+handler key0.onselect() { doNumber(0); }
+handler key1.onselect() { doNumber(1); }
+handler key2.onselect() { doNumber(2); }
+handler key3.onselect() { doNumber(3); }
+handler key4.onselect() { doNumber(4); }
+handler key5.onselect() { doNumber(5); }
+handler key6.onselect() { doNumber(6); }
+handler key7.onselect() { doNumber(7); }
+handler key8.onselect() { doNumber(8); }
+handler key9.onselect() { doNumber(9); }
+
+handler keyAdd.onselect() {
+    doOp();
+    operator = '+';
+}
+
+handler keySub.onselect() {
+    doOp();
+    operator = '-';
+}
+
+handler keyMult.onselect() {
+    doOp();
+    operator = '*';
+}
+
+handler keyDiv.onselect() {
+    doOp();
+    operator = '/';
+}
+
+handler keyEq.onselect() {
+    doOp();
+}
+
+handler keyClear.onselect() {
+    operator = '+';
+    operand = 0;
+    total = 0;
+    fldResult.text = 0;
+}

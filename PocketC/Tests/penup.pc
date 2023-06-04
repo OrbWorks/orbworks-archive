@@ -1,0 +1,5 @@
+// penup problem
+main() {
+  confirm("Is there a penup?");
+  waitp();
+}

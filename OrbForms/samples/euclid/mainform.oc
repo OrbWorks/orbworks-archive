@@ -1,0 +1,13 @@
+// mainform.oc
+// Created for mainForm
+
+handler mainForm.onopen() {
+    // TODO: handle onopen event
+}
+
+handler buttonGCD.onselect() {
+    int x = fieldX.text;
+    int y = fieldY.text;
+    fieldResult.text = gcd(x,y);
+}
+

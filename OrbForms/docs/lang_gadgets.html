@@ -1,0 +1,106 @@
+<p>The Palm OS provides many useful types of UI controls, such as buttons, lists,
+and text fields. However, many times an application needs to interact with the
+user in a way these controls to do not provide. For example, a chart control
+would be very useful for displaying collected data and a graph control would
+make displaying trends easy. Using gadgets it is possible to create these and
+many other controls that can then be reused in multiple forms or applications.</p>
+
+<p>A gadget is defined by creating a struct which provides some or all the default
+event handlers. A gadget must have a UIGadget as its first member, and must
+define methods to handle one or more of the gadget events (onopen, onclose,
+ondraw, onpendown, onpenmove, onpenup). These methods have the same name as the
+event handler, take no parameters, and return nothing (<code>void</code>). For example:</p>
+
+<pre>struct Chart {     // <b>NOTE:</b> As of version 3 this must be a struct
+  UIGadget gadget; // rather than an object
+  void onopen();
+  void onclose();
+  void ondraw();
+  
+  Draw draw;
+};
+
+void Chart.onopen() {
+  draw.attachGadget(gadget); // a draw struct can attach to a gadget when it opens
+}
+
+void Chart.onclose() {
+}
+
+void Chart.ondraw() {
+  draw.begin();
+  draw.line(clrFG, 0, 0, gadget.w-1, gadget.h-1);
+  draw.end();
+}</pre>
+
+<p>When these methods are defined, they are used as the default event handlers
+for gadgets of this type. The UIGadget struct (called 'gadget' above) is used to
+access the location, size, and visibility properties of the gadget (see ondraw
+above). </p>
+
+<p>To use a gadget, create an instance of one on a form using the IDE. After a
+Chart gadget is added to a form, the IDE automatically creates a Chart struct
+using the name you have specified, myChart for example. To customize this
+struct, you may override the default handlers that the gadget type provides.
+However, if you define a handler for myChart, the default handler will not be
+called unless you explicitly call it. For example: </p>
+
+<pre>handler myChart.ondraw() {
+  ondraw(); // call the default Chart supplies
+  draw.begin();
+  draw.line(clrFG, gadget.w-1, 0, 0, gadget.h-1);// draw an intersecting line
+  draw.end();
+}</pre>
+<h3>Custom Events</h3>
+<p>It is often useful for a gadget to create its own events. For example, a
+tic-tac-toe gadget could define an <i>onusermove</i> event that would fire when the
+user clicked on the gadget in a valid position. Implementing custom events in
+your gadget requires two steps. First, declare the event handler in your struct
+using the <i>handler</i> keyword:</p>
+<pre>struct TicGadget {
+  // A UIGadget must always be the first member of a gadget
+  UIGadget gadget;
+  
+  // default event handlers
+  void onpenup();
+  
+  // custom events
+  handler onusermove;
+  
+  // actions from app
+  void newGame();
+  ...</pre>
+<p>Second, call the event handler. The event handler is called like a normal
+function, however, if the user of the gadget has not defined a handler, the call
+does nothing. Like other handlers, custom event handlers do not take arguments.
+Unlike other handlers, a custom handler cannot pass event arguments in
+the Event structure (since its properties are read-only). Instead, the data
+needed by the event handler should
+be member variables in your gadget struct.</p>
+<pre>void TicGadget.onpenup() {
+  if (isValidMove(event.x, event.y) {
+    onusermove();
+  }
+}</pre>
+<h3>Embedding Bitmaps in Your Gadget</h3>
+<p>If your gadget uses bitmaps, it is useful to automatically include those in
+the application without requiring the user to explicitly add them to the project. To do this,
+add a bitmap declaration to your gadget declaration file. A bitmap declaration
+looks like this:</p>
+<pre>@bitmap Bitmap <i>yourBitmapName</i> {
+  id = 2000
+  image1 = &quot;gadget_bitmap_file_1.bmp&quot;
+  image8 = &quot;gadget_bitmap_file_8.bmp&quot;
+}</pre>
+<p>As you can see, a bitmap declaration does not follow the same syntax rules as
+other language elements. In particular, there is no semicolon a the end of the
+block, nor are there any within the block. </p>
+<p>The bitmap declaration contains two properties - the id and the image names.
+The id is the resource id that will be used to store and reference the bitmap by
+the OS. This id must not conflict with other bitmap ids in the application, so
+you should choose a high number (but &lt;9000). The image files associated with
+a bitmap are specified using the image<i>x</i> properties, where <i>x</i> is the
+bit-depth - you may specify image1, image2, image4, image8, and/or image16.
+High density images can also be specified using imageh1, imageh2, imageh4, imageh8,
+and/or imageh16. You may specify any combination of bit-depths. All normal density images specified must be the same size;
+high-density images must be exactly twice the size of normal images.</p>

@@ -1,0 +1,60 @@
+OrbPDB v1.1.1
+Copyright 2003 OrbWorks, Inc.
+-----------------------------
+
+Get the latest version from: http://www.orbworks.com/other/orbpdb.html
+
+A command-line tool for converting between PDB and CSV files, using a description string
+similar to the database functions in OrbForms Designer and PocketC.
+
+usage: orbpdb -[csv|pdb] [-n dbname] [-t type] [-c creator_id] [-a] [-rA[-[B]]] format srcfile destfile
+    -csv    source file is CSV (output to PDB)
+    -pdb    source file is PDB (output to CSV)
+    -n      set the output pdb name (invalid if -pdb or -a is specified)
+    -t      set the output pdb type (invalid if -pdb or -a is specified)
+    -c      set the output pdb creator (invalid if -pdb or -a is specified)
+    -a      append to output file
+    -r      specify records/rows to convert (use one of the 3 forms below)
+            -rA    convert only row A
+            -rA-   convert from row A to the end
+            -rA-B  convert from row A to row B inclusive
+            (row numbers begin with 0)
+
+format: a format string as used for dwreadx() or DBRecord.read()
+
+OrbPDB maps rows (lines) in a CSV file to records in a PDB. There is a one-to-one mapping
+between records and rows. Each element in the format string describes a data element in the
+record, and maps it to a value in the CSV row. The format string is composed of the
+following elements:
+
+i1,b    1-byte integer (e.g. "128")
+i2,w    2-byte integer
+i4      4-byte integer
+c       character (e.g. "a")
+f       4-byte IEEE float (e.g. "1.2")
+s,sz    null-terminated string
+lN,sN   fixed-length string (where N is the length)
+
+To make the strings more compact, you can prepend a type with a count. For example:
+
+  cccc => 4c
+
+If prepending a count would be ambiguous (such as one i4 followed by 6 c's), insert
+a . between the numbers. For example:
+
+  i4cccccc => i4.6c
+
+It is often necessary to have a record with a varying number of data elements. OrbPDB
+supports a repeating sequence of elements at the end of the format string. To specify this,
+put the repeating block in parentheses:
+
+  i4i4i1(sz): two i4's, an i1, and a variable number of strings. (This is the format for
+              the built-in address book
+
+Many databases contain records with different types. To convert these, append the output
+from multiple executions using the -a flag. For example, if the database contains a header
+record (record 0) containing 5 field names, followed by the rest of the records which
+are composed of an entry name, and 5 ints:
+
+  orbpdb -pdb -r0 5sz in.pdb out.csv        // read the first record
+  orbpdb -pdb -a -r1- sz5i4 in.pdb out.csv  // read the entries

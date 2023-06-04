@@ -1,0 +1,136 @@
+#include "tests.h"
+
+@app app { creator="oBVT", name="bvt_string.oc", dbname="bvt_string.oc" }
+
+struct Format {
+    float f;
+    int p;
+    string res;
+};
+
+Format formats[9] = {
+    { 4.6, 1, "4.6" },
+    { 4.6, 2, "4.60" },
+    { 4.6, 0, "5" },
+    { 0.0, 0, "0" },
+    { 0.0, 3, "0.000" },
+    { 0.0, 7, "0.0000000" },
+    { -1.2, 0, "-1" },
+    { -1.2, 3, "-1.200" },
+    { 1.2e-9, 0, "0" }
+};
+
+void test_numeric() {
+    int i;
+    for (i=0;i<9;i++) {
+        test(format(formats[i].f, formats[i].p) == formats[i].res, "format(" + formats[i].res + ")");
+    }
+    
+    test(hex(1) == "0x1", "hex(1)");
+    test(hex(-1) == "0xffffffff", "hex(-1)");
+    test(hex(0) == "0x0", "hex(0)");
+}
+
+void test_sl() {
+    StringList sl;
+    int i;
+
+    test(sl.count == 0, "sl.count == 0");
+    test(sl.add("lime")== 1, "sl.add(lime) == 1");
+    test(sl.count == 1, "sl.count == 1");
+    test(sl.add("kiwi")== 2, "sl.add(kiwi) == 2");
+    test(sl.insert(1, "apple") == 3, "sl.add(1, apple) == 3");
+    test(sl.find("kiwi") == 2, "sl.find(kiwi)");
+    test(sl.find("lime") == 0, "sl.find(lime)");
+    test(sl.item(0) == "lime", "sl.item(0)");
+    test(sl.del(1) == 2, "sl.del(1)");
+    test(sl.find("kiwi") == 1, "sl.find(kiwi)");
+    /*
+    for (i=0;i<sl.count;i++) {
+        puts(i + ": " + sl.item(i) + "\n");
+    }
+    */
+    sl.clear();
+    test(sl.count == 0, "sl.clear()");
+    test(sl.insert(1, "apple") == 1, "sl.add(1, apple) == 1");
+    test(sl.item(0) == "apple", "sl.item(0)");
+    sl.clear();
+    test(sl.tokens("happy Trails  to,you ,  " ," ,") == 4, "sl.tokens()");
+    test(sl.item(0) == "happy", "sl.tokens() 1");
+    test(sl.item(1) == "Trails", "sl.tokens() 2");
+    test(sl.item(2) == "to", "sl.tokens() 3");
+    test(sl.item(3) == "you", "sl.tokens() 4");
+    sl.sort(true);
+    for (i=0;i<sl.count;i++) puts(i + ": " + sl.item(i) + "\n");
+    test(sl.item(0) == "Trails", "sl.sort.1");
+    test(sl.item(1) == "happy", "sl.sort.2");
+    sl.sort(false);
+    for (i=0;i<sl.count;i++) puts(i + ": " + sl.item(i) + "\n");
+    test(sl.item(0) == "happy", "sl.sort.3");
+    test(sl.item(1) == "to", "sl.sort.4");
+    
+    sl.clear();
+    test(sl.tokens("a,b,c,d", ",") == 4, "sl.tokens()");
+    test(sl.item(3) == "d", "sl.tokens() 4");
+}
+
+void main() {
+    char carray[5] = { 'l', 'i', 'm', 'e', '\0' };
+    string str, str2;
+    
+    test(strlen("hello") == 5, "strlen('hello')");
+    test(strlen("") == 0, "strlen('')");
+
+    test(substr("", 5, 5) == "", "substr('', 5, 5)");
+    test(substr("hello", 1, 3) == "ell", "substr('hello', 1, 3)");
+    test(substr("hello", 1, 10) == "ello", "substr('hello', 1, 10)");
+    test(substr("hello", 1, -1) == "ell", "substr('hello', 1, -1)");
+    test(substr("hello", 1, -10) == "", "substr('hello', 1, -10)");
+
+    test(strleft("hello", 3) == "hel", "strleft('hello', 3)");
+    test(strleft("hello", 0) == "", "strleft('hello', )");
+    test(strleft("hello", 13) == "hello", "strleft('hello', 13)");
+    test(strleft("hello", -3) == "he", "strleft('hello', -3)");
+
+    test(strright("hello", 3) == "llo", "strright('hello', 3)");
+    test(strright("hello", 7) == "hello", "strright('hello', 7)");
+    test(strright("hello", -2) == "llo", "strright('hello', -1)");
+
+    test(strupper("hEllo") == "HELLO", "strupper('hEllo')");
+    test(strlower("hEllo") == "hello", "strlower('hEllo')");
+
+    test(strstr("hello", "ell", 0) == 1, "strstr('hello', 'ell', 0)");
+    test(strstr("hello", "ell", 1) == 1, "strstr('hello', 'ell', 1)");
+    test(strstr("hello", "ell", 2) == -1, "strstr('hello', 'ell', 2)");
+
+    test(strctos(carray) == "lime", "strctos(lime)");
+    test(5 == strstoc("kiwi", carray), "5 = strstoc(kiwi)");
+    test(strctos(carray) == "kiwi", "strstoc(kiwi)");
+    
+    test(strinsert("llo", 0, "he") == "hello", "strinsert('llo', 0, 'he')");
+    test(strinsert("heL", 3, "lo") == "heLlo", "strinsert('heL', 3, 'lo')");
+    test(strinsert("heL", 10, "lo") == "heLlo", "strinsert('heL', 10, 'lo')");
+    test(strinsert("heL", 2, "lo") == "heloL", "strinsert('heL', 2, 'lo')");
+    test(strinsert("", 2, "") == "", "strinsert('', 2, '')");
+    
+    test(strreplace("hello", "he", "h-e-") == "h-e-llo", "strreplace.1");
+    test(strreplace("", "", "") == "", "strreplace.2");
+    test(strreplace("", "hello", "") == "", "strreplace.3");
+    test(strreplace("hello", "he", "") == "llo", "strreplace.4");
+    test(strreplace("hello", "lo", "LO!") == "helLO!", "strreplace.5");
+    test(strreplace("hello", "l", "P") == "hePPo", "strreplace.6");
+    test(strreplace("hello hello", "lo", "LLOO") == "helLLOO helLLOO", "strreplace.7");
+    
+    test_numeric();
+    test_sl();
+    
+    str = "hello";
+    str2 = "hel" + "lo";
+    str[0] = 'H';
+    test("hello" == str2, "didn't overwrite constant");
+    str2 = str;
+    str[1] = 'E';
+    test(str2 == "Hello", "shared string not modified");
+    
+    final();
+}

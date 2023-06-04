@@ -1,0 +1,13 @@
+// strtok
+main() {
+  string source = "x";
+  string res;
+  int first;
+  first = strtok(source, null, " .", 0);
+  puts("total: " + first + "\n");
+  first = strtok(source, &res, " .", 0);
+  while (first != -1) {
+    puts("\"" + res + "\"\n");
+    first = strtok(source, &res, " .", first);
+  }
+}

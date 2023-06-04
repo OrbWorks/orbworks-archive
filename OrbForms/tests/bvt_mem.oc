@@ -1,0 +1,79 @@
+// memory tests
+#include "tests.h"
+
+int g_nPoints = 0;
+
+struct Point {
+    void _init();
+    void _destroy();
+    int x, y;
+};
+
+void Point._init() {
+    puts("  Point._init()    @ " + (int)&this + "\n");
+    g_nPoints++;
+}
+
+void Point._destroy() {
+    puts("  Point._destroy() @ " + (int)&this + "\n");
+    g_nPoints--;
+}
+
+void mydel(void* pv) {
+    Point* ppt;
+    ppt = (Point*)pv;
+    delete ppt;
+    pv++;
+}
+
+object Data {
+    string s;
+    float f;
+    int i;
+    char c;
+};
+
+void test_malloc() {
+    Data d = { "lime", 3.14, 5, 'a' };
+    Data* pd;
+    void* vd;
+    vd = malloct(typeof(Data), 1);
+    memcpy(vd, &d, sizeof(Data));
+    pd = (Data*)vd;
+    puts("pd->s == " + pd->s + "\npd->f == " + pd->f + "\npd->i == " + pd->i + "\npd->c == " + pd->c + "\n");
+    test(pd->s == "lime", "malloct/memcpy");
+    test(pd->f == 3.14, "malloct/memcpy");
+    test(pd->i == 5, "malloct/memcpy");
+    test(pd->c == 'a', "malloct/memcpy");
+    free(vd);
+}
+
+void test_objArray() {
+    Point lpt[3];
+    test(g_nPoints == 3, "3 points");
+}
+
+void main() {
+    Point* p1, p2, p3;
+    p1 = new Point;
+    p2 = new Point[3];
+    p3 = new Point[4];
+    test(p2 == p1+1, "new 1");
+    test(g_nPoints == 8, "8 points");
+    //delete p1;
+    mydel(p1);
+    mydel(null);
+    delete p3;
+    delete p2;
+    p1 = null;
+    delete p1;
+    p2 = null;
+    delete p2;
+    test(g_nPoints == 0, "0 points");
+    test_objArray();
+    test(g_nPoints == 0, "0 points");
+    
+    //test_malloc();
+    
+    final();
+}	

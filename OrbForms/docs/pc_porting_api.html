@@ -1,0 +1,52 @@
+<p>Much of the legacy PocketC APIs maps easily to the new object-oriented APIs. 
+However, it may be helpful to cover a few specific categories.</p>
+<h3>Graphics</h3>
+<p>In legacy PocketC, graphics were created by drawing directly to the screen, 
+generally after opening the graphics form by calling <code>graph_on()</code>. 
+Although easy to use, this mechanism results in global graphics state that 
+doesn't fit nicely in a structured application, and doesn't work well with gadgets. 
+The approach taken in OrbC is to draw using a <a href="oDraw.html">Draw</a> 
+object. A Draw object is used to draw to either a form, a gadget, or an 
+offscreen buffer. Drawing to a Draw object must be done between calls to begin 
+and end.</p>
+<ul>
+  <li>The drawing primitives and color functions map almost exactly to Draw 
+  methods. The meanings of some of the color values have changed.</li>
+  <li><code>bitmap</code> is not directly supported - embed your bitmaps using 
+  the bitmap resource syntax instead.</li>
+  <li>Offscreen buffers are now just Draw objects. Use the <code>draw</code> method to copy 
+  between them.</li>
+  <li>Resource bitmaps are not directly supported - embed your bitmaps using the 
+  bitmap resource syntax instead.</li>
+  <li><code>graph_on</code> and <code>graph_off</code> are no longer required, 
+  just attach the Draw object to the current form.</li>
+  <li><code>pushdraw</code> and <code>popdraw</code> are equivalent to calling <code>begin</code> 
+  and <code>end</code>.</li>
+  <li><code>saveg</code> and <code>restoreg</code> can be done by copying a form 
+  using <code>copyForm</code>.</li>
+  <li>Screen attributes and color depth are available on the
+  <a href="oUIApp.html">application</a> object.</li>
+</ul>
+<h3>Events</h3>
+<p>The eventing model in OrbC is substantially different that legacy PocketC. 
+The most important difference is that your application doesn't have an event 
+loop at all. Instead, you implement handlers for form and control events.</p>
+<ul>
+  <li>Pen events are available on forms and gadgets</li>
+  <li>Event data returned by functions such as <code>key</code> or <code>penx</code> 
+  is now available within event handlers in the global <a href="oEvent.html">
+  Event</a> structure.</li>
+  <li>The functions that wait for events such as <code>waitp</code> or <code>getc</code> 
+  no longer apply.</li>
+</ul>
+<h3>Database</h3>
+<p>The legacy PocketC functions always operated on the current database and 
+record. In OrbC, multiple databases and records can be opened at once. </p>
+<ul>
+  <li>The legacy functions map to methods on either <a href="oDatabase.html">
+  Database</a>, <a href="oDBRecord.html">DBRecord</a>, or
+  <a href="oDatabaseMgr.html">DatabaseMgr</a>.</li>
+  <li>The format used by OrbC read/write methods is slightly different than 
+  those used by <code>dbreadx</code> and <code>dbwritex</code>. See
+  <a href="tTypeStrings.html">type strings</a> for details.</li>
+</ul>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<page>
+<title>Frequent Asked Questions</title>
+    <section id="general">
+		<title>General Questions</title>
+	    <paragraph>
+			Hello
+        </paragraph>
+        <paragraph>
+			World
+        </paragraph>
+		<paragraph>
+        </paragraph>
+        <paragraph>
+        </paragraph>
+	</section>
+    <section id="ide">
+		<title>Integrated Development Environment Questions</title>
+		<paragraph>
+		</paragraph>
+		<paragraph>
+		</paragraph>
+    </section>
+</page>

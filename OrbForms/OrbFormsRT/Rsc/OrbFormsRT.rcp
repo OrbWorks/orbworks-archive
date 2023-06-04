@@ -1,0 +1,71 @@
+#include "OrbFormsRTRsc.h"
+
+FORM ID OutputForm  AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 9000
+BEGIN
+    TITLE "OrbC Output"
+    FIELD ID OutputOutputField  AT (0 15 153 144) USABLE LEFTALIGN FONT 0 EDITABLE  MULTIPLELINES MAXCHARS OutputFieldLen HASSCROLLBAR UNDERLINED 
+	SCROLLBAR OutputScroll AT (153 15 7 144) USABLE VALUE 50 MIN 0 MAX 100 PAGESIZE 10
+	GRAFFITISTATEINDICATOR AT (150 1)
+END
+
+MENU ID OutputMenuBar
+BEGIN
+	PULLDOWN "Edit"
+	BEGIN
+		MENUITEM "Copy" ID EditCopy "C"
+		MENUITEM "Select All" ID EditSelectAll "A"
+	END
+END
+
+FORM ID GraphForm AT (0 0 160 160) USABLE NOSAVEBEHIND HELPID 0 DEFAULTBTNID 0 MENUID 0
+BEGIN
+	TITLE "Graphics"
+END
+
+ALERT ID MessageAlert HELPID 0 DEFAULTBUTTON 0 INFORMATION
+BEGIN
+    TITLE "Message"
+    MESSAGE "^1"
+    BUTTONS  "OK"
+END
+
+ALERT ID RomIncompatibleAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+    TITLE "System Incompatible"
+    MESSAGE "System Version 3.0 or greater is required to run this application."
+    BUTTONS  "OK"
+END
+
+ALERT ID VMErrorAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+    TITLE "Runtime Error"
+    MESSAGE "^1"
+    BUTTONS  "OK"
+END
+
+ALERT ID VersionAlert HELPID 0 DEFAULTBUTTON 0 ERROR
+BEGIN
+    TITLE "Incorrect Runtime"
+    MESSAGE "This application requires a more recent version of the OrbForms runtime.\r\rGet the latest version from:\rwww.orbworks.com"
+    BUTTONS  "OK"
+END
+
+ALERT ID ConfirmAlert HELPID 0 DEFAULTBUTTON 1 CONFIRMATION
+BEGIN
+    TITLE "Confirmation"
+    MESSAGE "^1"
+    BUTTONS  "Yes" "No"
+END
+
+ALERT ID InputAlert HELPID 0 DEFAULTBUTTON 1 CONFIRMATION
+BEGIN
+    TITLE "Input"
+    MESSAGE "^1"
+    BUTTONS  "OK" "Cancel"
+END
+
+HEX "pref" ID 0 0x00 0x1e 0x00 0x00 0x20 0x00 0x00 0x00 0x20 0x00
+
+VERSION ID 1000 "4.1.3"
+
+APPLICATIONICONNAME ID 1000 "OrbFormsRT"

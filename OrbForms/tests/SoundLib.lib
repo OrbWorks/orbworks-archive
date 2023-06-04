@@ -1,0 +1,5 @@
+//Doc for SoundLib
+@doc "Plays a WAVE rsrc through the OS5 SoundMgr API";
+PlaySound(string dbName, int ID, int volume, int sync);
+@doc "Stops playing an async file started with PlaySound";
+StopSound(int MemVal);

@@ -1,0 +1,170 @@
+Draw gameDraw;
+int baseTicks;
+
+handler gameForm.onopen() {
+    gameDraw.attachForm(this);
+    if (bPaused)
+        buttonPause.text = "Resume";
+    bPaused = true;
+    appPrefs.bPlaying = true;
+    labelDelay.visible = false;
+    buttonTurn.visible = false;
+    app.hookhard(true);
+}
+
+handler gameForm.onclose() {
+    app.hookhard(false);
+}
+
+string doubleDigit(int num) {
+    if (num > 9)
+        return (string)num;
+    else
+        return "0" + num;
+}
+
+string formatTime(int time) {
+    return doubleDigit(time/3600) + "." + doubleDigit(time%3600/60) + "." + doubleDigit(time%60);
+}
+
+void drawTimes() {
+    labelWhiteTime.text = formatTime(game.timeWhite / 100);
+    labelBlackTime.text = formatTime(game.timeBlack / 100);
+    if (game.delay) {
+        labelDelay.text = "Delay: " + game.delay / 100;
+        labelDelay.visible = true;
+    } else {
+        labelDelay.visible = false;
+    }
+}
+
+const int c_whiteLeft = 6, c_blackLeft = 86, c_top = 54;
+void drawForm() {
+    gameDraw.begin();
+    drawTimes();
+    if (game.bWhite) {
+        gameDraw.bitmap(bmpPawn, c_whiteLeft, c_top);
+        gameDraw.rect(clrBG, c_blackLeft, c_top, c_blackLeft + 32, c_top + 52, 0);
+    } else {
+        gameDraw.bitmap(bmpPawn, c_blackLeft, c_top);
+        gameDraw.rect(clrBG, c_whiteLeft, c_top, c_whiteLeft + 32, c_top + 52, 0);
+    }
+    gameDraw.end();
+}
+
+handler gameForm.ontimer() {
+    int * pTime;
+    string name = "White";
+    int actualTicks = ticks() - baseTicks;
+    baseTicks = ticks();
+    
+    if (!bPaused) {
+        if (game.bWhite) pTime = &game.timeWhite;
+        else pTime = &game.timeBlack;
+        
+        if (options.addType == ADD_DELAY && game.delay) {
+            if (game.delay < actualTicks) {
+                actualTicks -= game.delay;
+                game.delay = 0;
+                (*pTime) -= actualTicks;
+            } else {
+                game.delay -= actualTicks;
+            }
+        } else {
+            (*pTime) -= actualTicks;
+        }
+        drawForm();
+        if (*pTime <=0) {
+            appPrefs.bPlaying = false;
+            if (!game.bWhite) {
+                name = "Black";
+            }
+            buttonCancel.text = "Close";
+            buttonPause.visible = false;
+            buttonTurn.visible = false;
+            if (appPrefs.bEndSound) {
+                tonea(620, 600, 64);
+            }
+            alert(name + " has run out of time!");
+        } else {
+            timer(20);
+        }
+        resetaot();
+    }
+}
+
+handler gameForm.ondraw() {
+    drawForm();
+}
+
+void switchTurns() {
+    if (options.addType == ADD_AFTER) {
+        if (game.bWhite)
+            game.timeWhite += options.secAdd * 100;
+        else
+            game.timeBlack += options.secAdd * 100;
+    }
+    game.bWhite = !game.bWhite;
+    if (options.addType == ADD_BEFORE) {
+        if (game.bWhite)
+            game.timeWhite += options.secAdd * 100;
+        else
+            game.timeBlack += options.secAdd * 100;
+    }
+    if (options.addType == ADD_DELAY)
+        game.delay = options.secAdd * 100;
+    drawForm();
+    if (appPrefs.bTurnSound) {
+        if (game.bWhite) 
+            tonea(1080, 300, 64);
+        else
+            tonea(840, 300, 64);
+    }
+    gameForm.timer(20);
+    baseTicks = ticks();
+}
+
+handler buttonTurn.onselect() {
+    switchTurns();
+}
+
+void handlePause() {
+    bPaused = !bPaused;
+    if (bPaused) {
+        buttonTurn.visible = false;
+        buttonPause.text = "Unpause";
+    } else {
+        buttonTurn.visible = true;
+        buttonPause.text = "Pause";
+        gameForm.timer(20);
+        baseTicks = ticks();
+    }
+}
+
+handler gameForm.onhkey() {
+    // only switch if the correct button was hit
+    if (event.key == evUp || event.key == evDown) {
+        handlePause();
+        return;
+    }
+    
+    if (game.bWhite) {
+        if (event.key == ev0 || event.key == ev1) {
+            switchTurns();
+        }
+    } else {
+        if (event.key == ev2 || event.key == ev3) {
+            switchTurns();
+        }
+    }
+}
+
+handler buttonPause.onselect() {
+    handlePause();
+}
+
+handler buttonCancel.onselect() {
+    bPaused = false;
+    appPrefs.bPlaying = false;
+    gameForm.close();
+}

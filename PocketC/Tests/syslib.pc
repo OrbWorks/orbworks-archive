@@ -1,0 +1,22 @@
+// PktCSysLibTest
+
+     library "PktCSysLib"
+
+     main() {
+       int secs;
+
+       if (GetSystemFeature(7)) // do we have a backlight?
+         Backlight(1);          // yes, turn it on!
+
+       secs = GetAutoOffTime();
+
+       if (secs) {
+         puts("Pilot will turn off in ");
+         puts(secs);
+         puts("seconds");
+       }
+       else
+         puts("Pilot is set to not turn off.");
+
+       puts("\n");
+     }

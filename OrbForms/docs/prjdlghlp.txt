@@ -1,0 +1,8 @@
+.topic 4
+List all types of project wizards you can use to create your project.
+.topic 3
+Browse the file system for the location you wish to save the project at.
+.topic 2
+Type in the location you wish to save the project at.
+.topic 1
+Type in the project name here.  

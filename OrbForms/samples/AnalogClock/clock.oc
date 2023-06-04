@@ -1,0 +1,6 @@
+// clock.oc
+// Main application code
+
+handler clock.onstart() {
+    mainForm.load();
+}

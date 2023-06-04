@@ -1,0 +1,687 @@
+#include "tests.h"
+#include "pc_io.oc"
+#include "pc_events.oc"
+#include "pc_string.oc"
+#include "pc_math.oc"
+#include "pc_graphics.oc"
+#include "pc_sound.oc"
+#include "pc_date.oc"
+#include "pc_database.oc"
+#include "pc_memo.oc"
+#include "pc_serial.oc"
+#include "pc_system.oc"
+#include "pc_memory.oc"
+#include "pc_network.oc"
+#include "pc_vfs.oc"
+library "PToolboxLib"
+
+@app {
+    creator = "oBVT";
+    name = "PocketC_OrbC";
+    dbname = "PocketC_OrbC";
+}
+
+bool skipFailures = false;
+
+void stringTests() {
+    bool first = 0;
+    string list, tok, cs = "const", es = "edit";
+    section("string");
+    do {
+        first = strtok("#12:34:67", &tok, "#:", first);
+        if (first != -1)
+            list += tok + ";";
+    } while (first != -1);
+    test(list == ";12;34;67;", "strtok");
+    test(strupr("TeSt")=="TEST", "strupr");
+    test(strlwr("TeSt")=="test", "strlwr");
+    es += "able";
+    test(cs@[2] == 'n', "const@[] get");
+    test(es@[5] == 'b', "edit@[] get");
+    cs@[1] = 'O';
+    test(cs == "cOnst", "const@[] set");
+    es@[2] = "I";
+    test(es == "edItable", "edit@[] set");
+}
+
+void soundTests() {
+    section("sound");
+    if (!quiet) {
+        putsl(getvol(0));
+        putsl(getvol(1));
+        putsl(getvol(2));
+    }
+}
+
+void dateTests() {
+    Date d;
+    int x;
+    
+    section("date");
+    d.now();
+    x = seconds();
+    test((d.secs & 0x7fffffff) == x, "seconds");
+    //putsl("d.secs = " + hex(d.secs));
+    //putsl("x = " + hex(x));
+    x = secondsx(20050705, 220105);
+    d.ymd = 20050705;
+    d.hour = 22;
+    d.min = 1;
+    d.sec = 5;
+    test((d.secs & 0x7fffffff) == x, "secondsx");
+    test(timex(x, 0) == 2201, "timex(0)");
+    test(timex(x, 2) == 220105, "timex(2)");
+    test(datex(x, 0) == 20050705, "datex(0)");
+    if (interactive) {
+        selecttime(x, "Select time");
+        selectdate(x, 0, "Select by day");
+    }
+}
+
+void memoTests() {
+    int x;
+    string s;
+    
+    section("memo");
+    test(mmnew(), "mmnew");
+    mmputs("title of memo\n");
+    mmputs("line");
+    test(mmfind("title of memo"), "mmfind.1");
+    s = mmgetl();
+    test(s == "title of memo", "mmgetl.1");
+    test(!mmeof(), "mmeof.1");
+    test(mmgetl() == "line", "mmgetl.2");
+    test(mmeof(), "mmeof.2");
+    mmrewind();
+    test(!mmeof(), "mmeof.3");
+    test(mmgetl() == "title of memo", "mmgetl.3");
+    test(mmcount() > 0, "mmcount");
+    x = mmfindx("title of memo");
+    test(x != -1, "mmfindx");
+    test(mmopen(x), "mmopen");
+    test(mmgetl() == "title of memo", "mmgetl.4");
+    mmdelete();
+    test(!mmfind("title of memo"), "mmfind.2");
+    mmnew();
+    mmputs("test category");
+    mmclose();
+}
+
+void dbTests() {
+    string name = "PocketC-OrbC test", type, creator;
+    int x;
+    int i;
+    float f;
+    char c;
+    string s;
+    
+    section("database");
+    if (dbopen(name))
+        dbdelete();
+    test(dbcreatex(name, "OCpc", "data"), "dbcreatex");
+    test(dbnrecs() == 0, "dbnrecs.1");
+    test(dbinfo(name, &type, &creator), "dbinfo.1");
+    test(type == "data" && creator == "OCpc", "dbinfo.2");
+    test(dbinfo("PocketC.prc", &type, &creator), "dbinfo.3");
+    dbclose();
+    test(dbopen(name), "dbopen");
+    dbrec(0);
+    dbwritei(8);
+    dbwritef(3.14);
+    dbwritec('a');
+    dbwrites("Good");
+    test(dbpos() == 14, "dbpos");
+    test(dbsize() == 14, "dbsize");
+    test(dbtotalsize(name) > 14, "dbtotalsize");
+    dbseek(0);
+    test(dbpos() == 0, "dbseek");
+    test(dbread('i') == 8, "dbread.1");
+    test(dbread('f') == 3.14, "dbread.2");
+    test(dbread('c') == 'a', "dbread.3");
+    test(dbread('s') == "Good", "dbread.4");
+    dbseek(0);
+    dbrec(1);
+    i = 7; f = 2.2; c = 'b'; s = "Great";
+    x = dbwritex(&i, "i4fcsz");
+    test(x == 4, "dbwritex");
+    dbseek(0);
+    i = 0; f = 0; c = 0; s = "";
+    x = dbreadx(&i, "i4fcsz");
+    test(x == 4, "dbreadx");
+    test(i == 7, "dbreadx.1");
+    test(f == 2.2, "dbreadx.2");
+    test(c == 'b', "dbreadx.3");
+    test(s == "Great", "dbreadx.4");
+    test(dbpos() == -1, "dbpos.2");
+    dberase();
+    test(dbsize() == 0, "dberase.1");
+    dbwritei(8);
+    test(dbsize() == 4, "dberase.2");
+    test(dbnrecs() == 2, "dbnrecs.2");
+    test(_convertFormat("12i4.2fcs56.6i2.2c") == "12i2fcl56.6w2c", "convertFormat");
+    test(dbbackup(2) == 0, "dbbackup.1");
+    dbbackup(1);
+    test(dbbackup(2) == 1, "dbbackup.2");
+    dbbackup(0);
+    test(dbbackup(2) == 0, "dbbackup.3");
+    //dbmoverec(1, 0);
+    dbrec(0);
+    test(dbpos() == 0, "dbrec");
+    test(dbread('i') == 0, "dbmove");
+    test(dbremoverec(1), "dbrem.1");
+    test(dbnrecs() == 1, "dbrem.2");
+    dbrename(name+"2");
+    test(dbinfo(name+"2", &type, &creator), "dbrename");
+    test(dbopen("ToDoDB"), "open ToDoDB");
+    dbsetcat(1);
+    test(dbgetcat() == 1, "set/getcat");
+    //putsl("catName1=" + dbcatname(1));
+    dbsetcatname(1, "Dewey");
+    test(dbcatname(1) == "Dewey", "db[set]catname");
+    test(dbgetappinfo() != -1, "getappinfo");
+    test(dbsize() > 0, "getappinfo.2");
+    test(dbpos() == 0, "getappinfo.3");
+    test(dbsetappinfo(), "setappinfo");
+    dbclose();
+    
+    putsl("Databases:");
+    s = dbenum(true, "data", "OCpc");
+    while (s != 0) {
+        putsl(s);
+        s = dbenum(false, "data", "OCpc");
+    }	
+    // something when closed
+    // arc/del
+}
+
+int s;
+int ls, as, cs;
+
+string addrOrbworks;
+
+string td1_s1;
+int td1_i;
+char td1_c;
+float td1_f;
+string td1_s2;
+
+string td2_s1;
+int td2_i;
+char td2_c;
+float td2_f;
+string td2_s2;
+
+socksends(int id, string s) {
+    return socksend(id, &s, "s", 1);
+}
+
+testNetwork() {
+    //string addr;
+    string name;
+    string localAddr;
+    int err;
+
+    section("network.network");
+    localAddr = netlocaladdr();
+    putsl("netlocaladdr = " + localAddr);
+    if (!skipFailures)
+        test(strlen(localAddr) > 8, "netlocaladdr"); // only succeeds on a device
+    testErr(nethostbyname("www.orbworks.com", &addrOrbworks), "net.getHostByName");
+    test(addrOrbworks == "216.36.203.221", "net.getHostByName.2");
+    putsl("www.orbworks.com = " + addrOrbworks);
+    err = nethostbyaddr(addrOrbworks, &name);
+    if (err != 0) {
+        putsl("(" + err + "): net.getHostByAddr");
+    } else {
+        putsl(addrOrbworks + " = " + name);
+    }
+    test(netgettimeout() == 1000, "timeout");
+    netsettimeout(500);
+    test(netgettimeout() == 500, "timeout.3");
+}
+
+testSocket() {
+    string hello = "hello\n";
+    string index;
+
+    section("network.socket");
+    testErr(sockopen(&s), "s.open");
+    testErr(sockconnect(s, "192.168.0.2:12345"), "s.connect");
+    putsl("s.localAddr = " + socklocaladdr(s));
+    putsl("s.remoteAddr = " + sockremoteaddr(s));
+    testErr(socksend(s, &hello, "s", 1), "s.send");
+    testErr(socksends(s, "line2\n"), "s.sends");	
+    testErr(sockshutdown(s, 2), "s.shutdown");
+    sockclose(s);
+    
+    testErr(sockopen(&s), "s.open.2");
+    testErr(sockconnect(s, addrOrbworks + ":80"), "s.connect.2");
+    testErr(socksends(s, "GET /index.html HTTP/1.0\n\n"), "s.sends.2");
+    testErr(sockrecv(s, &index, "s", 1), "s.recvs");
+    putsl("response len: " + strlen(index));
+    index = strleft(index, 135);
+    putsl("index.html:\n" + index);
+    test(strleft(index, 15) == "HTTP/1.1 200 OK", "s.recvs.2");
+    sockclose(s);
+}
+
+testListen() {
+    string addr;
+    section("network.listen");
+    testErr(sockopen(&ls), "ls.open");
+    testErr(sockbind(ls, ":2345"), "ls.bind");
+    testErr(socklisten(ls, 1), "ls.listen");
+    addr = socklocaladdr(ls);
+    //test(strlen(addr) > 6, "ls.localAddr");
+    if (!addr) addr = "192.168.0.2";
+    putsl("ls.localAddr = " + addr);
+    addr = addr + ":2345";
+    
+    testErr(sockopen(&cs), "cs.open");
+    testErr(sockconnect(cs, addr), "cs.connect");
+    
+    putsl("waiting for connection");
+    testErr(sockaccept(ls, &as), "ls.accept");
+    
+    td1_s1 = "hello";
+    td1_i = "12345678";
+    td1_c = 'a';
+    td1_f = 3.14;
+    td1_s2 = "bye";
+    
+    testErr(socksend(cs, &td1_s1, "sicfs", 1), "cs.send");
+    testErr(sockrecv(as, &td2_s1, "sicfs", 1), "as.recv");
+    test(td2_s1 == td1_s1, "td.s1");
+    test(td2_i == td1_i, "td.i");
+    test(td2_c == td1_c, "td.c");
+    //puts("td.c=" + td1_c + ", td2.c=(" + (int)td2_c + ")\n");
+    test(td2_f == td1_f, "td.f");
+    test(td2_s2 == td1_s2, "td.s2");
+    
+    sockclose(cs);
+    sockclose(as);
+    sockclose(ls);	
+}
+
+void netTests() {
+    section("network");
+    testErr(netopen(), "netopen");
+    testNetwork();
+    testSocket();
+    testListen();
+    netclose();
+}
+
+deltree(int vol, string path) {
+    int dir;
+    string name;
+    int attribs;
+    int first = true;
+    
+    if (volopendir(vol, path, &dir) == 0) {
+        while (direnum(dir, first, &name, &attribs)) {
+            first = false;
+            if (attribs & vfsAttrDirectory) {
+                deltree(vol, path + "/" + name);
+            } else {
+                voldelete(vol, path + "/" + name);
+            }
+        }
+        dirclose(dir);
+    } else return false;
+}
+
+enumdir(int vol) {
+    int dir;
+    int first = true;
+    int attribs;
+    string name;
+    
+    putsl("/:");
+    volcreatefile(vol, "/blah");
+    volcreatedir(vol, "/newdir");
+    if (0 == volopendir(vol, "/", &dir)) {
+        while (direnum(dir, first, &name, &attribs)) {
+            first = false;
+            putsl("  " + name + ": " + hex(attribs));
+        }
+        putsl("  end");
+    } else {
+        putsl("failed to open /");
+    }
+}
+
+findfile(int vol, string path) {
+    int file;
+    if (0 == volopenfile(vol, path, vfsModeRead, &file)) {
+        fileclose(file);
+        return true;
+    }
+    return false;
+}
+
+printDate(int d) {
+    return (string)d;
+}
+
+testdir(int vol) {
+    int dir;
+    int d;
+    int count;
+    int first = true;
+    int attribs;
+    string name;
+    
+    section("VFS.Directory");
+    test(volcreatedir(vol, "/dir2") == 0, "createDir");
+    test(volcreatefile(vol, "/dir2/file1") == 0, "create");
+    test(volcreatefile(vol, "/dir2/file2") == 0, "create");
+    test(volopendir(vol, "/dir2", &dir) == 0, "openDir");
+    while (direnum(dir, first, &name, &attribs)) {
+        first = false;
+        count++;
+        putsl(".. " + name);
+    }
+    test(count == 2, "count");
+    putsl("dir2: " + hex(dirgetattribs(dir)));
+    test(dirgetattribs(dir) & vfsAttrDirectory, "dir.attrib");
+    /*
+    attribs = dir.attribs;
+    dir.attribs = attribs | vfsAttrReadOnly;
+    puts("dir2: " + hex(dir.attribs) + "\n");
+    test(dir.attribs & vfsAttrReadOnly, "dir.attrib");
+    dir.attribs = attribs;
+    */
+    putsl("dir.created = " + printDate(dirgetdate(dir, vfsDateCreated)));
+    d = seconds(); // | 0x80000000;
+    d = d + 60 * 60 * 24 * 365;
+    dirsetdate(dir, vfsDateCreated, d);
+    if (!skipFailures)
+        test(dirgetdate(dir, vfsDateCreated) == d, "setDate");
+    dirclose(dir);
+    test(voldelete(vol, "/dir2/file1") == 0, "del dir2/file1");
+    test(voldelete(vol, "/dir2/file2") == 0, "del dir2/file2");
+    test(voldelete(vol, "/dir2") == 0, "del dir2");
+}
+
+int data_i;
+float data_f;
+char data_c;
+string data_s;
+int data_i2;
+
+int data2_i;
+float data2_f;
+char data2_c;
+string data2_s;
+int data2_i2;
+
+testfile(int vol) {
+    int file;
+    int attribs;
+    
+    data_i = 12345678;
+    data_f = 3.141592;
+    data_c = 'c';
+    data_s = "Jeremy";
+    data_i2 = 7654321;
+     
+    section("VFS.File");
+    volcreatefile(vol, "/file3");
+    test(volopenfile(vol, "/file3", vfsModeReadWrite, &file) == 0, "vol.open");
+    test(filetell(file) == 0, "offset");
+    test(filewrite(file, &data_i, "ifcsi", 1) == 5, "write");
+    test(filetell(file) == 20, "offset.2");
+    fileseek(file, 0);
+    test(filetell(file) == 0, "offset.4");
+    test(fileread(file, &data2_i, "ifcsi", 1) == 5, "read");
+    test(data_i == data2_i, "read.1");
+    test(data_i2 == data2_i2, "read.2");
+    test(data_c == data2_c, "read.3");
+    test(data_s == data2_s, "read.4");
+    test(data_f == data2_f, "read.5");
+    test(fileeof(file), "eof");
+    fileseek(file, 0);
+    test(fileeof(file) == false, "eof.2");
+    test(filesize(file) == 20, "size");
+    //test((file.size = 16) == 16, "size.2");
+    fileresize(file, 16);
+    test(filesize(file) == 16, "size.3");
+    test(fileread(file, &data2_i, "ifcsi", 1) == 4, "read.2");
+    putsl("file.attribs = " + hex(filegetattribs(file)));
+    attribs = filegetattribs(file);
+    filesetattribs(file, attribs | vfsAttrReadOnly);
+    test(filegetattribs(file) & vfsAttrReadOnly, "attribs");
+    putsl("file.attribs = " + hex(filegetattribs(file)));
+    filesetattribs(file, attribs); // remove read-only so we can delete
+    fileclose(file);
+    voldelete(vol, "/file3");
+}
+
+testvol(int vol) {
+    string name;
+    section("VFS.Volume");
+    testErr(volcreatefile(vol, "/file1"), "create");
+    test(findfile(vol, "/file1"), "create.2");
+    testErr(volrename(vol, "/file1", "file2"), "rename");
+    test(findfile(vol, "/file2"), "rename.2");
+    testErr(voldelete(vol, "/file2"), "del");
+    test(findfile(vol, "/file2") == false, "del.2");
+    putsl("default jpeg: " + volgetdefaultdir(vol, "image/jpeg"));
+    testErr(volcreatedir(vol, "/dir1"), "createDir");
+    test(findfile(vol, "/dir1"), "createDir.2");
+    testErr(voldelete(vol, "/dir1"), "delDir");
+    test(findfile(vol, "/dir1") == false, "delDir.2");
+    testErr(volexport(vol, "ToDoDB", "/ToDoDB.pdb"), "export");
+    test(findfile(vol, "/ToDoDB.pdb"), "export.2");
+    test(dbopen("ToDoDB"), "db.open");
+    dbdelete();
+    test(volimport(vol, "/ToDoDB.pdb", &name) == 0, "import");
+    test(name == "ToDoDB", "import.name = ToDoDB");
+    test(dbopen("ToDoDB"), "import.2");
+    dbclose();
+    voldelete(vol, "/ToDoDB.pdb");
+    
+    testdir(vol);
+    testfile(vol);
+}
+
+enumvolumes() {
+    int vol;
+    int first = true;
+    while (enumvols(first, &vol)) {
+        putsl("vol: " + vollabel(vol));
+        enumdir(vol);
+        if (first) {
+            // only test on the first volume
+            testvol(vol);
+        }
+        first = false;
+    }
+    putsl("end");
+}
+
+void vfsTests() {
+    section("VFS");
+    enumvolumes();
+}
+
+void ioTests() {
+    string res;
+    section("basic io");
+    res = gets("Enter 'abc'\nLine 2:");
+    test(res == "abc", "gets");
+    res = gets("Cancel");
+    test(res == "", "gets.2");
+    res = getsd("Enter 'abc':", "ab");
+    test(res == "abc", "getsd");
+    res = getsd("Cancel", "ab");
+    test(res == "", "getsd.2");
+    res = getsi(10, 10, 50, "ab");
+    test(res == "abc", "getsi");
+    res = getsm(20, 40, 70, 3, "line1\nab");
+    test(res == "line1\nabc", "getsm");
+}
+
+void colorTests() {
+    int index = 12;
+    if (getcolordepth() == 1) {
+        if (!setcolordepth(4))
+            if (!setcolordepth(2))
+                puts("unable to swith to gray\n");
+    }
+    title("Color");
+    clearg();
+    pushdraw();
+    setfg(255, 0, 0);
+    line(1, 0, 0, 160, 160);
+    setfgi(rgbtoi(128, 0, 0));
+    line(1, 0, 0, 160, 180);
+    pixel(1, 129, 80);
+    setbg(0, 128, 0);
+    rect(0, 30, 30, 130, 60, 0);
+    setbgi(rgbtoi(0, 255, 0));
+    rect(0, 60, 40, 130, 60, 0);
+    settextcolor(0, 0, 128);
+    text(20, 100, "dark blue");
+    settextcolori(rgbtoi(0, 0, 255));
+    text(28, 108, "bright blue");
+    popdraw();
+    line(1, 160, 0, 0, 160);
+    waitp();
+}
+
+void bufferTests() {
+    int id;
+    title("Buffer");
+    clearg();
+    id = bucreate(40, 40);
+    //test(id != -1, "bucreate");
+    text(0,94, "id = " + id);
+    text(0,80,"copy");
+    buset(id);
+    text(0,0,"buff is not this wide");
+    buset(0);
+    text(30,30, "screen");
+    bucopy(id, 0, 0, 20, 0);
+    bucopyrect(0, 0, 80, 12, 12, id, 0, 0, 0);
+    bucopy(id, 0, 80, 80, 0);
+    budelete(id);
+    waitp();	
+}
+
+void nativeTests() {
+    int x, y, e;
+    title("High density");
+    clearg();
+    pushdraw();
+    line(1, 0, 0, 180, 160);
+    drawnative(true);
+    line(1, 0, 0, 160, 160);
+    drawnative(false);
+    line(1, 160, 0, 0, 160);
+    text(0, 20, "draw something");
+    drawnative(true);
+    while (true) {
+        e = pcevent(0);
+        if (e == 2) {
+            x = npenx(); y = npeny();
+        } else if (e == 4) {
+            line(1, x, y, npenx(), npeny());
+            x = npenx(); y = npeny();
+        } else if (e == 3) break;
+    }
+    popdraw();
+}
+
+@bitmap Bitmap bmpChess {
+    id = 120
+    image1="pawn1.bmp"
+    image4="pawn4.bmp"
+    image8="pawn8.bmp"
+    imageh8="knight8h.bmp"
+}
+
+//@bmp "120,1,pawn1.bmp,4,pawn4.bmp,8,pawn8.bmp,8h,knight8h.bmp";
+
+testBitmaps() {
+    int id;
+    title("Bitmaps");
+    clearg();
+    id = resopen("Chess Clock");
+    clearg();
+    bitmapr(110, 30, 30);
+    resclose(id);
+    bitmapr(110, 40, 40);
+    bitmapr(120, 70, 70);
+    waitp();
+}
+
+void graphicsTests() {
+    graph_on();
+    title("OldTitle");
+    saveg();
+    title("NewTitle");
+    line(1, 0, 0, 160, 160);
+    sleep(1000);
+    restoreg();
+    sleep(1000);
+    //clear();
+    putsl("puts in graph mode");
+    colorTests();
+    bufferTests();
+    nativeTests();
+    testBitmaps();
+    graph_off();
+}
+
+void exitFunc() {
+    alert("exiting");
+}
+
+void sysTests() {
+    section("system");
+    atexit(exitFunc);
+}
+
+void libTests() {
+    string str;
+    string text = "abcdefghij";
+    string cut;
+    pointer data;
+
+    section("library");
+    str = GetOS();
+    putsl("OS: " + str);
+    data = Array("cis,2,3"); //creates a 2 by 3 array
+    free(data);
+
+    cut = Insert(&text,"vwxyz",4,3);
+    puts("CUT="+cut+"\n"); //will be "efg"
+    puts("TEXT="+text+"\n"); //will be "abcdvwxyzhij"
+}
+
+void main() {
+    //quiet = true;
+    interactive = true;
+    skipFailures = true;
+    
+    putsl("NOT CLEARED");
+    clear();
+    
+    stringTests();
+    soundTests();
+    dateTests();
+    memoTests();
+    dbTests();
+    if (interactive)
+        netTests();
+    if (interactive)
+        ioTests();
+    vfsTests();
+    if (interactive)
+        graphicsTests();
+    sysTests();
+    libTests();
+    final();
+}

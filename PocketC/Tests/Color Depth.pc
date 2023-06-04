@@ -1,0 +1,28 @@
+// Color Depth
+library "GrayLib"
+#include "buttons.h"
+
+changeDepth(int d) {
+    int ret;
+    ret = setdepth(d);
+    alert("setdepth: " + ret);
+    refreshAll();
+}
+
+bwfunc() { changeDepth(1); }
+g2func() { changeDepth(2); }
+g4func() { changeDepth(4); }
+cfunc()  { changeDepth(8); }
+exitfunc() { exitflag = 1; }
+timerfunc() { alert("hi"); }
+
+main() {
+    graph_on();
+    title("Color Depth");
+    addButton("B/W", bwfunc, 30, 40, 130, 65);
+    addButton("Gray 4", g2func, 30, 65, 130, 90);
+    addButton("Gray 16", g4func, 30, 90, 130, 115);
+    addButton("Color", cfunc, 30, 115, 130, 140);
+    //addTimer(50, timerfunc);
+    eventLoop();
+}

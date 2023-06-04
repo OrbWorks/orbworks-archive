@@ -1,0 +1,140 @@
+// Address Reader
+
+// offsets of specific entries
+#define LastName	0
+#define FirstName	1
+#define Company		2
+#define Phone1		3
+#define Phone2		4
+#define Phone3		5
+#define Phone4		6
+#define Phone5		7
+#define Address		8
+#define City		9
+#define State		10
+#define ZipCode		11
+#define Country		12
+#define Title		13
+#define Custom1		14
+#define Custom2		15
+#define Custom3		16
+#define Custom4		17
+#define Note		18
+#define NumFields	19
+
+// Name mapping field:
+//	This field controls how the phone number tap-down is displayed
+//	in AddressBook. There are eight pull down choice names which can be
+//	applied to any one of the five phone-number database entries. Note that
+//	there is no direct association between these names and the phone number
+//	field - for example: you can have two fields both named 'Work' with
+//	different number values - there is no checking.
+
+// The 32 bit integer field has the following format:
+//	name map = 0xdd054321
+//
+// where:
+//		dd - reserved - note: examples from the database usually contain 0x15
+//		0 is a nibble of zero
+//		5-1 are the tapdown name fields displayed for phone # 5 to 1
+
+// To use this field, two definitions are needed. The first is the 4 bit
+//	value used to indicate which name value to be used, and the second is the
+//	shift value needed to shift that into the appropriate position for phone 
+//	number 'n'
+
+// Nibble definitions for the named fields
+#define n_work		0
+#define n_home		1
+#define n_FAX		2
+#define n_other		3
+#define n_email		4
+#define n_main		5
+#define n_pager		6
+#define n_mobile	7
+
+// These are shift definitions for the phone number fields
+#define s_display 20
+#define s_phone5 16
+#define s_phone4 12
+#define s_phone3 8
+#define s_phone2 4
+#define s_phone1 0
+
+//#define DEBUG
+
+modifyRecords() {
+    int count, i, field_mask, phone_mask, new_mask, j, new_phone;
+    int bPhone[8];
+    int cDisp;
+    string sPhone[8] = {"Work", "Home", "Fax", "Other", "email", "Main", "Pager", "Mobile"};
+    string comma;
+    string lastname;
+    
+    dbopen("AddressDB");
+    count = dbnrecs();
+    
+    for (i=0;i<count;i++) {
+        dbrec(i);
+        phone_mask = dbread('i');
+        field_mask = dbread('i');
+        dbread('c');
+        
+        new_phone = n_work;
+        if (!(field_mask & 1)) {
+#ifdef DEBUG
+            puts(i + " <-- skipping\n");
+#endif
+            continue;
+        }
+        lastname = dbread('s');
+#ifdef DEBUG
+        cDisp++;
+        if (cDisp == 8)
+            clear();
+#endif
+
+        bPhone[0] = bPhone[1] = bPhone[2] = bPhone[3] =
+        bPhone[4] = bPhone[5] = bPhone[6] = bPhone[7] = 0;
+        
+        for (j=0;j<5;j++) {
+            if (field_mask & (1 << (j+Phone1)))
+                // we found a valid entry
+                bPhone[(phone_mask >> (j*4)) & 0x7] = 1;
+        }
+#ifdef DEBUG
+        puts(i + " " + lastname + ": curr: " + sPhone[(phone_mask >> s_display) & 0x7]);
+        comma = "";
+        puts("\n  has: ");
+        for (j=0;j<8;j++) {
+            if (bPhone[j]) {
+                puts(comma + sPhone[j]);
+                comma = ", ";
+            }
+        }
+#endif
+        if (bPhone[n_home]) new_phone = n_home;
+        else if (bPhone[n_mobile]) new_phone = n_mobile;
+        else if (bPhone[n_work]) new_phone = n_work;
+        else if (bPhone[n_email]) new_phone = n_email;
+#ifdef DEBUG
+        puts("\n  new: " + sPhone[new_phone]);
+        puts("\n  oldmask " + hex(phone_mask));
+#endif
+        new_mask = phone_mask & 0xff0fffff;
+        new_mask = new_mask | (new_phone << s_display);
+#ifdef DEBUG
+        puts("\n  newmask " + hex(new_mask));
+        puts("\n");
+#endif
+        dbseek(0);
+        dbwritex(&new_mask, "i4");
+    }
+    dbclose();
+}
+
+string addr[NumFields];
+
+main() {
+    modifyRecords();
+}

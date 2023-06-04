@@ -1,0 +1,24 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// RAW
+//
+
+1000                RAW     DISCARDABLE     "launcher\\code0000.bin"
+1001                RAW     DISCARDABLE     "launcher\\code0001.bin"
+1002                RAW     DISCARDABLE     "launcher\\data0000.bin"
+1003                RAW     DISCARDABLE     "launcher\\Talt1001.bin"
+
+2000                RAW     DISCARDABLE     "standalone\\code0000.bin"
+2001                RAW     DISCARDABLE     "standalone\\code0001.bin"
+2002                RAW     DISCARDABLE     "standalone\\code0002.bin"
+2003                RAW     DISCARDABLE     "standalone\\data0000.bin"
+2004                RAW     DISCARDABLE     "standalone\\Talt9000.bin"
+2005                RAW     DISCARDABLE     "standalone\\Talt9001.bin"
+2006                RAW     DISCARDABLE     "standalone\\Talt9002.bin"
+2007                RAW     DISCARDABLE     "standalone\\Talt9003.bin"
+2008                RAW     DISCARDABLE     "standalone\\Talt9004.bin"
+2009                RAW     DISCARDABLE     "standalone\\Talt9005.bin"
+2010                RAW     DISCARDABLE     "standalone\\pref0000.bin"
+2011                RAW     DISCARDABLE     "standalone\\MBAR9000.bin"
+2012                RAW     DISCARDABLE     "standalone\\tFRM9000.bin"
+2013                RAW     DISCARDABLE     "standalone\\tFRM9100.bin"

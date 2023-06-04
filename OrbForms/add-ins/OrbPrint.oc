@@ -1,0 +1,45 @@
+const int prtFontCourier = 0;
+const int prtFontTimes = 1;
+const int prtFontHelvetica = 2;
+const int prtFontStandard = 8;
+const int prtSize12 = 0;
+const int prtSize10 = 8;
+const int prtSize9 = 16;
+const int prtStylePlain = 0;
+const int prtStyleBold = 1;
+const int prtOrientLandscape = 0;
+const int prtOrientPortrait = 1;
+
+struct PalmPrint {
+    int id;
+    void _init() @ library("OrbPrint", 0);
+    void _destroy() @ 80;
+    void _copy(PalmPrint) @ 89;
+    
+    int charsPerLine @ library("OrbPrint", 12:13);
+    int linesPerPage @ library("OrbPrint", 14:15);
+    int font @ library("OrbPrint", :16);
+    int fontSize @ library("OrbPrint", :17);
+    int leftMargin @ library("OrbPrint", :18);
+    int topMargin @ library("OrbPrint", :19);
+    int style @ library("OrbPrint", :20);
+    int indent @ library("OrbPrint", :21);
+    int numCopies @ library("OrbPrint", :22);
+    int orientation @ library("OrbPrint", :23);
+
+    bool open() @ library("OrbPrint", 1);
+    
+    // block mode
+    void printString(string str) @ library("OrbPrint", 2);
+    void xmitString(string str) @ library("OrbPrint", 3);
+    
+    // line mode
+    void beginPrint() @ library("OrbPrint", 4);
+    void endPrint() @ library("OrbPrint", 5);
+    void beginXmit() @ library("OrbPrint", 6);
+    void endXmit() @ library("OrbPrint", 7);
+    void printLine(string str) @ library("OrbPrint", 8);
+    void xmitLine(string str) @ library("OrbPrint", 9);
+    void printLinePassThru(string str) @ library("OrbPrint", 10);
+    void xmitLinePassThru(string str) @ library("OrbPrint", 11);
+};

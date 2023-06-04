@@ -1,0 +1,26 @@
+//BugTest
+//#include "pc_most.oc"
+eventLoop(){
+int e=0;
+string t;
+while(1){
+  e=event(1);
+  switch(e){
+    case 2://p-down
+      pixel(1,penx(),peny());
+      break;
+    case 5://pg-up
+    case 6://pg-down
+      t=gets("Get some input:");
+      break;
+    }
+  }
+}
+
+main() {
+int i,w,h;
+graph_on();
+clearg();
+eventLoop();
+graph_off();
+}

@@ -1,0 +1,57 @@
+const int serCradlePort = 0x8000;
+const int serIRPort = 0x8001;
+const int serIrComm = 0x6972636D;
+const int serRfComm = 0x7266636D;
+
+const int serStatusCTS = 1;
+const int serStatusRTS = 2;
+const int serStatusDSR = 4;
+const int serStatusBreak = 8;
+
+const int serErrorParity = 0x01;
+const int serErrorHWOverrun = 0x02;
+const int serErrorFraming = 0x04;
+const int serErrorBreak = 0x08;
+const int serErrorHShake = 0x10;
+const int serErrorSWOverrun = 0x20;
+const int serErrorCarrierLost = 0x40;
+
+
+struct Serial {
+    int id;
+    void _init() @ library("OrbSerial", 0);
+    void _destroy() @ 80;
+    void _copy(Serial) @ 89;
+
+    int error @ library("OrbSerial", 6);
+    int status @ library("OrbSerial", 7);
+
+    bool open(int port, int baud) @ library("OrbSerial", 1);
+    void close() @ library("OrbSerial", 2);
+    void settings(int charbits, int stopbits, int parity, char flowctl, int ctstimeout) @ library("OrbSerial", 3);
+    bool setbuffer(int size) @ library("OrbSerial", 4);
+    void clearerr() @ library("OrbSerial", 5);
+    
+    bool send(void* data, string type, int count) @ library("OrbSerial", 8);
+    bool recv(void* data, string type, int count, int timeout) @ library("OrbSerial", 9);
+    bool sendb(char byte) @ library("OrbSerial", 10);
+    bool recvb(char* pbyte) @ library("OrbSerial", 11);
+    int  sendcheck() @ library("OrbSerial", 12);
+    int  recvcheck() @ library("OrbSerial", 13);
+    bool sendwait() @ library("OrbSerial", 14);
+    bool recvwait(int bytes, int timeout) @ library("OrbSerial", 15);
+    void sendflush() @ library("OrbSerial", 16);
+    void recvflush(int timeout) @ library("OrbSerial", 17);
+};
+
+object SerialStream : Stream {
+    Serial serial;
+    bool write(void* data, string type, int count);
+    bool read(void* data, string type, int count);
+};
+bool SerialStream.write(void* data, string type, int count) {
+    return serial.send(data, type, count);
+}
+bool SerialStream.read(void* data, string type, int count) {
+    return serial.recv(data, type, count, 100);
+}

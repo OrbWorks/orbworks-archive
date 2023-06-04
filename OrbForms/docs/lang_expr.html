@@ -1,0 +1,285 @@
+<p>An expression is something in OrbC that evaluates to a value. An
+expression can be a literal, a variable, a function call (when the function
+returns a value), or any combination of these connected by operators.</p>
+
+<p>A <b>literal</b> is any value that is directly entered
+into a source file, such as: 5, 5.4, 'j', &quot;hello&quot;.</p>
+
+<p>A value stored in a <b> variable</b> can be accessed by simply typing
+its name: (e.g. <code>myInteger</code>). However, if the variable is an array, each value in the
+array must be accessed individually by index. The valid indices for an array
+with <i>n</i> elements are 0 to <i>n</i>-1. So, an array declared like this:</p>
+
+<pre>string names[4];</pre>
+
+<p>can be accessed like this:</p>
+
+<pre>names[0] = &quot;first name&quot;;
+names[1] = &quot;second name&quot;;
+names[2] = &quot;third name&quot;;
+names[3] = &quot;fourth name&quot;;</pre>
+
+<p>A <b>function call</b> consists of the name of a function followed by
+parentheses containing all the parameters for the function. The value of a
+function call is the value returned by the function.</p>
+
+<pre>a = area(4, 5);
+square(9.2);
+clear();
+text(20, 30, &quot;Game Over&quot;);</pre>
+
+<p>A function can only be called after it is defined. If you want to call a
+function before defining it, you can use a function prototype. A prototype of a
+function is a global line (not within another function) which states the return
+type, name,
+and parameters of a function followed by a semicolon:</p>
+<pre>int area(int x, int y);
+float square(float); // the use of variable names is optional in a declaration</pre>
+<p>These three basic elements can be combined with operators:</p>
+<pre>5 + 7 - area(12, 34);
+square(5) * pi;
+&quot;Hello, &quot; + &quot;World&quot;;</pre>
+<p>Of course, function calls can have expressions in them as well:</p>
+<pre>area(x+3, y*9);
+area(8 * square(4), 7);</pre>
+<h3>Assignment</h3>
+<p>Variable assignment is actually just another form of expression. The value of
+the entire assignment expression is equal to the value being assigned.
+Assignment is done in one of two ways--for a normal variable:<br/>
+<i>name</i> = <i>expression</i></p>
+<p>and for an array:<br/>
+<i>name</i>[<i>index-expression</i>] = <i>expression</i></p>
+<p>Here are a few examples:</p>
+<pre>int myInt, numbers[3];
+string myString;
+...
+myInt = 8;
+myString = &quot;Animaniacs&quot;;
+numbers[0] = myInt + 5;
+numbers[2] = numbers[0] * 8;</pre>
+<p>However, since OrbC is loosely typed, any type of value can be assigned
+to any type of variable and the value will be automatically converted:</p>
+<pre>myString = 95; // The value of myString is now &quot;95&quot;
+numbers[1] = &quot;78&quot;; // The value of numbers[1] is now 78;
+numbers[&quot;2&quot;] = &quot;2&quot;; // Another neat trick. numbers[2] is now 2</pre>
+<h3>Operators</h3>
+<p>The following table gives the list of operators and their associativity in
+order of precedence, lowest first. In other words, when two operators are in an
+expression, the operator lowest in the table is evaluated first. However, if
+part of an expression is enclosed in parens, that part is evaluated first.</p>
+<table cellSpacing="1" width="623" border="1">
+  <tbody>
+    <tr>
+      <th vAlign="center">
+        <p align="center">Operator</p>
+      </th>
+      <th vAlign="center">
+        <p align="center">Assoc</p>
+      </th>
+      <th vAlign="center">
+        <p align="center">Description</p>
+      </th>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>=</code></p>
+      </td>
+      <td vAlign="center">right</td>
+      <td vAlign="center">assigns the value of the expression on the right to
+        the variable on the left. Evaluates to the expression on the right.</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>||</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">logical 'or', evaluates to 0 if false, 1 if true</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>&amp;&amp;</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">logical 'and'</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>|</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">bitwise 'or'</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>^</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">bitwise 'xor'</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>&amp;</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">bitwise 'and'</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>== != &lt; &lt;= &gt; &gt;=</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">relational operators. == (equal), != (not equal),
+        &lt;= (less than or equal), &gt;= (greater than or equal). These
+        evaluate to 1 if the expression is true, 0 otherwise</td>
+    </tr>
+    <tr>
+      <td align="center"><code>&lt;&lt; &gt;&gt;</code></td>
+      <td>left</td>
+      <td>bitwise shift operators. The operands must be <code>int</code> or <code>char</code>.</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>+ -</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">addition, subtraction (subtraction cannot be used with
+        a string argument)</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>* / %</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">multiplication, division, modulus (cannot be used with
+        strings, nor can modulus be used with floats)</td>
+    </tr>
+    <tr>
+      <td vAlign="center">
+        <p align="center"><code>- ! ++ -- ~ * [] () &amp; . -&gt; sizeof() typeof()</code></p>
+      </td>
+      <td vAlign="center">left</td>
+      <td vAlign="center">- (negation), ! (logical 'not'), ++ (increment), --
+        (decrement), ~ (bitwise neg), [] (array subscript, string character
+        accessor), &amp; (address of
+        ), . (the struct accessor), and <code>-&gt;</code> (the struct dereference
+        accessor). sizeof (size of a type/variable), typeof (<a href="ttypeStrings.html">type string</a> of a
+        type/variable).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Compound Assignment</h3>
+<p>To save time and space, you can use compound assignment operators. These
+operators perform a binary operation on the left and right side of the
+expression, and then assign the value back to the left side. For example:</p>
+<pre>x += 2;
+myArray[i] *= 3;</pre>
+<p>are equivalent to:</p>
+<pre>x = x + 2;
+myArray[i] = myArray[i] * 3;</pre>
+<p>Compound assignment operators have the same precedence as the basic
+assignment operator (<code>=</code>). Available compound operators are <code>+=, -=, *=, /=, %=,
+^=, |=, &amp;=, &lt;&lt;=, &gt;&gt;=</code>.</p>
+<h3>Shortcut Logic</h3>
+<p>When using the &amp;&amp; and || operators, the compiler uses shortcut
+logic, meaning it only evaluates the sub-expression that it needs to in order to
+get the correct result. For example:</p>
+
+<pre>bool true_func() { return true; }
+bool false_func() { return false; }
+
+void test() {
+  if (true_func() || false_func()) {
+    ...
+  }
+  if (false_func() &amp;&amp; true_func()) {
+    ...
+  }
+}</pre>
+
+<p>In the first <code>if</code> statement <code>false_func()</code> would not be
+called. Since the first half of the || expression is true, the whole expression
+must be true so the second half is not evaluated. In the same way, in the
+second <code>if</code> expression <code>true_func()</code> is never executed because the compiler knows
+that the entire expression is false regardless of the second half.</p>
+
+<h3>String Character Accessor</h3>
+<p>To get or set an individual character within a string variable, use <i>stringVariable</i>[<i>index</i>].
+The index of the first character is 0. You will produce a runtime error if you
+attempt to access a character that is past the end of the string. Example:</p>
+<pre>string str = &quot;bob&quot;;
+...
+alert(str[1]); // Displays the second letter of str
+str[1] = 'X'; // changes str from &quot;bob&quot; to &quot;bXb&quot;</pre>
+<p><b>Note:</b> the string character accessor cannot be used with literals, nor
+can the address of the resulting character be taken. In other words, the following
+expressions are not valid: &amp;str[i], &quot;hello&quot;[i]</p>
+<h3>Increment / Decrement</h3>
+<p>The ++ and -- operators are special in that they must be placed before or
+after a variable and modify the value of the variable. The ++ increments the
+value of a variable by one, while the -- decrements by one. The caveat is that
+if the ++/-- is placed in front of the variable, the expression evaluates to the
+value of the variable after it is incremented/decremented. If it is placed after
+the variable, the expression evaluates to the variable's previous value.
+Example:</p>
+<pre>int myInt;
+...
+myInt = 8;
+alert(++myInt); // Displays &quot;9&quot;
+
+myInt = 8;
+alert(myInt++); // Displays &quot;8&quot;, but myInt is now 9</pre>
+<h3>sizeof() and typeof()</h3>
+
+<p><code>sizeof()</code> and <code>typeof()</code> are operators that give
+information about a type. They can be used either on the name of a variable or
+the name of a type. <code>sizeof()</code> evaluates to the number of memory values required for
+the type - which is 1 for the five basic types and for pointers, but becomes more
+interesting when used on structs and objects. <code>typeof()</code> evaluates to a string
+describing the memory structure of a type. Some of the built-in functions (such
+as <a href="mDBRecord-read.html">DBRecord.read</a>) require these
+<a href="ttypeStrings.html">type strings</a> to convert OrbC structures into
+native data to pass to the operating system.</p>
+
+<pre>struct Person {
+  string name;
+  int age;
+};
+
+void test() {
+  Person bob;
+  int size;
+  string type;
+  size = sizeof(Person); // size = 2
+  size = sizeof(bob); // size = 2
+  type = typeof(Person); // type = &quot;si&quot;;
+}</pre>
+
+<p><b>Note</b>: When either of these operators is applied to an array
+variable, only information about the type is supplied - the size is NOT
+multiplied by the number of elements in the array. However, if an array is
+contained in a struct/object, the operators return information about the entire
+struct/object including the full size of the array.</p>
+
+<h3>Automatic Conversion and Casting</h3>
+<p>Just like in assignments statements, automatic conversion takes place in
+every part of an expression. If the two arguments to an operator are of
+different types, one of the arguments will be promoted to the less strict type. The
+promotion order is <code>char</code> to <code>int</code> to <code>float</code> to <code>string</code>. So in the expression:</p>
+<pre>&quot;Result is: &quot; + 5;</pre>
+<p>The literal 5 is first promoted to a string, and the two strings are
+concatenated to &quot;Result is: 5&quot;. This may have some undesirable side effects. For example, if you
+want to display an expression and result, you might do
+something like this:</p>
+<pre>alert(&quot;5 + 7 = &quot; + 5 + 7); // Displays &quot;5 + 7 = 57&quot;</pre>
+<p>This probably wasn't the desired outcome. Instead, you would want the
+expression evaluated first, then concatenated to the string. The parentheses can
+be used to accomplish this:</p>
+<pre>alert(&quot;5 + 7 = &quot; + (5 + 7)); // Displays &quot;5 + 7 = 12&quot;</pre>
+<p>One problem remains. Suppose you want to find the floating point value of a
+fraction of two integers.</p>
+<pre>alert(&quot;7 / 5 = &quot; + (7 / 5)); // Displays &quot;7 / 5 = 1&quot;</pre>
+<p>This output is because both arguments are integers, so the result is also an
+integer. To solve this, we can cast one of them to a float:</p>
+<pre>alert(&quot;7 / 5 = &quot; + ((float)7 / 5)); // Displays &quot; 7 / 5 = 1.4&quot;</pre>
+<p>This forces the integer 7 to a floating point number before dividing it by 5.</p>

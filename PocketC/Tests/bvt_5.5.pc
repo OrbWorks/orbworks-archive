@@ -1,0 +1,160 @@
+#include "tests.h"
+@cid "bvt5";
+@dbname "bvt 5.5";
+@name "bvt 5.5";
+@ver "1.0";
+@licon1 "icon_l1.bmp";
+@licon4 "icon_l4.bmp";
+@licon8 "icon_l8.bmp";
+@licon8h "icon_lh8.bmp";
+@sicon1 "icon_s1.bmp";
+@sicon4 "icon_s4.bmp";
+@sicon8 "icon_s8.bmp";
+@sicon8h "icon_sh8.bmp";
+
+
+test5way() {
+    int e, y = 20;
+    title("5-way");
+    clearg();
+    text(0, y, "test 5-way, tap to continue");
+    y = y + 11;
+    while (true) {
+        e = event(0);
+        if (e == 5) { text(0, y, "up"); y = y + 11; }
+        else if (e == 6) { text(0, y, "down"); y = y + 11; }
+        else if (e == 16) { text(0, y, "left"); y = y + 11; }
+        else if (e == 17) { text(0, y, "right"); y = y + 11; }
+        else if (e == 18) { text(0, y, "select"); y = y + 11; }
+        else if (e == 3) break;
+    }
+}
+
+testSound() {
+    tonea(660, 1000, 72);
+    puts("still playing\n");
+    puts("sys vol: " + getvol(0) + "\ngame vol: " + getvol(1) +
+        "\nalarm vol: " + getvol(2) + "\n");
+    tonea(0,0,0);
+    puts("stopped playing\n");
+}
+
+testColor() {
+    int index = 12;
+    if (getcolordepth() == 1) {
+        if (!setcolordepth(4))
+            if (!setcolordepth(2))
+                puts("unable to swith to gray\n");
+    }
+    title("Color");
+    clearg();
+    pushdraw();
+    setfg(255, 0, 0);
+    line(1, 0, 0, 160, 160);
+    setfgi(rgbtoi(128, 0, 0));
+    line(1, 0, 0, 160, 180);
+    pixel(1, 129, 80);
+    setbg(0, 128, 0);
+    rect(0, 30, 30, 130, 60, 0);
+    setbgi(rgbtoi(0, 255, 0));
+    rect(0, 60, 40, 130, 60, 0);
+    settextcolor(0, 0, 128);
+    text(20, 100, "dark blue");
+    settextcolori(rgbtoi(0, 0, 255));
+    text(28, 108, "bright blue");
+    popdraw();
+    line(1, 160, 0, 0, 160);
+    puts("255,0,0 = " + rgbtoi(255,0,0) + "\n");
+    waitp();
+    if (choosecolori("pick it", &index)) {
+        puts("chose " + index + "\n");
+        setfgi(index);
+        line(1, 0, 70, 160, 70);
+    } else {
+        puts("canceled\n");
+    }
+    puts("object frame: " + getuicolor(0) + "\nobject fill: " +
+        getuicolor(1) + "\n");
+    waitp();
+}
+
+testBuffer() {
+    int id;
+    title("Buffer");
+    clearg();
+    id = bucreate(40, 40);
+    test(id != -1, "bucreate");
+    text(0,94, "id = " + id);
+    text(0,80,"copy");
+    buset(id);
+    text(0,0,"buff is not this wide");
+    // alert("alert?"); // fine
+    buset(0);
+    text(30,30, "screen");
+    bucopy(id, 0, 0, 20, 0);
+    bucopyrect(0, 0, 80, 12, 12, id, 0, 0, 0);
+    bucopy(id, 0, 80, 80, 0);
+    budelete(id);
+    waitp();	
+}
+
+testHighDensity() {
+    int x, y, e;
+    title("High density");
+    clearg();
+    pushdraw();
+    line(1, 0, 0, 180, 160);
+    drawnative(true);
+    line(1, 0, 0, 160, 160);
+    drawnative(false);
+    line(1, 160, 0, 0, 160);
+    text(0, 20, "draw something");
+    drawnative(true);
+    while (true) {
+        e = event(0);
+        if (e == 2) {
+            x = npenx(); y = npeny();
+        } else if (e == 4) {
+            line(1, x, y, npenx(), npeny());
+            x = npenx(); y = npeny();
+        } else if (e == 3) break;
+    }
+    popdraw();
+    puts("density: " + getscreenattrib(5) + "\n");
+    puts("width: " + getscreenattrib(0) + "\nheight: " + getscreenattrib(1) + "\n");
+}
+
+@bitmap UIBitmap bmpChess {
+    id = 120
+    image1="pawn1.bmp";
+    image4="pawn4.bmp";
+    image8="pawn8.bmp";
+    image8h="knight8h.bmp";
+}
+
+//@bmp "120,1,pawn1.bmp,4,pawn4.bmp,8,pawn8.bmp,8h,knight8h.bmp";
+
+testBitmaps() {
+    int id;
+    title("Bitmaps");
+    clearg();
+    id = resopen("Chess Clock");
+    clearg();
+    bitmapr(110, 30, 30);
+    resclose(id);
+    bitmapr(110, 40, 40);
+    bitmapr(120, 70, 70);
+    waitp();
+}
+
+main() {
+    clear();
+    testSound();
+    graph_on();
+    test5way();
+    testColor();
+    testBuffer();
+    testHighDensity();
+    testBitmaps();
+    final();
+}

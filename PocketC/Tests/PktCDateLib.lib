@@ -1,0 +1,9 @@
+// PktCDateLib.lib - definition file for PktCDateLib by Marvin E. Wilborne III
+// Get the latest version at http://www3.gamewood.net/mew3/pilot/pocketc/
+SelectFromToday(int parameter);
+ExtractYMD(int date, int component);
+DeltaDays(int date1, int date2);
+CalcDate(int date, int days);
+PCDLVersion();
+MakeYMD(int year, int month, int day);
+SelectFromDate(int date);

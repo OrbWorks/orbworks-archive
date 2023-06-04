@@ -1,0 +1,59 @@
+<p>A project is the collection of the application properties, application icon,
+forms, bitmaps, strings, source code, and gadget source code that go into an
+application. An OrbForms Designer project is stored as a .orb file which
+contains references to the source files, gadget files, and bitmaps files.</p>
+<h3>Project Items and Names</h3>
+<p>Each item in a project has a name. Each name must be unique, and must be a
+valid variable name. In fact, OrbForms Designer creates an object for each item
+that can be accessed from source code. Look through the tutorials to see how
+this works.</p>
+<h3>Application Icon</h3>
+<p>A project contains one small icon and one large icon. The small icon must be
+15x9 pixels, and the large icon must by 32x32. However, in the large icon, only
+the top 22 lines will be visible (the lower portion is obscured by the
+application name). Any pixel whose RGB color is (255,128,255), a light pink,
+will be treated as transparent for 4-bit and 8-bit icons.</p>
+<h3>Project Bitmaps</h3>
+<p>A project can contain bitmaps, which can be used to do custom drawing in
+forms and gadgets. Each bitmap can contain up to 10 images - one standard 
+density and one high density for each
+supported bit depth (1-, 2-, 4-, 8- and 16-bit). Any pixel whose RGB color is 
+(255,128,255), a light pink, will be treated as transparent for 4-, 8-, and 16-bit 
+images. When creating an
+8-bit image, the compiler will convert the image to use the Palm palette. To ensure that
+the bitmap looks best, create the image using the Palm palette
+(Palm256Palette.pal can be used by most image editors for this purpose). High 
+density images must be twice as wide and tall as standard images.</p>
+<p>Bitmaps can also be added to the application via source code. See
+<a href="tGadgets.html">Gadgets</a> for details.</p>
+<h3>Project Strings</h3>
+<p>A project may contain strings, which are represented in the project bar. A
+project string is only used as the help string for a modal form - when the user
+taps the &quot;i&quot; in the upper right of a modal form, the specified string
+will be displayed in a help dialog.</p>
+<p>Project strings can also be added to the application via source code. See
+<a href="oUIString.html">UIString</a> for details.</p>
+<h3>Compiling and Source File Order</h3>
+<p>The order of source and gadget files in the project is significant. OrbForms
+Designer compiles all the files in a project in order, essentially treating them
+as one large file. For this reason functions, object, methods, global variables,
+etc. defined in one file can be accessed by every file that is listed after it
+in the project.</p>
+<p>The project file contains an application definitions which is composed of all
+the forms, controls, etc. used by the application. When a form contains a
+gadget, the gadget object must be defined before the application definition. To
+accomplish this, the compiler processes the gadget files before the processing
+the application definition, followed by the source files. This has several
+implications, which are described below.</p>
+<h3>Source File Order Guidelines</h3>
+<p>To make this easier to understand, here are a few guidelines:</p>
+<ul>
+  <li>Gadget objects must be defined in gadget files.</li>
+  <li>The actual methods of a gadget may be defined in a source file.</li>
+  <li>Gadget files may not reference the forms, controls, etc. of the
+    application.</li>
+  <li>Objects and global variables may only be used in the file in which they
+    are defined, and the files that follow.</li>
+  <li>Functions can only be used in the file in which they are <i>declared</i>,
+    and the files that follow.</li>
+</ul>

@@ -1,0 +1,23 @@
+// categories
+main() {
+  int i;
+  
+  if (!dbcreatex("ABCdatabase", "ABC2", "ABCt"))
+  	puts("Unable to create ABCdatabase\n");
+  if (dbopen("MemoDB")) {
+    mmopen(0);
+    puts(mmgetl() + "\n");
+    puts(dbcatname(dbgetcat()) + "\n");
+    dbsetcat(1);
+    puts(dbcatname(dbgetcat()) + "\n");
+    /*
+    for (i=0;i<16;i++) {
+      puts(i + ": " + dbcatname(i) + "\n");
+    }
+    */
+    dbclose();
+  } else {
+    puts("Unable to open DB\n");
+  }
+}
+  

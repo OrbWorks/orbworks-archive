@@ -1,0 +1,34 @@
+<p>An OrbC application responds to user interaction through event handlers.
+Whenever a button is pressed, a form is opened, or dozens of other things
+happen, an event is generated. If the application has defined a handler for that
+event, that handler is executed.</p>
+<p>For each user interface object (form, button, etc.) in your application, the
+IDE automatically creates an object to represent it. Each type of control has a
+corresponding object type - a button is of type UIButton, form is UIForm, etc.
+See the API documentation for more details and supported events. For example,
+if you created a button named 'helloButton', the compiler would create a
+UIButton object named 'helloButton'.</p>
+
+<p>An event handler is similar to an object method, but is defined for an
+<i>instance</i> of a UI object. A handler does not have a return value, and takes no
+parameters - the event information can be retrieved using the Event object, see
+API documentation for details. When one of the events occurs that is supported
+by the object, the handler is executed. Using 'helloButton' as an example, you
+could define a handler for the onselect event (which is the only event supported
+by a button) like this:</p>
+
+<pre>handler helloButton.onselect() {
+  alert(&quot;You pressed the 'hello' button!&quot;);
+}</pre>
+
+<p>Just as with object methods, event handlers can access the UI object's
+members directly (like the x and y coordinate):</p>
+
+<pre>handler helloButton.onselect() {
+  string coord;
+  coord = &quot;(&quot; + x + &quot;,&quot; + y + &quot;)&quot;; // x and y provided by UIButton object
+  alert(&quot;helloButton is at &quot; + coord);
+}</pre>
+
+<p>Unlike object methods, handlers cannot be called directly - only the runtime
+can call them.</p>

@@ -1,0 +1,82 @@
+// switch test
+test(int b, string t) {
+    if (b)
+        puts("PASSED: " + t + "\n");
+    else
+        puts("FAILED: " + t + "\n");
+}
+
+testsr(string fruit) {
+    switch (fruit) {
+        case "apple":
+            return "apple";
+        default:
+            return "not apple";
+    }
+}
+
+testswitch() {
+    int x = 7, n;
+    string str = "happy";
+    float f = 7.8;
+    char c = 'd';
+    
+    switch (x) {
+        case 2:
+            test(false, "switch 2:");
+            break;
+        case 7:
+            test(true, "switch 7:");
+            n++;
+            break;
+        default:
+            test(false, "default:");
+    }
+    test(true, "after switch");
+    n++;
+    switch (x) {
+     	case 2:
+     	case 7:
+     		test(true, "switch 7:");
+     		n++;
+     	case 8:
+     		test(true, "fall-through");
+     		n++;
+     		break;
+     	default:
+     		test(false, "default:");
+    }
+    n++;
+    switch (x) {
+        default:
+            test(true, "default:");
+            n++;
+            break;
+        case 2:
+            test(false, "switch 2:");
+            break;
+    }
+    n++;
+    test(n == 7, "n == 7");
+    
+    switch (str) {
+        case "sad":
+            test(false, "sad");
+            break;
+        case "happy":
+            test(true, "happy");
+    }
+    switch (c) {
+        case 'c':
+            test(false, "c");
+            break;
+        case 'd':
+            test(true, "d");
+    }
+    test(testsr("apple") == "apple", "case ret");
+    test(testsr("orange") == "not apple", "default ret");
+}
+
+main() {
+    testswitch();
+}

@@ -1,0 +1,15 @@
+[Tutorial and GCC files provided by Mark Roth]
+
+Will not run on 1.0 rom.
+Runs on 2.0 rom but crashes back into the prefs on exit.
+Installs but didn't show up in Launcher on 3.0 rom most likely due to some stupidity on my part.
+Runs on 3.1 rom.
+Runs on 3.2 rom.
+Runs on 3.3 rom.
+Runs on 3.5 rom.
+Runs on 4.0 rom.
+Runs on 4.1 rom.
+
+Thats all my roms and I don't want to update tonite. Tested haphazardly by Mark Roth on all roms and it seems to work fine.
+
+The tutorial is in GCC_native_tutorial.txt for compiling a native library for PocketC using GCC.

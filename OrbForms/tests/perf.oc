@@ -1,0 +1,295 @@
+// performance tests
+
+Memo memo;
+Date date;
+//
+// utility routines
+//
+
+void puts2(string str) {
+  puts(str);
+  memo.puts(str);
+}
+
+int t, loop_base;
+const int MAX_ITER=3000;
+void start(string name, bool useLoop) {
+  puts2(name + ": ");
+  t = ticks();
+  if (useLoop)
+    t += loop_base;
+}
+
+void stop() {
+  t = ticks() - t;
+  puts2(t + " ticks\n");
+}
+
+void set(string name) {
+  puts2("***  " + name + ":\n");
+}
+
+//
+// tests
+//
+int fib(int x) {
+  if (x < 2) return 1;
+  return fib(x-1) + fib(x-2);
+}
+
+void perf_fib() {
+  set("Fib");
+  start("Fib(18)", false);
+  fib(18);
+  stop();
+}
+
+int g_ia[10];
+
+void perf_stmt() {
+  int i;
+  
+  set("Stmt");
+  start("for", false);
+  for (i=0;i<MAX_ITER;i++)
+    ;
+  stop();
+  
+  i=0;
+  start("while", false);
+  while (i<MAX_ITER) i++;
+  stop();
+}
+
+void perf_expr() {
+  int i,j;
+
+  set("Expr");
+  
+  start("i=0", true);
+  for (i=0;i<MAX_ITER;i++)
+    j=0;
+  stop();
+
+  start("i++", true);
+  for (i=0;i<MAX_ITER;i++)
+    j++;
+  stop();
+
+  start("i+=2", true);
+  for (i=0;i<MAX_ITER;i++)
+    j+=2;
+  stop();
+
+  start("i=i+2", true);
+  for (i=0;i<MAX_ITER;i++)
+    j=j+2;
+  stop();
+
+  start("i+=j", true);
+  for (i=0;i<MAX_ITER;i++)
+    j+=i;
+  stop();
+
+}
+
+object PerfExpr {
+  int j,k;
+  void perf_expr();
+};
+
+void PerfExpr.perf_expr() {
+  int i;
+
+  set("Expr object");
+  
+  start("i=0", true);
+  for (i=0;i<MAX_ITER;i++)
+    j=0;
+  stop();
+
+  start("i++", true);
+  for (i=0;i<MAX_ITER;i++)
+    j++;
+  stop();
+
+  start("i+=2", true);
+  for (i=0;i<MAX_ITER;i++)
+    j+=2;
+  stop();
+
+  start("i=i+2", true);
+  for (i=0;i<MAX_ITER;i++)
+    j=j+2;
+  stop();
+
+  start("i+=j", true);
+  for (i=0;i<MAX_ITER;i++)
+    j+=k;
+  stop();
+
+}
+
+void empty() {
+}
+
+int ret_int(int x) {
+  return x;
+}
+
+void perf_func() {
+  int i,j;
+  
+  set("Func");
+  start("empty()", true);
+  for (i=0;i<MAX_ITER;i++)
+    empty();
+  stop();
+
+  start("ret_int()", true);
+  for (i=0;i<MAX_ITER;i++)
+    ret_int(i);
+  stop();
+
+}
+
+object PerfFunc {
+  void empty();
+  int ret_int(int x);
+  void perf_func();
+};
+
+void PerfFunc.empty() {
+}
+
+int PerfFunc.ret_int(int x) {
+  return x;
+}
+
+void PerfFunc.perf_func() {
+  int i,j;
+  
+  set("Method");
+  start("empty()", true);
+  for (i=0;i<MAX_ITER;i++)
+    empty();
+  stop();
+
+  start("ret_int()", true);
+  for (i=0;i<MAX_ITER;i++)
+    ret_int(i);
+  stop();
+
+}
+
+// expression parser
+
+string es;
+int ies, tok;
+char op;
+int num;
+
+void nextToken() {
+  while (es[ies] == ' ') ies++;
+  if (es[ies] == '\0') {
+    tok = 0;
+    return;
+  }
+  if (es[ies] >= '0' && es[ies] <= '9') {
+    num = 0;
+    while (es[ies] >= '0' && es[ies] <= '9') {
+      num = num * 10 + es[ies++]-'0';
+    }
+    tok = 1;
+    return;
+  }
+  op = es[ies++];
+  tok = 2;
+}
+
+int doMult() {
+  int val, right;
+  char lastOp;
+  val = num;
+  nextToken();
+  while (tok == 2 && (op == '*' || op == '/')) {
+    lastOp = op;
+    nextToken();
+    if (tok != 1) return val;
+    right = num;
+    nextToken();
+    if (lastOp == '*')
+      val *= right;
+    else
+      val /= right;
+  }
+  return val;
+}
+
+int doAdd() {
+  int val, right;
+  char lastOp;
+  val = doMult();
+  while (tok == 2 && (op == '+' || op == '-')) {
+    lastOp = op;
+    nextToken();
+    if (tok != 1) return val;
+    right = doMult();
+    if (lastOp == '+')
+      val += right;
+    else
+      val -= right;
+  }
+  return val;
+}
+
+int _calc(string expr) {
+  int res;
+  es = expr;
+  ies = 0;
+  nextToken();
+  if (tok == 1)
+    res = doAdd();
+  return res;
+}
+
+void perf_parser() {
+  int i;
+  set("Parser");
+  start("_calc() * 100", false);
+  for (i=0;i<100;i++)
+    _calc("123 + 8 * 65 / 3 + 2");
+  stop();
+}
+
+PerfExpr pe;
+PerfFunc pf;
+
+void main() {
+  int i;
+  date.now();
+  memo.create();
+  puts2(date.date() + " " + date.time() + "\n");
+  
+  start("loop base", false);
+  for (i=0;i<MAX_ITER;i++)
+    ;
+  stop();
+  
+  loop_base = t;
+
+  perf_fib();
+  perf_stmt();
+  perf_expr();
+  pe.perf_expr();
+  perf_func();
+  pf.perf_func();
+  perf_parser();
+  
+  memo.close();
+}
+
+/*
+OrbForms Debug - build 50 + moveVal inline
+
+*/

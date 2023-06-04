@@ -1,0 +1,328 @@
+// PocketC database compatibility functions
+
+#include "pc_format.oc"
+
+Database _db;
+DBRecord _rec;
+bool _isDBOpen;
+bool _isRecOpen;
+int _recid;
+int _recloc;
+
+void _closeRec() {
+    if (_isRecOpen) {
+        _rec.close();
+        _isRecOpen = false;
+    }
+}
+
+void _closeDB() {
+    _closeRec();
+    if (_isDBOpen) {
+        _db.close();
+        _isDBOpen = false;
+        _recid = 0;
+        _recloc = 0;
+    }
+}
+
+bool _openRec() {
+    if (_isRecOpen)
+        return true;
+
+    if (_db.getrec(_recid, _rec, false)) {
+        _isRecOpen = true;
+        return true;
+    }
+    return false;
+}
+
+bool _openCreateRec() {
+    if (_isRecOpen)
+        return true;
+
+    if (_db.nrecs <= _recid) {
+        if (_db.newrec(&_recid, _rec)) {
+            _isRecOpen = true;
+            return true;
+        }
+    } else if (_db.getrec(_recid, _rec, false)) {
+        _isRecOpen = true;
+        return true;
+    }
+    return false;
+}
+
+bool dbopen(string name) {
+    _closeDB();
+    _recid = _recloc = 0;
+    if (_db.open(name, false)) {
+        _isDBOpen = true;
+        return true;
+    }
+    return false;
+}
+
+bool dbcreatex(string name, string creator, string type) {
+    _recid = _recloc = 0;
+    if (_db.create(name, type, creator, false)) {
+        _isDBOpen = true;
+        return true;
+    }
+    return false;
+}
+
+bool dbcreate(string name) {
+    return dbcreatex(name, "PktC", "user");
+}
+
+void dbrename(string name) {
+    if (_isDBOpen)
+        _db.name = name;
+}
+
+void dbrec(int recnum) {
+    _closeRec();
+    _recid = recnum;
+    _recloc = 0;
+}
+
+int dbnrecs() {
+    if (_isDBOpen)
+        return _db.nrecs;
+    else
+        return 0;
+}
+
+int dbsize() {
+    if (_openRec())
+        return _rec.size;
+    else
+        return 0;
+}
+
+void dbwritei(int data) {
+    if (_openCreateRec()) {
+        _rec.offset = _rec.size;
+        _rec.write(&data, "i", 1);
+        _recloc = _rec.offset;
+    }
+}
+
+void dbwritec(char data) {
+    if (_openCreateRec()) {
+        _rec.offset = _rec.size;
+        _rec.write(&data, "c", 1);
+        _recloc = _rec.offset;
+    }
+}
+
+void dbwritef(float data) {
+    if (_openCreateRec()) {
+        _rec.offset = _rec.size;
+        _rec.write(&data, "f", 1);
+        _recloc = _rec.offset;
+    }
+}
+
+void dbwrites(string data) {
+    if (_openCreateRec()) {
+        _rec.offset = _rec.size;
+        _rec.write(&data, "s", 1);
+        _recloc = _rec.offset;
+    }
+}
+
+dbread(char type) {
+    int i;
+    char c;
+    float f;
+    string s;
+    if (_openRec()) {
+        if (_recloc >= _rec.size)
+            _recloc = -1;
+        switch (type) {
+            case 'i': _rec.read(&i, "i", 1); return i;
+            case 'c': _rec.read(&c, "c", 1); return c;
+            case 'f': _rec.read(&f, "f", 1); return f;
+            case 's': _rec.read(&s, "s", 1); return s;
+        }
+    }
+}
+
+int dbreadxc(pointer ptr, string format, int count) {
+    int ret = 0;
+    if (_openRec()) {
+        ret = _rec.read(ptr, _convertFormat(format), count);
+        if (_rec.offset == _rec.size)
+            _recloc = -1;
+        else
+            _recloc = _rec.offset;
+    }
+    return ret;
+}
+
+int dbreadx(pointer ptr, string format) {
+    return dbreadxc(ptr, format, 1);
+}
+
+int dbwritexc(pointer ptr, string format, int count) {
+    int ret = 0;
+    if (_openCreateRec()) {
+        ret = _rec.write(ptr, _convertFormat(format), count);
+        _recloc = _rec.offset;
+    }
+    return ret;
+}
+
+int dbwritex(pointer ptr, string format) {
+    return dbwritexc(ptr, format, 1);
+}
+
+int dbpos() {
+    return _recloc;
+}
+
+void dbseek(int pos) {
+    _recloc = pos;
+    if (_isRecOpen)
+        _rec.offset = pos;
+}
+
+bool dbbackup(int flag) {
+    if (_isDBOpen) {
+        if (flag < 2)
+            _db.backup = flag;
+        else
+            return _db.backup;
+    }
+    return false;
+}
+
+void dbclose() {
+    _closeDB();
+}
+
+void dbdelete() {
+    _closeRec();
+    if (_isDBOpen) {
+        _db.deldb();
+        _isDBOpen = false;
+    }
+}
+
+void dberase() {
+    if (_openRec())
+        _rec.erase();
+}
+
+int dbdelrec(int recnum) {
+    if (_isDBOpen) {
+        _db.delrec(recnum);
+        return true;
+    }
+    return false;
+}
+
+int dbarcrec(int recnum) {
+    if (_isDBOpen) {
+        _db.archiverec(recnum);
+        return true;
+    }
+    return false;
+}
+
+int dbremoverec(int recnum) {
+    if (_isDBOpen) {
+        _db.removerec(recnum);
+        return true;
+    }
+    return false;
+}
+
+void dbmoverec(int from, int to) {
+    if (_isDBOpen) {
+        _db.moverec(from, to);
+    }
+}
+
+dbenum(int first, string type, string cid) {
+    DatabaseMgr dbmgr;
+    string s = dbmgr.dbenum(first, type, cid);
+    if (s == "") return 0;
+    return s;
+}
+
+int dbgetcat() {
+    if (_openRec()) {
+        return _rec.category;
+    }
+    return 0;
+}
+
+void dbsetcat(int cat) {
+    if (_openRec()) {
+        _rec.category = cat;
+    }
+}
+
+string dbcatname(int cat) {
+    if (_isDBOpen) {
+        return _db.getcatname(cat);
+    }
+    return "";
+}
+
+void dbsetcatname(int cat, string name) {
+    if (_isDBOpen) {
+        _db.setcatname(cat, name);
+    }
+}
+
+int dbinfo(string name, pointer pstrType, pointer pstrCreator) {
+    Database db;
+    if (_isDBOpen && _db.name == name) {
+        *pstrType = _db.type;
+        *pstrCreator = _db.creator;
+        return true;
+    }
+    if (db.open(name, true)) {
+        *pstrType = db.type;
+        *pstrCreator = db.creator;
+        return true;
+    }
+    return false;
+}
+
+int dbtotalsize(string name) {
+    Database db;
+    if (_isDBOpen && _db.name == name) {
+        return _db.size;
+    }
+    if (db.open(name, true)) {
+        return db.size;
+    }
+    return 0;
+}
+
+int dbgetappinfo() {
+    int i;
+    _closeRec();
+    if (_isDBOpen) {
+        i = _db.getappinfo();
+        if (i == -1)
+            return false;
+        _recid = i;
+        _recloc = 0;
+        return _openRec();
+    }
+    return false;
+}
+
+int dbsetappinfo() {
+    if (_isDBOpen) {
+        _closeRec();
+        return _db.setappinfo(_recid);
+    }
+    return false;
+}

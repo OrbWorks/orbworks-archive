@@ -1,0 +1,243 @@
+// PocketC Architect sample
+// Survey - implements a simple database editor/viewer for taking a survey
+
+// app definition
+@app UIApp app {
+  name = "Survey"
+  dbname = "Survey"
+  creator = "OFs3"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form UIForm personalForm {
+    id = 100
+    text = "Survey - Personal"
+    x = 0, y = 0, w = 160, h = 160
+    menuid = 101
+
+    menubar UIMenuBar barPersonal {
+      id = 101
+      menu UIMenu menuPersonalOptions {
+        text = "Options"
+        menuitem UIMenuItem miPersonalOptionsAbout {
+          id = 102, sysid = 0, text = "About", shortcut = "A"
+        }
+      }
+    }
+
+    popup UIPopup popPersonalPage {
+      id = 104
+      x = 122, y = 0, w = 38, h = 11
+      text = "Page"
+      leftanchor = false
+    }
+    
+    list UIList listPersonalPages {
+      id = 109
+      x = 100, y = 0, w = 60, h = 22
+      triggerid = 104
+    }
+    
+    label UILabel Label_110 {
+      id = 110
+      x = 2, y = 20
+      text = "Name:"
+    }
+
+    field UIField fldPersonalName {
+      id = 111
+      x = 34, y = 20, w = 122, h = 12
+      maxchars = 36, autoshift = true
+    }
+
+    label UILabel Label_114 {
+      id = 114
+      x = 11, y = 38
+      text = "Age:"
+    }
+
+    field UIField fldPersonalAge {
+      id = 115
+      x = 34, y = 38, w = 25, h = 12
+      maxchars = 3, autoshift = true, numeric = true
+    }
+
+    label UILabel Label_116 {
+      id = 116
+      x = 11, y = 56
+      text = "Sex:"
+    }
+
+    pushbutton UIPushButton pushMale {
+      id = 117
+      x = 34, y = 56, w = 25, h = 12
+      text = "Male"
+      group = 1
+    }
+
+    pushbutton UIPushButton pushFemale {
+      id = 118
+      x = 60, y = 56, w = 32, h = 12
+      text = "Female"
+      group = 1
+    }
+
+    label UILabel Label_119 {
+      id = 119
+      x = 8, y = 74
+      text = "Marital Status:"
+    }
+
+    popup UIPopup popPersonalStatus {
+      id = 120
+      x = 76, y = 74, w = 45, h = 12
+      text = "Status"
+    }
+
+    list UIList listPersonalStatus {
+      id = 121
+      x = 76, y = 74, w = 50, h = 33
+      triggerid = 120
+    }
+
+    label UILabel lblPersonalRecord {
+      id = 128
+      x = 2, y = 146
+      text = "Record XXX of XXX"
+    }
+
+    button UIButton btnPersonalPrevious {
+      id = 129
+      x = 104, y = 146, w = 14, h = 12
+      text = "<"
+    }
+ 
+    button UIButton btnPersonalNext {
+      id = 130
+      x = 124, y = 146, w = 14, h = 12
+      text = ">"
+    }
+ 
+    button UIButton btnPersonalAdd {
+      id = 131
+      x = 144, y = 146, w = 14, h = 12
+      text = "+"
+    }
+  }
+ 
+  form UIForm workForm {
+    id = 103
+    text = "Survey - Work"
+    x = 0, y = 0, w = 160, h = 160
+    menuid = 105
+
+    menubar UIMenuBar barWork {
+      id = 105
+      menu UIMenu menuWorkOptions {
+        text = "Options"
+        menuitem UIMenuItem miWorkOptionsAbout {
+          id = 106, sysid = 0, text = "About", shortcut = "A"
+        }
+      }
+    }
+    
+    popup UIPopup popWorkPage {
+      id = 107
+      x = 122, y = 0, w = 38, h = 11
+      text = "Page"
+      leftanchor = false
+    }
+
+    list UIList listWorkPages {
+      id = 108
+      x = 100, y = 0, w = 60, h = 22
+      triggerid = 107
+    }
+
+    label UILabel Label_112 {
+      id = 112
+      x = 2, y = 20
+      text = "Employer:"
+    }
+
+    field UIField fldWorkEmployer {
+      id = 113
+      x = 48, y = 20, w = 110, h = 12
+      maxchars = 80
+      autoshift = true, numeric = false
+      hresize = 0, vresize = 0
+    }
+
+    label UILabel Label_122 {
+      id = 122
+      x = 10, y = 38
+      fontid = 0
+      text = "Position:"
+      hresize = 0, vresize = 0
+    }
+
+    field UIField fldWorkPosition {
+      id = 123
+      x = 48, y = 38, w = 110, h = 12
+      maxchars = 80, autoshift = true
+    }
+
+    label UILabel Label_124 {
+      id = 124
+      x = 2, y = 56
+      text = "Years in position:"
+    }
+
+    field UIField fldWorkYears {
+      id = 125
+      x = 74, y = 56, w = 25, h = 12
+      maxchars = 2,autoshift = true, numeric = true
+    }
+
+    label UILabel Label_126 {
+      id = 126
+      x = 2, y = 74
+      text = "Miles from work:"
+    }
+
+    field UIField fldWorkDistance {
+      id = 127
+      x = 74, y = 74, w = 25, h = 12
+      maxchars = 3, autoshift = true, numeric = true
+    }
+
+    label UILabel lblWorkRecord {
+      id = 135
+      x = 2, y = 146
+      text = "Record XXX of XXX"
+    }
+
+    button UIButton btnWorkPrevious {
+      id = 132
+      x = 104, y = 146, w = 14, h = 12
+      text = "<"
+    }
+
+    button UIButton btnWorkNext {
+      id = 133
+      x = 124, y = 146, w = 14, h = 12
+      text = ">"
+    }
+
+    button UIButton btnWorkAdd {
+      id = 134
+      x = 144, y = 146, w = 14, h = 12
+      text = "+"
+    }
+  }
+}
+
+// source files
+#include "Survey.oc"
+#include "RecordMgr.oc"
+#include "personalForm.oc"
+#include "workForm.oc"

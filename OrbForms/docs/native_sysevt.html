@@ -1,0 +1,21 @@
+
+<p>A native add-in can intercept system events by registering an event function
+with OrbC using the <code>reg_event_func</code> function of the OrbC native
+interface. To see an example, see the <code>hookcontrast</code> function implemented in
+SampleAddIn.</p>
+<p>Event handling in the Palm OS is normally implemented in a loop like this:</p>
+<pre>do {
+  EvtGetEvent(&amp;event, timeout);
+
+  if (! SysHandleEvent(&amp;event))
+    if (! MenuHandleEvent(0, &amp;event, &amp;error))
+      if (! AppHandleEvent(&amp;event))
+        FrmDispatchEvent(&amp;event);
+
+} while (event.eType != appStopEvent);</pre>
+<p>This is very similar to the way events are handled in the OrbC runtime
+environment. When a native add-in registers an event function, it is called
+before SysHandleEvent. If the add-in's function handles the event, it must
+return true to prevent the other event functions from processing the event. When
+more than one native add-in registers an event function, there are no guarantees
+about which add-in will get the first chance to process the event.</p>

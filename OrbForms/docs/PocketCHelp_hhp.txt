@@ -1,0 +1,21 @@
+[OPTIONS]
+Binary TOC=No
+Binary Index=Yes
+Compiled File=PocketC.chm
+Contents File=PocketC.hhc
+Index File=PocketC.hhk
+Default Window=main
+Default Topic=index.html
+Default Font=
+Full-text search=Yes
+Auto Index=Yes
+Language=
+Title=PocketC Architect Help
+Create CHI file=No
+Compatibility=1.1 or later
+Error log file=_errorlog.txt
+
+[WINDOWS]
+main="PocketC Architect Help","PocketC.hhc","PocketC.hhk","index.html","index.html",,,,,0x23520,222,0x1046,[10,10,800,570],0xB0000,,,,,,0
+
+[FILES]

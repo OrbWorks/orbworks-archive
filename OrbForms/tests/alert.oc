@@ -1,0 +1,17 @@
+int customAlert(string title, string message, string buttons, int type) @ 314;
+int customPrompt(string title, string message, string buttons, int type, string* pres) @ 315;
+
+void main() {
+    string str;
+    int button;
+    button = customAlert("OrbForms Custom Alert",
+        "This is a really long messag that will wrap around a few times, I hope",
+        "Yes:No:OK",
+        0);
+    alert("pressed button #" + button);
+    button = customPrompt("OrbForms Custom Prompt",
+        "This is also a really long message that will wrap around a few time, for sure",
+        "One:Two:Three",
+        1, &str);
+    alert("pressed button #" + button + "\ntext: " + str);
+}

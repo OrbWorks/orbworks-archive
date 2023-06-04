@@ -1,0 +1,30 @@
+// leak
+main() {
+// mmopen(IFILE);
+// for (i = 0; i < 3; i++;)
+// category = mmgetl();
+//mmclose();
+
+string category = "SI", fileName = "blah";
+int curLine, index;
+dbopen("MemoDB");
+
+curLine = dbread('s');
+index = 0;
+while (strstr(curLine, fileName, 0) == -1) { // search for record
+dbrec(index);
+curLine = dbread('s');
+index++;
+}
+
+index = 0;
+while ((curLine = dbcatname(index)) != category) { // search for category number
+if (curLine < 1) // what if category doesn't exist?
+break;
+index++;
+}
+
+if (curLine < 1) // create category if it doesn't exist
+dbsetcatname(index, category);
+dbsetcat(index);
+}

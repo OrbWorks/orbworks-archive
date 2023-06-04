@@ -1,0 +1,26 @@
+handler memoForm.onopen() {
+    sclMemo.update(fldMemo);
+}
+
+handler fldMemo.onhchange() {
+    sclMemo.update(this);
+}
+
+handler sclMemo.onmove() {
+    fldMemo.scroll(event.value - event.prev);
+    update(fldMemo);
+}
+
+handler buMemoClose.onselect() {
+    memoForm.close();
+}
+
+handler memoForm.onhkey() {
+    if (event.key == evUp) {
+        fldMemo.scroll(-3);
+        sclMemo.update(fldMemo);
+    } else if (event.key == evDown) {
+        fldMemo.scroll(3);
+        sclMemo.update(fldMemo);
+    }
+}

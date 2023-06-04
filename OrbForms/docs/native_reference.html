@@ -1,0 +1,173 @@
+
+<p>The OrbC native interface is exposed through a structure of function
+pointers which is passed to the add-in's entry function. The structure is
+defined in OrbNative.h (in the add-in directory) as follows:</p>
+<pre>struct OrbFormsInterface {
+  UInt16 version;
+  // VM interface
+  Value* (*vm_pop)();
+  void   (*vm_push)(Value*);
+  Value* vm_retVal;
+  void   (*vm_error)(char*);
+  Value* (*vm_deref)(long ptr);
+  void   (*vm_call)(long ptr);
+  void   (*vm_callBI)(long index);
+  
+  // Value interface
+  void  (*val_release)(Value*);
+  void  (*val_acquire)(Value*, Value*);
+  char* (*val_lock)(Value*);
+  void  (*val_unlock)(Value*);
+  void  (*val_unlockRelease)(Value*);
+  char* (*val_newString)(Value*, int len);
+  char* (*val_newConstString)(Value*, const char*);
+  bool  (*val_copyString)(Value*, const char*);
+
+  // Native struct interface
+  void* (*nobj_pop)();
+  void* (*nobj_get_data)(long id);
+  long  (*nobj_create)(void* obj, NOBJ_DELETE_FUNC delfunc);
+  long  (*nobj_addref)(long id);
+  long  (*nobj_delref)(long id);
+
+  // Gadget interface
+  void* (*gadget_get_data)(long id);
+  void  (*gadget_set_data)(long id, void*);
+  void  (*gadget_get_bounds)(long id, int* pX, int* pY, int* pW, int* pH);
+  
+  // System event interface
+  bool  (*event_reg_func)(NATIVE_EVENT_FUNC eventfunc);
+  bool  (*event_unreg_func)(NATIVE_EVENT_FUNC eventfunc);
+
+  // Type string processing
+  long  (*ts_iterate)(long addr, char* strFormat, int count,
+      NATIVE_TS_ITER func, void* context);
+  long  (*ts_data_size)(long addr, char* strFormat, int count);
+};
+</pre>
+<h3>Virtual Machine</h3>
+<ul>
+  <li><code><b>UInt16 version</b></code> - the version of the runtime environment that
+    has loaded the add-in. The top byte is the major version, the bottom byte is
+    the minor and bug fix version. For example, version 1.1.0 is 0x0110</li>
+  <li><code><b>Value* vm_pop()</b></code> - retrieves the value from the top of the
+    stack. If this is value is a string, you must release it when finished. <b>Note</b>: The value returned actually points into the stack memory (instead of a copy). Therefore, any function which writes to the stack will
+    overwrite it. Also, calling any Palm OS function that could cause an
+    OrbC handler to run can possibly overwrite the value.</li>
+  <li><code><b>void vm_push(Value* val)</b></code> - copies the value to the top of the
+    stack. If this is a string, the ownership is passed to the stack, so you
+    should not release it.</li>
+  <li><code><b>Value* vm_retVal</b></code> - the return value register. If your
+    function is declared to return a value, you must set the type and data of
+    the value. If you function does not return a value, you must not set it.</li>
+  <li><code><b>void vm_error(char* text)</b></code> - displays the specified text as an
+    error message, and immediately terminates the application.</li>
+  <li><code><b>Value* vm_deref(long ptr)</b></code> - retrieves a pointer to the value
+    stored at location ptr (either in the OrbC stack or heap). It is not
+    safe to assume that two contiguous values in OrbC memory are contiguous
+    in actual memory, so you must call this to retrieve every value. i.e. in:
+    &quot;<code>Value*
+    v = ofi-&gt;vm_deref(ptr); v++;</code>&quot; v++ makes is invalid.&nbsp;</li>
+  <li><code><b>void vm_call(long ptr)</b></code> - call an OrbC function, method,
+    or gadget custom event handler. This method will modify the stack and modify
+    <code>vm_retVal</code>. If the function you call returns a value, you must pop it from
+    the stack.</li>
+  <li><code><b>void vm_callBI(long index)</b></code> - call a built in function,
+    method, or property. <code>index</code> is the index of the function, which
+    can be found in the orbc.sys file. This method will modify the stack and modify
+    <code>vm_retVal</code>. If the function you call returns a value, you must pop it from
+    the stack.</li>
+</ul>
+<h3>Values</h3>
+<p>All of the Value functions operate on string values. If a Value already
+contains a string, it must be released before assigning any new value. If your
+function modifies a string, you must make sure that it is a shared string with
+no other Value referencing it. To do this, first release the string, then
+allocate a new string to store the modified value.&nbsp;</p>
+<ul>
+  <li><code><b>void val_release(Value* val)</b></code> - release the string. If
+    this is a shared string, the reference count is decremented, and the string
+    is possibly
+    freed.</li>
+  <li><code><b>void val_acquire(Value* val, Value* src)</b></code> - copy the
+    source string into this Value. If this is a shared string, the reference
+    count is increased.&nbsp;</li>
+  <li><code><b>char* val_lock(Value* val)</b></code> - lock the string and
+    return a pointer to the data. Each call to <code>val_lock</code> must be
+    matched by a call to <code>val_unlock</code>.</li>
+  <li><code><b>void val_unlock(Value* val)</b></code> - unlock the string.</li>
+  <li><code><b>void val_unlockRelease(Value* val)</b></code> - unlock and
+    release the string. This does the same thing as calling <code>val_unlock</code>
+    followed by <code>val_release</code>, but is more efficient.</li>
+  <li><code><b>char* val_newString(Value* val, int len)</b></code> - allocates a
+    new string of length <code>len</code>. The length does not include the null
+    terminator, so <code>val_newString(val, 5)</code> allocates enough room to
+    store &quot;apple&quot;. Upon return the string is locked, so you must call <code>val_unlock</code>
+    after you have filled the buffer. Returns null if unable to allocate.</li>
+  <li><code><b>char* val_newConstString(Value* val, const char* str)</b></code> -
+    sets the value to point to the given constant string, returning the same
+    pointer passed in. The pointer must either be a literal string, or must
+    remain valid until the application exits. Upon return, the value is already
+    unlocked.</li>
+  <li><code><b>bool val_copyString(Value* val, const char* str)</b></code> -
+    Creates a new shared string by copying the supplied string. Upon return the
+    value is already unlocked. Returns false if unable to allocate.</li>
+</ul>
+<h3>Native Struct Functions</h3>
+<ul>
+  <li><code><b>void* nobj_pop()</b></code> - pops the pointer to the struct off
+    the stack, dereferences it to retrieve the id, and returns the associated
+    native struct pointer.</li>
+  <li><code><b>void* nobj_get_data(long id)</b></code> - retrieves the
+    native struct pointer associated with the given id.</li>
+  <li><code><b>long nobj_create(void* obj, NOBJ_DELETE_FUNC delfunc)</b></code> -
+    create a new native struct. This should be called from the struct's _init
+    method. This function pops the struct pointer off the stack (so your
+    function must not), allocates a new id for it, and stores the id into the
+    struct's id field. The native struct pointer (<code>obj</code>) is
+    associated with this id. When the native struct's reference count goes to 0,
+    the supplied delete function is called. The struct's assigned id is
+    returned.</li>
+  <li><code><b>long nobj_addref(long id)</b></code> - Add an explicit reference
+    to the struct with the given id, returning the new reference count.</li>
+  <li><code><b>long nobj_delref(long id)</b></code> - Delete an explicit
+    reference from the struct with the given id, returning the new reference
+    count. If the count reaches 0, the struct's delete function will be called
+    before this function returns.</li>
+</ul>
+<h3>Gadget Functions</h3>
+<ul>
+  <li><code><b>void* gadget_get_data(long id)</b></code> - retrieves the data associated with the given gadget id.</li>
+  <li><code><b>void gadget_set_data(long id, void*)</b></code> - associates the
+    given data with the gadget id. </li>
+  <li><code><b>void gadget_get_bounds(long id, int* pX, int* pY, int* pW, int*
+    pH)</b></code> - retrieves the bounds of the given gadget.</li>
+</ul>
+<h3>System Event Functions</h3>
+<ul>
+  <li><code><b>bool event_reg_func(NATIVE_EVENT_FUNC eventfunc)</b></code> -
+    registers the given event function to be called on each system event that
+    occurs. Returns true if the function was able to be registered.</li>
+  <li><code><b>bool event_unreg_func(NATIVE_EVENT_FUNC eventfunc)</b></code> -
+    unregisters the given event function. </li>
+</ul>
+<h3>Type String Functions</h3>
+<ul>
+  <li><code><b>long ts_iterate(long addr, char* strFormat, int count, NATIVE_TS_ITER func, void*
+    context)</b></code> -
+    iterates over a block of memory starting at address <code>addr</code>, according to the format specified by&nbsp;<code>strFormat</code>
+    (repeated <code>count</code> times). Returns the number of values processed.
+    For each value in memory, the function <code>func</code> is called as
+    described below. The <code>context</code> parameter is passed to the
+    callback function. See OrbSerial sample for usage example.</li>
+  <li><code><b>typedef bool (*NATIVE_TS_ITER)(OrbFormsInterface*, Value* val, VarType type, int size, void*
+    context)</b></code> - user supplied function called for each value processed
+    by <code>ts_iterate</code>. For each value, a pointer to the Value is
+    provided, along with the type and size specified by the format string. See <a href="tNativeTypeStrings.html">Native
+    Type Strings</a> for a table of possible parameter values. Return true to
+    continue the iteration, or false to force it to end prematurely. </li>
+  <li><code><b>long ts_data_size(long addr, char* strFormat, int count)</b></code> -
+    calculates the total size required to serialize a the block of memory
+    starting at address <code>addr</code>, based on the format string <code>strFormat</code>
+    (repeated <code>count</code> times) </li>
+</ul>

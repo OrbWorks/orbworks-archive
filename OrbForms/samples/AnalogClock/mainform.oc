@@ -1,0 +1,15 @@
+// MainForm.oc
+// Created for MainForm
+
+handler mainForm.onopen() {
+    Date today;
+    today.now();
+    //labNow.text = today.date(); 
+    
+    timer(100);
+}
+
+handler mainForm.ontimer() {
+    gadClock.DrawClockHands();
+    timer(100);
+}

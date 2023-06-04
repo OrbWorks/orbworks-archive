@@ -1,0 +1,67 @@
+// mainform.oc
+// Created for mainForm
+
+handler mainForm.onopen() {
+    chbRound.checked = prefRound;
+    fldParty.text = 1;
+}
+
+void calculateTips() {
+    float bill, total, percent, tip;
+    string sPercents, sTotals, sTips, sEachs;
+    float tipValues[4] = { 12, 15, 18, 20 };
+    float inc;
+    int i;
+    int partynum;
+    
+    bill = fldBill.text;
+    partynum = fldParty.text;
+    if (partynum <= 0)	{	
+        partynum = 1;
+    }
+    
+    if (chbRound.checked) {
+        // round the total to the nearest dollar
+        total = (int)(bill * 1.12); // round down
+        
+        // determine a good increment for the tip value
+        // so that our range is about 12%-20%
+        inc = (int)(bill / 40 + 1);
+            
+        for (i=0;i<4;i++) {
+            percent = (total / bill - 1) * 100;
+            tip = total - bill;
+
+            sPercents += format(percent, 2) + "\n";
+            sTips += format(tip, 2) + "\n";
+            sTotals += format(total, 2) + "\n";
+            sEachs += format(total/partynum,2)+"\n";
+            total += inc;
+        }
+
+    } else {
+        for (i=0;i<4;i++) {
+            tip = bill * tipValues[i] / 100;
+            total = bill + tip;
+            
+            sPercents += (int)tipValues[i] + "\n";
+            sTips += format(tip, 2) + "\n";
+            sTotals += format(total, 2) + "\n";
+            sEachs += format(total/partynum,2)+"\n";
+        }
+    }
+    
+    fldPercents.text = sPercents;
+    fldTips.text = sTips;
+    fldTotals.text = sTotals;
+    fldPerson.text = sEachs;
+}
+
+handler btnCalc.onselect() {
+    calculateTips();
+}
+
+handler chbRound.onselect() {
+    calculateTips();
+    prefRound = chbRound.checked;
+}

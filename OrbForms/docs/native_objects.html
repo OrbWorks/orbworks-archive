@@ -1,0 +1,47 @@
+<p>A native struct can be implemented in many ways. The documentation below
+explains the model that the OrbC native interface supports through its
+helper functions. In addition to the text below, it would be informative to read
+through the sample add-ins. The SampleAddIn (samples\Add-ins\SampleAddIn)
+implements SampleSerial, a native struct that demonstrates accessing the serial
+port.</p>
+<p><b>Note:</b> Currently native objects are not supported. What were previously 
+called native objects are actually native structs. All the previous features are 
+still supported, but with the current version of the compiler a struct must be 
+used (because inheritance and virtual methods are not supported).</p>
+<h3>Native Struct IDs</h3>
+<p>Each native struct in the application has a unique id. This id is stored in
+an internal table which maps it to a native struct pointer. In the OrbC
+declaration, the struct defines only one field: this id - all other state and data of the struct are 
+retrieved and set through properties and methods. To make coding easy, the
+OrbC native interface provides a function (<code>nobj_pop</code>) to pop the 
+struct pointer from the stack, dereference it to retrieve the id, and map the id to the
+native struct pointer.</p>
+<h3>Reference Counting</h3>
+<p>Native structs are reference counted by the runtime environment. When a 
+struct is created or copied, its reference count is increased automatically. 
+When a struct goes out of scope or is deleted, the reference count is
+decremented. When the reference count reaches zero, the native struct's delete
+function is called. To support this reference counting mechanism, your native
+struct must declare a <code> _copy</code> method and a <code> _destroy</code> method that call the built in
+functions (80 and 89) as specified below:</p>
+<pre>struct Native {
+  int id;
+  void _init() @ library(&quot;AddInName&quot;, 0);
+  void _destroy() @ 80;
+  void _copy(Native) @ 89;
+}</pre>
+<p>In addition to the reference counting handled by the runtime, you may add
+explicit references to a struct. A common reason to do this is to ensure that
+the lifetime of a container struct is greater than the lifetime of a struct it
+owns. For example, a database owns the database records, so the database struct must live longer than the record. To ensure this, the database record 
+struct adds an explicit reference to the database struct when it is created, and
+removes the reference when it is destroyed.</p>
+<p>Another advantage to using the ref-counted native structs is that the runtime
+environment will be able to clean up all resources that the application
+neglected, even if the application is stopping due to an error.</p>
+<h3>Creating a Native Struct</h3>
+<p>To create a native struct, you must allocate the state needed by the struct and call the supplied OrbC native interface function <code>nobj_create</code>
+from your struct's <code>_init</code> method. This function pops the struct's
+pointer from the stack, so you must NOT do this before hand. As a parameter to <code>nobj_create</code>,
+you must specify the native struct's delete function. This function will be
+called automatically by the runtime when the struct's reference count reaches 0.</p>

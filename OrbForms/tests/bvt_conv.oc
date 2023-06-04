@@ -1,0 +1,85 @@
+// conversion test
+int a, b; // these must be the first globals!!
+#include "tests.h"
+
+void fromstring() {
+    string s = "50";
+    float f;
+    int i;
+    char c;
+    
+    c = s;
+    f = s;
+    i = s;
+    
+    test(c=='5', "string to char");
+    test(i==50, "string to int");
+    test(f==50.0, "string to float");
+}
+
+void fromint() {
+    int i = 75;
+    float f;
+    string s;
+    char c;
+    
+    f = i;
+    s = i;
+    c = i;
+    
+    test(f==75.0, "int to float");
+    test(c==75, "int to char");
+    test(s=="75", "int to string");
+}
+
+void fromchar() {
+    int i;
+    float f;
+    string s;
+    char c = 65;
+    
+    f = c;
+    s = c;
+    i = c;
+    
+    test(i==65, "char to int");
+    test(f==65.0, "char to float");
+    test(s=="A", "char to string");
+}
+
+void fromfloat() {
+    int i;
+    float f = 3.14, nf;
+    string s;
+    char c;
+    
+    i = f;
+    s = f;
+    c = f;
+    
+    test(i==3, "float to int");
+    test(c==3, "float to char");
+    nf = s;
+    test(nf < 3.15 && nf > 3.13, "float to string");
+    test((int)3.8==3, "float to int (no round)");
+}
+
+void pointer() {
+    int i = (int)&a;
+    int* pi = (int*)1;
+    //i = (int)&a;
+    test(i==0, "int = int*");
+    //pi = (int*)1;
+    b = 9;
+    test(*pi==9, "int* = int");
+}
+
+void main() {
+    fromstring();
+    fromint();
+    fromfloat();
+    fromchar();
+    pointer();
+    
+    final();
+}

@@ -1,0 +1,50 @@
+// PocketC Architect sample
+// TicTacToe - demonstrates using a gadget
+
+// include the gadget definition
+#include "TicGadget.oc"
+
+// app definition
+@app UIApp tttApp {
+  name = "TicTacToe"
+  dbname = "TicTacToe"
+  creator = "OFs4"
+  version = "1.00"
+
+  icon {
+    smallres = "OrbCSampleRes,tAIB,1001"
+    largeres = "OrbCSampleRes,tAIB,1000"
+  }
+
+  form UIForm mainForm {
+    id = 100
+    text = "Tic-Tac-Toe"
+    x = 0, y = 0, w = 160, h = 160
+    menuid = 103
+
+    menubar UIMenuBar mbarMain {
+      id = 103
+      menu UIMenu mnuOptions {
+        text = "Options"
+        menuitem UIMenuItem miAbout {
+          id = 104, sysid = 0, text = "About...", shortcut = "A"
+        }
+      }
+    }
+    
+    gadget TicGadget ticGadget {
+      id = 101
+      x = 20, y = 23, w = 118, h = 118
+    }
+
+    button UIButton mainNewGame {
+      id = 102
+      x = 2, y = 147, w = 46, h = 12
+      text = "New Game"
+    }
+  }
+}
+
+// source files
+#include "TicTacToe.oc"
+#include "mainform.oc"

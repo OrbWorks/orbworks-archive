@@ -1,0 +1,5 @@
+// GrayLib - by Jeremy Dewey
+setdepth(int depth);
+gbitmap(int x, int y, string bits);
+reverse(string str);
+QSort(pointer ptr, int i);

@@ -1,0 +1,258 @@
+// vfs test
+#include "tests.h"
+
+// open modes
+#define vfsModeRead 2
+#define vfsModeWrite 5
+#define vfsModeReadWrite 7
+#define vfsModeCreate 8
+#define vfsModeTruncate 16
+
+// error codes
+#define vfsErrFileNotFound 0x2a08
+#define vfsErrFilePermissionDenied 0x2a05
+#define vfsErrCardReadOnly 0x2907
+#define vfsErrFileGeneric 0x2a02
+#define vfsErrFileStillOpen 0x2a04
+#define vfsErrFileAlreadyExists 0x2a06
+#define vfsErrFileEOF 0x2a07
+#define vfsErrDirNotEmpty 0x2a0d
+#define vfsErrBadName 0x2a0e
+#define vfsErrVolumeFull 0x2a0f
+#define vfsErrNotADirectory 0x2a11
+#define vfsErrIsADirectory 0x2a12
+#define vfsErrDirectoryNotFound 0x2a13
+#define vfsErrNameShortened 0x2a14
+
+// attributes
+#define vfsAttrReadOnly 1
+#define vfsAttrHidden 2
+#define vfsAttrSystem 4
+#define vfsAttrVolumeLabel 8
+#define vfsAttrDirectory 16
+#define vfsAttrArchive 32
+#define vfsAttrLink 64
+
+// dates
+#define vfsDateCreated 1
+#define vfsDateModified 2
+#define vfsDateAccessed 3
+
+deltree(int vol, string path) {
+    int dir;
+    string name;
+    int attribs;
+    int first = true;
+
+    if (volopendir(vol, path, &dir) == 0) {
+        while (direnum(dir, first, &name, &attribs)) {
+            first = false;
+            if (attribs & vfsAttrDirectory) {
+                deltree(vol, path + "/" + name);
+            } else {
+                voldelete(vol, path + "/" + name);
+            }
+        }
+        dirclose(dir);
+    } else return false;
+}
+
+enumdir(int vol) {
+    int dir;
+    int first = true;
+    int attribs;
+    string name;
+
+    puts("/:\n");
+    volcreatefile(vol, "/blah");
+    volcreatedir(vol, "/newdir");
+    if (0 == volopendir(vol, "/", &dir)) {
+        while (direnum(dir, first, &name, &attribs)) {
+            first = false;
+            puts("  " + name + ": " + hex(attribs) + "\n");
+        }
+        puts("  end\n");
+    } else {
+        puts("failed to open /\n");
+    }
+}
+
+findfile(int vol, string path) {
+    int file;
+    if (0 == volopenfile(vol, path, vfsModeRead, &file)) {
+        fileclose(file);
+        return true;
+    }
+    return false;
+}
+
+printDate(int d) {
+    return (string)d;
+}
+
+testdir(int vol) {
+    int dir;
+    int d;
+    int count;
+    int first = true;
+    int attribs;
+    string name;
+
+    puts("** Directory\n");
+    test(volcreatedir(vol, "/dir2") == 0, "createDir");
+    test(volcreatefile(vol, "/dir2/file1") == 0, "create");
+    test(volcreatefile(vol, "/dir2/file2") == 0, "create");
+    test(volopendir(vol, "/dir2", &dir) == 0, "openDir");
+    while (direnum(dir, first, &name, &attribs)) {
+        first = false;
+        count++;
+        puts(".. " + name + "\n");
+    }
+    test(count == 2, "count");
+    puts("dir2: " + hex(dirgetattribs(dir)) + "\n");
+    test(dirgetattribs(dir) & vfsAttrDirectory, "dir.attrib");
+    /*
+    attribs = dir.attribs;
+    dir.attribs = attribs | vfsAttrReadOnly;
+    puts("dir2: " + hex(dir.attribs) + "\n");
+    test(dir.attribs & vfsAttrReadOnly, "dir.attrib");
+    dir.attribs = attribs;
+    */
+    puts("dir.created = " + printDate(dirgetdate(dir, vfsDateCreated)) + "\n");
+    d = seconds() | 0x80000000;
+    d = d + 60 * 60 * 24 * 365;
+    dirsetdate(dir, vfsDateCreated, d);
+    test(dirgetdate(dir, vfsDateCreated) == d, "setDate");
+    dirclose(dir);
+    test(voldelete(vol, "/dir2/file1") == 0, "del dir2/file1");
+    test(voldelete(vol, "/dir2/file2") == 0, "del dir2/file2");
+    test(voldelete(vol, "/dir2") == 0, "del dir2");
+}
+
+int data_i;
+float data_f;
+char data_c;
+string data_s;
+int data_i2;
+char data_ca[6];
+
+int data2_i;
+float data2_f;
+char data2_c;
+string data2_s;
+int data2_i2;
+string data2_s2;
+
+testfile(int vol) {
+    int file;
+    int attribs;
+
+    data_i = 12345678;
+    data_f = 3.141592;
+    data_c = 'c';
+    data_s = "Jeremy";
+    data_i2 = 7654321;
+
+    puts("** File\n");
+    volcreatefile(vol, "/file3");
+    test(volopenfile(vol, "/file3", vfsModeReadWrite, &file) == 0, "vol.open");
+    test(filetell(file) == 0, "offset");
+    test(filewrite(file, &data_i, "ifcsi", 1) == 5, "write");
+    test(filetell(file) == 20, "offset.2");
+    fileseek(file, 0);
+    test(filetell(file) == 0, "offset.4");
+    test(fileread(file, &data2_i, "ifcsi", 1) == 5, "read");
+    test(data_i == data2_i, "read.1");
+    test(data_i2 == data2_i2, "read.2");
+    test(data_c == data2_c, "read.3");
+    test(data_s == data2_s, "read.4");
+    test(data_f == data2_f, "read.5");
+    test(fileeof(file), "eof");
+    fileseek(file, 0);
+    test(fileeof(file) == false, "eof.2");
+    test(filesize(file) == 20, "size");
+    //test((file.size = 16) == 16, "size.2");
+    fileresize(file, 16);
+    test(filesize(file) == 16, "size.3");
+    test(fileread(file, &data2_i, "ifcsi", 1) == 4, "read.2");
+    puts("file.attribs = " + hex(filegetattribs(file)) + "\n");
+    attribs = filegetattribs(file);
+    filesetattribs(file, attribs | vfsAttrReadOnly);
+    test(filegetattribs(file) & vfsAttrReadOnly, "attribs");
+    puts("file.attribs = " + hex(filegetattribs(file)) + "\n");
+    filesetattribs(file, attribs); // remove read-only so we can delete
+
+    // test strings at the end of files
+    fileresize(file, 0);
+    strtoc("dewey", data_ca);
+    test(filewrite(file, data_ca, "c", 6) == 6, "write.sz");
+    fileseek(file, 0);
+    test(fileread(file, &data2_s2, "s", 1) == 1, "read.sz");
+    test(data2_s2 == "dewey", "read.sz2");
+    fileresize(file, 0);
+    test(filewrite(file, data_ca, "c", 5) == 5, "write.s]");
+    fileseek(file, 0);
+    data2_s2 = "";
+    test(fileread(file, &data2_s2, "s", 1) == 1, "read.s]");
+    test(data2_s2 == "dewey", "read.s]2");
+    fileseek(file, 0);
+    data2_s2 = "";
+    test(fileread(file, &data2_s2, "s10", 1) == 1, "read.s#]");
+    test(data2_s2 == "dewey", "read.s#]2");
+
+    fileclose(file);
+    voldelete(vol, "/file3");
+}
+
+testvol(int vol) {
+    string name;
+    puts("** Volume\n");
+    testErr(volcreatefile(vol, "/file1"), "create");
+    test(findfile(vol, "/file1"), "create.2");
+    testErr(volrename(vol, "/file1", "file2"), "rename");
+    test(findfile(vol, "/file2"), "rename.2");
+    testErr(voldelete(vol, "/file2"), "del");
+    test(findfile(vol, "/file2") == false, "del.2");
+    puts("default jpeg: " + volgetdefaultdir(vol, "image/jpeg") + "\n");
+    testErr(volcreatedir(vol, "/dir1"), "createDir");
+    test(findfile(vol, "/dir1"), "createDir.2");
+    testErr(voldelete(vol, "/dir1"), "delDir");
+    test(findfile(vol, "/dir1") == false, "delDir.2");
+    testErr(volexport(vol, "MemoDB", "/MemoDB.pdb"), "export");
+    test(findfile(vol, "/MemoDB.pdb"), "export.2");
+    test(dbopen("MemoDB"), "db.open");
+    dbdelete();
+    test(volimport(vol, "/MemoDB.pdb", &name) == 0, "import");
+    test(name == "MemoDB", "import.name = MemoDB");
+    test(dbopen("MemoDB"), "import.2");
+    dbclose();
+    voldelete(vol, "/MemoDB.pdb");
+
+    testdir(vol);
+    testfile(vol);
+}
+
+enumvolumes() {
+    int vol;
+    int first = true;
+    while (enumvols(first, &vol)) {
+        puts("vol: " + vollabel(vol) + "\n");
+        enumdir(vol);
+        if (first) {
+            // only test on the first volume
+            testvol(vol);
+        }
+        first = false;
+    }
+    puts("end\n");
+}
+
+main() {
+    /*
+    dbopen("MemoDB2");
+    dbrename("MemoDB");
+    dbclose();
+    */
+    enumvolumes();
+    final();
+}

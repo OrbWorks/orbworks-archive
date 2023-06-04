@@ -1,0 +1,49 @@
+<html><head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Frequent Asked Questions</title>
+<link REL="StyleSheet" HREF="faq.css" TYPE="text/css">
+</head><body><br><hr>
+<h1>Contents</h1>
+<h2>General Questions</h2>
+<ol><li><A href="#general1">How large is a standalone application?</A></li>
+</ol>
+<h2>Integrated Development Environment Questions</h2>
+<ol><li><A href="#ide1">How do I build a standalone application?</A></li>
+<li><A href="#ide2">How do I edit a bitmap?</A></li>
+<li><A href="#ide3">I compiled my app, so why isn't the version of my app on the emulator updated?</A></li>
+</ol>
+<h2>Language Questions</h2>
+<ol></ol>
+<h2>API Questions</h2>
+<ol><li><A href="#api1">How do I exit my app?</A></li>
+<li><A href="#api2">How do I draw a circle?</A></li>
+<li><A href="#api3">How do I place an image on the form?</A></li>
+</ol>
+<h2>Runtime Errors</h2>
+<ol></ol>
+<hr>
+<h1>Answers</h1>
+<h2>General Questions</h2>
+<ol><li><A name="general1"><b>How large is a standalone application?</b></A><br>A standalone application is about 63k larger than an app that requires the OrbForms runtime.<br><br></li>
+</ol>
+<h2>Integrated Development Environment Questions</h2>
+<ol><li><A name="ide1"><b>How do I build a standalone application?</b></A><br>In the Project bar, select the root node, usually called "app". Once selected, the application properties will be displayed in the Inspection bar. Select the "Standalone" property and set it to "TRUE". This is feature is not available in the DEMO version.<br><br></li>
+<li><A name="ide2"><b>How do I edit a bitmap?</b></A><br>In the Project bar, select the bitmap you wish to edit. Once selected, the Inspection bar will display the bitmaps associated with each color-depth. Right-click the image (or the "&lt;None&gt;" text) and select "Edit Bitmap".<br><br></li>
+<li><A name="ide3"><b>I compiled my app, so why isn't the version of my app on the emulator updated?</b></A><br>You must enable "Emulator Upload" in Tools | Options. Also, if your application is running on the emulator when you compile, the IDE will be unable to update it.<br><br></li>
+</ol>
+<h2>Language Questions</h2>
+<ol></ol>
+<h2>API Questions</h2>
+<ol><li><A name="api1"><b>How do I exit my app?</b></A><br>Under normal circumstances a Palm application should not exit until the user selects another application. However, if a fatal error occurs, you can quickly bail out using UIApp.abort(). Please see the API docs for details.<br><br></li>
+<li><A name="api2"><b>How do I draw a circle?</b></A><br>The Palm OS does not provide a method for drawing circles or ellipses. However, the Draw.frame method draws a rectangle with a given corner radius. To draw a circle, draw a frame with the circle's radius as the corner radius.<br><br></li>
+<li><A name="api3"><b>How do I place an image on the form?</b></A><br>Right click on the Bitmaps node in the Project tree and select "Add Bitmap Files".  
+			One bitmap object will be created under Bitmaps.  Let us call it bmpFace
+			Now adjust its properties to set the bitmap image file for b/w, 2bit gray, 4bit gray, and 256 color by right click on each property value, and pick the file.
+			Note: The image sizes much be the same for all 4 different mode.
+			Now right click on the form to Add Bitmap, change its following properties: Normal Bitmap=bmpFace.
+			You should see the image displayed on the form in the visual designer by now.  
+			<br><br></li>
+</ol>
+<h2>Runtime Errors</h2>
+<ol></ol>
+</body></html>

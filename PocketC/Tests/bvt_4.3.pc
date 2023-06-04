@@ -1,0 +1,29 @@
+#include "tests.h"
+
+test_appinfo() {
+    int mask;
+    string name[16];
+    int ai, i;
+    test(dbopen("MemoDB"), "dbopen()");
+    test(dbsetcatname(4, "Megan"), "dbsetcatname()");
+    test(dbcatname(4) == "Megan", "dbcatname()");
+    ai = dbgetappinfo();
+    test(ai != -1, "dbgetappinfo()");
+    dbrec(ai);
+    test(dbreadx(&mask, "i2.16s16") == 17, "dbreadx()");
+    puts(hex(mask) + "\n");
+    for (i=0;i<16;i++) {
+        puts(i + ": " + name[i] + "\n");
+    }
+    name[4] = "Hudson";
+    dbseek(0);
+    test(dbwritex(&mask, "i2.16s16") == 17, "dbwritex()");
+    test(dbsetappinfo(), "dbsetappinfo()");
+    test(dbcatname(4) == "Hudson", "dbcatname()");
+    dbclose();
+}
+
+main() {
+    test_appinfo();
+    final();
+}

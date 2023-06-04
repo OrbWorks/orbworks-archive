@@ -1,0 +1,11 @@
+OrbPDOC - a simple PDOC <-> text file converter
+Copyright (c) 2006, OrbWorks
+
+usage: orbpdoc.exe [-d] infile [outfile [docname]]
+  * If -d is NOT specified, the conversion is text -> PDOC. outfile is
+    optional, and defaults to '<infile>.pdb'. docname is the document
+    name as it will be seen by the Palm OS and PDOC reader, and defaults
+    to infile.
+  * If -d is specified, the conversion is PDOC -> text. outfile is optional,
+    and defaults to the document name stored within the .pdb file. docname
+    cannot be specified.

@@ -1,0 +1,102 @@
+// Function Test
+
+test(string s, int pass) {
+    if (pass) puts(s + ": success\n");
+    else puts(s + ": FAIL\n");
+}
+
+basicIOtest() {
+    string res1, res2;
+    int i, j;
+    
+    test("puts", 1);
+    res1 = gets("Enter \"a\"\rThanks");
+    res2 = gets("Press cancel");
+    test("gets", (res1 == "a" && res2 == ""));
+    res1 = getsd("Press OK", "def");
+    test("getsd", res1=="def");
+    
+    i = confirm("Press no");
+    j = confirm("Press yes");
+    test("confirm", (i==0 && j==1));
+    alert("alert test");
+    test("alert", confirm("alert appeared?"));
+    // clear();
+}
+
+eventtest() {
+    // puts("event funcs don't use strings\n");
+}
+
+strtest() {
+    string s;
+    char c[5] = { 't', 'e', 's', 't', '\0' };
+    
+    s = "aBc" + "D";
+    test("strlen", (strlen("abc") == 3));
+    test("substr", 
+        substr("Hello", 1, 3) == "ell" &&
+        substr("Hello", 3, 5) == "lo");
+    test("strleft", (strleft("Hello", 3) == "Hel"));
+    test("strright", (strright("Hello", 3) == "llo"));
+    test("strupr", 
+        strupr("aBcD") == "ABCD" && // copy
+        strupr(s) == "ABCD"); // in-place
+    test("strlwr",
+        strlwr("aBcD") == "abcd" && // copy
+        strlwr(s) == "abcd"); // in-place
+    test("strstr",
+        strstr("searcheach", "ea", 0) == 1 &&
+        strstr("searcheach", "ea", 2) == 6 &&
+        strstr("searcheach", "ea", 7) == -1);
+    test("hex", hex(0x56) == "0x56");
+    // TODO: more format tests
+    test("format", format(1.0, 2) == "1.00");
+    test("ctostr", ctostr(c) == "test");
+    strtoc("name", c);
+    test("strtoc", c[0]=='n' && c[1]=='a' && c[2]=='m' &&
+        c[3]=='e' && c[4]=='\0');
+}
+
+mathtest() {
+    // puts("math funcs don't use strings\n");
+}
+
+graphtest() {
+}
+
+soundtest() {
+}
+
+datetimetest() {
+}
+
+dbtest() {
+}
+
+memotest() {
+}
+
+serialtest() {
+}
+
+systemtest() {
+}
+
+memorytest() {
+}
+
+main() {
+    //basicIOtest();
+    //eventtest();
+    //strtest();
+    //mathtest();
+    graphtest();
+    soundtest();
+    datetimetest();
+    dbtest();
+    memotest();
+    serialtest();
+    systemtest();
+    memorytest();
+}

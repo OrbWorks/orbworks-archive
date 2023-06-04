@@ -1,0 +1,953 @@
+Name:    bvt_vfs.prc
+Version: 0x301
+Has UI:  false
+======  Code ======
+    0   Call (2955) "main"
+    5   Halt 
+: "Stream.write"
+    9   Link 4 
+   11  CWord 0 
+   14    Jmp 20
+   17  CWord 0 
+   20 SetRet 
+   21 UnLink 
+   22    Ret 4 
+: "Stream.read"
+   27   Link 4 
+   29  CWord 0 
+   32    Jmp 38
+   35  CWord 0 
+   38 SetRet 
+   39 UnLink 
+   40    Ret 4 
+: "Stream.writeInt"
+   45   Link 2 
+   47 LoadFP 0 
+   50 CWdPFP 1 
+   53   CStr (1) "i"
+   56  CWord 1 
+   59 CallVi 0 (st:3)
+   62    Jmp 68
+   65  CWord 0 
+   68 SetRet 
+   69 UnLink 
+   70    Ret 2 
+: "Stream.readInt"
+   75   Link 2 
+   77 LoadFP 0 
+   80 LoadFP 1 
+   83   CStr (1) "i"
+   86  CWord 1 
+   89 CallVi 1 (st:3)
+   92    Jmp 98
+   95  CWord 0 
+   98 SetRet 
+   99 UnLink 
+  100    Ret 2 
+: "Stream.writeWord"
+  105   Link 2 
+  107 LoadFP 0 
+  110 CWdPFP 1 
+  113   CStr (3) "w"
+  116  CWord 1 
+  119 CallVi 0 (st:3)
+  122    Jmp 128
+  125  CWord 0 
+  128 SetRet 
+  129 UnLink 
+  130    Ret 2 
+: "Stream.readWord"
+  135   Link 2 
+  137 LoadFP 0 
+  140 LoadFP 1 
+  143   CStr (3) "w"
+  146  CWord 1 
+  149 CallVi 1 (st:3)
+  152    Jmp 158
+  155  CWord 0 
+  158 SetRet 
+  159 UnLink 
+  160    Ret 2 
+: "Stream.writeFloat"
+  165   Link 2 
+  167 LoadFP 0 
+  170 CWdPFP 1 
+  173   CStr (5) "f"
+  176  CWord 1 
+  179 CallVi 0 (st:3)
+  182    Jmp 188
+  185  CWord 0 
+  188 SetRet 
+  189 UnLink 
+  190    Ret 2 
+: "Stream.readFloat"
+  195   Link 2 
+  197 LoadFP 0 
+  200 LoadFP 1 
+  203   CStr (5) "f"
+  206  CWord 1 
+  209 CallVi 1 (st:3)
+  212    Jmp 218
+  215  CWord 0 
+  218 SetRet 
+  219 UnLink 
+  220    Ret 2 
+: "Stream.writeChar"
+  225   Link 2 
+  227 LoadFP 0 
+  230 CWdPFP 1 
+  233   CStr (7) "c"
+  236  CWord 1 
+  239 CallVi 0 (st:3)
+  242    Jmp 248
+  245  CWord 0 
+  248 SetRet 
+  249 UnLink 
+  250    Ret 2 
+: "Stream.readChar"
+  255   Link 2 
+  257 LoadFP 0 
+  260 LoadFP 1 
+  263   CStr (7) "c"
+  266  CWord 1 
+  269 CallVi 1 (st:3)
+  272    Jmp 278
+  275  CWord 0 
+  278 SetRet 
+  279 UnLink 
+  280    Ret 2 
+: "Stream.writeString"
+  285   Link 2 
+  287 LoadFP 0 
+  290 CWdPFP 1 
+  293   CStr (9) "s"
+  296  CWord 1 
+  299 CallVi 0 (st:3)
+  302    Jmp 308
+  305  CWord 0 
+  308 SetRet 
+  309 UnLink 
+  310    Ret 2 
+: "Stream.readString"
+  315   Link 2 
+  317 LoadFP 0 
+  320 LoadFP 1 
+  323   CStr (9) "s"
+  326  CWord 1 
+  329 CallVi 1 (st:3)
+  332    Jmp 338
+  335  CWord 0 
+  338 SetRet 
+  339 UnLink 
+  340    Ret 2 
+: "DBRecordStream.write"
+  345   Link 4 
+  347   AddI SP <= [0xc000],0x0001
+  353 LoadFP 1 
+  356 LoadFP 2 
+  359 LoadFP 3 
+  362 CallBI DBRecord.write
+  365 LoadFP 2 
+  368 CallBI <Invalid #>
+  371    EqI 
+  372    Jmp 378
+  375  CWord 0 
+  378 SetRet 
+  379 UnLink 
+  380    Ret 4 
+: "DBRecordStream.read"
+  385   Link 4 
+  387   AddI SP <= [0xc000],0x0001
+  393 LoadFP 1 
+  396 LoadFP 2 
+  399 LoadFP 3 
+  402 CallBI DBRecord.read
+  405 LoadFP 2 
+  408 CallBI <Invalid #>
+  411    EqI 
+  412    Jmp 418
+  415  CWord 0 
+  418 SetRet 
+  419 UnLink 
+  420    Ret 4 
+: "DBRecordStream._init"
+  425   Link 1 
+  427   AddI SP <= [0xc000],0x0001
+  433 CallBI DBRecord._init
+  436 UnLink 
+  437   RetN 1 
+: "DBRecordStream._destroy"
+  442   Link 1 
+  444   AddI SP <= [0xc000],0x0001
+  450 CallBI nobject.destroy
+  453 UnLink 
+  454   RetN 1 
+: "test"
+  459   Link 2 
+  461    Not SP <= [0xc000]
+  465   JmpZ 490
+  468 SCWord [0x0000] <- 0
+  473   CStr (11) "FAIL: "
+  476   AddS SP <= SP,[0xc001]
+  480   CStr (18) "\n"
+  483   AddS 
+  484 CallBI puts
+  487    Jmp 504
+  490   CStr (20) "PASS: "
+  493   AddS SP <= SP,[0xc001]
+  497   CStr (18) "\n"
+  500   AddS 
+  501 CallBI puts
+  504 UnLink 
+  505   RetN 2 
+: "final"
+  510   Link 0 
+  512  LoadI 0x0000
+  515   JmpZ 527
+  518   CStr (38) "\n## PASSED\n"
+  521 CallBI puts
+  524    Jmp 533
+  527   CStr (50) "\n## FAILED\n"
+  530 CallBI puts
+  533 UnLink 
+  534   RetN 0 
+: "File.getRec"
+  539   Link 3 
+  541 LoadFP 2 
+  544 LoadFP 0 
+  547  LCall 0 
+  551 LoadFP 1 
+  554 CallBI <Invalid #>
+  557    Jmp 563
+  560  CWord 0 
+  563 SetRet 
+  564 UnLink 
+  565    Ret 3 
+: "FileStream.write"
+  570   Link 4 
+  572   AddI SP <= [0xc000],0x0001
+  578 LoadFP 1 
+  581 LoadFP 2 
+  584 LoadFP 3 
+  587  LCall 3 
+  591 LoadFP 2 
+  594 CallBI <Invalid #>
+  597    EqI 
+  598    Jmp 604
+  601  CWord 0 
+  604 SetRet 
+  605 UnLink 
+  606    Ret 4 
+: "FileStream.read"
+  611   Link 4 
+  613   AddI SP <= [0xc000],0x0001
+  619 LoadFP 1 
+  622 LoadFP 2 
+  625 LoadFP 3 
+  628  LCall 3 
+  632 LoadFP 2 
+  635 CallBI <Invalid #>
+  638    EqI 
+  639    Jmp 645
+  642  CWord 0 
+  645 SetRet 
+  646 UnLink 
+  647    Ret 4 
+: "FileStream._init"
+  652   Link 1 
+  654   AddI SP <= [0xc000],0x0001
+  660  LCall 0 
+  664 UnLink 
+  665   RetN 1 
+: "FileStream._destroy"
+  670   Link 1 
+  672   AddI SP <= [0xc000],0x0001
+  678 CallBI nobject.destroy
+  681 UnLink 
+  682   RetN 1 
+: "enumdir"
+  687   Link 1 
+  689 StInit (115) "3is"
+  692 CWdPFP 4 
+  695  LCall 4 
+  699 SCWord [0xc005] <- 1
+  704   CStr (69) "/:\n"
+  707 CallBI puts
+  710 LoadFP 0 
+  713   CStr (73) "/blah"
+  716  LCall 73 
+  720    Pop 
+  721 LoadFP 0 
+  724   CStr (79) "/newdir"
+  727  LCall 79 
+  731    Pop 
+  732 LoadFP 0 
+  735   CStr (62) "/"
+  738 CWdPFP 4 
+  741  LCall 4 
+  745    EqI SP <= 0x0000,SP
+  749   JmpZ 813
+  752 CWdPFP 4 
+  755 LoadFP 5 
+  758 CWdPFP 7 
+  761 CWdPFP 6 
+  764  LCall 6 
+  768   JmpZ 804
+  771 SCWord [0xc005] <- 0
+  776   CStr (87) "  "
+  779   AddS SP <= SP,[0xc007]
+  783   CStr (15) ": "
+  786   AddS 
+  787 LoadFP 6 
+  790 CallBI hex
+  793   AddS 
+  794   CStr (18) "\n"
+  797   AddS 
+  798 CallBI puts
+  801    Jmp 752
+  804   CStr (90) "  end\n"
+  807 CallBI puts
+  810    Jmp 819
+  813   CStr (97) "failed to open /\n"
+  816 CallBI puts
+  819 CWdPFP 4 
+  822 CallBI nobject.destroy
+  825   PopN 4 
+  828 UnLink 
+  829   RetN 1 
+: "findfile"
+  834   Link 2 
+  836 StInit (1) "i"
+  839 CWdPFP 5 
+  842  LCall 5 
+  846 LoadFP 0 
+  849 LoadFP 1 
+  852  CWord 2 
+  855 CWdPFP 5 
+  858  LCall 5 
+  862    EqI SP <= 0x0000,SP
+  866   JmpZ 882
+  869 CWdPFP 5 
+  872  LCall 5 
+  876  CWord 1 
+  879    Jmp 891
+  882  CWord 0 
+  885    Jmp 891
+  888  CWord 0 
+  891 CWdPFP 5 
+  894 CallBI nobject.destroy
+  897 SetRet 
+  898    Pop 
+  899 UnLink 
+  900    Ret 2 
+: "printDate"
+  905   Link 1 
+  907 LoadFP 0 
+  910 CallBI get Date.year
+  913   ItoS 
+  914   CStr (62) "/"
+  917   AddS 
+  918 LoadFP 0 
+  921 CallBI get Date.month
+  924   ItoS 
+  925   AddS 
+  926   CStr (62) "/"
+  929   AddS 
+  930 LoadFP 0 
+  933 CallBI get Date.day
+  936   ItoS 
+  937   AddS 
+  938    Jmp 944
+  941   CStr (0) ""
+  944 SetRet 
+  945 UnLink 
+  946    Ret 1 
+: "testdir"
+  951   Link 1 
+  953 StInit (275) "5isi"
+  956 CWdPFP 4 
+  959  LCall 4 
+  963 SCWord [0xc007] <- 1
+  968   CStr (119) "** Directory\n"
+  971 CallBI puts
+  974 LoadFP 0 
+  977   CStr (133) "dir2"
+  980  LCall 133 
+  984    EqI SP <= SP,0x0000
+  988   CStr (138) "createDir"
+  991   Call (459) "test"
+  996 LoadFP 0 
+  999   CStr (148) "dir2/file1"
+ 1002  LCall 148 
+ 1006    EqI SP <= SP,0x0000
+ 1010   CStr (159) "create"
+ 1013   Call (459) "test"
+ 1018 LoadFP 0 
+ 1021   CStr (166) "dir2/file2"
+ 1024  LCall 166 
+ 1028    EqI SP <= SP,0x0000
+ 1032   CStr (159) "create"
+ 1035   Call (459) "test"
+ 1040 LoadFP 0 
+ 1043   CStr (133) "dir2"
+ 1046 CWdPFP 4 
+ 1049  LCall 4 
+ 1053    EqI SP <= SP,0x0000
+ 1057   CStr (177) "openDir"
+ 1060   Call (459) "test"
+ 1065 CWdPFP 4 
+ 1068 LoadFP 7 
+ 1071 CWdPFP 9 
+ 1074 CWdPFP 8 
+ 1077  LCall 8 
+ 1081   JmpZ 1111
+ 1084 SCWord [0xc007] <- 0
+ 1089  IncAI SP <= 0xc006
+ 1093    Pop 
+ 1094   CStr (185) ".. "
+ 1097   AddS SP <= SP,[0xc009]
+ 1101   CStr (18) "\n"
+ 1104   AddS 
+ 1105 CallBI puts
+ 1108    Jmp 1065
+ 1111    EqI SP <= [0xc006],0x0002
+ 1117   CStr (189) "count"
+ 1120   Call (459) "test"
+ 1125   CStr (195) "dir2: "
+ 1128 CWdPFP 4 
+ 1131  LCall 4 
+ 1135 CallBI hex
+ 1138   AddS 
+ 1139   CStr (18) "\n"
+ 1142   AddS 
+ 1143 CallBI puts
+ 1146 CWdPFP 4 
+ 1149  LCall 4 
+ 1153  BAndI SP <= SP,0x0010
+ 1157   CStr (202) "dir.attrib"
+ 1160   Call (459) "test"
+ 1165   CStr (213) "dir.created = "
+ 1168 CWdPFP 10 
+ 1171 CWdPFP 4 
+ 1174  CWord 1 
+ 1177  LCall 1 
+ 1181   Call (905) "printDate"
+ 1186   AddS 
+ 1187   CStr (18) "\n"
+ 1190   AddS 
+ 1191 CallBI puts
+ 1194 CWdPFP 5 
+ 1197 CallBI Date.now
+ 1200 CWdPFP 5 
+ 1203 CWdPFP 5 
+ 1206 CallBI get Date.year
+ 1209   AddI SP <= SP,0x0001
+ 1213 CallBI set Date.year
+ 1216    Pop 
+ 1217 CWdPFP 4 
+ 1220  CWord 1 
+ 1223 CWdPFP 5 
+ 1226  LCall 5 
+ 1230 CWdPFP 10 
+ 1233 CWdPFP 4 
+ 1236  CWord 1 
+ 1239  LCall 1 
+ 1243 CallBI get Date.year
+ 1246 CWdPFP 5 
+ 1249 CallBI get Date.year
+ 1252    EqI 
+ 1253   CStr (228) "setDate"
+ 1256   Call (459) "test"
+ 1261 CWdPFP 4 
+ 1264  LCall 4 
+ 1268 LoadFP 0 
+ 1271   CStr (148) "dir2/file1"
+ 1274  LCall 148 
+ 1278    EqI SP <= SP,0x0000
+ 1282   CStr (236) "del dir2/file1"
+ 1285   Call (459) "test"
+ 1290 LoadFP 0 
+ 1293   CStr (166) "dir2/file2"
+ 1296  LCall 166 
+ 1300    EqI SP <= SP,0x0000
+ 1304   CStr (251) "del dir2/file2"
+ 1307   Call (459) "test"
+ 1312 LoadFP 0 
+ 1315   CStr (133) "dir2"
+ 1318  LCall 133 
+ 1322    EqI SP <= SP,0x0000
+ 1326   CStr (266) "del dir2"
+ 1329   Call (459) "test"
+ 1334 CWdPFP 4 
+ 1337 CallBI nobject.destroy
+ 1340   PopN 7 
+ 1343 UnLink 
+ 1344   RetN 1 
+: "testfile"
+ 1349   Link 1 
+ 1351 StInit (537) "iifcsiifcs4i"
+ 1354 CWdPFP 4 
+ 1357  LCall 4 
+ 1361  SCInt [0xc005] <- 12345678
+ 1368 SCFloa [0xc006] <- 3.141592
+ 1375 SCChar [0xc007] <- 'c'
+ 1379 SCStri [0xc008] <- (280) "Jeremy"
+ 1384  SCInt [0xc009] <- 7654321
+ 1391 SCWord [0xc00f] <- 156
+ 1396 CWdPFP 15 
+ 1399   Call (652) "FileStream._init"
+ 1404   CStr (287) "** File\n"
+ 1407 CallBI puts
+ 1410 LoadFP 0 
+ 1413   CStr (296) "file3"
+ 1416  LCall 296 
+ 1420    Pop 
+ 1421 LoadFP 0 
+ 1424   CStr (296) "file3"
+ 1427  CWord 7 
+ 1430 CWdPFP 4 
+ 1433  LCall 4 
+ 1437    EqI SP <= SP,0x0000
+ 1441   CStr (302) "vol.open"
+ 1444   Call (459) "test"
+ 1449 CWdPFP 4 
+ 1452  LCall 4 
+ 1456    EqI SP <= SP,0x0000
+ 1460   CStr (311) "offset"
+ 1463   Call (459) "test"
+ 1468 CWdPFP 4 
+ 1471 CWdPFP 5 
+ 1474   CStr (318) "ifcsi"
+ 1477  CWord 1 
+ 1480  LCall 1 
+ 1484    EqI SP <= SP,0x0005
+ 1488   CStr (324) "write"
+ 1491   Call (459) "test"
+ 1496 CWdPFP 4 
+ 1499  LCall 4 
+ 1503    EqI SP <= SP,0x0014
+ 1507   CStr (330) "offset.2"
+ 1510   Call (459) "test"
+ 1515 CWdPFP 4 
+ 1518  CWord 0 
+ 1521  LCall 0 
+ 1525    EqI SP <= SP,0x0000
+ 1529   CStr (339) "offset.3"
+ 1532   Call (459) "test"
+ 1537 CWdPFP 4 
+ 1540  LCall 4 
+ 1544    EqI SP <= SP,0x0000
+ 1548   CStr (348) "offset.4"
+ 1551   Call (459) "test"
+ 1556 CWdPFP 4 
+ 1559 CWdPFP 10 
+ 1562   CStr (318) "ifcsi"
+ 1565  CWord 1 
+ 1568  LCall 1 
+ 1572    EqI SP <= SP,0x0005
+ 1576   CStr (357) "read"
+ 1579   Call (459) "test"
+ 1584    EqI SP <= [0xc005],[0xc00a]
+ 1590   CStr (362) "read.1"
+ 1593   Call (459) "test"
+ 1598    EqI SP <= [0xc009],[0xc00e]
+ 1604   CStr (369) "read.2"
+ 1607   Call (459) "test"
+ 1612    EqC SP <= [0xc007],[0xc00c]
+ 1618   CStr (376) "read.3"
+ 1621   Call (459) "test"
+ 1626    EqS SP <= [0xc008],[0xc00d]
+ 1632   CStr (383) "read.4"
+ 1635   Call (459) "test"
+ 1640    EqF SP <= [0xc006],[0xc00b]
+ 1646   CStr (390) "read.5"
+ 1649   Call (459) "test"
+ 1654 CWdPFP 4 
+ 1657  LCall 4 
+ 1661   CStr (397) "eof"
+ 1664   Call (459) "test"
+ 1669 CWdPFP 4 
+ 1672  CWord 0 
+ 1675  LCall 0 
+ 1679    Pop 
+ 1680 CWdPFP 4 
+ 1683  LCall 4 
+ 1687    EqI SP <= SP,0x0000
+ 1691   CStr (401) "eof.2"
+ 1694   Call (459) "test"
+ 1699 CWdPFP 16 
+ 1702 CWdPFP 4 
+ 1705 CallBI nobject.copy
+ 1708    Pop 
+ 1709 SCWord [0xc00a] <- 0
+ 1714 SCWord [0xc00e] <- 1
+ 1719 SCChar [0xc00c] <- 'a'
+ 1723 SCStri [0xc00d] <- (407) "Megan"
+ 1728 SCFloa [0xc00b] <- 1.245000
+ 1735 CWdPFP 15 
+ 1738 CWdPFP 5 
+ 1741   CStr (318) "ifcsi"
+ 1744  CWord 1 
+ 1747   Call (570) "FileStream.write"
+ 1752    EqI SP <= SP,0x0001
+ 1756   CStr (413) "fstr.write"
+ 1759   Call (459) "test"
+ 1764 CWdPFP 4 
+ 1767  CWord 0 
+ 1770  LCall 0 
+ 1774    Pop 
+ 1775 CWdPFP 15 
+ 1778 CWdPFP 10 
+ 1781   CStr (318) "ifcsi"
+ 1784  CWord 1 
+ 1787   Call (611) "FileStream.read"
+ 1792    EqI SP <= SP,0x0001
+ 1796   CStr (424) "fstr.read"
+ 1799   Call (459) "test"
+ 1804    EqI SP <= [0xc005],[0xc00a]
+ 1810   CStr (434) "fstr.read.1"
+ 1813   Call (459) "test"
+ 1818    EqI SP <= [0xc009],[0xc00e]
+ 1824   CStr (446) "fstr.read.2"
+ 1827   Call (459) "test"
+ 1832    EqC SP <= [0xc007],[0xc00c]
+ 1838   CStr (458) "fstr.read.3"
+ 1841   Call (459) "test"
+ 1846    EqS SP <= [0xc008],[0xc00d]
+ 1852   CStr (470) "fstr.read.4"
+ 1855   Call (459) "test"
+ 1860    EqF SP <= [0xc006],[0xc00b]
+ 1866   CStr (482) "fstr.read.5"
+ 1869   Call (459) "test"
+ 1874 CWdPFP 4 
+ 1877  CWord 0 
+ 1880  LCall 0 
+ 1884    Pop 
+ 1885 CWdPFP 4 
+ 1888  LCall 4 
+ 1892    EqI SP <= SP,0x0014
+ 1896   CStr (494) "size"
+ 1899   Call (459) "test"
+ 1904 CWdPFP 4 
+ 1907  CWord 16 
+ 1910  LCall 16 
+ 1914    EqI SP <= SP,0x0010
+ 1918   CStr (499) "size.2"
+ 1921   Call (459) "test"
+ 1926 CWdPFP 4 
+ 1929  LCall 4 
+ 1933    EqI SP <= SP,0x0010
+ 1937   CStr (506) "size.3"
+ 1940   Call (459) "test"
+ 1945 CWdPFP 4 
+ 1948 CWdPFP 10 
+ 1951   CStr (318) "ifcsi"
+ 1954  CWord 1 
+ 1957  LCall 1 
+ 1961    EqI SP <= SP,0x0004
+ 1965   CStr (369) "read.2"
+ 1968   Call (459) "test"
+ 1973   CStr (513) "file.attribs = "
+ 1976 CWdPFP 4 
+ 1979  LCall 4 
+ 1983 CallBI hex
+ 1986   AddS 
+ 1987   CStr (18) "\n"
+ 1990   AddS 
+ 1991 CallBI puts
+ 1994 CWdPFP 4 
+ 1997  LCall 4 
+ 2001 StorFP 17 
+ 2004    Pop 
+ 2005 CWdPFP 4 
+ 2008   BOrI SP <= [0xc011],0x0001
+ 2014  LCall 0 
+ 2018    Pop 
+ 2019 CWdPFP 4 
+ 2022  LCall 4 
+ 2026  BAndI SP <= SP,0x0001
+ 2030   CStr (529) "attribs"
+ 2033   Call (459) "test"
+ 2038   CStr (513) "file.attribs = "
+ 2041 CWdPFP 4 
+ 2044  LCall 4 
+ 2048 CallBI hex
+ 2051   AddS 
+ 2052   CStr (18) "\n"
+ 2055   AddS 
+ 2056 CallBI puts
+ 2059 CWdPFP 4 
+ 2062 LoadFP 17 
+ 2065  LCall 17 
+ 2069    Pop 
+ 2070 CWdPFP 4 
+ 2073  LCall 4 
+ 2077 LoadFP 0 
+ 2080   CStr (296) "file3"
+ 2083  LCall 296 
+ 2087    Pop 
+ 2088 CWdPFP 15 
+ 2091   Call (670) "FileStream._destroy"
+ 2096 CWdPFP 4 
+ 2099 CallBI nobject.destroy
+ 2102   PopN 14 
+ 2105 UnLink 
+ 2106   RetN 1 
+: "testdb"
+ 2111   Link 1 
+ 2113 StInit (635) "5iss"
+ 2116 CWdPFP 4 
+ 2119  LCall 4 
+ 2123 CWdPFP 5 
+ 2126 CallBI DBRecord._init
+ 2129 CWdPFP 6 
+ 2132 CallBI Database._init
+ 2135 SCWord [0xc007] <- 82
+ 2140 CWdPFP 7 
+ 2143   Call (425) "DBRecordStream._init"
+ 2148   CStr (550) "** Database\n"
+ 2151 CallBI puts
+ 2154 LoadFP 0 
+ 2157   CStr (563) "MemoDB.pdb"
+ 2160  CWord 2 
+ 2163 CWdPFP 4 
+ 2166  LCall 4 
+ 2170    EqI SP <= SP,0x0000
+ 2174   CStr (302) "vol.open"
+ 2177   Call (459) "test"
+ 2182 CWdPFP 4 
+ 2185  CWord 0 
+ 2188 CWdPFP 5 
+ 2191   Call (539) "File.getRec"
+ 2196    EqI SP <= SP,0x0000
+ 2200   CStr (574) "file.getRec"
+ 2203   Call (459) "test"
+ 2208 CWdPFP 8 
+ 2211 CWdPFP 5 
+ 2214 CallBI nobject.copy
+ 2217    Pop 
+ 2218 CWdPFP 7 
+ 2221 CWdPFP 9 
+ 2224   Call (315) "Stream.readString"
+ 2229   CStr (586) "dbstream.read"
+ 2232   Call (459) "test"
+ 2237 CWdPFP 4 
+ 2240  LCall 4 
+ 2244 CWdPFP 5 
+ 2247 CallBI DBRecord.close
+ 2250 CWdPFP 6 
+ 2253   CStr (600) "MemoDB"
+ 2256  CWord 1 
+ 2259 CallBI Database.open
+ 2262   CStr (607) "db.open"
+ 2265   Call (459) "test"
+ 2270 CWdPFP 6 
+ 2273  CWord 0 
+ 2276 CWdPFP 5 
+ 2279  CWord 1 
+ 2282 CallBI Database.getrec
+ 2285   CStr (615) "db.getrec"
+ 2288   Call (459) "test"
+ 2293 CWdPFP 8 
+ 2296 CWdPFP 5 
+ 2299 CallBI nobject.copy
+ 2302    Pop 
+ 2303 CWdPFP 7 
+ 2306 CWdPFP 10 
+ 2309   Call (315) "Stream.readString"
+ 2314   CStr (586) "dbstream.read"
+ 2317   Call (459) "test"
+ 2322    EqS SP <= [0xc009],[0xc00a]
+ 2328   CStr (625) "same data"
+ 2331   Call (459) "test"
+ 2336 CWdPFP 5 
+ 2339 CallBI DBRecord.close
+ 2342 CWdPFP 7 
+ 2345   Call (442) "DBRecordStream._destroy"
+ 2350 CWdPFP 6 
+ 2353 CallBI nobject.destroy
+ 2356 CWdPFP 5 
+ 2359 CallBI nobject.destroy
+ 2362 CWdPFP 4 
+ 2365 CallBI nobject.destroy
+ 2368   PopN 7 
+ 2371 UnLink 
+ 2372   RetN 1 
+: "testvol"
+ 2377   Link 1 
+ 2379 StInit (116) "is"
+ 2382 CWdPFP 4 
+ 2385 CallBI Database._init
+ 2388   CStr (640) "** Volume\n"
+ 2391 CallBI puts
+ 2394 LoadFP 0 
+ 2397   CStr (153) "file1"
+ 2400  LCall 153 
+ 2404    EqI SP <= SP,0x0000
+ 2408   CStr (159) "create"
+ 2411   Call (459) "test"
+ 2416 LoadFP 0 
+ 2419   CStr (153) "file1"
+ 2422   Call (834) "findfile"
+ 2427   CStr (651) "create.2"
+ 2430   Call (459) "test"
+ 2435 LoadFP 0 
+ 2438   CStr (153) "file1"
+ 2441   CStr (171) "file2"
+ 2444  LCall 171 
+ 2448    EqI SP <= SP,0x0000
+ 2452   CStr (660) "rename"
+ 2455   Call (459) "test"
+ 2460 LoadFP 0 
+ 2463   CStr (171) "file2"
+ 2466   Call (834) "findfile"
+ 2471   CStr (667) "rename.2"
+ 2474   Call (459) "test"
+ 2479 LoadFP 0 
+ 2482   CStr (171) "file2"
+ 2485  LCall 171 
+ 2489    EqI SP <= SP,0x0000
+ 2493   CStr (676) "del"
+ 2496   Call (459) "test"
+ 2501 LoadFP 0 
+ 2504   CStr (171) "file2"
+ 2507   Call (834) "findfile"
+ 2512    EqI SP <= SP,0x0000
+ 2516   CStr (680) "del.2"
+ 2519   Call (459) "test"
+ 2524   CStr (686) "default jpeg: "
+ 2527 LoadFP 0 
+ 2530   CStr (701) "image/jpeg"
+ 2533  LCall 701 
+ 2537   AddS 
+ 2538   CStr (18) "\n"
+ 2541   AddS 
+ 2542 CallBI puts
+ 2545 LoadFP 0 
+ 2548   CStr (712) "dir1"
+ 2551  LCall 712 
+ 2555    EqI SP <= SP,0x0000
+ 2559   CStr (138) "createDir"
+ 2562   Call (459) "test"
+ 2567 LoadFP 0 
+ 2570   CStr (712) "dir1"
+ 2573   Call (834) "findfile"
+ 2578   CStr (717) "createDir.2"
+ 2581   Call (459) "test"
+ 2586 LoadFP 0 
+ 2589   CStr (712) "dir1"
+ 2592  LCall 712 
+ 2596    EqI SP <= SP,0x0000
+ 2600   CStr (729) "delDir"
+ 2603   Call (459) "test"
+ 2608 LoadFP 0 
+ 2611   CStr (712) "dir1"
+ 2614   Call (834) "findfile"
+ 2619    EqI SP <= SP,0x0000
+ 2623   CStr (736) "delDir.2"
+ 2626   Call (459) "test"
+ 2631 LoadFP 0 
+ 2634   CStr (600) "MemoDB"
+ 2637   CStr (563) "MemoDB.pdb"
+ 2640  LCall 563 
+ 2644    EqI SP <= SP,0x0000
+ 2648   CStr (745) "export"
+ 2651   Call (459) "test"
+ 2656 LoadFP 0 
+ 2659   CStr (563) "MemoDB.pdb"
+ 2662   Call (834) "findfile"
+ 2667   CStr (752) "export.2"
+ 2670   Call (459) "test"
+ 2675 CWdPFP 4 
+ 2678   CStr (600) "MemoDB"
+ 2681  CWord 1 
+ 2684 CallBI Database.open
+ 2687   CStr (607) "db.open"
+ 2690   Call (459) "test"
+ 2695 CWdPFP 4 
+ 2698 CallBI Database.delete
+ 2701 LoadFP 0 
+ 2704   CStr (563) "MemoDB.pdb"
+ 2707 CWdPFP 5 
+ 2710  LCall 5 
+ 2714    EqI SP <= SP,0x0000
+ 2718   CStr (761) "import"
+ 2721   Call (459) "test"
+ 2726   CStr (600) "MemoDB"
+ 2729    EqS SP <= [0xc005],SP
+ 2733   CStr (768) "import.name = MemoDB"
+ 2736   Call (459) "test"
+ 2741 CWdPFP 4 
+ 2744   CStr (600) "MemoDB"
+ 2747  CWord 1 
+ 2750 CallBI Database.open
+ 2753   CStr (789) "import.2"
+ 2756   Call (459) "test"
+ 2761 CWdPFP 4 
+ 2764 CallBI Database.close
+ 2767 LoadFP 0 
+ 2770   CStr (798) "bvt_vfs"
+ 2773   CStr (806) "bvt_vfs.prc"
+ 2776  LCall 806 
+ 2780    EqI SP <= SP,0x0000
+ 2784   CStr (818) "export.prc"
+ 2787   Call (459) "test"
+ 2792 LoadFP 0 
+ 2795   Call (951) "testdir"
+ 2800 LoadFP 0 
+ 2803   Call (1349) "testfile"
+ 2808 LoadFP 0 
+ 2811   Call (2111) "testdb"
+ 2816 LoadFP 0 
+ 2819   CStr (563) "MemoDB.pdb"
+ 2822  LCall 563 
+ 2826    Pop 
+ 2827 LoadFP 0 
+ 2830   CStr (806) "bvt_vfs.prc"
+ 2833  LCall 806 
+ 2837    Pop 
+ 2838 CWdPFP 4 
+ 2841 CallBI nobject.destroy
+ 2844   PopN 2 
+ 2847 UnLink 
+ 2848   RetN 1 
+: "enumvols"
+ 2853   Link 0 
+ 2855 StInit (66) "ii"
+ 2858 CWdPFP 3 
+ 2861  LCall 3 
+ 2865 SCWord [0xc004] <- 1
+ 2870 CWdPFP 3 
+ 2873 LoadFP 4 
+ 2876 CWdPFP 3 
+ 2879  LCall 3 
+ 2883   JmpZ 2934
+ 2886   CStr (829) "vol: "
+ 2889 CWdPFP 3 
+ 2892  LCall 3 
+ 2896   AddS 
+ 2897   CStr (18) "\n"
+ 2900   AddS 
+ 2901 CallBI puts
+ 2904 CWdPFP 3 
+ 2907   Call (687) "enumdir"
+ 2912 LoadFP 4 
+ 2915   JmpZ 2926
+ 2918 CWdPFP 3 
+ 2921   Call (2377) "testvol"
+ 2926 SCWord [0xc004] <- 0
+ 2931    Jmp 2870
+ 2934   CStr (92) "end\n"
+ 2937 CallBI puts
+ 2940 CWdPFP 3 
+ 2943 CallBI nobject.destroy
+ 2946   PopN 2 
+ 2949 UnLink 
+ 2950   RetN 0 
+: "main"
+ 2955   Link 0 
+ 2957   Call (2853) "enumvols"
+ 2962   Call (510) "final"
+ 2967 UnLink 
+ 2968   RetN 0 
+

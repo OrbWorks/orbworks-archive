@@ -1,0 +1,15 @@
+// test sleep
+
+main()
+{
+   int ms;
+   hooksync(1);
+   clear();  // clears the output form
+   ms = gets("Enter milliseconds to sleep:");
+   while(1)
+   {
+      puts(seconds() + "\n");
+      sleep(ms);
+      if (event(0)==15) exit();  // watch for the hotsync button to end execution
+   }
+}

@@ -1,0 +1,24 @@
+// native add-in declaration for SampleAddIn
+// (except the gadget, which is declared separately)
+
+// add, just about as simple as you can get
+int add(int x, int y) @ library("SampleAddIn", 0);
+
+// hookcontrast - this demonstrates custom event
+// functions
+bool hookcontrast(bool hook) @ library("SampleAddIn", 12);
+
+// a sample implementation of serial I/O
+// this is a very limited implementation only meant to
+// demonstrate native structs, it is not meant to be
+// used in a production environment
+struct SampleSerial {
+    int id;
+    void _init() @ library("SampleAddIn", 7);
+    void _destroy() @ 80;
+    void _copy(SampleSerial) @ 89;
+    bool open(int baud) @ library("SampleAddIn", 8);
+    void close() @ library("SampleAddIn", 9);
+    void send(char byte) @ library("SampleAddIn", 10);
+    char recv() @ library("SampleAddIn", 11);
+};

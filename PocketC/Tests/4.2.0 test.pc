@@ -1,0 +1,7 @@
+// 4.2.0 test
+main() {
+  alert(getsysval(4));
+  if (dbopen("MemoDB")) {
+    dbrename("MemoDB2");
+  }
+}

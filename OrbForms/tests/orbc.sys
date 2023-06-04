@@ -1,0 +1,676 @@
+// compiler helpers
+void __vector_call() @ 1;
+void __vector_bicall() @ 2;
+void __vector_libcall() @ 3;
+void __vector_virtcall() @ 318;
+int  __expectedCount(string) @ 319;
+
+// standard functions
+void puts(string text) @ 6;
+void alert(string text) @ 7;
+bool confirm(string text) @ 264;
+string prompt(string text) @ 267;
+
+const int alertInfo = 0;
+const int alertQuestion = 1;
+const int alertWarning = 2;
+const int alertError = 3;
+
+int alertc(string title, string message, string buttons, int type) @ 314;
+int promptc(string title, string message, string buttons, int type, string* pres) @ 315;
+int promptcd(string title, string message, string buttons, int type, string text, string* pres) @ 336;
+
+const int keyPower = 0x0001;
+const int keyPageUp = 0x0002;
+const int keyPageDown = 0x0004;
+const int keyHard1 = 0x0008;
+const int keyHard2 = 0x0010;
+const int keyHard3 = 0x0020;
+const int keyHard4 = 0x0040;
+const int keyCradle = 0x0080;
+const int keyAntenna = 0x0100;
+const int keyContrast = 0x0200;
+int keystate() @ 292;
+bool penstate() @ 293;
+
+// string
+int strlen(string str) @ 99;
+string substr(string str, int first, int len) @ 100;
+string strleft(string str, int len) @ 101;
+string strright(string str, int len) @ 102;
+string strupper(string str) @ 103;
+string strlower(string str) @ 104;
+int strstr(string str, string sub, int first) @ 105;
+string hex(int value) @ 106;
+string format(float value, int prec) @ 107;
+string lformat(float value, int prec) @ 282;
+float lparse(string str) @ 283;
+string strctos(char* array) @ 108;
+int strstoc(string str, char* array) @ 109;
+string strinsert(string str, int pos, string ins) @ 371;
+string strreplace(string str, string search, string replace) @ 372;
+
+// math
+float cos(float f) @ 110;
+float sin(float f) @ 111;
+float tan(float f) @ 112;
+float acos(float f) @ 113;
+float asin(float f) @ 114;
+float atan(float f) @ 115;
+float cosh(float f) @ 116;
+float sinh(float f) @ 117;
+float tanh(float f) @ 118;
+float acosh(float f) @ 119;
+float asinh(float f) @ 120;
+float atanh(float f) @ 121;
+float exp(float f) @ 122;
+float log(float f) @ 123;
+float log10(float f) @ 124;
+float sqrt(float f) @ 125;
+float atan2(float x, float y) @ 126;
+float pow(float x, float y) @ 127;
+int random(int max) @ 128;
+float rand() @ 129;
+void srand(int seed) @ 375;
+
+// sound
+enum { beepInfo = 1, beepWarning, beepError, beepStartUp, beepAlarm, beepConfirmation, beepClick };
+void beep(int type) @ 193;
+void tone(int freq, int dur, int vol) @ 190;
+void tonea(int freq, int dur, int vol) @ 191;
+void tonema(int key, int dur, int vol) @ 192;
+
+// time/date
+int ticks() @ 8;
+int tickspersec() @ 324;
+enum { dateDayByDay, dateDayByWeek, dateDayByMonth };
+struct Date {
+	int secs; // internal representation
+	
+	int year @ 220:227;
+	int month @ 221:228;
+	int day @ 222:229;
+	int hour @ 223:230;
+	int min @ 224:231;
+	int sec @ 225:232;
+	int ymd @ 226:233;
+	int weekday @ 287;
+	
+	void now() @ 234;
+	bool selectdate(int selby, string title) @ 235;
+	bool selecttime(string title) @ 268;
+	void addsecs(int secs);
+	void adddays(int days);
+	void subsecs(int secs);
+	void subdays(int days);
+	int diffsecs(Date date);
+	int diffdays(Date date) @ 277;
+	
+	string time() @ 236;
+	string date() @ 237;
+	string ldate() @ 238;
+};
+
+void Date.addsecs(int s) { secs += s; }
+void Date.adddays(int days) { secs += days * 86400; }
+void Date.subsecs(int s) { secs -= s; }
+void Date.subdays(int days) { secs += days * -86400; }
+int Date.diffsecs(Date d) { return secs - d.secs; }
+
+// system
+void resetaot() @ 194;
+void sleep(int ms) @ 266;
+void launch(string creatorid) @ 195;
+void launchGoto(string creatorid, string database, int recId, int searchStrLen, int matchPos, int matchField, int matchCustom) @ 378;
+void launchCustomString(string creatorid, int code, string param) @ 379;
+string username() @ 196;
+string serialnum() @ 197;
+int osver() @ 198;
+string osvers() @ 199;
+int orbver() @ 200;
+string getclip() @ 201;
+void setclip(string text) @ 202;
+void memcpy(void* pDest, void* pSrc, int len) @ 203;
+void* malloct(string type, int count) @ 204;
+void free(void* ptr) @ 219;
+void _plat1() @ 241;
+void _plat2() @ 242;
+void _plat3() @ 243;
+void events(bool blocking) @ 316;
+void _assert(string, bool) @ 325;
+void _debuglog(string) @ 326;
+string callstack() @ 327;
+void fatal(string) @ 328;
+int freemem() @ 373;
+int battery(bool volts) @ 374;
+
+struct Preferences {
+	int id;
+	// methods
+	bool get(string creatorid, bool saved, void* pdata, string type, int count) @ 215;
+	bool set(string creatorid, bool saved, void* pdata, string type, int count) @ 214;
+	void del(string creatorid, bool saved) @ 216;
+};
+
+struct DBRecord {
+	int _id;
+	void _init() @ 189;
+	void _destroy() @ 80;
+	void _copy(DBRecord) @ 89;
+	
+	int offset @ 183:184;
+	int size @ 188;
+	int category @ 186:187;
+	int id @ 185;
+	int uniqueid @ 322;
+	int handle @ 281;
+
+	int read(void* pdata, string type, int count) @ 179;
+	int write(void* pdata, string type, int count) @ 180;
+	void erase() @ 181;
+	void close() @ 182;
+	bool _getRecFromFile(int fileRef, int id) @ 333;
+	bool _getResFromFile(int fileRef, string type, int id) @ 334;
+};
+
+enum { dbDateCreated, dbDateModified, dbDateBackup };
+struct Database {
+	int id;
+	void _init() @ 158;
+	void _destroy() @ 80;
+	void _copy(Database) @ 89;
+	
+	// properties
+	int nrecs @ 172;
+	bool backup @ 173:174;
+	bool locked @ 320:321;
+	bool res @ 258;
+	int size @ 175;
+	string type @ 176;
+	string creator @ 177;
+	string name @ 178 : 309;
+	int dbref @ 280;
+	int version @ 312 : 313;
+	bool inrom @ 332;
+	int dbid @ 380;
+	int card @ 381;
+	
+	// methods
+	bool open(string name, bool readonly) @ 159;
+	bool opentc(string type, string cid, bool readonly) @ 160;
+	bool create(string name, string type, string cid, bool res) @ 161;
+	void close() @ 162;
+	void deldb() @ 163;
+	
+	string getcatname(int num) @ 165;
+	void setcatname(int num, string name) @ 164;
+	
+	void moverec(int from, int to) @ 166;
+	void removerec(int id) @ 167;
+	void removeres(string type, int id) @ 257;
+	void delrec(int id) @ 168;
+	void archiverec(int id) @ 169;
+	bool getrec(int id, DBRecord rec, bool readonly) @ 170;
+	bool getres(string type, int id, DBRecord rec) @ 255;
+	bool getresinfo(int index, string* pType, int* pId) @ 284;
+	bool newrec(int* id, DBRecord rec) @ 171;
+	bool newres(string type, int id, DBRecord rec) @ 256;
+	int findrec(int uniqueid) @ 323;
+	
+	bool hasappinfo() @ 279;
+	int getappinfo() @ 259;
+	bool setappinfo(int id) @ 260;
+	bool createappinfo() @ 278;
+	Date getdate(int which) @ 331;
+};
+
+struct DatabaseMgr {
+	int id;
+	string dbenum(bool first, string type, string creatorid) @ 205;
+};
+
+struct Memo {
+	int id;
+	// properties
+	string text @ 131:132;
+	int nrecs @ 133;
+	int index @ 335;
+
+	void _init() @ 130;
+	void _destroy() @ 80;
+	void _copy(Memo) @ 89;
+	
+	// methods
+	bool find(string name) @ 134;
+	bool create() @ 135;
+	bool open(int index) @ 136;
+	void puts(string text) @ 137;
+	string line() @ 138;
+	bool end() @ 139;
+	void rewind() @ 140;
+	void close() @ 141;
+	void remove() @ 142;
+	void erase() @ 143;
+	void del() @ 285;
+	void archive() @ 286;
+};
+
+// hard keys
+const char ev0 = '\x00'; // Calendar
+const char ev1 = '\x01'; // Address
+const char ev2 = '\x02'; // ToDo
+const char ev3 = '\x03'; // Memo/Note
+const char evUp = '\x04'; // Page up/Nav up
+const char evDown = '\x05'; // Page down/Nav down
+const char evLeft = '\x06'; // Nav left
+const char evRight = '\x07'; // Nav right
+const char evSelect = '\x08'; // Nav select
+// Sony JogDial
+//const char evJogUp = '\x09';
+//const char evJogDown = '\x0a';
+const char evJogPushRepeat = '\x0b';
+//const char evJogPushedUp = '\x0c';
+//const char evJogPushedDown = '\x0d';
+const char evJogPush = '\x0e';
+const char evJogRelease = '\x0f';
+//const char evJogBack = '\x10';
+const char evNextField = '\x11';
+const char evPrevField = '\x12';
+
+struct Event {
+	int x @ 46, y @ 47;
+	int nx @ 297, ny @ 298;
+	bool inside @ 52;
+	int value @ 61, prev @ 62;
+	char key @ 63;
+	int code @ 275;
+} event;
+
+struct Bitmap {
+	int id;
+};
+
+struct UIString {
+	int id;
+	string text @ 296;
+};
+
+struct Dict {
+	int id;
+	int count @ 78;
+	
+	void _init() @ 79;
+	void _destroy() @ 80;
+	void _copy(Dict) @ 89;
+	void clear() @ 81;
+	int add(string key, string name) @ 82;
+	int del(string key) @ 83;
+	string find(string key) @ 84;
+	bool has(string key) @ 85;
+	string key(int index) @ 261;
+	string value(int index) @ 262;
+};
+
+struct StringList {
+	int id;
+	int count @ 207;
+	
+	void _init() @ 206;
+	void _destroy() @ 80;
+	void _copy(StringList) @ 89;
+	void clear() @ 208;
+	int add(string str);
+	int insert(int index, string str) @ 209;
+	int del(int index) @ 210;
+	int find(string str) @ 211;
+	int tokens(string str, string toks) @ 212;
+	string item(int index) @ 213;
+	void sort(bool caseSensitive) @ 329;
+};
+
+int StringList.add(string str) {
+	return insert(-1, str);
+}
+
+enum { screenWidth, screenHeight, screenRowBytes, screenDepth, screenAllDepths,
+	screenDensity, screenPixelFormat, screenResolutionX, screenResolutionY };
+enum { sysPrefSysSoundVolume = 30, sysPrefGameSoundVolume, sysPrefAlarmSoundVolume };
+
+struct UIApp {
+	int id;
+	string version;
+	string creator;
+	// methods
+	int getdepth() @ 156;
+	bool setdepth(int bits) @ 157;
+	int getScreenAttrib(int attrib) @ 299;
+	void hookhard(bool hook) @ 218;
+	void abort() @ 265;
+	int getSysPref(int prefID) @ 307;
+
+	// handlers - onstart onstop
+};
+
+struct UIMenuBar {
+	int id;
+};
+
+struct UIMenu {
+	int id;
+};
+
+struct UIMenuItem {
+	int id;
+	// handlers - onselect
+};
+
+struct UIButton {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int bmpid @ :294, sbmpid @ :295;
+	string text @ 11:12;
+	
+	// handlers - onselect
+};
+
+struct UICheckbox {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int checked @ 23:24;
+	string text @ 11:12;
+	
+	// handlers - onselect
+};
+
+struct UIPushButton {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int bmpid @ :294, sbmpid @ :295;
+	int checked @ 23:24;
+	string text @ 11:12;
+	
+	// handlers - onselect
+};
+
+struct UIRepeatButton {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int bmpid @ :294, sbmpid @ :295;
+	string text @ 11:12;
+	
+	// handlers - onselect
+};
+
+struct UILabel {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15, h @ 16;
+	bool visible @ :26;
+	string text @ 9:10;
+};
+
+struct UIFBitmap {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15, h @ 16;
+	//int bmpid @ :25;
+	bool visible @ :26;
+};
+
+struct UISlider {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int value @ 53:57, min @ 54:58, max @ 55:59, page @ 56:60;
+
+	// handlers - onmove, ondone
+};
+
+struct UIPopup {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	string text @ 11:12;
+
+	// handlers - onselect, onlistselect
+};
+
+struct UISelector {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	string text @ 11:12;
+
+	// handlers - onselect
+};
+
+funcptr UIListDrawFunc void(int item, int x, int y, int w, int h, string text);
+struct UIList {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	int selitem @ 64:65;
+	int topitem @ :67;
+	int count @ 68;
+
+	// methods
+	bool setitems(int num, string* ptext) @ 72;
+	bool setitemslist(StringList sl) @ 217;
+	string gettext(int index) @ 66;
+	void makevisible(int index) @ 69;
+	bool scroll(int index) @ 70;
+	int popup() @ 71;
+	void redraw() @ 74;
+	void setdrawfunc(UIListDrawFunc func) @ 317;
+	
+	// handlers - onselect
+};
+
+struct UIField {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	string text @ 27:28;
+	int inspt @ 29:30;
+	string seltext @ 31:32;
+	int fontid @ 33:34;
+	int scrollpos @ 35:36;
+	bool dirty @ 37:38;
+	bool editable @ :306;
+	bool numeric @ :310;
+	
+	// methods
+	void insert(string text) @ 39;
+	void select(int start, int end) @ 40;
+	void cut() @ 41;
+	void copy() @ 42;
+	void paste() @ 43;
+	void undo() @ 44;
+	void del(int start, int end) @ 45;
+	void grabfocus() @ 75;
+	void relfocus() @ 76;
+	void scroll(int) @ 244;
+	void phonelookup() @ 290;
+	
+	// handlers - onhchange
+};
+
+struct UIScroll {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	int visible @ :26;
+	int value @ 246:250, min @ 247:251, max @ 248:252, page @ 249:253;
+
+	// methods
+	void update(UIField) @ 245;
+	
+	// handlers - onmove, ondone
+};
+
+struct UIGadget {
+	int id;
+	// properties
+	int x @ 13:271, y @ 14:272, w @ 15:273, h @ 16:274;
+	bool visible @ :26;
+	
+	// handlers - onopen onclose ondraw onpendown onpenmove onpenup
+};
+
+struct UIForm {
+	int id;
+	// properties
+	int x @ 17, y @ 18, w @ 19, h @ 20;
+	string title @ 21:22;
+	int menu @ :254;
+	bool obscured @ 330;
+	
+	// methods
+	void load() @ 86;
+	void close() @ 88;
+	void domodal() @ 87;
+	int dodialog() @ 263;
+	void timer(int nticks) @ 77;
+	void select(int groupid, int ctrlid) @ 73;
+	void help(UIString helpString) @ 270;
+	void redraw(int code) @ 276;
+	UIField* activefield() @ 289;
+	void keyboard() @ 291;
+
+	// handlers - ontimer onchar onhkey onopen onclose ondraw onpendown onpenmove onpenup
+};
+
+enum { ulNone, ulDot, ulSolid };
+enum { clrFG, clrBG, clrDot, clrXOR };
+enum { clrText, clrInv };
+enum { fntStandard, fntBold, fntLarge, fntSymbol, fntSymbol11, fntSymbol7, fntLED, fntLargeBold };
+enum { uiColorObjectFrame, uiColorObjectFill, uiColorObjectFG,
+		uiColorObjectSelFill, uiColorObjectSelFG,
+		uiColorMenuFrame, uiColorMenuFill, uiColorMenuFG,
+		uiColorMenuSelFill, uiColorMenuSelFG,
+		uiColorFieldBG, uiColorFieldText, uiColorFieldTextLines, uiColorFieldCaret,
+		uiColorFieldTextHighlightBG, uiColorFieldTextHighlightFG,
+		uiColorFieldFepRawText, uiColorFieldFepRawBG, uiColorFieldFepConvText,
+		uiColorFieldFepConvBG, uiColorFieldFepUnderline,
+		uiColorFormFrame, uiColorFormFill,
+		uiColorDialogFrame, uiColorDialogFill,
+		uiColorAlertFrame, uiColorAlertFill,
+		uiColorOK, uiColorCaution, uiColorWarning
+};
+enum { modePaint, modeErase, modeMask, modeInvert, modeOverlay, modePaintInverse, modeSwap };
+
+struct Draw {
+	int id;
+	void _init() @ 90;
+	void _destroy() @ 80;
+	void _copy(Draw) @ 89;
+	
+	int handle @ 288;
+	int nw @ 300, nh @ 301;
+	
+	// direct drawing
+	void attachForm(UIForm form) @ 95;
+	void attachGadget(UIGadget gadget) @ 94;
+	
+	// offscreen
+	bool create(int w, int h) @ 152;
+	bool copyForm(UIForm form) @ 153;
+	bool copyGadget(UIGadget gadget) @ 154;
+	void release() @ 155;
+	
+	// begin/end drawing
+	void begin() @ 91;
+	void nbegin() @ 302;
+	void end() @ 92;
+	
+	// state
+	int fg(int index) @ 144;
+	void fgRGB(int r, int g, int b) @ 303;
+	int bg(int index) @ 145;
+	void bgRGB(int r, int g, int b) @ 304;
+	int textColor(int index) @ 146;
+	void textRGB(int r, int g, int b) @ 305;
+	int font(int fontid) @ 147;
+	int textAlign(int mode) @ 149;
+	int textWidth(string str) @ 239;
+	int textHeight() @ 240;
+	int underline(int mode) @ 148;
+
+	// color utilities
+	int indexFromColor(int r, int g, int b) @ 51;
+	bool selectIndex(string title, int* pIndex) @ 269;
+	int uiColor(int uiType) @ 308;
+	
+	// drawing ops
+	void line(int color, int x1, int y1, int x2, int y2) @ 93;
+	void pixel(int color, int x, int y) @ 96;
+	void rect(int color, int x1, int y1, int x2, int y2, int rad) @ 97;
+	void frame(int color, int x1, int y1, int x2, int y2, int rad, int thick) @ 98;
+	void bitmap(Bitmap bmp, int x, int y) @ 48;
+	void bitmapm(Bitmap bmp, int x, int y, int mode) @ 376;
+	void text(int color, int x, int y, string text) @ 49;
+	void textTrunc(int x, int y, int w, string text) @ 311;
+	void draw(Draw d, int x, int y) @ 50;
+	void drawm(Draw d, int x, int y, int mode) @ 377;
+
+	// database
+	//bool read(DBRecord rec, int rec) @ 0; //150;
+	//bool write(DBRecord rec, int rec) @ 0; //151;
+};
+
+object Stream {
+	virtual bool write(void* data, string type, int count);
+	virtual bool read(void* data, string type, int count);
+	virtual bool writeInt(int);
+	virtual bool readInt(int*);
+	virtual bool writeWord(int);
+	virtual bool readWord(int*);
+	virtual bool writeFloat(float);
+	virtual bool readFloat(float*);
+	virtual bool writeChar(char);
+	virtual bool readChar(char*);
+	virtual bool writeString(string);
+	virtual bool readString(string*);
+};
+bool Stream.write(void*, string, int) { return false; }
+bool Stream.read(void*, string, int) { return false; }
+bool Stream.writeInt(int i) { return write(&i, "i", 1); }
+bool Stream.readInt(int* pi) { return read(pi, "i", 1); }
+bool Stream.writeWord(int w) { return write(&w, "w", 1); }
+bool Stream.readWord(int* pw) { return read(pw, "w", 1); }
+bool Stream.writeFloat(float f) { return write(&f, "f", 1); }
+bool Stream.readFloat(float* pf) { return read(pf, "f", 1); }
+bool Stream.writeChar(char c) { return write(&c, "c", 1); }
+bool Stream.readChar(char* pc) { return read(pc, "c", 1); }
+bool Stream.writeString(string s) { return write(&s, "s", 1); }
+bool Stream.readString(string* ps) { return read(ps, "s", 1); }
+
+interface ISerializable {
+	bool serialize(Stream* stream);
+	bool deserialize(Stream* stream);
+};
+
+object DBRecordStream : Stream {
+	DBRecord rec;
+	bool write(void* data, string type, int count);
+	bool read(void* data, string type, int count);
+};
+bool DBRecordStream.write(void* data, string type, int count) {
+	return rec.write(data, type, count) == __expectedCount(type);
+}
+bool DBRecordStream.read(void* data, string type, int count) {
+	return rec.read(data, type, count) == __expectedCount(type);
+}

@@ -1,0 +1,471 @@
+
+const int MAX_COL = 2;
+
+struct ListItem {
+    string	Cols[MAX_COL];
+    int		Flags, Check, Color;
+    int		ItemData, RecID;
+};
+
+@bitmap Bitmap imgUnchecked {
+  id = 2000
+  image1 = "unchecked.bmp"
+}
+
+@bitmap Bitmap imgChecked {
+  id = 2001
+  image1 = "checked.bmp"
+}
+
+object ListCtrl {
+    UIGadget gadget;
+    void onopen();
+    void onclose();
+    void ondraw();
+    void onpendown();
+    void onpenmove();
+    void onpenup();
+    void Create();
+    int InsertItem(int before, string title);
+    int AddItem(string title);
+    void SetItemState(int item, int flags, int mask);
+    void SetCheck(int item, int check);
+    void SetItemColor(int item, int color);
+    void DeleteAllItems();
+    void DeleteItem(int item);
+    void SortItems();
+    void SetColumnWidth(int col, int width);
+    void SetItemText(int item, int col, string text);
+    string GetItemText(int item, int col);
+    int GetCheck(int item);
+    void SetSlider(UIScroll *sb);
+    void Scroll(int off);
+    int GetSelectedItem();
+    int SetSelectedItem(int item);
+    int GetItemCount();
+    void EnsureVisible(int item);
+    int ModifyStyle(int add, int remove);
+    void SetRecID(int item, int id);
+    int GetRecID(int item);
+    void SetItemData(int item, int id);
+    int GetItemData(int item);
+    handler OnClick;
+    
+    int Colors;
+    
+    //---private---
+    void SetScrollMax();
+    
+    int ItemCount;	// soviele Zeilen gibts
+    int ColumnCount;
+    int ColumnWidth[MAX_COL];
+    int ItemMax;	// soviele sind derzeit angefordert
+    ListItem *Items;
+    int YOff;  		// vertikal gescrollt
+    int SelItem;
+    int Style;
+    UIScroll *ScrollBar;
+    Draw DC;
+    // helpers
+    int tx, ty;
+    bool click;
+    int LH;
+};
+
+// Styles:
+const int sStripes = 1;
+const int sLines = 2;
+
+void ListCtrl.SetScrollMax()
+{
+    int max;
+    
+    if (ScrollBar == null) return;
+    
+    max = ItemCount*LH - gadget.h;
+    if (max < 0) max = 0;			//* 18.2.03 jd (old: max = ItemCount*LH;)
+    ScrollBar->max = max;
+}
+
+void ListCtrl.Scroll(int off)
+{
+    YOff = off;
+    ondraw();
+}
+
+void ListCtrl.SetSlider(UIScroll *sb)
+{
+    ScrollBar = sb;
+    ScrollBar->page = gadget.h;
+    SetScrollMax();
+}
+
+void ListCtrl.Create()
+{
+    UIApp app;						//* 18.2.03 jd
+    LH = 11;
+    YOff = 0;
+    ItemCount = 0;
+    ColumnCount = 1;
+    ItemMax = 64;
+    SelItem = -1;
+    Colors = 1 << app.getdepth();	//* 18.2.03	jd
+    ScrollBar = null;
+    Style = sStripes;	//|sLines;
+    Items = new ListItem[ItemMax];
+}
+
+void ListCtrl.onopen() {
+    if (ItemMax == 0) Create();
+    DC.attachGadget(gadget);
+}
+
+void ListCtrl.onclose() {
+    delete Items;
+}
+
+int ListCtrl.GetSelectedItem()
+{
+    return(SelItem);
+}
+
+int ListCtrl.SetSelectedItem(int item)
+{
+    int i = SelItem;
+    
+    if (item != SelItem) {
+        if (item>=ItemCount) item = -1;
+        SelItem = item;
+        ondraw();
+    }
+    return(i);
+}
+
+int ListCtrl.InsertItem(int before, string title)
+{
+    ListItem *temp;
+    int		i, j;
+    
+    if (ItemCount == ItemMax) {
+        // Array vergr��ern
+        ItemMax += 16;
+        temp = new ListItem[ItemMax];
+        j = 0;
+        for (i=0; i<=ItemCount; i++) {
+            if (i == before) ++j;
+            temp[j] = Items[i];
+            ++j;
+        }
+        delete Items;
+        Items = temp;		
+    }
+    else {
+        // nur einf�gen
+        i = ItemCount;
+        while (i>before) {
+            Items[i] = Items[i-1];
+            --i;
+        }
+    }
+    Items[before].Cols[0] = title;
+    for (i=1; i<MAX_COL; i++) Items[before].Cols[i] = "";
+    Items[before].ItemData = 0;
+    Items[before].RecID = -1;
+    Items[before].Check = 0;
+    Items[before].Flags = 0;
+    Items[before].Color = Colors-1;
+    ++ItemCount;
+    SetScrollMax();
+    return(before);
+}
+
+int ListCtrl.AddItem(string title)
+{
+    return InsertItem(ItemCount, title);
+}
+
+void ListCtrl.DeleteAllItems()
+{
+    int i;
+    
+    //for (i=0; i<ItemCount; i++) {
+    //	delete Items[i].Cols;
+    //}
+    ItemCount = 0;
+    SelItem = -1;
+    SetScrollMax();
+}
+
+void ListCtrl.DeleteItem(int item)
+{
+    if (item >= ItemCount || item < 0)	//* 18.02.03 ">" --> ">="
+        return;
+    
+    while (item < ItemCount-1) {
+        Items[item] = Items[item+1];
+        ++item;							//* 18.02.03 added
+    }
+    
+    --ItemCount;
+    if (SelItem >= ItemCount)			//* 18.02.03 added
+        SelItem = ItemCount-1;
+    SetScrollMax();
+}
+
+void ListCtrl.SetItemState(int item, int flags, int mask)
+{
+    if (item >= ItemCount) return;
+    
+    Items[item].Flags &= ~mask;
+    Items[item].Flags |= flags;
+}
+
+void ListCtrl.SetCheck(int item, int check)
+{
+    if (item >= ItemCount) return;
+    
+    Items[item].Check = check;
+}
+
+void ListCtrl.SetItemColor(int item, int color) {
+    if (item >= ItemCount) return;
+    
+    Items[item].Color = color;
+}
+
+void ListCtrl.SetItemText(int item, int col, string text)
+{
+    if (col < 0 || col >= MAX_COL) return;
+    if (ColumnCount <= col) ColumnCount = col+1;
+
+    Items[item].Cols[col] = text;
+}
+
+string ListCtrl.GetItemText(int item, int col)
+{
+    if (item < 0 || item >= ItemCount) return("");
+    return(Items[item].Cols[col]);
+}
+
+int ListCtrl.GetCheck(int item)
+{
+    if (item < 0 || item >= ItemCount) return(0);
+    return(Items[item].Check);
+}
+
+int ListCtrl.GetItemCount()
+{
+    return(ItemCount);
+}
+
+
+void ListCtrl.SetColumnWidth(int col, int width)
+{
+    if (col < 0 || col >= MAX_COL) return;
+    
+    ColumnWidth[col] = width;
+    if (ColumnCount <= col) ColumnCount = col+1;
+}
+
+void ListCtrl.onpendown()
+{
+    tx = event.x;
+    ty = event.y;
+    click = true;
+}
+
+void ListCtrl.onpenmove()
+{
+    int y = YOff, dy;
+    int ymax = (ItemCount*LH) - gadget.h;
+    bool scroll = false;
+
+    if (ymax < 0) ymax = 0;
+    y += ty - event.y;
+    if (y < 0) {
+        y = 0;
+        if (YOff != 0) scroll = true;
+    }
+    if (y > ymax) {
+        y = ymax;
+        if (YOff != ymax) scroll = true;
+    }
+    dy = y - YOff;	if (dy < 0) dy = -dy;
+    if (scroll || dy > 4) {
+        YOff = y;
+        ty = event.y;
+        if (ScrollBar) {
+            ScrollBar->value = YOff;
+        }
+        ondraw();
+        click = false;
+    }
+}
+
+void ListCtrl.onpenup()
+{
+    int i;
+    if (click) {
+        i = (YOff + ty)/LH;
+        if (i >= ItemCount) i = -1;
+        if (i != SelItem) {
+            SelItem = i;
+            ondraw();
+        }
+        if (SelItem >= 0) OnClick();
+    }
+}
+
+void ListCtrl.ondraw() {
+    int			y, i, bg = 0, off, j, oldFG = -1, col, len, w;
+    ListItem	*p = Items;
+    bool		stripes = Colors > 2;
+    string		str;
+    
+    y = -YOff;
+    DC.begin();
+    i = 0;
+    while (y < gadget.h) {		//* 18.2.03 jd: "gadget.y+" removed
+        if (y > -LH) {
+            col = clrText;
+            //DC.fg(Colors-1);
+            DC.textColor(p->Color);
+            // Textfarbe ermitteln
+            if (i == SelItem) {
+                // selektiertes Item wei� auf blauem Hintergrund
+                DC.bg(92 /*Colors-1*/);
+                if (Colors < 4)
+                    col = clrInv;
+            }
+            else {
+                DC.bg(bg);
+            }
+            DC.rect(clrBG, 0, y, gadget.w, y+LH, 0);
+            if (i < ItemCount) {
+                off = 0;
+                if (p->Check)
+                    DC.bitmap(imgChecked, off, y);
+                else
+                    DC.bitmap(imgUnchecked, off, y);
+                off += 12;
+                DC.text(col, off, y, p->Cols[0]);
+                if (p->Cols[1] != "") {
+                    str = "  " + p->Cols[1];
+                    w = DC.textWidth(str);
+                    DC.text(col, gadget.w-w, y, str);
+                }
+            }
+        }
+        y += LH;
+        ++i;
+        ++p;
+        /*if (oldFG >= 0) {
+            DC.fg(oldFG);
+            oldFG = -1;
+        }*/
+        if (stripes) {
+            if (bg == 224) bg = 0; else bg = 224;
+        }
+    }
+    DC.end();
+}
+
+void ListCtrl.SortItems()
+{
+    ListItem temp;
+    int left = 0;
+    int pivot = 1;
+    int right = ItemCount;
+    int left_b, right_b, middle_b, i;
+
+    while (pivot < right) {
+        // is the next item >= than the last?
+        //if (compare(left, pivot, cc) > 0) {
+        if (Items[left].ItemData > Items[pivot].ItemData) {
+            // binary insert into place
+            left_b = 0;
+            right_b = left;
+            
+            while (left_b < right_b) {
+                middle_b = left_b + (right_b - left_b)/2;
+                if (Items[pivot].ItemData < Items[middle_b].ItemData) {
+                    right_b = middle_b - 1;
+                }
+                else {
+                    left_b = middle_b + 1;
+                }
+            }
+                
+            if (left_b >= right_b) {
+                middle_b = left_b;
+                if (Items[pivot].ItemData >= Items[middle_b].ItemData) {
+                    middle_b += 1;
+                }
+            }
+            // save to temp
+            temp = Items[pivot];
+            // make  room
+            for (i=pivot-middle_b; i>0; i--)
+                Items[middle_b + i] = Items[middle_b + i - 1];
+            // copy from temp
+            Items[middle_b] = temp;
+            
+            left = pivot;
+            pivot += 1;
+        } else {
+            left = pivot;
+            pivot += 1;
+        }
+    }
+}
+
+void ListCtrl.EnsureVisible(int item)
+{
+    int y = item * LH, max;
+    
+    if (y >= YOff && y < YOff+gadget.h) return;	// schon sichtbar
+    
+    max  = ItemCount*LH-gadget.h;
+    if (max < 0) max = 0;
+    
+    y -= gadget.h/2;
+    if (y < 0) y = 0;
+    if (y > max) y = max;
+    
+    YOff = y;
+    if (ScrollBar) ScrollBar->value = YOff;
+    ondraw(); 
+}
+
+int ListCtrl.ModifyStyle(int add, int remove)
+{
+    int rv = Style;
+    
+    Style &= ~remove;
+    Style |= add;
+    return(rv);
+}
+
+void ListCtrl.SetRecID(int item, int id)
+{
+    if (item < 0 || item >= ItemCount) return;
+    Items[item].RecID = id;
+}
+
+int ListCtrl.GetRecID(int item)
+{
+    if (item < 0 || item >= ItemCount) return -1;
+    return Items[item].RecID;
+}
+
+void ListCtrl.SetItemData(int item, int id)
+{
+    if (item < 0 || item >= ItemCount) return;
+    Items[item].ItemData = id;
+}
+
+int ListCtrl.GetItemData(int item)
+{
+    if (item < 0 || item >= ItemCount) return 0;
+    return Items[item].ItemData;
+}

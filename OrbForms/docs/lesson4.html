@@ -1,0 +1,222 @@
+<p>This lesson's objective is to show you how to create a custom user interface 
+element - a progress bar. In the process, you will learn the following programming skills:</p>
+<ol>
+  <li>Design a custom gadget</li>
+  <li>Implement a custom gadget</li>
+  <li>Draw rectangles and frames</li>
+  <li>Use system UI colors</li>
+  <li>Use a gadget in a form</li>
+</ol>
+<p>At the end of the lesson, you should be able to create a progress bar that 
+looks like this:</p>
+<p>&nbsp;<img border="0" src="lesson4_9.gif" width="205" height="36"></p>
+<h3>Step1: Getting started</h3>
+<p>First, create a simple project with a form (covered in earlier tutorials). Next, create a new gadget file:</p>
+<table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="19%" valign="top">Select Project | Insert New File from the menu.</td>
+    <td width="81%"><img border="0" src="lesson4_5.gif" width="205" height="224"></td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top">Select the Gadget File template.<p>Name the file 
+    ProgressBarGadget.oc</td>
+    <td width="81%"><img border="0" src="lesson4_6.gif" width="294" height="308"></td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top">&nbsp;</td>
+    <td width="81%">&nbsp;</td>
+  </tr>
+</table>
+<p>Now you should have a gadget file named ProgressBarGadget.oc open in the 
+editor.</p>
+<h3>Step2: Design the progress bar </h3>
+<p>In order to design the progress bar, we need to think through following 
+questions.</p>
+<ol>
+  <li>What functionality should the gadget have?</li>
+  <li>How will a developer use the gadget?</li>
+  <li>How should the gadget be drawn?</li>
+</ol>
+<p><b>Methods:</b></p>
+<p>Think from a developer perspective, the progress bar should at least have 
+the following methods:</p>
+<ul>
+  <li>setrange(int min, int max) - set the range of the progress bar</li>
+  <li>setvalue(int value) - set the current value of the progress bar</li>
+</ul>
+<p><b>Drawing:</b></p>
+<p>From the image above, we see that the progress bar looks like a normal Palm 
+OS control, with a dark border and a partially filled center. To draw this, we 
+first draw a large rounded rectangle in the background color to fill the entire 
+gadget. Next, we draw a rectangle within the gadget to represent the current 
+progress. Finally, we draw a border around the entire gadget.</p>
+<p>It is important that the control match the current color scheme of the 
+device. To accomplish this, we use the Draw.uiColor() method to retrieve the 
+current system colors. The background is filled with uiColorObjectFill, the 
+completed portion of the bar is filled with uiColorObjectSelFill, and the border 
+is drawn with uiColorObjectFrame.</p>
+<p>Now we are ready to implement our ideas.</p>
+<h3><b>Step3: Implementation</b></h3>
+<ol>
+  <li>By default, ProgressBarGadget.oc should contain a gadget template.&nbsp; Rename 
+  the gadget name to <b>ProgressBarGadget</b></li>
+  <li>Add the following methods and fields to the gadget declaration:<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+    // functionality related methods and properties<br>
+    void setrange(int min, int max);<br>
+    void setvalue(int value);<br>
+    <br>
+    // internal state<br>
+    int min; // maximum progress<br>
+    int max; // maximum progress<br>
+    int value; // current progress<p>// drawing related methods and properties<br>
+    void ondraw(); // event handler method<br>
+    void redraw(); // drawing routine<br>
+    Draw draw; // draw object attached to gadget<br>
+    int bgColor, borderColor, fillColor; // cached system UI colors</div>
+  </li>
+  <li>Attach the draw object, and retrieve the system UI colors in the <b> onopen</b> method.<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+    void ProgressBarGadget.onopen() {<br>
+	&nbsp;&nbsp;&nbsp;
+	// attach the draw object to the gadget<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.attachGadget(gadget);<br>
+	&nbsp;&nbsp;&nbsp;
+	// cache the system UI colors<br>
+	&nbsp;&nbsp;&nbsp;
+	bgColor = draw.uiColor(uiColorObjectFill);<br>
+	&nbsp;&nbsp;&nbsp;
+	borderColor = draw.uiColor(uiColorObjectFrame);<br>
+	&nbsp;&nbsp;&nbsp;
+	fillColor = draw.uiColor(uiColorObjectSelFill);<br>
+    }</div>
+  </li>
+  <li>&nbsp;Define <b>setrange</b>() and <b>setvalue</b>() methods<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+void ProgressBarGadget.setrange(int min, int max) {<br>
+	&nbsp;&nbsp;&nbsp;
+	this.min = min;<br>
+	&nbsp;&nbsp;&nbsp;
+	this.max = max;<br>
+}<br>
+<br>
+void ProgressBarGadget.setvalue(int value) {<br>
+	&nbsp;&nbsp;&nbsp;
+	this.value = value;<br>
+}</div>
+  </li>
+  <li>Implement the <b>ondraw</b>() handler method to simply call the redraw() 
+  method.<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+    void ProgressBarGadget.ondraw() {<br>
+    &nbsp;&nbsp;&nbsp;
+    redraw();<br>
+    }</div>
+  </li>
+  <li>Implement the <b>redraw() </b>method, the core of this gadget. One 
+  interesting thing to note is the set of parameters passed to the rect and 
+  frame methods. The Palm OS draws rects and frames <b>outside</b> the box 
+  specified by the x1, y1, x2, y2 values. Thus, to get the frame to touch the edge of 
+  the gadget, we must specify these values as 1 pixel in from each edge.<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+
+void ProgressBarGadget.redraw() {<br>
+	&nbsp;&nbsp;&nbsp;
+	int offset;<br>
+<br>
+	&nbsp;&nbsp;&nbsp;
+	// enable drawing<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.begin();<br>
+	<br>
+	&nbsp;&nbsp;&nbsp;
+	// clear the background<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.fg(bgColor);<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.rect(clrFG, 1, 1, gadget.w-1, gadget.h-1, 3);<br>
+	<br>
+	&nbsp;&nbsp;&nbsp;
+	if (value > min) {<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		// draw the completed portion<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		draw.fg(fillColor);<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		offset = gadget.w * (value - min) / (max - min) - 1;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		draw.rect(clrFG, 1, 1, offset, gadget.h-1, 3);<br>
+	&nbsp;&nbsp;&nbsp;
+	}<br>
+	<br>
+	&nbsp;&nbsp;&nbsp; // draw the border<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.fg(borderColor);<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.frame(clrFG, 1, 1, gadget.w-1, gadget.h-1, 3, 1);<br>
+	<br>
+	&nbsp;&nbsp;&nbsp;
+	// disable drawing<br>
+	&nbsp;&nbsp;&nbsp;
+	draw.end();<br>
+}</div>
+  </li>
+</ol>
+<h3><b>Step4: Use the progress bar gadget in a form</b></h3>
+<p>Now that you have completed the gadget implementation, let's try it out in a 
+form.</p>
+<table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+  <tr>
+    <td width="50%" valign="top">Right-click on mainForm in the Form Designer.</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">Select Add Gadget</td>
+    <td width="50%">
+    <img border="0" src="lesson4_7.gif" width="134" height="101"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">In the Inspection window, change the Name attribute to gadProgress 
+    and change the Gadget type attribute to ProgressBarGadget.</td>
+    <td width="50%"><img border="0" src="lesson4_8.gif" width="213" height="54"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">Adjust the gadget size</td>
+    <td width="50%">
+    <img border="0" src="lesson4_10.gif" width="160" height="103"></td>
+  </tr>
+</table>
+<h3>Step5: Use the progress bar</h3>
+<p>Set the range of the progress bar in the form's <b>onopen</b> handler:</p>
+<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+  handler mainForm.onopen() {<br>
+&nbsp;&nbsp;&nbsp; gadProgress.setrange(0, 20);<br>
+  }</div>
+<p>Create a Go button on the form, and name it btnGo. Create an onselect handler 
+to step through the progress range like this:</p>
+<div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+  handler btnGo.onselect() {<br>
+  &nbsp;&nbsp;&nbsp;
+  int i;<br>
+  &nbsp;&nbsp;&nbsp;
+  // hide the Go button while progressing<br>
+  &nbsp;&nbsp;&nbsp;
+  btnGo.visible = false;<br>
+  &nbsp;&nbsp;&nbsp;
+  // step through the whole progress bar<br>
+  &nbsp;&nbsp;&nbsp;
+  for (i=0;i&lt;=20;i++) {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  gadProgress.setvalue(i);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  gadProgress.redraw();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  sleep(100);<br>
+  &nbsp;&nbsp;&nbsp;
+  }<br>
+  &nbsp;&nbsp;&nbsp;
+  btnGo.visible = true;<br>
+  }</div>
+<h3>Final Step<b>: We are done!</b></h3>
+<ul>
+  <li>Now build the application.</li>
+  <li>Download it to the emulator or the actual device.&nbsp; </li>
+  <li>Start the application.</li>
+  <li>Press the Go button and watch its progress.</li>
+</ul>

@@ -1,0 +1,70 @@
+<p>Variables are the items in a program that store data. There
+are five basic types of variables in the OrbC language:</p>
+<table border="1">
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>integer (32-bit, signed)</td>
+    <td><code>int</code></td>
+    <td><code>1, 2, 5, -789, 452349</code></td>
+  </tr>
+  <tr>
+    <td>floating point (32-bit)</td>
+    <td><code>float</code></td>
+    <td><code>-1.2, 3.141592, 5.7e-4</code></td>
+  </tr>
+  <tr>
+    <td>characters (8-bit, signed)</td>
+    <td><code>char</code></td>
+    <td><code>'a', 'b', '#', '4', 56</code></td>
+  </tr>
+  <tr>
+    <td>strings</td>
+    <td><code>string</code></td>
+    <td><code>"Bob" "Megan" "Hello"</code></td>
+  </tr>
+  <tr>
+    <td>boolean</td>
+    <td><code>bool</code></td>
+    <td><code>true, false</code></td>
+  </tr>
+</table>
+<p>Each variable has a name and is of a pre-determined type. Variables are declared like this:<br/>
+<i>variable-type name</i>[<i>, name2...</i>]<i>;</i></p>
+<p>Here are a few examples:</p>
+<pre><B>int</B> myInteger, row, column; // defines three integer variables named &quot;myInteger&quot;, &quot;row&quot;, and &quot;column&quot;
+<B>string</B> name;
+<B>float</B> pi;
+<B>char</B> c, last, first;</pre>
+<p>Variables must have names conforming to a few rules: 1. the name must be 31
+characters or less. 2. the name may only contain letters, numbers, and the
+underscore character (_) 3. the name must not begin with a number. A variable
+should not have the same name as a method - although it is legal to do so, this
+will prevent the application from being able to call the function from any
+location where the variable is visible.</p>
+<p>It is also possible to have an <i>array</i> of values. An array is a list of
+values that are stored in one variable. Arrays are declared like normal
+variables except that the variable name is followed by '<code>[<i>size</i>]</code>'
+where <i>size</i> is the number of items that the variable can hold. A
+declaration might look like this:</p>
+<pre><b>int</b> values[10];
+<b>string</b> names[7];</pre>
+<p>Of course, arrays and normal variables can be declared
+together:</p>
+<pre><b>int</b> row, values[10], column;
+<b>string</b> name, colors[8];</pre>
+
+<p>You can also give default values to the variables, however
+these initial values must be simple literals:</p>
+<pre><b>int</b> nine = 9, eight = 8, zero;
+<b>string</b> days[7] = { &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tues&quot; };</pre>
+
+<p>In the case of arrays, the initial values must be in
+braces and separated by commas. If the number of values in the initializer list
+is less than the length of the array, then the uninitialized elements have
+default values. For the <code>days</code>
+array above, the last 4 members of <code>days</code> are the empty string
+("").</p>

@@ -1,0 +1,92 @@
+   Name: fib perf
+Version: 4.02
+ Header: 2 bytes
+
+    7	CWord		69
+   10	Call
+   11	Pop
+   12	Halt
+
+Func 0:
+   13	Link		(1 args)
+   15	GetL		0
+   18	CWord		0
+   21	Eq
+   22	GetL		0
+   25	CWord		1
+   28	Eq
+   29	Or
+   30	JmpZ		40
+   33	CWord		1
+   36	SetRet
+   37	Jmp		66
+   40	GetL		0
+   43	CWord		1
+   46	Sub
+   47	OldCall		13
+   50	GetL		0
+   53	CWord		2
+   56	Sub
+   57	OldCall		13
+   60	Add
+   61	SetRet
+   62	Jmp		66
+   65	SetRet0
+   66	UnLink
+   67	Ret		1
+
+Func 1:
+   69	Link		(0 args)
+   71	CInt		0
+   76	CInt		0
+   81	CWordPFP	local 0
+   84	CallBI		ticks
+   86	Save
+   87	Pop
+   88	CWordPFP	local 1
+   91	CWord		15
+   94	OldCall		13
+   97	Save
+   98	Pop
+   99	CWordPFP	local 0
+  102	CallBI		ticks
+  104	GetL		2
+  107	Sub
+  108	Save
+  109	Pop
+  110	CString	1	"fib(15) = "
+  113	GetL		3
+  116	Add
+  117	CString	12	"\nTicks: "
+  120	Add
+  121	GetL		2
+  124	Add
+  125	ToString
+  126	CallBI		alert
+  128	Pop
+  129	SetRet0
+  130	PopN		2
+  133	UnLink
+  134	Ret		0
+
+
+Instruction count:
+    CInt 2	   CChar 0	  CFloat 0	 CString 2	
+   ToInt 0	  ToChar 0	 ToFloat 0	ToString 1	
+    GetG 0	    SetG 0	    GetL 7	    SetL 0	
+   Array 0	   IncGA 0	   DecGA 0	   IncLA 0	
+   DecLA 0	   IncGB 0	   DecGB 0	   IncLB 0	
+   DecLB 0	     Add 4	     Sub 3	    Mult 0	
+     Div 0	     Mod 0	     Neg 0	     Not 0	
+     And 0	      Or 1	      Eq 2	     NEq 0	
+      LT 0	     LTE 0	      GT 0	     GTE 0	
+     Jmp 2	    JmpZ 1	   JmpNZ 0	 OldCall 3	
+  CallBI 3	     Ret 2	  SetRet 2	 SetRet0 2	
+     Pop 5	    PopN 1	    Link 2	  UnLink 2	
+    Halt 1	    Swap 0	 LibCall 0	   CWord 7	
+CWordPFP 3	    Call 1	    Load 0	    Save 3	
+    IncA 0	    DecA 0	    IncB 0	    DecB 0	
+    BAnd 0	     BOr 0	    BNot 0	      SL 0	
+      SR 0	     Xor 0	    NoOp 0	   NoOp2 0	
+     XXX 0	     XXX 0	 AddExtI 0	    GetC 0	
+    SetC 0	    Case 0	

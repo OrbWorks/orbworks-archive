@@ -1,0 +1,67 @@
+<p>OrbC provides several features that aid developers in debugging 
+code:</p>
+<ul>
+  <li>assertions</li>
+  <li>debug logging</li>
+  <li>debug only code blocks</li>
+  <li>runtime functions</li>
+</ul>
+<p>Most of the features are only available when the project is built in debug 
+mode. These features generate no code in non-debug builds, which means you can 
+keep all your debugging code in place without degrading the 
+performance/experience of your shipping code. In addition to the features below,
+when building a debug build, the DEBUG preprocessor symbol will be defined.</p>
+<h3>Assertions</h3>
+<p>An assertion tests an assumption that a developer makes when writing code, 
+displaying an error if the specified condition is not true. Assertions do not 
+generate any code in non-debug builds. Using assertions 
+liberally is a great way to ensure that otherwise difficult bugs are found early 
+in the development cycle. An assertion looks very similar to function call using 
+the <code>assert</code> keyword:</p>
+<pre>void setAge(int age) {
+  <b>assert</b>(age > 0);
+  // do something with age
+}</pre>
+<p>The function above takes an age as a parameter. Age cannot be negative, so 
+this function expects the parameter to always be positive. If a number less than 
+1 is ever passed to this function, the code above will cause an error message to 
+be displayed containing &quot;assert(age &gt; 0)&quot; and the call stack causing the error.</p>
+<h3>Debug Logging</h3>
+<p>Logging can be effectively used to track the state of an application. Debug 
+logging works in conjunction with the emulator or simulator to create a file on 
+your computer containing output from your OrbC application. Logging code is 
+not generated for non-debug builds.</p>
+<p>To write a line to the log, use the <code>debuglog</code> keyword:</p>
+<pre>void myButton.onselect() {
+  <b>debuglog</b>("myButton pressed, myCheckbox.checked=" + myCheckbox.checked);
+}</pre>
+<p>When the first <code>debuglog</code> statement is encountered, the file &quot;\orbforms_log.txt&quot; 
+is opened in the root of the drive that was used to launch the emulator. Each <code>debuglog</code> 
+statement creates a new line in the log file.</p>
+<h3>Debug-only Code Blocks</h3>
+
+<p>In addition to logging and assertions, you can create blocks of code that are 
+only compiled into debug builds. To do this, create a block using the <code>debug</code> 
+keyword. In the following example, a status label is used for verbose data:</p>
+<pre>void loadData(Stream* stream) {
+  Rectangle rect;
+  int count, i;
+  count = stream->readInt();
+  for (i=0; i&lt;count; i++) {
+    stream->read(&rect, typeof(rect), 1);
+    <b>debug</b> {
+      // display in a status label how many rects have been read
+      // (this info it too verbose for end users, so do not
+      // show this in non-debug builds)
+      labelStatus.text = i + " rects";
+    }
+  }
+}</pre>
+<h3>Runtime Functions</h3>
+<p>The following functions can be very useful in debugging. These are available 
+in debug builds and non-debug builds.</p>
+<ul>
+  <li><a href="mcallstack.html">callstack()</a> - retreives the current call 
+  stack.</li>
+  <li><a href="mfatal.html">fatal()</a> - displays a fatal error and exits.</li>
+</ul>

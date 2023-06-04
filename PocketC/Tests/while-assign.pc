@@ -1,0 +1,18 @@
+// while-assign
+int offset = 0;
+string str = "line1\nline2\nline3";
+
+main() {
+  puts("while(offset=...)\n");
+  while ((offset = strstr(str, "\n", offset+1)) != -1) {
+    puts(offset + "\n");
+  }
+  offset = 0;
+  puts("while(1)\n");
+  while (1) {
+    offset = strstr(str, "\n", offset+1);
+    if (offset == -1)
+      break;
+    puts(offset + "\n");
+  }
+}

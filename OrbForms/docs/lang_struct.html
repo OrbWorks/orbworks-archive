@@ -1,0 +1,68 @@
+<p>A structure is a user defined data type that is a
+collection of other data types. For example, a Person data type can be defined
+as a string containing the person's name, and an integer representing the
+person's age like this:</p>
+
+<pre>struct Person {
+  string name;
+  int age;
+};</pre>
+
+<p>After being declared, Person can be used like the built-in data types (e.g.
+int, string). To access the data in a structure, use the dot (.) operator like this:</p>
+
+<pre>Person bob; // create a Person variable named 'bob'
+bob.name = &quot;Bob&quot;; // assign &quot;Bob&quot; to the name member of 'bob'
+bob.age = 26;</pre>
+
+<p>When using a pointer to a struct, you must use the <code>-&gt;</code>
+operator, rather than the <code>.</code> operator, to access the data in the structure, like this:</p>
+
+<pre>Person* pBob; // create a Person pointer name 'pBob'
+pBob = new Person; // allocate a new Person object, and assign the address to 'pBob'
+pBob-&gt;name = &quot;Bob&quot;; // set the name member of the Person that 'pBob' points to
+pBob-&gt;age = 18;</pre>
+
+<p>Structs may also contain other structs (or objects) as members. When a struct
+contains another struct, multiple <code>.</code> operators must be used. For
+example:</p>
+
+<pre>struct City {
+  int population;
+  Person mayor;
+};
+City hudson;
+...
+hudson.mayor.age++; // happy birthday</pre>
+
+<p>Structs can be initialized like other data types, but must
+be enclosed in braces and each member must be initialized in the order in which
+they were declared, like this:</p>
+
+<pre>Person bob = { &quot;Bob&quot;, 72 };
+City hudson = { 45000, { &quot;Mayor John&quot;, 48 } };</pre>
+
+<p>Structures can be copied just like other variables, by using the assignment operator (=):</p>
+
+<pre>Person bob = { &quot;Bob&quot;, 54 }, andy = { &quot;Andy&quot;, 32 };
+bob = andy; // copies all the data from 'andy' to 'bob'
+alert(bob.name); // displays &quot;Andy&quot;</pre>
+
+<p>Unlike other variable types, structure and object parameters are passed by
+reference. When a structure is passed to a function, the entire structure is not
+copied. Instead, when the structure parameter is accessed, the original
+structure is accessed, not a local copy. For example:</p>
+
+<pre>struct Person {
+  string name;
+}
+
+void bob(Person person) {
+  person.name = &quot;bob&quot;; // this affects the original variable 'andy'
+}
+
+void test() {
+  Person andy = { &quot;Andy&quot; };
+  bob(andy); // pass a reference to 'andy'
+  // andy.name is now &quot;Bob&quot;
+}</pre>

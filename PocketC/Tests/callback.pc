@@ -1,0 +1,13 @@
+func1() {
+    puts ( "Func1" );
+}
+
+func2( pointer x) {
+    puts ( "Func2" );
+    x();
+}
+
+main() {
+    func1();
+    func2( func1 );
+}

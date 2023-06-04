@@ -1,0 +1,974 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PocketC Language</title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h1>PocketC Language</h1>
+
+<ul>
+<li><a href="#TheTitle">The Title</a>
+<li><a href="#TheGlobalVariables">The Global Variables</a>
+<li><a href="#TheFunctions">The Functions</a>
+<li><a href="#Expressions">Expressions</a>
+<li><a href="#Assignment">Assignment</a>
+<li><a href="#Operators">Operators</a>
+<li><a href="#StringCharacterAccessor">String Character Accessor</a>
+<li><a href="#IncrementDecrement">Increment / Decrement</a>
+<li><a href="#AutomaticConversionAndCasting">Automatic Conversion and Casting</a>
+<li><a href="#Statements">Statements</a>
+<li><a href="#StatementExamples">Statement Examples</a>
+<li><a href="#Pointers">Pointers</a>
+<li><a href="#Include">Include</a>
+<li><a href="#UsingNativeLibraries">Using Native Libraries</a>
+<li><a href="#SpecialCharacters">Special characters</a>
+<li><a href="#Preprocessor">Preprocessor</a>
+</ul>
+
+<p>First, PocketC is a case sensitive language, meaning that typing <em>word</em> is not
+the same as type <em>Word</em>.</p>
+
+<p>There are three elements to a PocketC applet: the title line, the global variables, and
+the functions. </p>
+
+<h2><a name="TheTitle">The Title</a></h2>
+
+<p>The title is by far the easiest part of the PocketC language. The first line of your
+applet is two slashes followed by the name of your applet. Example:</p>
+
+<p><code>// My Applet</code></p>
+
+<p>This is also known as a <b>comment</b>. Anytime the compiler finds '<code>//</code>' in
+your applet, it will ignore the rest of the line that it is on. This allows you to place
+explanatory text in your applet. There is one other way to put a comment in your applet,
+by surrounding the text with '<code>/* */</code>'. This method allows you to spread a
+comment out over several lines. Example:</p>
+
+<pre>/* This is a multi-line comment.
+All the text between the
+asterisks is ignored */</pre>
+
+<p>Multi-line comments are not nestable. In other words: </p>
+
+<pre>/* comment1 /* comment2 */ a=b+c; */</pre>
+
+<p>is NOT valid. </p>
+
+<h2><a name="TheGlobalVariables">The Global Variables</a></h2>
+
+<p>Variables are the things that are used to store values in a program. There are four
+types of variables in PocketC: </p>
+
+<table border="1">
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>integer (32-bit, signed)</td>
+    <td><code>int</code></td>
+    <td><code>1, 2, 5, -789, 452349</code></td>
+  </tr>
+  <tr>
+    <td>floating point (32-bit)</td>
+    <td><code>float</code></td>
+    <td><code>-1.2, 3.141592, 5.7e-4</code></td>
+  </tr>
+  <tr>
+    <td>characters (8-bit, signed)</td>
+    <td><code>char</code></td>
+    <td><code>'a', 'b', '#'</code></td>
+  </tr>
+  <tr>
+    <td>strings</td>
+    <td><code>string</code></td>
+    <td><code>&quot;Bob&quot; &quot;Katie&quot; &quot;Hello&quot;</code></td>
+  </tr>
+  <tr>
+    <td>pointers</td>
+    <td><code>pointer</code></td>
+    <td>discussed later</td>
+  </tr>
+</table>
+
+<p><strong>Note:</strong> String constants may only be 1023 characters. To strore a longer
+string in a variable, use addition: <code>str = &quot;long1...&quot; +
+&quot;long2...&quot;;</code> </p>
+
+<p>Variables are declared like this:<br>
+<i>variable-type name</i>[,<i>name</i>...];</p>
+
+<p>Here are a few examples: </p>
+
+<pre><b>int</b> myInteger, row, column;
+<b>string</b> name;
+<b>float</b> pi;
+<b>char</b> c, last, first;
+<b>pointer</b> ptr;</pre>
+
+<p>It is also possible to have an <i>array</i> of values. An array is a list of values
+that are stored in one variable. Arrays are declared like normal variables except that the
+variable name is followed by '<code>[<i>size</i>]</code>' where <i>size</i> is the number
+of item that the variable can hold. A declaration might look like this: </p>
+
+<pre><b>int</b> values[10];
+<b>string</b> names[7];</pre>
+
+<p>Of course, arrays and normal variables can be declared together: </p>
+
+<pre><b>int</b> row, values[10], column;
+<b>string</b> name, colors[8];</pre>
+
+<p>You can also give default values to the variables: </p>
+
+<pre><b>int</b> nine = 9, eight = 8, zero;
+<b>string</b> days[7] = { &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tues&quot; };</pre>
+
+<p>In the case of arrays, the initials values must be in braces and separated by
+commas. If the number of values in the initializer list is less than the length
+of the array, then the uninitialized elements have default values. For the <code>days</code>
+array above, the last 4 members of <code>days</code> are the empty string (&quot;&quot;). </p>
+
+<p>We'll discuss variables a little more later. </p>
+
+<h2><a name="TheFunctions">The Functions</a></h2>
+
+<p>Functions are the most important part of a program because they contain the actual
+instructions that make a program useful. All functions have a name and a parameter list
+(which may be empty) and are declared like the:<br>
+<code><i>func-name</i>(</code>[<code><i>param-type param-name</i>,...</code>]<code>) { <i>statements</i>
+}</code></p>
+
+<p>Statements are discussed later, but for now, here are a few examples: </p>
+
+<pre>area(int width, int height) {
+   return width * height;
+}
+
+square(float x) {
+   return x * x;
+}
+
+five() {
+   return 5;
+}</pre>
+
+<p>There is one special function name which all programs must have: <code>main</code>. The
+<code>main</code> function is the function which is called first in your program. When the
+<code>main</code> function exits, the program terminates. The <code>main</code> function
+must be declared with no paramters: </p>
+
+<pre>// My Applet
+main() {
+   puts(&quot;Hello World&quot;);
+}</pre>
+
+<p>Functions can also have local variables, which are variables that can only be accessed
+within the function that declares them. Global variables, however, can be accessed from
+anywhere. Local variables are declared in the same way that global variables are except
+that they immediately follow the opening brace of a function: </p>
+
+<pre>// My Applet
+main() {
+   string localString;
+
+   localString = &quot;Hello World&quot;;
+   puts(localString);
+}</pre>
+
+<p><b>Note:</b> If you are creating large arrays, it is best to make them global
+variables instead of local variable is possible.&nbsp; </p>
+
+<p>Before we go any further, we need to talk a little bit about expressions. </p>
+
+<h3><a name="Expressions">Expressions</a></h3>
+
+<p>An expression is any number of constants, variables, and function calls connected by
+operators and parentheses.</p>
+
+<p>A <b>constant</b> is any value that is directly entered into the program, such as: <code>5
+5.4 'a' &quot;String&quot;</code></p>
+
+<p>A value stored in a <b>variable</b> can be accessed by just typing its name: <code>myInteger
+name</code><br>
+However, if that variable is an array, each value must be accessed individually by index.
+The valid indices for a given array are 0 to <i>n</i>-1 where <i>n</i> is the number of
+values in the array. So an array declared: </p>
+
+<pre>string names[4]</pre>
+
+<p>can be accessed like so: </p>
+
+<pre>names[0] = &quot;first name&quot;;
+names[1] = &quot;second name&quot;;
+names[2] = &quot;third name&quot;;
+names[3] = &quot;fourth name&quot;;</pre>
+
+<p>A <b>function call</b> consists of the name of a function, followed by an open paren,
+the parameter list, and a closing paren: </p>
+
+<pre>area(5, 7);
+square(8.9);
+clear();
+text(30, 55, &quot;Game Over&quot;);</pre>
+
+<p>A function can only be called after it is defined. If you want to call a function
+before defining it, you can use a function prototype. A prototype of a function is a
+global line (not within another function) which states the name and parameters of a
+function followed by a semicolon:</p>
+
+<pre>area(int x, int y);
+square(float); // the use of variable names is optional in a declaration</pre>
+
+<p>These three basic elements can be combined with operators: </p>
+
+<pre>5 + 7 - area(12, 34);
+square(5) * pi;
+&quot;Hello, &quot; + &quot;World&quot;;</pre>
+
+<p>Of course, function calls can have expressions in them as well: </p>
+
+<pre>area(6+3, 8*9);
+area(8 * square(4), 7);</pre>
+
+<h3><a name="Assignment">Assignment</a></h3>
+
+<p>Variable assignment is actually just another form of expression. Assignment is done in
+one of two ways--for a normal variable:<br>
+<i>name</i> = <i>expression</i></p>
+
+<p>and for an array:<br>
+<i>name</i>[<i>index-expression</i>] = <i>expression</i></p>
+
+<p>Here are a few examples: </p>
+
+<pre>int myInt, numbers[3];
+string myString;
+...
+myInt = 8;
+myString = &quot;Animaniacs&quot;;
+numbers[0] = myInt + 5;
+numbers[2] = numbers[0] * 8;</pre>
+
+<p>However, since PocketC is loosely typed, any type of value can be assigned to any type
+of variable and the value will be automatically converted: </p>
+
+<pre>myString = 95; // The value of myString is now &quot;95&quot;
+numbers[1] = &quot;78&quot;; // The value of numbers[1] is now 78;
+numbers[&quot;2&quot;] = &quot;2&quot;; // Another neat trick. numbers[2] is now 2</pre>
+
+<p>Now, what are all the operators that can be used in an expression, and what is their
+associativity? Good question. </p>
+
+<h3><a name="Operators">Operators</a></h3>
+
+<p>The following table is in order of precedence, lowest first.</p>
+
+<table BORDER="1" CELLSPACING="1" WIDTH="623">
+  <tr>
+    <th VALIGN="middle"><p ALIGN="CENTER">Operator</th>
+    <th VALIGN="middle"><p ALIGN="CENTER">Assoc</th>
+    <th VALIGN="middle"><p ALIGN="CENTER">Description</th>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">=</td>
+    <td VALIGN="MIDDLE">right</td>
+    <td VALIGN="MIDDLE">assigns the value of the expression on the right to the variable on
+    the left. Evaluates to the expression on the right.</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">||</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">logical 'or', evaluates to 0 if false, 1 if true</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">&amp;&amp;</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">logical 'and'</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">|</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">bitwise 'or'</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">^</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">bitwise 'xor'</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">&amp;</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">bitwise 'and'</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">== != &lt; &lt;= &gt; &gt;=</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">relational operators. == (equal), != (not equal), &lt;= (less than or
+    equal), &gt;= (greater than or equal). These evaluate to 1 if the expression is true, 0
+    otherwise</td>
+  </tr>
+  <tr>
+    <td>&lt;&lt; &gt;&gt;</td>
+    <td>left</td>
+    <td>bitwise shift operators. The operands must be int or char.</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">+ -</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">addition, subtraction (subtraction cannot be used with a string
+    argument)</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">* / %</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">multiplication, division, modulus (cannot be used with strings, nor
+    can modulus be used with floats)</td>
+  </tr>
+  <tr>
+    <td VALIGN="MIDDLE"><p ALIGN="CENTER">- ! ++ - - ~ * [] () &amp; @[]</td>
+    <td VALIGN="MIDDLE">left</td>
+    <td VALIGN="MIDDLE">- (negation), ! (logical 'not'), ++ (increment), -- (decrement), ~
+    (bitwise neg), [] (array subscript), () (function pointer dereference), &amp; (address of
+    ), and @[] (string character accessor) Of these, only the logical 'not' and
+      @[] can be used with strings</td>
+  </tr>
+</table>
+<p>
+
+<b>Notes:</b> No shortcut logic is performed on the operands of || and &amp;&amp;<br>
+The compound assignment operators (+=, *=, etc.) are not supported.<br>
+The comma and conditional operators (?:) are not supported.<br>
+</p>
+
+<h3><a name="StringCharacterAccessor">String Character Accessor</a></h3>
+
+<p>To get or set an individual character within a string variable, use <i>stringVariable</i>@[<i>index</i>].
+The index of the first character is 0. You will produce a runtime error if you
+attempt to access a character that is past the end of the string. Example:</p>
+<pre>string str = &quot;bob&quot;;
+...
+puts(str@[1]); // Prints the second letter of str
+str@[1] = 'X'; // changes str from &quot;bob&quot; to &quot;bXb&quot;</pre>
+
+<p><b>Note:</b> the string character accessor cannot be used with pointers, nor
+can the address of the resulting string be take. In other words, the following
+expressions are not valid: &amp;str@[i], *pstr@[i], (*pstr)@[i]</p>
+
+<h3><a name="IncrementDecrement">Increment / Decrement</a></h3>
+
+<p>The ++ and -- operators are special in that they must be placed before or after a
+variable and modify the value of the variable. The ++ increments the value of a variable
+by one, while the -- decrements by one. The caveat is that if the ++/-- is placed in front
+of the variable, the expression evaluates to the value of the variable after it is
+incremented/decremented. If it is placed after the variable, the expression evaluates to
+the variable's previous value. Example: </p>
+
+<pre>int myInt;
+...
+myInt = 8;
+puts(++myInt); // Prints &quot;9&quot; to the output form
+
+myInt = 8;
+puts(myInt++); // Prints &quot;8&quot; to the output form, but myInt is now 9</pre>
+
+<h3><a name="AutomaticConversionAndCasting">Automatic Conversion and Casting</a></h3>
+
+<p>Just like in assignments statements, automatic conversion takes place in every part of
+an expression. If the two arguments to an operator are of different types, one of
+arguments will be promoted to the less strict type. The promotion order is char to int to
+float to string. So in the expression: </p>
+
+<pre>&quot;Result is: &quot; + 5;</pre>
+
+<p>The constant 5 is first promoted to a string, and the two strings are concatenated.
+This may have some undesirable side effects. For example, if you want to write an
+expression and result to the output form, you might do something like this: </p>
+
+<pre>puts(&quot;5 + 7 = &quot; + 5 + 7); // Prints &quot;5 + 7 = 57&quot;</pre>
+
+<p>This probably wasn't the desired outcome. Instead, you would want the expression
+evaluated first, then concatenated to the string. The parentheses can be used to
+accomplish this: </p>
+
+<pre>puts(&quot;5 + 7 = &quot; + (5 + 7)); // Prints &quot;5 + 7 = 12&quot;</pre>
+
+<p>One problem remains. Suppose you want to find the floating point value of a fraction of
+two integer. </p>
+
+<pre>puts(&quot;7 / 5 = &quot; + (7 / 5)); // Prints &quot;7 / 5 = 1&quot;</pre>
+
+<p>This output is because both arguments are integers, so the result is also an integer.
+To solve this, we can cast one of them to a float: </p>
+
+<pre>puts(&quot;7 / 5 = &quot; + ((float)7 / 5)); // Prints &quot; 7 / 5 = 1.4&quot;</pre>
+
+<p>This forces the integer 7 to a floating point number before dividing it by 5.</p>
+
+<h3><a name="Statements">Statements</a></h3>
+
+<p>Statements are the individual parts that make up the body of a function. The following
+are the available statements: </p>
+
+<table border="1">
+  <tr>
+    <th>Statement</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>return;</code></td>
+    <td>Returns immediately from the current function (with a default return value of integer
+    0)</td>
+  </tr>
+  <tr>
+    <td><code>return <i>expr</i>;</code></td>
+    <td>Returns immediately from the current function, returning the value of the expression <i>expr</i></td>
+  </tr>
+  <tr>
+    <td><code>if (<i>expr</i>) <i>stmt</i></code></td>
+    <td>Evaluates the expression <i>expr</i>, if its result is true (non-zero or non-empty
+    string), the statement <i>stmt</i> is executed, otherwise <i>stmt</i> is skipped, and
+    execution continues</td>
+  </tr>
+  <tr>
+    <td><code>if (<i>expr</i>) <i>stmtA</i><br>
+    else <i>stmtB</i></code></td>
+    <td>Evaluates the expression <i>expr</i>, if its result is true (non-zero or non-empty
+    string), the statement <i>stmtA</i> is executed, otherwise <i>stmtB</i> is executed</td>
+  </tr>
+  <tr>
+    <td><code>while (<i>expr</i>) <i>stmt</i></code></td>
+    <td>The expression <i>expr</i> is evaluated. If it is true (non-zero or non-empty string),
+    <i>stmt</i> is executed. The loop then begin again, evaluating <i>expr</i> and executing <i>stmt</i>
+    until <i>expr</i> is no longer true. This means that <i>stmt</i> will never execute if <i>expr</i>
+    is initially false</td>
+  </tr>
+  <tr>
+    <td><code>do <i>stmt</i><br>
+    while (<i>expr</i>)</code></td>
+    <td>The same as <code>while</code> except that the statement <i>stmt</i> is executed
+    before <i>expr</i> is evaluated. This guarantees that <i>stmt</i> will execute at least
+    once</td>
+  </tr>
+  <tr>
+    <td><code>for (<i>init</i>;<i>cond</i>;<i>iter</i>)<br>
+    <i>stmt</i></code></td>
+    <td>The initializer expression <i>init</i> is first evaluated. The condition expression <i>cond</i>
+    is evaluated. If it is true, <i>stmt</i> is executed and the iterator expression <i>iter</i>
+    is evaluated continuing the loop, otherwise the the <code>for</code> loop ends. Note: <i>init</i>
+    is evaluated only once.</td>
+  </tr>
+  <tr>
+    <td><code>break;</code></td>
+    <td>Immediately exits from the directly enclosing <code>while/do/for</code> 
+      loop or <code>switch</code> statement..</td>
+  </tr>
+  <tr>
+    <td><code>continue;</code></td>
+    <td>Immediately restarts the directly enclosing <code>while/do/for</code> loop. In a <code>for</code>
+    loop, the <i>iter</i> expression is evaluated, followed by the <i>cond</i> expression and
+    possibly the <i>stmt</i></td>
+  </tr>
+  <tr>
+    <td><code>switch (<i>expr</i>)<br>
+      { stmts }</code></td>
+    <td>Evaluates the expression <i>expr</i>. If <i>stmts</i> contains a <code>case</code>
+      statement with a matching value, the code immediately following the <code>case</code>
+      statement is executed until either a <code>break</code> statement or the end of the
+      <code>switch</code> statement is reached. If no matching <code>case</code> statement is found and
+      a <code>default</code> statement exists in the <code>switch</code>, the code immediately following the
+      <code>default</code> statement is executed until either a <code>break</code> statement or the end of
+      the <code>switch</code> statement is reached. If no case statement matches the <i>expr</i>,
+      and no <code>default</code> statement is present, everything in the <code>switch</code> statement is
+      skipped, and execution continues after the final closing brace. <i>expr</i>
+      must not evaluate to a float value.</td>
+  </tr>
+  <tr>
+    <td><code>case <i>constant</i>:</code></td>
+    <td>
+      <p align="left">A marker within a <code>switch</code> statement. The <i>constant</i>
+      must be either a <code>char</code> (<code>case 'a':</code>), an <code>int</code>
+      (<code>case 3:</code>), or a <code>string</code> (<code>case &quot;apple&quot;:</code>)
+      If the <i>constant</i> matches the <i>expr</i> in the
+      <code>switch</code> statement, then the code immediately following this marker is run,
+      until a <code>break</code> statement or the end of the <code>switch</code> statement is reached.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><code>default:</code></td>
+    <td>An optional marker within a <code>switch</code> statement. If none of the <code>case</code>s in
+      the <code>switch</code> statement match the <code>switch</code> <i>expr</i>, the code immediately
+      following this marker is executed, until a <code>break</code> statement or the end of
+      the <code>switch</code> statement is reached.</td>
+  </tr>
+  <tr>
+    <td><code>{ <i>statements</i> }</code></td>
+    <td>A brace followed by a list of statements, followed by another brace is considered a
+    single statement</td>
+  </tr>
+  <tr>
+    <td><code><i>expression</i>;</code></td>
+    <td>An expression followed by a semicolon is also considered to be a statement</td>
+  </tr>
+</table>
+
+<br>
+<h3><a name="StatementExamples">Statement Examples</a></h3>
+<p>
+
+<b>return</b><br>
+Let's visit a previous example function to see how return works. </p>
+
+<pre>five() {
+   return 5;
+}</pre>
+
+<p>Since the return value of the function <i>five</i> is always 5, we can use the function
+any place we would normal put the constant 5. </p>
+
+<pre>puts(&quot;Five is &quot; + five()); // Prints &quot;Five is 5&quot;</pre>
+
+<p>Also, since <code>return</code> causes the function to exit immediately, we could do
+this: </p>
+
+<pre>five() {
+   return 5;
+   puts(&quot;This won't print&quot;);
+}</pre>
+
+<p>and we would have the same effect.</p>
+
+<p><b>if</b><br>
+</p>
+
+<pre>lessThan5(int x) {
+   if (x &lt; 5)
+      puts(&quot;Less than five&quot;);
+   puts(&quot;Hello&quot;);
+}</pre>
+
+<p>If this function is called with a number less than 5, &quot;Less than five&quot; will
+be printed followed by the word &quot;Hello&quot;, otherwise, only the word
+&quot;Hello&quot; is printed.</p>
+
+<p><b>if ... else</b><br>
+</p>
+
+<pre>lessThan5(int x) {
+   if (x &lt; 5)
+      puts(&quot;Less than five&quot;);
+   else
+      puts(&quot;Greater than or equal to five&quot;);
+}</pre>
+
+<p>If this function is called with a number less than 5, &quot;Less than five&quot; is
+printed, otherwise &quot;Greater than or equal to five&quot; is printed.</p>
+
+<p><b>while</b> </p>
+
+<pre>count() {
+   int x;
+
+   x = 5;
+   while (x &gt; 0) {
+      puts(x);
+      x = x - 1;
+   }
+}</pre>
+
+<p>This bit of code will print the numbers from 5 to 1 counting backwards. Notice that
+braces were placed around the two lines of code in the <code>while</code> loop to make
+them act as a single statement.</p>
+
+<p><b>do ... while</b> </p>
+
+<pre>count() {
+   int x;
+
+   x = 6;
+   do {
+      x = x - 1; // could also be x--
+      puts(x);
+   } while (x &gt; 0);
+}</pre>
+
+<p>This bit of code (similar to the previous example) will print the numbers from 5 to <b>0</b>
+counting backwards. The zero is printed in this case because the expression <code>x &lt; 0</code>
+is not evaluated until after the loop</p>
+
+<p><b>for</b> </p>
+
+<pre>output() {
+   string list[4];
+   int index;
+
+   list[0] = &quot;Zero&quot;;
+   list[1] = &quot;One&quot;;
+   list[2] = &quot;Two&quot;;
+   list[3] = &quot;Three&quot;;
+
+   for (index = 0 ; index &lt; 4 ; index++)
+      puts(list[index]);
+}</pre>
+
+<p>This example will print out &quot;ZeroOneTwoThree&quot;. When we disect it we see that
+the array <i>list</i> is initialized first. We then reach the <code>for</code> loop.
+First, the initializer is evaluated, setting index to 0. Next, the condition is evaluated <code>index
+&lt; 4</code>, which is true, so the body of the loop executes, printing &quot;Zero&quot;.
+The iterator expression is then evaluated, increasing <i>index</i> by one. This continues
+until <i>index</i> is equal to 4, at which point the loop exits without executing the body
+again.</p>
+
+<p><b>break</b> </p>
+
+<pre>count() {
+   int x;
+
+   x = 5;
+   while (x &gt; 0) {
+      if (x == 1)
+         break;
+      puts(x);
+      x = x - 1;
+   }
+}</pre>
+
+<p>In this slightly more complex piece of code, the counting goes on as it normally would,
+printing out &quot;5432&quot;. However, when <i>x</i> reaches 1, <code>break</code> is
+executed, breaking out of the <code>while</code> loop early, before the 1 gets printed.</p>
+
+<p><b>continue</b> </p>
+
+<pre>count() {
+   int x;
+
+   x = 6;
+   while (x &gt; 1) {
+      x--; // Do the subtraction first
+      if (x == 3)
+         continue;
+      puts(x);
+   }
+}</pre>
+
+<p>In this clearly contrived example, the output is &quot;5421&quot;. When <i>x</i>
+reaches 3, the <code>continue</code> is executed, passing execution to the beginning of
+the loop, skipping over the <i>puts</i>.</p>
+
+<p><b>switch, case, default</b> </p>
+
+<pre>which_number(int x) {
+   switch (x) {
+      case 1:
+         puts(&quot;x == 1\n&quot;);
+         break;
+      case 2:
+      case 3:
+         puts(&quot;x == 2 or x == 3\n&quot;);
+         break;
+      case 8:
+         puts(&quot;x == 8\n&quot;);
+      case 10:
+         puts(&quot;x == 8 or x == 10\n&quot;);
+         break;
+      default:
+         puts(&quot;x is not 1,2,3,8, or 10\n&quot;);
+   }
+}</pre>
+
+<p>The <i>which_number</i> function is passed a value, and will print out a fact
+or two about it. If the value is 1, <code>case 1</code> is executed and <code>break</code>s to the end of
+the <code>switch</code>. If the value is 2 or 3, the code following <code>case 3:</code> is
+executed. If the value is 8, both &quot;x=8&quot; and &quot;x=8 or x=10&quot; is
+printed because there is no <code>break</code> before <code>case 10:</code>, this is called fall-through.
+If none of the cases match the passed in value, the code following <code>default:</code> is
+executed.</p>
+
+<h3><a name="Pointers">Pointers</a></h3>
+
+<p><strong>Note:</strong> Pointers are an advanced topic, which should be dealt with after
+the user is familiar with all the other programming concepts.</p>
+
+<p>All variables are stored at some address in memory. A pointer is a variable which
+refers to another variable by containing that variable's address.</p>
+
+<p>There are two primary operators which are used with pointers, * and &amp;. The *
+operator dereferences the pointer. A dereferenced pointer acts just like the data to which
+it points. The &amp; operator returns the address of a given variable. To illustrate: </p>
+
+<pre>pointer p, q;
+int i;
+
+main() {
+  i = 5;
+  p = &amp;i;   // Assign the address of 'i' to the pointer 'p'
+            // now, typing '*p' is the same as typing 'i'
+  puts(*p); // Print the value of 'i'
+  *p = 7;   // Assign 7 to 'i'
+  q = p;    // Assign the value of 'p', which is the address of 'i', to 'q'
+            // now, typing '*q' is the also the same as typing 'i'
+
+  // Things not to do
+  p = 8;    // BAD! Don't assign a constant value to a pointer
+  *i = 9;   // BAD! Don't try to dereference a non-pointer
+}</pre>
+
+<p>A pointer can also be used to take the address of a function (but NOT a built in
+function!). Unlike variables, however, the &amp; operator is <strong>NOT</strong> used.
+Calling a function through a pointer is a little tricky. First, the code looks ugly.
+Second, <strong>no error checking can be done on the parameters</strong>, so type
+conversions are not done and the number of arguments is not confirmed. For example: </p>
+
+<pre>
+func(int x) { return 5*x; }
+
+main() {
+  int result;
+  pointer ptr;
+
+  ptr = func; // Take the address of a function
+  result = (*ptr)(5); // call the function (ugly)
+
+  // Things not to do
+  result = (*ptr)(&quot;5&quot;); // this won't work, since the string
+                        // isn't converted to an integer
+  result = (*ptr)(5,7); // this will compile, but will result
+                        // in stack corruption because the
+                        // wrong number of arguments are used
+}</pre>
+<p>
+
+<b>Pointers and arrays</b><br>
+Pointers and arrays are fairly similar. Pointers can use the [] operator, and an array
+variable (when not used with []) results in the address of the first element. For example:
+</p>
+
+<pre>int array[5];
+pointer p;
+
+main() {
+  p = array; // Assign the address of the first element of
+             // 'array' to 'p'
+  *p = 7;    // Assign 7 to array[0]
+  p[1] = 8;  // Assign 8 to array[1]
+}</pre>
+
+<p>This enables the pointers to arrays to be passed as function parameters. This also
+allows the user to implement their own version of two-dimensional arrays. By creating an
+array of pointers, each of which is a pointer to an array (or part of one), a
+two-dimensional array can be simulated. </p>
+
+<pre>int array[100];
+pointer twod[10]; // after init(), this can be treated
+                  // like at 10x10 matrix
+
+init() {
+  int i;
+  for (i=0;i&lt;10;i++)
+    twod[i]=array + i*10; // Pointer arithmetic
+}
+
+main() {
+  int x, y;
+  init();
+  for (x=0;x&lt;10;x++)
+    for (y=0;y&lt;10;y++)
+      twod[x][y]=x * y; // Sets array[x*10 + y] = x*y
+}</pre>
+<p>
+
+<b>Pointer arithmetic</b><br>
+Pointer values can used in a limited number of expression. You can add and subtract from a
+pointer (and, thus, can use the increment and decrement operators as well). When you add 1
+to a pointer, the pointer points to the next value in memory. Similarly, when you subtract
+1 from a pointer, the pointer points to the previous value in memory. Caution should be
+used when using pointer arithmetic, because dereferencing an invalid memory location will
+cause an error in the applet. </p>
+
+<h3><a name="Include">Include</a></h3>
+
+<p>Using the <code>include</code> keyword, it becomes possible to write programs whose
+source code is longer than the current 4K Memo Pad limit, or to create memos of frequently
+used code. The contents of the included file are functionally inserted into the line
+containing the <code>include</code> keyword.<br>
+<b>Notes:</b> An included memo can begin with '/$' instead of '//' to hide it from the
+compile form. You may also include a doc file. However, PocketC searches for a
+matching memo before searching for a matching doc file. On the Desktop Edition,
+any slashes in a path must be escaped<br>
+<b>Example</b> </p>
+
+<pre>/$ MyFunctions
+times5(int x) {
+   return x*5;
+}</pre>
+
+<p>Another memo: </p>
+
+<pre>// My Program
+include &quot;MyFunctions&quot;
+
+main() {
+   int y;
+   y = times5(7);
+   puts(y); // Prints 35
+}</pre>
+
+<p>The compiler sees this as: </p>
+
+<pre>// My Program
+times5(int x) {
+   return x*5;
+}
+main() {
+   int y;
+   y = times5(7);
+   puts(y); // Prints 35
+}</pre>
+
+<b>Note: </b><code>include</code> can only be used at the top level (i.e. you cannot use <code>include</code> within a function)
+
+<h3><a name="UsingNativeLibraries">Using Native Libraries</a></h3>
+
+<p>To use the functions defined by a native library, you must first tell the compiler to
+load the library by using the <code>library</code> keyword. The functions are then used as
+if they were normal functions. (DO NOT use this keyword with MathLib. MathLib functions
+are available as built-in functions.)</p>
+
+<p>Example:</p>
+
+<pre>// My Applet
+// PocketCLib defines times5(int)
+library &quot;PocketCLib&quot;
+
+main() {
+   int x;
+   x = times5(7);
+}</pre>
+
+<p>For information of creating native libraries, see <a href="native.html">native.htm</a>l.
+</p>
+
+<h3><a name="SpecialCharacters">Special characters</a></h3>
+
+<p>There are two ways to add special characters to a string. The first is by appending
+them by number, such as: </p>
+
+<pre>str = &quot;Here is a neat little square: &quot; + (char)149;</pre>
+
+<p>The other method is through using escape sequences. The following escape sequences are
+supported: </p>
+
+<table border="1">
+  <tr>
+    <th>Escape sequence</th>
+    <th width="40">\\</th>
+    <th width="40">\'</th>
+    <th width="40">\&quot;</th>
+    <th width="40">\n</th>
+    <th width="40">\t</th>
+    <th>\x</th>
+  </tr>
+  <tr>
+    <th>Interpretation</th>
+    <td align="center">\</td>
+    <td align="center">'</td>
+    <td align="center">&quot;</td>
+    <td align="center">newline</td>
+    <td align="center">tab</td>
+    <td>character specified by the following two hex digits. Example: '\x95' is the block
+    character (decimal 149)</td>
+  </tr>
+</table>
+
+<p>So, to create a string that contains a quote: </p>
+
+<pre>str = &quot;She said \&quot;I'm sorry,\&quot; but it was too late...&quot;;
+puts(str); // Prints: She said &quot;I'm sorry,&quot; but it was too late...</pre>
+
+<h3><a name="Preprocessor">Preprocessor</a></h3>
+
+<p>Just as in C, PocketC contains a preprocessor, which allow a programmer to define
+macros and conditionally compile a section of code based on the presence of a given macro.</p>
+
+<p><strong>#define <em>macro macro_data</em></strong></p>
+
+<p>A macro is an identifier which, when read by the compiler, is replaced by the macro's
+data. A macro's data can be any number of tokens (including zero). The macro data is
+terminated by the next newline. For example: </p>
+
+<pre>#define calc 5 * (x + 7)
+
+main() {
+  int x, y;
+  x = 9;
+  y = calc;
+  puts(&quot;y = &quot; + y);
+}</pre>
+
+<p>The compiler sees this as: </p>
+
+<pre>main() {
+  int x, y;
+  x = 9;
+  y = 5 * (x + 7);
+  puts(&quot;y = &quot; + y);
+}</pre>
+<p>
+
+<b>#ifdef <i>macro</i></b></p>
+
+<p>If the macro has been previously defined (even if it is defined to be nothing), the
+section of code between it and the matching <b>#endif</b> is compiled. Otherwise, the
+compiler ignores the section of code.</p>
+
+<p><b>#ifndef <i>macro</i></b></p>
+
+<p>If the macro has NOT been previously defined, the section of code between it and the
+matching <b>#endif</b> is compiled. Otherwise, the compiler ignores the section of code.</p>
+
+<p><b>#endif</b></p>
+
+<p>Marks the end of a section of code preceeded by an <b>#ifdef</b> or <b>#ifndef</b>.</p>
+
+<p><b>#else</b></p>
+
+<p>Placed in the middle of a <b>#ifdef</b> or <b>#ifndef</b> block, the code between the <b>#else</b>
+and the <b>#endif</b> is compiled if and only if the previous block was not.</p>
+
+<p><b>#undef</b></p>
+
+<p>Undefines a previously defined macro. If the macro was never defined, this
+does nothing.</p>
+
+<p>Example:</p>
+
+<pre>#define DEBUG
+
+main() {
+#ifdef DEBUG
+  puts(&quot;In debugging mode&quot;);
+#else
+  puts(&quot;In normal mode&quot;);
+#endif
+}</pre>
+
+<p>The compiler predefines these macros:
+<pre>#define __PKTC__ 1
+#define __PKTC_PALM__ 1
+#define __PKTC_PRC__ 1 // only if PocketC Desktop Edition is building a .prc file
+</pre>
+
+<hr>
+
+<p>That should just about cover it. Next, look over the <a href="Functions.html">Built-in
+Functions</a> to see which may be useful for you.</p>
+</body>
+</html>

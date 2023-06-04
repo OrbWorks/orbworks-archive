@@ -1,0 +1,17 @@
+// application code
+
+bool prefRound;
+
+handler app.onstart() {
+    // load the application preferences
+    Preferences prefs;
+    prefs.get("TipC", false, &prefRound, typeof(prefRound), 1);
+    // load the main form
+    mainForm.load();
+}
+
+handler app.onstop() {
+    // save the application preferences
+    Preferences prefs;
+    prefs.set("TipC", false, &prefRound, typeof(prefRound), 1);
+}
