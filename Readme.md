@@ -99,10 +99,10 @@ The Release directory contains the latest binary releases of the products.
 | OrbForms.zip                 | OrbForms Designer v4.1.3. To register, use email `github-orbforms-user@orbworks.com` and registration code `611c5c7a21a279447aca72e408941b44`. |
 | OrbPDOC.zip                  | OrbPDOC v1.1                                                 |
 | PDE.zip                      | PocketC Desktop Edition v7.1.4                               |
-| PocketC_retail.zip           | PocketC v7.1.4. This is the retail version that requires no registration code. |
+| PocketC.zip                  | PocketC v7.1.4. Use the PowerShell script `Generate-PocketCCode.ps1 <username>` to generate a registration code. |
 | PocketC_rt.zip               | PocketC runtime v7.1.4                                       |
 | PocketCArchitectDestktop.zip | PocketC Architect (desktop) v4.1.3. To register, use email `github-architect-user@orbworks.com` and registration code `30ad739847d707dc364850861d73857e`. |
-| PocketCArchitectDevice.zip   | PocketC Architect (device) v4.1.3. There is no retail build of this product, so use the PowerShell script `Generate-PocketCArchitectCode.ps1 <username>` to generate a registration code. |
+| PocketCArchitectDevice.zip   | PocketC Architect (device) v4.1.3. Use the PowerShell script `Generate-PocketCArchitectCode.ps1 <username>` to generate a registration code. |
 | PocketCScan.zip              | PocketC Desktop Edition v7.1.4 for scanners. This includes the PocketC compiler and runtime with support for Symbol scanners. This product was only made available to select partners. |
 
 ## Notes
